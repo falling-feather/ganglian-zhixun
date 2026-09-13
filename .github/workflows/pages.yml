@@ -2,7 +2,7 @@ name: Publish student demo
 on:
   push:
     branches: [main]
-    paths: ['apps/**', 'packages/**', 'scripts/build-public-demo.mjs', 'pnpm-lock.yaml', 'pnpm-workspace.yaml', 'package.json', 'tsconfig.base.json', '.github/workflows/pages.yml']
+    paths: ['apps/**', 'packages/**', 'scripts/build-public-demo.mjs', 'scripts/lib/public-images.mjs', 'pnpm-lock.yaml', 'pnpm-workspace.yaml', 'package.json', 'tsconfig.base.json', '.github/workflows/pages.yml']
   workflow_dispatch:
 permissions:
   contents: read

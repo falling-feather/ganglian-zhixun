@@ -9,7 +9,9 @@ import './style.css';
 
 type Person=Pick<ExplorationPerson,'id'|'name'|'role'|'nodeId'|'activity'|'goal'|'greeting'|'topics'|'appearance'>;
 type PublicLesson=Pick<ExplorationLesson,'title'|'assignment'|'initialNodeId'|'nodes'|'materials'|'strategies'|'workPlan'>&{people:Person[]};
-type Course={courseId:string;regionId:string;regionTitle:string;shortTitle:string;summary:string;coverIndex:number;lesson:PublicLesson};
+type CourseSummary={courseId:string;regionId:string;regionTitle:string;shortTitle:string;summary:string;coverIndex:number;assignment:string;initialNodeId:string;sceneCount:number;personCount:number;pathCount:number;lessonFile:string};
+type Course=CourseSummary&{lesson:PublicLesson};
+declare const __PUBLIC_CATALOG_URL__:string|undefined;
 type Draft={nodeId?:string;visited:string[];note:string;works:Record<string,string>};
 type Saved={version:1;courses:Record<string,Draft>};
 const storageKey='ganglian-public-student-v1';
@@ -26,12 +28,12 @@ function loadSaved():Saved {
 }
 function Atlas({image,atlas,className='',style={},children}:{image:string;atlas?:{columns:number;rows:number;index:number}|undefined;className?:string;style?:CSSProperties;children?:ReactNode}) {
   const columns=atlas?.columns??1,rows=atlas?.rows??1,index=atlas?.index??0;
-  const ref=useRef<HTMLDivElement>(null),[bounds,setBounds]=useState({width:0,height:0}),[aspect,setAspect]=useState(0);
+  const ref=useRef<HTMLDivElement>(null),[bounds,setBounds]=useState({width:0,height:0}),[aspect,setAspect]=useState(0),[failed,setFailed]=useState(false);
   useEffect(()=>{const element=ref.current!;const measure=()=>setBounds({width:element.clientWidth,height:element.clientHeight});const observer=new ResizeObserver(measure);observer.observe(element);measure();return()=>observer.disconnect();},[]);
-  useEffect(()=>{let cancelled=false;const source=new Image();setAspect(0);source.onload=()=>{if(!cancelled)setAspect(source.naturalWidth*rows/(source.naturalHeight*columns));};source.src=publicAsset(image);return()=>{cancelled=true;source.onload=null;};},[image,columns,rows]);
+  useEffect(()=>{let cancelled=false;const source=new Image();setAspect(0);setFailed(false);source.decoding='async';source.onload=()=>{if(!cancelled)setAspect(source.naturalWidth*rows/(source.naturalHeight*columns));};source.onerror=()=>{if(!cancelled)setFailed(true);};source.src=publicAsset(image);return()=>{cancelled=true;source.onload=null;source.onerror=null;};},[image,columns,rows]);
   const cellWidth=aspect?(className==='tour-person-art'?Math.min(bounds.width,bounds.height*aspect):Math.max(bounds.width,bounds.height*aspect)):0;
   const cellHeight=aspect?cellWidth/aspect:0;
-  return <div ref={ref} className={className} style={{backgroundImage:aspect?`url("${publicAsset(image)}")`:undefined,backgroundSize:`${cellWidth*columns}px ${cellHeight*rows}px`,backgroundPosition:`${(bounds.width-cellWidth)/2-(index%columns)*cellWidth}px ${(bounds.height-cellHeight)/2-Math.floor(index/columns)*cellHeight}px`,...style}}>{children}</div>;
+  return <div ref={ref} className={className} data-loaded={aspect>0?'true':'false'} style={{backgroundImage:aspect?`url("${publicAsset(image)}")`:undefined,backgroundSize:`${cellWidth*columns}px ${cellHeight*rows}px`,backgroundPosition:`${(bounds.width-cellWidth)/2-(index%columns)*cellWidth}px ${(bounds.height-cellHeight)/2-Math.floor(index/columns)*cellHeight}px`,clipPath:className==='tour-person-art'?`inset(${Math.max(0,(bounds.height-cellHeight)/2)}px ${Math.max(0,(bounds.width-cellWidth)/2)}px)`:undefined,...style}}>{children}{className==='tour-scene'&&!aspect?<span className="tour-image-state" role="status">{failed?'场景图片暂时无法载入，地图和资料仍可使用。':'正在载入场景…'}</span>:null}</div>;
 }
 function Panel({title,children,close}:{title:string;children:ReactNode;close():void}) {
   const ref=useRef<HTMLDialogElement>(null);
@@ -68,13 +70,22 @@ function Tour({course,draft,update,exit,saveError}:{course:Course;draft:Draft;up
   </main>;
 }
 function PublicDemo() {
-  const [courses,setCourses]=useState<Course[]>([]),[error,setError]=useState(''),[selected,setSelected]=useState<string|null>(null),[saved,setSaved]=useState<Saved>(loadSaved),[saveError,setSaveError]=useState(false),[about,setAbout]=useState(false);
-  useEffect(()=>{const controller=new AbortController();void fetch('./catalog.json',{signal:controller.signal}).then(response=>{if(!response.ok)throw new Error('课程资料暂时无法读取');return response.json() as Promise<Course[]>;}).then(setCourses).catch(cause=>{if(!controller.signal.aborted)setError(String(cause));});return()=>controller.abort();},[]);
+  const [courses,setCourses]=useState<CourseSummary[]>([]),[error,setError]=useState(''),[selected,setSelected]=useState<string|null>(null),[saved,setSaved]=useState<Saved>(loadSaved),[saveError,setSaveError]=useState(false),[about,setAbout]=useState(false);
+  const [lessons,setLessons]=useState<Record<string,PublicLesson>>({}),[lessonError,setLessonError]=useState(''),[retry,setRetry]=useState(0);
+  useEffect(()=>{const controller=new AbortController();const url=typeof __PUBLIC_CATALOG_URL__==='undefined'?'./catalog.json':__PUBLIC_CATALOG_URL__!;void fetch(url,{signal:controller.signal}).then(response=>{if(!response.ok)throw new Error('课程资料暂时无法读取');return response.json() as Promise<CourseSummary[]>;}).then(setCourses).catch(cause=>{if(!controller.signal.aborted)setError(String(cause));});return()=>controller.abort();},[]);
   useEffect(()=>{const save=()=>{try{localStorage.setItem(storageKey,JSON.stringify(saved));setSaveError(false);}catch{setSaveError(true);}};const timer=setTimeout(save,250);window.addEventListener('pagehide',save);return()=>{clearTimeout(timer);window.removeEventListener('pagehide',save);};},[saved]);
   useEffect(()=>{const change=()=>setSelected(new URLSearchParams(location.hash.slice(1)).get('course'));window.addEventListener('hashchange',change);change();return()=>window.removeEventListener('hashchange',change);},[]);
-  const course=courses.find(item=>item.courseId===selected);
-  const open=async(dossier:ArchiveDossier)=>{const target=courses.find(item=>item.courseId===dossier.id)!;setSaved(current=>({...current,courses:{...current.courses,[target.courseId]:current.courses[target.courseId]??{...emptyDraft(),nodeId:target.lesson.initialNodeId,visited:[target.lesson.initialNodeId]}}}));location.hash=new URLSearchParams({course:target.courseId}).toString();};
-  if(course)return <Tour key={course.courseId} course={course} draft={saved.courses[course.courseId]??emptyDraft()} update={draft=>setSaved(current=>({...current,courses:{...current.courses,[course.courseId]:draft}}))} exit={()=>{location.hash='';}} saveError={saveError}/>;
-  return <div className="v3-shell"><header className="v3-topbar"><button className="v3-brand" onClick={()=>{location.hash='';}}><BrandMark/><span>岗链智训</span></button><nav><button className="active">课程</button><button onClick={()=>setAbout(true)}>使用说明</button><a href="https://github.com/falling-feather/ganglian-zhixun" target="_blank" rel="noreferrer">项目源码</a></nav><span className="demo-mode">学生端 · 公开导览</span></header><div className="v3-shell-body"><ArchiveStage title="我的课程档案" loading={!courses.length&&!error} error={error} dossiers={courses.map(item=>({id:item.courseId,title:item.shortTitle,region:item.regionTitle,subtitle:item.summary,coverIndex:item.coverIndex,duration:'完整课程约45–60分钟',actionLabel:'进入课程导览',details:[{title:'课程任务',text:item.lesson.assignment},{title:'可以探索',items:[item.lesson.nodes.length+'个场景 · '+item.lesson.people.length+'名课程人物',item.lesson.strategies.length+'条调查路径','课程资料、私人笔记与作品草稿']}]}))} onOpen={open} footer={<span className="demo-footer">三地区 · 五课程 · 本机草稿</span>}/></div>{about?<Panel title="公开导览使用说明" close={()=>setAbout(false)}><p>你可以浏览课程档案，自由探索三地区的场景与人物，阅读课程资料、查看预设访谈片段，并整理和导出自己的笔记、作品草稿。</p><p>这是无需登录的公开导览。完整系统的实时人物智能体、关系学习、教师评分与云端提交需要后端服务，目前没有接入这两个公开站点。</p><p>记录仅保存在当前浏览器，清除浏览器数据会移除这些记录。导出作品时默认不附带私人笔记。</p><p>场景、人物和事件为教学仿真；资料中标明的公开来源可另行查阅。</p></Panel>:null}</div>;
+  const summary=courses.find(item=>item.courseId===selected),lesson=summary?lessons[summary.courseId]:undefined;
+  useEffect(()=>{
+    setLessonError('');
+    if(!summary||lesson)return;
+    const controller=new AbortController();
+    void fetch('./'+summary.lessonFile,{signal:controller.signal}).then(response=>{if(!response.ok)throw new Error('本课资料暂时无法读取，请重试。');return response.json() as Promise<PublicLesson>;}).then(value=>{if(!controller.signal.aborted)setLessons(current=>({...current,[summary.courseId]:value}));}).catch(cause=>{if(!controller.signal.aborted)setLessonError(cause instanceof Error?cause.message:'本课资料暂时无法读取');});
+    return()=>controller.abort();
+  },[summary,lesson,retry]);
+  const open=async(dossier:ArchiveDossier)=>{const target=courses.find(item=>item.courseId===dossier.id)!;setSaved(current=>({...current,courses:{...current.courses,[target.courseId]:current.courses[target.courseId]??{...emptyDraft(),nodeId:target.initialNodeId,visited:[target.initialNodeId]}}}));location.hash=new URLSearchParams({course:target.courseId}).toString();};
+  if(summary&&lesson){const course={...summary,lesson};return <Tour key={course.courseId} course={course} draft={saved.courses[course.courseId]??emptyDraft()} update={draft=>setSaved(current=>({...current,courses:{...current.courses,[course.courseId]:draft}}))} exit={()=>{location.hash='';}} saveError={saveError}/>;}
+  if(summary)return <main className="tour-course-loading"><h1>{summary.shortTitle}</h1><p role={lessonError?'alert':'status'}>{lessonError||'正在打开本课资料…'}</p>{lessonError?<button onClick={()=>setRetry(value=>value+1)}>重新载入</button>:null}<button onClick={()=>{location.hash='';}}>返回课程档案</button></main>;
+  return <div className="v3-shell"><header className="v3-topbar"><button className="v3-brand" onClick={()=>{location.hash='';}}><BrandMark/><span>岗链智训</span></button><nav><button className="active">课程</button><button onClick={()=>setAbout(true)}>使用说明</button><a href="https://github.com/falling-feather/ganglian-zhixun" target="_blank" rel="noreferrer">项目源码</a></nav><span className="demo-mode">学生端 · 公开导览</span></header><div className="v3-shell-body"><ArchiveStage title="我的课程档案" loading={!courses.length&&!error} error={error} dossiers={courses.map(item=>({id:item.courseId,title:item.shortTitle,region:item.regionTitle,subtitle:item.summary,coverIndex:item.coverIndex,duration:'完整课程约45–60分钟',actionLabel:'进入课程导览',details:[{title:'课程任务',text:item.assignment},{title:'可以探索',items:[item.sceneCount+'个场景 · '+item.personCount+'名课程人物',item.pathCount+'条调查路径','课程资料、私人笔记与作品草稿']}]}))} onOpen={open} footer={<span className="demo-footer">三地区 · 五课程 · 本机草稿</span>}/></div>{about?<Panel title="公开导览使用说明" close={()=>setAbout(false)}><p>你可以浏览课程档案，自由探索三地区的场景与人物，阅读课程资料、查看预设访谈片段，并整理和导出自己的笔记、作品草稿。</p><p>这是无需登录的公开导览。完整系统的实时人物智能体、关系学习、教师评分与云端提交需要后端服务，目前没有接入这两个公开站点。</p><p>记录仅保存在当前浏览器，清除浏览器数据会移除这些记录。导出作品时默认不附带私人笔记。</p><p>场景、人物和事件为教学仿真；资料中标明的公开来源可另行查阅。</p></Panel>:null}</div>;
 }
 createRoot(document.getElementById('root')!).render(<StrictMode><PublicDemo/></StrictMode>);

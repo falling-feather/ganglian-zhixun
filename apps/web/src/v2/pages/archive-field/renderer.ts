@@ -7,6 +7,7 @@ import {
 } from 'three';
 import {advanceArchiveFlow, archiveSheetPose, createArchiveSheets, dossierIndexForSheet, FILE_HEIGHT, FILE_WIDTH, resizeArchiveLoop} from './motion';
 import {publicAsset} from '../../../public-asset';
+import {ARCHIVE_MAX_FPS,archiveFrameIsDue} from './frame-pacing';
 
 export interface ArchiveAnchor {
   x: number; y: number; left: number; top: number; width: number; height: number;
@@ -45,11 +46,11 @@ export class ArchiveFieldRenderer {
   private spread=0;
   private spreadTarget=0;
   private reduced=false;
-  private lastFrame=0;
+  private lastFrame:number|null=null;
   private frame=0;
   private request=0;
   private disposed=false;
-  private readonly onVisibility=()=>{this.lastFrame=0;this.invalidate();};
+  private readonly onVisibility=()=>{this.lastFrame=null;this.invalidate();};
 
   static async create(canvas:HTMLCanvasElement,callbacks:FieldCallbacks,signal:AbortSignal) {
     if(signal.aborted)throw new DOMException('Archive mount cancelled','AbortError');
@@ -69,6 +70,7 @@ export class ArchiveFieldRenderer {
     this.renderer.setPixelRatio(Math.min(devicePixelRatio,software ? 0.55 : 1.5));
     this.canvas.dataset.rendererTier=software?'software':'gpu';
     this.canvas.dataset.totalSheets=String(this.sheets.length);
+    this.canvas.dataset.targetFps=String(ARCHIVE_MAX_FPS);
     this.renderer.outputColorSpace=SRGBColorSpace;
     this.renderer.toneMapping=ACESFilmicToneMapping;this.renderer.toneMappingExposure=1.0;
     this.texture.anisotropy=Math.min(2,this.renderer.capabilities.getMaxAnisotropy());
@@ -247,7 +249,8 @@ export class ArchiveFieldRenderer {
   private readonly draw=(now:number)=>{
     const drawStarted=performance.now();
     this.request=0;if(this.disposed||document.hidden)return;
-    const delta=this.lastFrame?Math.min((now-this.lastFrame)/1000,.2):1/60;this.lastFrame=now;
+    if(!archiveFrameIsDue(now,this.lastFrame,this.reduced)){this.invalidate();return;}
+    const delta=this.lastFrame===null?1/60:Math.min((now-this.lastFrame)/1000,.2);this.lastFrame=now;
     this.spread+=(this.spreadTarget-this.spread)*(this.reduced?1:1-Math.exp(-delta*5));
     advanceArchiveFlow(this.sheets,delta,this.focus,this.reduced);
     this.updateVisibleSheets();
