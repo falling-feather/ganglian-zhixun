@@ -6,7 +6,7 @@
 - [GitHub Pages 学生公开导览](https://falling-feather.github.io/ganglian-zhixun/)
 - [Sites 学生公开导览](https://ganglian-student.fallensigh0901.chatgpt.site)
 
-2026-09-13：GitHub Pages 发布流程成功，首页和五课程目录HTTP检查通过；Sites第1版发布成功，访问范围为公开。完整后端没有部署到这两个站点。
+2026-09-13：优化版GitHub Pages发布流程成功，首页预加载WebP、五课程摘要和WebP类型HTTP检查通过；Sites第2版发布成功，访问范围仍为公开。完整后端没有部署到这两个站点。
 
 GitHub Pages 和 Sites 发布同一份学生端公开导览。导览共用正式档案组件，课程内容从当前课程包生成，包含三地区五课程、地图、人物设定与预设访谈片段、资料、私人笔记、作品草稿和 Markdown 导出。
 
