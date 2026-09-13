@@ -10,7 +10,12 @@ const output=resolve(root,'.local/public-student-demo/dist');
 const require=createRequire(resolve(web,'package.json'));
 const {build}=await import(pathToFileURL(require.resolve('vite')).href);
 const {default:react}=await import(pathToFileURL(require.resolve('@vitejs/plugin-react')).href);
-await build({root:web,configFile:false,base:'./',plugins:[react()],build:{outDir:output,emptyOutDir:true,rollupOptions:{input:resolve(web,'public-demo.html')}}});
+const mediaBase=process.env.PUBLIC_ASSET_ORIGIN?process.env.PUBLIC_ASSET_ORIGIN.replace(/\/$/u,'')+'/':'';
+if(mediaBase&&new URL(mediaBase).protocol!=='https:')throw new Error('Public media origin must use HTTPS');
+const sharedMedia=mediaBase?{name:'shared-public-media',enforce:'pre',transform(source,id){
+  return id.endsWith('.css')?source.replace(/url\((['"]?)\/assets\/([^)'"\s]+)\1\)/gu,(_match,_quote,path)=>`url("${mediaBase}assets/${path}")`):null;
+}}:null;
+await build({root:web,configFile:false,base:'./',define:{'import.meta.env.VITE_PUBLIC_ASSET_BASE':JSON.stringify(mediaBase)},plugins:[react(),...(sharedMedia?[sharedMedia]:[])],build:{outDir:output,emptyOutDir:true,copyPublicDir:!mediaBase,rollupOptions:{input:resolve(web,'public-demo.html')}}});
 await rename(resolve(output,'public-demo.html'),resolve(output,'index.html'));
 const catalog=courseRegionAssignments.map(meta=>{
   const original=courseFieldLessonsV3.find(item=>item.courseId===meta.courseId);
