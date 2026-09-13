@@ -1,5 +1,13 @@
 # 公开演示与完整后端
 
+## 在线地址
+
+- [完整项目源码](https://github.com/falling-feather/ganglian-zhixun)
+- [GitHub Pages 学生公开导览](https://falling-feather.github.io/ganglian-zhixun/)
+- [Sites 学生公开导览](https://ganglian-student.fallensigh0901.chatgpt.site)
+
+2026-09-13：GitHub Pages 发布流程成功，首页和五课程目录HTTP检查通过；Sites第1版发布成功，访问范围为公开。完整后端没有部署到这两个站点。
+
 GitHub Pages 和 Sites 发布同一份学生端公开导览。导览共用正式档案组件，课程内容从当前课程包生成，包含三地区五课程、地图、人物设定与预设访谈片段、资料、私人笔记、作品草稿和 Markdown 导出。
 
 公开导览不调用模型、不上传笔记、不提供教师评分或云端提交。浏览器存储与正式系统数据库彼此独立。所有场景在导览中可直接访问，不表示正式课程中的访问许可已经获得。
@@ -14,7 +22,7 @@ pnpm build:packages
 node scripts/build-public-demo.mjs
 ```
 
-产物在 `.local/public-student-demo/dist`。使用相对资源路径与 hash 导览地址，支持 GitHub Pages 仓库子路径。GitHub Actions 负责发布；Sites 使用同一产物建立单独的静态站点发布记录。
+产物在 `.local/public-student-demo/dist`。使用相对资源路径与 hash 导览地址，支持 GitHub Pages 仓库子路径。GitHub Actions 负责发布；Sites 使用同一构建入口生成产物并建立单独的静态站点发布记录。
 
 公开构建只打包当前导览实际引用的36份图片资源，保持原画质，不包含没有在导览中使用的历史媒体。两个站点各自提供完整图片，避免跨站图片加载阻塞首页或场景。
 
