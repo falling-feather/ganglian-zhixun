@@ -1,4 +1,4 @@
-import {mkdir, readFile, rename, writeFile} from 'node:fs/promises';
+import {copyFile, mkdir, readFile, rename, writeFile} from 'node:fs/promises';
 import {dirname, resolve} from 'node:path';
 import {fileURLToPath, pathToFileURL} from 'node:url';
 import {createRequire} from 'node:module';
@@ -10,12 +10,7 @@ const output=resolve(root,'.local/public-student-demo/dist');
 const require=createRequire(resolve(web,'package.json'));
 const {build}=await import(pathToFileURL(require.resolve('vite')).href);
 const {default:react}=await import(pathToFileURL(require.resolve('@vitejs/plugin-react')).href);
-const mediaBase=process.env.PUBLIC_ASSET_ORIGIN?process.env.PUBLIC_ASSET_ORIGIN.replace(/\/$/u,'')+'/':'';
-if(mediaBase&&new URL(mediaBase).protocol!=='https:')throw new Error('Public media origin must use HTTPS');
-const sharedMedia=mediaBase?{name:'shared-public-media',enforce:'pre',transform(source,id){
-  return id.endsWith('.css')?source.replace(/url\((['"]?)\/assets\/([^)'"\s]+)\1\)/gu,(_match,_quote,path)=>`url("${mediaBase}assets/${path}")`):null;
-}}:null;
-await build({root:web,configFile:false,base:'./',define:{'import.meta.env.VITE_PUBLIC_ASSET_BASE':JSON.stringify(mediaBase)},plugins:[react(),...(sharedMedia?[sharedMedia]:[])],build:{outDir:output,emptyOutDir:true,copyPublicDir:!mediaBase,rollupOptions:{input:resolve(web,'public-demo.html')}}});
+await build({root:web,configFile:false,base:'./',plugins:[react()],build:{outDir:output,emptyOutDir:true,copyPublicDir:false,rollupOptions:{input:resolve(web,'public-demo.html')}}});
 await rename(resolve(output,'public-demo.html'),resolve(output,'index.html'));
 const catalog=courseRegionAssignments.map(meta=>{
   const original=courseFieldLessonsV3.find(item=>item.courseId===meta.courseId);
@@ -23,6 +18,18 @@ const catalog=courseRegionAssignments.map(meta=>{
   const {title,assignment,initialNodeId,nodes,people,materials,strategies,workPlan}=original.lesson;
   return {...meta,lesson:{title,assignment,initialNodeId,nodes,people:people.map(({id,name,role,nodeId,activity,goal,greeting,topics,appearance})=>({id,name,role,nodeId,activity,goal,greeting,topics,appearance})),materials,strategies,workPlan}};
 });
+const assetPaths=new Set(['/assets/archive/charcoal-paper.png','/assets/archive/xunpu-cover.png','/assets/v3/course-covers.png']);
+function collectAssets(value){
+  if(typeof value==='string'&&value.startsWith('/assets/'))assetPaths.add(value);
+  else if(value&&typeof value==='object')Object.values(value).forEach(collectAssets);
+}
+collectAssets(catalog);
+for(const path of assetPaths){
+  if(path.includes('..')||path.includes('\\'))throw new Error('Invalid public asset path');
+  const destination=resolve(output,path.slice(1));
+  await mkdir(dirname(destination),{recursive:true});
+  await copyFile(resolve(web,'public',path.slice(1)),destination);
+}
 await mkdir(output,{recursive:true});
 await writeFile(resolve(output,'catalog.json'),JSON.stringify(catalog));
 await writeFile(resolve(output,'.nojekyll'),'');

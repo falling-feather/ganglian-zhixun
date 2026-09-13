@@ -16,7 +16,7 @@ node scripts/build-public-demo.mjs
 
 产物在 `.local/public-student-demo/dist`。使用相对资源路径与 hash 导览地址，支持 GitHub Pages 仓库子路径。GitHub Actions 负责发布；Sites 使用同一产物建立单独的静态站点发布记录。
 
-Sites 的页面与交互独立发布，图片资源复用 Pages 公开源站，以避开大资源包上传超时。构建 Sites 时设置 `PUBLIC_ASSET_ORIGIN=https://falling-feather.github.io/ganglian-zhixun`；普通 Pages 构建不设置该值，保留所有本地图片。该资源源站已验证允许跨域 WebGL 加载；后续停用或更改 Pages 地址时须同步更新 Sites 的资源地址。
+公开构建只打包当前导览实际引用的36份图片资源，保持原画质，不包含没有在导览中使用的历史媒体。两个站点各自提供完整图片，避免跨站图片加载阻塞首页或场景。
 
 ## 完整系统托管准备
 
