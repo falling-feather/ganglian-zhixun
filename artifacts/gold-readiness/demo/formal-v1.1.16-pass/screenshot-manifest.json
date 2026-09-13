@@ -1,0 +1,57 @@
+{
+  "schemaVersion": "screenshot-manifest/1.0.0",
+  "runId": "v1.1.16-formal-pass-20260730",
+  "status": "passed",
+  "files": [
+    {
+      "file": "00-world-rain-consequence.png",
+      "bytes": 89944,
+      "sha256": "ebce4785f056adbe61b265d8a2f1dbf4e52f1bd381f413bc3d5c1e508fbcbfa0"
+    },
+    {
+      "file": "01-student-r2-precise-content.png",
+      "bytes": 95732,
+      "sha256": "2b59a1e4af8ca1990918db41d96cab9dca810661c0bb90bc0761270e5d41987a"
+    },
+    {
+      "file": "02-student-four-domain-governance.png",
+      "bytes": 98285,
+      "sha256": "c589e5dc150994fe3b231eb2e0289068c47ef7cce6441135c428ed492d561df5"
+    },
+    {
+      "file": "03-teacher-precise-governance-arbitration.png",
+      "bytes": 112652,
+      "sha256": "4138d0c9b6eadbca944890ae083a3ee0876f94a6b698e477f8bdf6f27c2d1922"
+    },
+    {
+      "file": "04-student-copyright-platform-pause.png",
+      "bytes": 93945,
+      "sha256": "1b4f1dba2d31120a4d61f5f2ee4e624ae9cfc51c0ffd1c2d2e31e45e3e84cce1"
+    },
+    {
+      "file": "05-teacher-learning-candidate-approved.png",
+      "bytes": 79773,
+      "sha256": "a4002977fb250f5c73b2e00c9224c0a8b891e055aae6d4e928eec9a0aa1bc736"
+    },
+    {
+      "file": "06-student-final-score-replay.png",
+      "bytes": 99598,
+      "sha256": "0394d36bc8545f68935ee39596947c5a551cc126644c15cd0938fad9b2da7317"
+    },
+    {
+      "file": "07-teacher-final-score.png",
+      "bytes": 100721,
+      "sha256": "48067588c48635abbc7cbca2bb28b09b44b3b0dda3e33e78df687e4bb5ca2f42"
+    },
+    {
+      "file": "08-gold-evidence-workbench.png",
+      "bytes": 90925,
+      "sha256": "80d3ec4e8fb6de552e4917316c66e924e60afb635d0e8a27485398c8c246bd43"
+    },
+    {
+      "file": "09-operations-health.png",
+      "bytes": 83717,
+      "sha256": "343ff9f28988b5d05f54ca7ee52eabae5fc0f98c36cb77db503fcee774638e0d"
+    }
+  ]
+}

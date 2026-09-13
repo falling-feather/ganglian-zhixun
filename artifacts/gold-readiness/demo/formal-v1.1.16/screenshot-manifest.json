@@ -1,0 +1,72 @@
+{
+  "schemaVersion": "screenshot-manifest/1.0.0",
+  "runId": "v1.1.16-rehearsal-timeout-20260730",
+  "status": "failed_timeout",
+  "files": [
+    {
+      "file": "00-world-rain-consequence.png",
+      "bytes": 123957,
+      "sha256": "907d81da3d1426f1e7a7532a1f3aa78229ec9d5ba5b72d7f287efb6eba2edd23"
+    },
+    {
+      "file": "01-student-risk-decision-chain.png",
+      "bytes": 365345,
+      "sha256": "5c6db7bbfba8c9b3224e50b16df1ff2366472afe8da10575364eeb229673dfa1"
+    },
+    {
+      "file": "02-student-four-domain-governance.png",
+      "bytes": 143480,
+      "sha256": "49ae504c5cf4b41e54c99665e66223ee450f11cfcf693c3dc0a2a989aabe224e"
+    },
+    {
+      "file": "03-student-r2-precise-submission.png",
+      "bytes": 335543,
+      "sha256": "aad70b50e2eeecb49a405e4320c0126bccced30b5dcf72824731e70522634bce"
+    },
+    {
+      "file": "04-gold-readiness-workbench.png",
+      "bytes": 409271,
+      "sha256": "dfc1fb753e2acdedee30d90ef775296b925985bfa56a9ca1243a4985d041d037"
+    },
+    {
+      "file": "05-director-timeline-and-evidence.png",
+      "bytes": 152446,
+      "sha256": "ee7608e92201f643a045ca7158dd994450e4013f9deb31f1320490a0a9da7424"
+    },
+    {
+      "file": "06-teacher-governance-and-submission-audit.png",
+      "bytes": 272293,
+      "sha256": "a98815d5816e322c1ed368c7d5fab09f04bd9ee5e75b0c31ec14e7311c20d925"
+    },
+    {
+      "file": "07-teacher-final-score-and-learning-candidate.png",
+      "bytes": 583584,
+      "sha256": "cc2631480543b0f3244bd65c1918b7be71ec0f8df559fe8be184f3041900960b"
+    },
+    {
+      "file": "07a-teacher-final-score-viewport.png",
+      "bytes": 101974,
+      "sha256": "7dad3ee9e2a4282e5f9b15ddfb73e8de66ec43da7afd466cec14ef3e5623b888"
+    },
+    {
+      "file": "07b-learning-candidate-approved-viewport.png",
+      "bytes": 80267,
+      "sha256": "4b220092baf8839232b214b6fb70a0490d690064c1ec50b17b006fd68d2bbe56"
+    },
+    {
+      "file": "08-student-final-feedback-replay.png",
+      "bytes": 237420,
+      "sha256": "13b7b5bc5372a02ba6e0d8b52fec4b851569e325bc2af78b428f7e6679cd8c1c"
+    },
+    {
+      "file": "08a-student-final-score-viewport.png",
+      "bytes": 97390,
+      "sha256": "97576e1e55a52324ecdc53e282e698eebd61aa3ad5d88e59ff3eed008dc8fb96"
+    },
+    {
+      "file": "09-operations-health-viewport.png",
+      "bytes": 83794,
+      "sha256": "0b158d307ecb64f480923fc19de61f1aa1b9da36d01c2f5f66bcf093fe0c7e47"
+    }
+  ]
+}

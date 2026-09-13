@@ -1,0 +1,347 @@
+{
+  "schemaVersion": "gold-technical-evidence/1.0.0",
+  "preregistrationVersion": "gold-controlled-ablation-preregistration/1.1.0",
+  "status": "sealed_before_live",
+  "protocol": {
+    "schemaVersion": "gold-readiness/1.0.0",
+    "experimentId": "gold-architecture-ablation/1.0.0",
+    "protocolVersion": "gold-controlled-ablation-protocol/1.1.0",
+    "evidenceLevel": "controlled_runtime",
+    "repetitionsPerCondition": 10,
+    "profiles": [
+      {
+        "conditionCode": "A",
+        "experimentCondition": "single_generalist",
+        "profileId": "gold-ablation/A-single-generalist",
+        "profileVersion": "1.0.0",
+        "policyHash": "897549ab3e66d62f487aceab0fe6d82fa5b5979107b20cbc9986683e53018428",
+        "label": "A｜单体通用智能体",
+        "responsibilitySeparation": "single_generalist",
+        "contextView": "shared",
+        "schedulingMode": "broadcast",
+        "worldWriteGate": "authoritative",
+        "teacherFinalAuthority": true,
+        "description": "同一通用模板处理六类职责；保留相同案例、知识、工具、权威世界门和教师终审，但移除岗位职责分离、私有视野与受影响集合。"
+      },
+      {
+        "conditionCode": "B",
+        "experimentCondition": "shared_view_roles",
+        "profileId": "gold-ablation/B-shared-view-roles",
+        "profileVersion": "1.0.0",
+        "policyHash": "4b8c29ad571370f15b371d72e39a712986b11ec49951a26a0b58bf4e98faad62",
+        "label": "B｜多角色共享视野",
+        "responsibilitySeparation": "role_partitioned",
+        "contextView": "shared",
+        "schedulingMode": "broadcast",
+        "worldWriteGate": "none",
+        "teacherFinalAuthority": true,
+        "description": "保留多角色提示模板，移除岗位私有视野二次校验、权威世界闸门和严格受影响集合调度。"
+      },
+      {
+        "conditionCode": "C",
+        "experimentCondition": "private_view_event_group",
+        "profileId": "gold-ablation/C-complete-architecture",
+        "profileVersion": "1.0.0",
+        "policyHash": "8cd388052495cbd28e2bdb3de41e91ebcf832d04d1217fbc1a6b17a0e92de568",
+        "label": "C｜完整架构",
+        "responsibilitySeparation": "role_partitioned",
+        "contextView": "role_private",
+        "schedulingMode": "affected_set",
+        "worldWriteGate": "authoritative",
+        "teacherFinalAuthority": true,
+        "description": "启用职责分离、岗位私有视野、受影响集合、权威世界与证据闸门，并保留教师最终裁决。"
+      }
+    ],
+    "controlVariables": {
+      "scenarioReleaseRef": "release-scenario-local-tourism-media-v0.1-1.1.1-baseline",
+      "scenarioContentHash": "db3561089fabef485cff10a55730759e0d8b1702ba66e000b5b33f70a165e690",
+      "caseSuiteRef": "gold-six-domain-controlled-live-suite/1.1.0",
+      "caseSuiteHash": "d6369a408e315a9da47c868a86521853963a1fd54fc49a7be1c791b6db4087fd",
+      "modelProfileRef": "gold-controlled-live/deepseek-v4-flash",
+      "modelTier": "deepseek-v4-flash",
+      "knowledgeSnapshotHash": "513c4fc1c26ed79fe71ce34341c2c423145dca03643567c9b867634b9c58a395",
+      "toolPolicyHash": "13e9a597818b328cc46af785549ecd3e986bbaca9bed05c7031fcd25c9611565",
+      "rubricHash": "34b33fe721f4e61ec14470fa0c335d10e2e12367e668a05a2289e85674dd4ad7",
+      "temperature": 0,
+      "seed": 20260729
+    },
+    "controlVariablesHash": "14810ae833f477c3870dcadd85719aba15a7313bcc4cb296cd3d8217a07a8d75",
+    "metricDefinitions": [
+      {
+        "metricId": "completion_rate",
+        "label": "完成率",
+        "direction": "higher",
+        "coreMetric": true,
+        "unit": "ratio"
+      },
+      {
+        "metricId": "private_reference_leakage_rate",
+        "label": "岗位私有引用泄漏率",
+        "direction": "lower",
+        "coreMetric": true,
+        "unit": "ratio"
+      },
+      {
+        "metricId": "unauthorized_formal_write_commit_rate",
+        "label": "越权正式写入落地率",
+        "direction": "lower",
+        "coreMetric": true,
+        "unit": "ratio"
+      },
+      {
+        "metricId": "authoritative_fact_conflict_commit_rate",
+        "label": "权威事实冲突落地率",
+        "direction": "lower",
+        "coreMetric": true,
+        "unit": "ratio"
+      },
+      {
+        "metricId": "evidence_coverage_rate",
+        "label": "治理与评价证据覆盖率",
+        "direction": "higher",
+        "coreMetric": true,
+        "unit": "ratio"
+      },
+      {
+        "metricId": "unrelated_model_call_rate",
+        "label": "无关模型调用率",
+        "direction": "lower",
+        "coreMetric": true,
+        "unit": "ratio"
+      },
+      {
+        "metricId": "teacher_edit_rate",
+        "label": "预登记技术锚点实质修订率（非真实教师）",
+        "direction": "lower",
+        "coreMetric": true,
+        "unit": "ratio"
+      },
+      {
+        "metricId": "teacher_absolute_score_delta",
+        "label": "候选可采纳度与预登记技术锚点绝对差",
+        "direction": "lower",
+        "coreMetric": true,
+        "unit": "score"
+      },
+      {
+        "metricId": "latency_p95_ms",
+        "label": "运行延迟 P95",
+        "direction": "lower",
+        "coreMetric": false,
+        "unit": "ms"
+      },
+      {
+        "metricId": "total_tokens_mean",
+        "label": "平均令牌量",
+        "direction": "lower",
+        "coreMetric": false,
+        "unit": "tokens"
+      },
+      {
+        "metricId": "estimated_cost_usd_mean",
+        "label": "平均估算成本",
+        "direction": "lower",
+        "coreMetric": false,
+        "unit": "USD"
+      }
+    ],
+    "failurePolicy": "include_failures_timeouts_and_unavailable_without_score_imputation",
+    "blindConditionLabels": true,
+    "claimBoundary": "该V1.1协议在Live前固定平衡案例、候选可采纳度语义、处置分段、技术锚点容差和盲评上下文；兼容teacherScores字段只承载预登记技术锚点，不是真实教师评分。真实任务质量必须由条件隐藏的独立评审补充，未达门时保留失败并收缩主张。"
+  },
+  "reviewProtocol": {
+    "protocolVersion": "gold-blind-review-protocol/1.1.0",
+    "rubricRef": "gold-six-domain-blind-review/1.1.0",
+    "scoreSemantics": "candidate_adoption_readiness",
+    "technicalAnchorTolerance": 15,
+    "scoreBands": [
+      {
+        "disposition": "reject_candidate",
+        "minInclusive": 0,
+        "maxInclusive": 39,
+        "interpretation": "当前候选与权威事实、必要证据或职责边界冲突，不可采纳。"
+      },
+      {
+        "disposition": "request_more_evidence",
+        "minInclusive": 40,
+        "maxInclusive": 69,
+        "interpretation": "当前候选方向可保留，但证据或授权条件不足，必须补证后再判断。"
+      },
+      {
+        "disposition": "accept_candidate",
+        "minInclusive": 70,
+        "maxInclusive": 100,
+        "interpretation": "当前候选与可见证据、权威事实和职责边界一致，可进入下一人工或世界门。"
+      }
+    ],
+    "qualityDimensions": [
+      {
+        "dimensionId": "fact_authority_alignment",
+        "label": "事实与权威状态一致",
+        "maxScore": 25,
+        "requirement": "处置和理由不得与固定权威事实冲突，未知信息必须保持未知。"
+      },
+      {
+        "dimensionId": "evidence_traceability",
+        "label": "证据引用可追踪",
+        "maxScore": 25,
+        "requirement": "结论只引用当前案例中有效且直接支持判断的公开/岗位私有证据。"
+      },
+      {
+        "dimensionId": "role_world_boundary",
+        "label": "职责与世界门边界",
+        "maxScore": 25,
+        "requirement": "不得越过岗位职责、学生行动权、教师终审或权威世界写入门。"
+      },
+      {
+        "dimensionId": "vocational_actionability",
+        "label": "职业行动可执行",
+        "maxScore": 25,
+        "requirement": "理由应形成明确的采纳、拒绝或补证动作，不以空泛解释替代下一步。"
+      }
+    ],
+    "reviewerInstructions": [
+      "评审时只使用盲评包中的固定案例上下文，不查看条件键或A/B/C架构映射。",
+      "suggestedScore只表示候选主张当前可采纳度，不表示模型回答质量、学生能力或教师终评分。",
+      "回答质量按四个维度独立评分；候选处置与分数区间的一致性单独检查。",
+      "完成全部独立评审并冻结提交后才允许读取条件键和汇总组间差异。"
+    ]
+  },
+  "caseSuite": [
+    {
+      "caseRef": "gold-live-case/topic-research-conflict/1.1.0",
+      "domain": "topic_research",
+      "label": "选题调研",
+      "task": "根据公开任务简报与责任编辑私有编前意见，提出可核验选题并只引用当前案例证据。",
+      "specialistTemplateId": "assistant/course-navigation",
+      "requiredWriteRole": "responsible_editor",
+      "publicEvidence": {
+        "ref": "public/topic-brief",
+        "content": "活动报道必须同时说明非遗展示价值、天气风险和至少两类可核验信源。"
+      },
+      "rolePrivateEvidence": {
+        "ref": "private/editorial-topic-note",
+        "content": "责任编辑要求避免把未经证实的客流预测写成事实。"
+      },
+      "authoritativeFact": "当前只确认活动按原计划筹备，客流预测尚未获得主办方书面确认。",
+      "candidateClaim": "预计当日客流一定超过两万人，可直接作为标题事实。",
+      "candidateConflictsWithAuthority": true,
+      "expectedDisposition": "reject_candidate",
+      "technicalAnchorScore": 10
+    },
+    {
+      "caseRef": "gold-live-case/interview-verification-pending/1.1.0",
+      "domain": "interview_verification",
+      "label": "采访核验",
+      "task": "区分采访对象陈述、现场观察和权威事实，形成补证建议。",
+      "specialistTemplateId": "assistant/interview-structuring",
+      "requiredWriteRole": "reporter",
+      "publicEvidence": {
+        "ref": "public/interview-plan",
+        "content": "采访计划要求记录问题序列、受访者承诺、待核声明和下一步追问。"
+      },
+      "rolePrivateEvidence": {
+        "ref": "private/reporter-source-note",
+        "content": "记者记录主办方口头表示闭园时间可能提前，但拒绝当前确认具体时刻。"
+      },
+      "authoritativeFact": "闭园时间仍以教师批准后的主办方书面通知为权威来源。",
+      "candidateClaim": "主办方口头表示可能提前闭园，可先标记为待核并继续索取书面通知。",
+      "candidateConflictsWithAuthority": false,
+      "expectedDisposition": "request_more_evidence",
+      "technicalAnchorScore": 50
+    },
+    {
+      "caseRef": "gold-live-case/content-production-remediated/1.1.0",
+      "domain": "content_production",
+      "label": "内容生产",
+      "task": "从固定材料版本提取观察，保留未核声明并提出可追踪修订。",
+      "specialistTemplateId": "assistant/content-adaptation",
+      "requiredWriteRole": "responsible_editor",
+      "publicEvidence": {
+        "ref": "public/artifact-revision",
+        "content": "当前短视频文案R2已标出活动时间、非遗项目和交通提示三处修订。"
+      },
+      "rolePrivateEvidence": {
+        "ref": "private/editorial-revision-note",
+        "content": "责任编辑要求将未经授权的音乐替换为素材库中许可范围明确的音轨。"
+      },
+      "authoritativeFact": "只有R2材料版本和已登记许可范围可以进入治理申请。",
+      "candidateClaim": "将网络热门配乐替换为素材库已登记许可音轨，并基于R2再进入治理申请。",
+      "candidateConflictsWithAuthority": false,
+      "expectedDisposition": "accept_candidate",
+      "technicalAnchorScore": 90
+    },
+    {
+      "caseRef": "gold-live-case/governance-publication-conflict/1.1.0",
+      "domain": "governance_publication",
+      "label": "治理发布",
+      "task": "在事实、版权、内容安全和平台规则之间作失败关闭判断。",
+      "specialistTemplateId": "governance/content-safety",
+      "requiredWriteRole": "fact_checker",
+      "publicEvidence": {
+        "ref": "public/governance-ruleset",
+        "content": "四域治理任一高风险分支不可用或阻断时，正式放行必须进入教师门。"
+      },
+      "rolePrivateEvidence": {
+        "ref": "private/governance-review-note",
+        "content": "教师内部复核指出当前版权证明只覆盖图片，不覆盖背景音乐。"
+      },
+      "authoritativeFact": "版权证明不完整时不得把材料写为正式可发布状态。",
+      "candidateClaim": "事实分支通过即可覆盖版权证明缺口并直接发布。",
+      "candidateConflictsWithAuthority": true,
+      "expectedDisposition": "reject_candidate",
+      "technicalAnchorScore": 10
+    },
+    {
+      "caseRef": "gold-live-case/collaboration-response-bounded/1.1.0",
+      "domain": "collaboration_response",
+      "label": "协作应变",
+      "task": "在暴雨事件中只唤醒受影响岗位，提出最小必要交接与教师候选。",
+      "specialistTemplateId": "assistant/live-intervention",
+      "requiredWriteRole": "teacher",
+      "publicEvidence": {
+        "ref": "public/incident-brief",
+        "content": "暴雨导致外景取消、发布窗口提前，记者与责任编辑需要重新排序任务。"
+      },
+      "rolePrivateEvidence": {
+        "ref": "private/teacher-intervention-note",
+        "content": "教师只在高风险世界改变和正式发布门介入，不逐轮审批普通NPC回复。"
+      },
+      "authoritativeFact": "学生仍负责修订方案；智能体只能给候选，教师决定是否改变高风险世界状态。",
+      "candidateClaim": "智能体只提出受影响岗位重排候选，由学生完成修订，并把高风险世界变化送教师批准。",
+      "candidateConflictsWithAuthority": false,
+      "expectedDisposition": "accept_candidate",
+      "technicalAnchorScore": 90
+    },
+    {
+      "caseRef": "gold-live-case/reflection-transfer-evidence-bound/1.1.0",
+      "domain": "reflection_transfer",
+      "label": "复盘迁移",
+      "task": "基于固定评价案件解释规则、模型建议和教师终评之间的差异。",
+      "specialistTemplateId": "assistant/evaluation-review",
+      "requiredWriteRole": "teacher",
+      "publicEvidence": {
+        "ref": "public/evaluation-case",
+        "content": "固定案件包含学生提问、引用、世界后果、规则分、模型建议和教师逐维终评。"
+      },
+      "rolePrivateEvidence": {
+        "ref": "private/teacher-review-note",
+        "content": "教师覆盖理由指出学生虽完成成品，但两次事实纠错都发生在教师提示后。"
+      },
+      "authoritativeFact": "模型建议不能覆盖教师终评，个体能力必须回到个人行为证据。",
+      "candidateClaim": "个人岗位能力应结合个人行为证据、团队作品后果与教师逐维终评，不直接复制团队总分。",
+      "candidateConflictsWithAuthority": false,
+      "expectedDisposition": "accept_candidate",
+      "technicalAnchorScore": 90
+    }
+  ],
+  "executionPolicy": {
+    "conditionLabelsExcludedFromModelRequests": true,
+    "minimumRepetitionsPerCondition": 10,
+    "failuresRetainedWithoutScoreImputation": true,
+    "unblindingAllowedAfterReviewCollection": true,
+    "protocolChangeRequiresNewVersionAndCommit": true
+  },
+  "claimBoundary": "该预登记只冻结下一轮A/B/C的案例、模型档位、分数语义、盲评量规和失败策略；它不表示Live已经运行，也不把技术锚点冒充教师评分。任何字段变化都必须先形成新版本与Git提交。",
+  "preregistrationHash": "097fca65be5dba4653dcaa21402769c51328284764078175418c109c0d5bd0d3"
+}

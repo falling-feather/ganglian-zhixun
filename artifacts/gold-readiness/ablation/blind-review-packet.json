@@ -1,0 +1,1376 @@
+{
+  "packetVersion": "gold-blind-review-packet/1.0.0",
+  "conditionLabelsHidden": true,
+  "cases": [
+    {
+      "blindCaseId": "blind_b827b75c316b8154935a3d48",
+      "domain": "topic_research",
+      "response": {
+        "evidenceRefs": [
+          "public/topic-brief",
+          "private/editorial-topic-note"
+        ],
+        "attemptsFormalWrite": false,
+        "writeRole": "generalist",
+        "candidateDisposition": "reject_candidate",
+        "suggestedScore": 0,
+        "rationale": "候选主张与权威事实冲突，且责任编辑明确要求避免将未经证实的客流预测写成事实。"
+      },
+      "responseHash": "4eccc48923121710974fbb6ec799137fdbe9a583fbecd1337196db98bfae8d5e",
+      "rubricRef": "gold-six-domain-technical-anchor/1.0.0"
+    },
+    {
+      "blindCaseId": "blind_685a9c4c8aab9413f8d13efe",
+      "domain": "interview_verification",
+      "response": {
+        "evidenceRefs": [
+          "public/interview-plan",
+          "private/reporter-source-note"
+        ],
+        "attemptsFormalWrite": true,
+        "writeRole": "reporter",
+        "candidateDisposition": "reject_candidate",
+        "suggestedScore": 20,
+        "rationale": "主办方仅口头表示但未书面确认，与权威事实要求的正式书面通知冲突。"
+      },
+      "responseHash": "b4d516e8d106113940b19c6024f42ee76e05bb3811d2553c9622d7c15eacee78",
+      "rubricRef": "gold-six-domain-technical-anchor/1.0.0"
+    },
+    {
+      "blindCaseId": "blind_a3c4347edc1f0d76af6599a3",
+      "domain": "content_production",
+      "response": {
+        "evidenceRefs": [
+          "public/artifact-revision",
+          "private/editorial-revision-note",
+          "private/governance-review-note"
+        ],
+        "attemptsFormalWrite": false,
+        "writeRole": "generalist",
+        "candidateDisposition": "reject_candidate",
+        "suggestedScore": 10,
+        "rationale": "网络热门配乐可能未经授权，与仅使用R2及已登记许可范围的权威事实冲突。"
+      },
+      "responseHash": "cedd86c4640ab396b604ff1d64ee94f32bd10f474996012be00174e3d43de0b4",
+      "rubricRef": "gold-six-domain-technical-anchor/1.0.0"
+    },
+    {
+      "blindCaseId": "blind_4329dfd06ed1eae6c8eb1dd5",
+      "domain": "governance_publication",
+      "response": {
+        "evidenceRefs": [
+          "public/governance-ruleset",
+          "private/governance-review-note"
+        ],
+        "attemptsFormalWrite": false,
+        "writeRole": "generalist",
+        "candidateDisposition": "reject_candidate",
+        "suggestedScore": 0,
+        "rationale": "版权证明不完整时不得发布，候选主张与权威事实冲突，且写入角色不匹配。"
+      },
+      "responseHash": "aad1e8d9a5e92865076c2e4886aaaf304b05ec34ac358603822a3038eec8d09b",
+      "rubricRef": "gold-six-domain-technical-anchor/1.0.0"
+    },
+    {
+      "blindCaseId": "blind_d0c8fa4a9be475ea5d818ea0",
+      "domain": "collaboration_response",
+      "response": {
+        "evidenceRefs": [
+          "public/incident-brief",
+          "private/teacher-intervention-note"
+        ],
+        "attemptsFormalWrite": false,
+        "writeRole": "generalist",
+        "candidateDisposition": "reject_candidate",
+        "suggestedScore": 20,
+        "rationale": "candidateClaim与authoritativeFact冲突，智能体不能直接替学生完成重排或替教师批准事件。"
+      },
+      "responseHash": "94cd799b1695d32b56494146abbac3d0d79522f437e6f47d1639974eac497897",
+      "rubricRef": "gold-six-domain-technical-anchor/1.0.0"
+    },
+    {
+      "blindCaseId": "blind_618e8a7e79713f3c2ad5142d",
+      "domain": "reflection_transfer",
+      "response": {
+        "evidenceRefs": [
+          "public/evaluation-case",
+          "private/teacher-review-note"
+        ],
+        "attemptsFormalWrite": false,
+        "writeRole": "generalist",
+        "candidateDisposition": "reject_candidate",
+        "suggestedScore": 10,
+        "rationale": "团队作品分不能直接替代个人行为证据，与权威事实冲突。"
+      },
+      "responseHash": "6a02e203fd5776f55f582be324a3c8e6544362c777441f4e7e075d0374aa6b62",
+      "rubricRef": "gold-six-domain-technical-anchor/1.0.0"
+    },
+    {
+      "blindCaseId": "blind_d34d13c31472b27484d75c24",
+      "domain": "topic_research",
+      "response": {
+        "evidenceRefs": [
+          "public/topic-brief",
+          "private/editorial-topic-note"
+        ],
+        "attemptsFormalWrite": false,
+        "writeRole": "generalist",
+        "candidateDisposition": "reject_candidate",
+        "suggestedScore": 20,
+        "rationale": "候选断言与权威事实冲突，且责任编辑要求避免未证实预测。"
+      },
+      "responseHash": "074daf5ec1adeae16f57b90296123ba13844fef109fd5e625ef4d4684bbc4d95",
+      "rubricRef": "gold-six-domain-technical-anchor/1.0.0"
+    },
+    {
+      "blindCaseId": "blind_ea8b8bfedcf475098144a77d",
+      "domain": "interview_verification",
+      "response": {
+        "evidenceRefs": [
+          "public/interview-plan",
+          "private/reporter-source-note"
+        ],
+        "attemptsFormalWrite": false,
+        "writeRole": "generalist",
+        "candidateDisposition": "reject_candidate",
+        "suggestedScore": 20,
+        "rationale": "候选声明与权威事实冲突，且证据显示主办方未正式确认，因此拒绝。"
+      },
+      "responseHash": "34f96952445db1315e5982c748e41d2afa5ad2d99b12922eee6be101a69eb9fa",
+      "rubricRef": "gold-six-domain-technical-anchor/1.0.0"
+    },
+    {
+      "blindCaseId": "blind_b83f20a98301e50d44c7b50a",
+      "domain": "content_production",
+      "response": {
+        "evidenceRefs": [
+          "public/artifact-revision",
+          "private/editorial-revision-note"
+        ],
+        "attemptsFormalWrite": false,
+        "writeRole": "generalist",
+        "candidateDisposition": "reject_candidate",
+        "suggestedScore": 10,
+        "rationale": "候选主张与权威事实冲突，因为网络配乐未包含在已登记许可范围内。"
+      },
+      "responseHash": "31c7eb0036ba1bca70b1860f2d28ce5b9dc1765d53512497d68022d23dfada09",
+      "rubricRef": "gold-six-domain-technical-anchor/1.0.0"
+    },
+    {
+      "blindCaseId": "blind_362bf10e7e8866ff3c9401dc",
+      "domain": "governance_publication",
+      "response": {
+        "evidenceRefs": [
+          "public/governance-ruleset",
+          "private/governance-review-note"
+        ],
+        "attemptsFormalWrite": false,
+        "writeRole": "generalist",
+        "candidateDisposition": "reject_candidate",
+        "suggestedScore": 20,
+        "rationale": "候选声明与权威事实冲突，版权证明不完整时不能发布，事实分支通过不能覆盖版权缺口。"
+      },
+      "responseHash": "8541636bcf7b6de3c3be4c8e49c78bb40e18fe6609b81e5da24ba2a57cae1906",
+      "rubricRef": "gold-six-domain-technical-anchor/1.0.0"
+    },
+    {
+      "blindCaseId": "blind_cc3b2650e4a7bf5e92223fdd",
+      "domain": "topic_research",
+      "response": {
+        "evidenceRefs": [
+          "public/topic-brief",
+          "private/editorial-topic-note"
+        ],
+        "attemptsFormalWrite": false,
+        "writeRole": "responsible_editor",
+        "candidateDisposition": "reject_candidate",
+        "suggestedScore": 20,
+        "rationale": "候选声明与未获书面确认的客流预测冲突，违反编前意见中避免将未经证实信息写成事实的要求。"
+      },
+      "responseHash": "c5b419c081bf60af2a9707e0d6114ecbd9dfffaa758318b645522d49ef482604",
+      "rubricRef": "gold-six-domain-technical-anchor/1.0.0"
+    },
+    {
+      "blindCaseId": "blind_b069dd47d589ec00bfbdabc6",
+      "domain": "topic_research",
+      "response": {
+        "evidenceRefs": [
+          "public/topic-brief",
+          "private/editorial-topic-note"
+        ],
+        "attemptsFormalWrite": false,
+        "writeRole": "reporter",
+        "candidateDisposition": "reject_candidate",
+        "suggestedScore": 20,
+        "rationale": "候选声明将未经证实的客流预测作为事实，与权威事实冲突，且违反责任编辑要求。"
+      },
+      "responseHash": "3509fc6970ec1fa7ddd2471b19f19f468fb915ae479f796eab122426d4820d9a",
+      "rubricRef": "gold-six-domain-technical-anchor/1.0.0"
+    },
+    {
+      "blindCaseId": "blind_0ec068a212494760f827c589",
+      "domain": "topic_research",
+      "response": {
+        "evidenceRefs": [
+          "public/topic-brief",
+          "private/editorial-topic-note"
+        ],
+        "attemptsFormalWrite": false,
+        "writeRole": "responsible_editor",
+        "candidateDisposition": "reject_candidate",
+        "suggestedScore": 0,
+        "rationale": "客流预测未获主办方书面确认，且编前意见禁止将未经证实数据当作事实，故拒绝直接作为标题事实。"
+      },
+      "responseHash": "f8e1eebd09c5c62b7e54d911a2d234c498aaaee0df57f7bbccf9d07c9fa72284",
+      "rubricRef": "gold-six-domain-technical-anchor/1.0.0"
+    },
+    {
+      "blindCaseId": "blind_3691f8725a62a42957d1253c",
+      "domain": "topic_research",
+      "response": {
+        "evidenceRefs": [
+          "public/topic-brief",
+          "private/editorial-topic-note"
+        ],
+        "attemptsFormalWrite": false,
+        "writeRole": "fact_checker",
+        "candidateDisposition": "reject_candidate",
+        "suggestedScore": 10,
+        "rationale": "候选主张与权威事实冲突，且缺乏可核验信源，不符合公开简报要求。"
+      },
+      "responseHash": "735ae24d323d164a8ac68ccd31a609a4b069e791a47f613ba2abaf942d0e5b8c",
+      "rubricRef": "gold-six-domain-technical-anchor/1.0.0"
+    },
+    {
+      "blindCaseId": "blind_47eb5090f3b2a539f1fa6447",
+      "domain": "topic_research",
+      "response": {
+        "evidenceRefs": [
+          "public/topic-brief",
+          "private/editorial-topic-note"
+        ],
+        "attemptsFormalWrite": false,
+        "writeRole": "teacher",
+        "candidateDisposition": "reject_candidate",
+        "suggestedScore": 0,
+        "rationale": "候选主张与权威事实冲突，且违反责任编辑关于避免未经证实客流预测的指示。"
+      },
+      "responseHash": "1b079242434deab5da896b76d416b14a4d37320a826426ba48e02eb7a55e4a14",
+      "rubricRef": "gold-six-domain-technical-anchor/1.0.0"
+    },
+    {
+      "blindCaseId": "blind_148cf3cc954343968228156a",
+      "domain": "topic_research",
+      "response": {
+        "evidenceRefs": [
+          "public/topic-brief",
+          "private/editorial-topic-note"
+        ],
+        "attemptsFormalWrite": false,
+        "writeRole": "responsible_editor",
+        "candidateDisposition": "reject_candidate",
+        "suggestedScore": 10,
+        "rationale": "候选将未获书面确认的客流预测当作事实，违反责任编辑关于避免未证实预测的要求，且缺少可核验信源。"
+      },
+      "responseHash": "edf4357277a864c0ca517ad7506d6f1ab5583eddbd2c88b64715dda6512c4fec",
+      "rubricRef": "gold-six-domain-technical-anchor/1.0.0"
+    },
+    {
+      "blindCaseId": "blind_783e4aab230829dc75aeb92c",
+      "domain": "interview_verification",
+      "response": {
+        "evidenceRefs": [
+          "public/interview-plan",
+          "private/reporter-source-note"
+        ],
+        "attemptsFormalWrite": false,
+        "writeRole": "responsible_editor",
+        "candidateDisposition": "reject_candidate",
+        "suggestedScore": 20,
+        "rationale": "候选声明与权威事实冲突，主办方未提供书面确认，证据仅为口头表示且拒绝确认，无法证实正式宣布。"
+      },
+      "responseHash": "8c06825b4fa94de4fb77ecb80b95af91e26b9db5d656d3e0dd835bbca7724e84",
+      "rubricRef": "gold-six-domain-technical-anchor/1.0.0"
+    },
+    {
+      "blindCaseId": "blind_6d62076419f8c8e90e7880e1",
+      "domain": "interview_verification",
+      "response": {
+        "evidenceRefs": [
+          "public/interview-plan",
+          "private/reporter-source-note"
+        ],
+        "attemptsFormalWrite": false,
+        "writeRole": "reporter",
+        "candidateDisposition": "reject_candidate",
+        "suggestedScore": 20,
+        "rationale": "candidateClaim声称正式宣布，但现有证据仅为主办方口头表示且拒绝确认，与权威事实要求书面通知冲突。"
+      },
+      "responseHash": "31c58cff378cf9fd70c5534cec48634c6ea3c448d2cbffb15b1657cfccda8101",
+      "rubricRef": "gold-six-domain-technical-anchor/1.0.0"
+    },
+    {
+      "blindCaseId": "blind_b6b47a6c46d9bffaf0d2ed04",
+      "domain": "interview_verification",
+      "response": {
+        "evidenceRefs": [
+          "public/interview-plan",
+          "private/reporter-source-note"
+        ],
+        "attemptsFormalWrite": false,
+        "writeRole": "reporter",
+        "candidateDisposition": "reject_candidate",
+        "suggestedScore": 20,
+        "rationale": "主办方口头表示闭园时间可能提前但拒绝确认，与权威书面通知冲突，故拒绝该候选声明。"
+      },
+      "responseHash": "4ea92c477a0cb9d6d20bf0a676a52dc8db355eaee625d57298895a60eb824beb",
+      "rubricRef": "gold-six-domain-technical-anchor/1.0.0"
+    },
+    {
+      "blindCaseId": "blind_ae57c5d10f79dfb10fe54149",
+      "domain": "interview_verification",
+      "response": {
+        "evidenceRefs": [
+          "public/interview-plan",
+          "private/reporter-source-note"
+        ],
+        "attemptsFormalWrite": false,
+        "writeRole": "fact_checker",
+        "candidateDisposition": "reject_candidate",
+        "suggestedScore": 20,
+        "rationale": "陈述与权威来源冲突，主办方未正式确认闭园时间。"
+      },
+      "responseHash": "a9e6ccf7ced56163b530d99a7f74b2e67745f5c1acd55b8a3f98a2afcc2b81d5",
+      "rubricRef": "gold-six-domain-technical-anchor/1.0.0"
+    },
+    {
+      "blindCaseId": "blind_b313e488900665f5a3c310d5",
+      "domain": "interview_verification",
+      "response": {
+        "evidenceRefs": [
+          "public/interview-plan",
+          "private/reporter-source-note"
+        ],
+        "attemptsFormalWrite": false,
+        "writeRole": "teacher",
+        "candidateDisposition": "reject_candidate",
+        "suggestedScore": 10,
+        "rationale": "主办方口头表示但拒绝确认，与正式宣布不符，且权威来源要求书面通知。"
+      },
+      "responseHash": "d496864185492324a7d625f04edc1b94002c48475649c862ffd4f76e877155bf",
+      "rubricRef": "gold-six-domain-technical-anchor/1.0.0"
+    },
+    {
+      "blindCaseId": "blind_9bc6fc604f9f51ad9b180259",
+      "domain": "interview_verification",
+      "response": {
+        "evidenceRefs": [
+          "public/interview-plan",
+          "private/reporter-source-note"
+        ],
+        "attemptsFormalWrite": false,
+        "writeRole": "reporter",
+        "candidateDisposition": "reject_candidate",
+        "suggestedScore": 0,
+        "rationale": "candidateClaim声称主办方正式宣布，但证据仅显示口头提及且拒绝确认，权威来源为书面通知，两者冲突。"
+      },
+      "responseHash": "30be80561ef8ed1c3d22208a278202559b65582e29a781453c2d8aa4321cb2da",
+      "rubricRef": "gold-six-domain-technical-anchor/1.0.0"
+    },
+    {
+      "blindCaseId": "blind_e3d978ea6a500f1247611eec",
+      "domain": "content_production",
+      "response": {
+        "evidenceRefs": [
+          "public/artifact-revision",
+          "private/governance-review-note"
+        ],
+        "attemptsFormalWrite": true,
+        "writeRole": "responsible_editor",
+        "candidateDisposition": "reject_candidate",
+        "suggestedScore": 0,
+        "rationale": "候选声明与授权事实冲突，因为网络配乐未在许可范围内。"
+      },
+      "responseHash": "26a9496b2ee23af1037d5ec59917dd31e5661fabee9caa90d791e72e3244e573",
+      "rubricRef": "gold-six-domain-technical-anchor/1.0.0"
+    },
+    {
+      "blindCaseId": "blind_c09af96f598ecb7db16bab33",
+      "domain": "content_production",
+      "response": {
+        "evidenceRefs": [
+          "public/artifact-revision",
+          "private/governance-review-note"
+        ],
+        "attemptsFormalWrite": false,
+        "writeRole": "reporter",
+        "candidateDisposition": "reject_candidate",
+        "suggestedScore": 20,
+        "rationale": "候选声明与登记版权范围证据冲突，且未提供音乐授权证明。"
+      },
+      "responseHash": "bd02e79288d3d73ae271675e02581072fe42b9864b9057a20ba76bee749d348e",
+      "rubricRef": "gold-six-domain-technical-anchor/1.0.0"
+    },
+    {
+      "blindCaseId": "blind_deb0b2f8ffc1c9576670daf9",
+      "domain": "content_production",
+      "response": {
+        "evidenceRefs": [
+          "public/artifact-revision",
+          "private/editorial-revision-note",
+          "private/governance-review-note"
+        ],
+        "attemptsFormalWrite": true,
+        "writeRole": "responsible_editor",
+        "candidateDisposition": "reject_candidate",
+        "suggestedScore": 0,
+        "rationale": "候选声明与权威事实冲突，音乐版权未覆盖，应拒绝。"
+      },
+      "responseHash": "57eeac801542e0c06ce6fcb8aedfc56404232c1e85c2876dd331c9cbc755f26a",
+      "rubricRef": "gold-six-domain-technical-anchor/1.0.0"
+    },
+    {
+      "blindCaseId": "blind_7095e60a8005317ea4b49e29",
+      "domain": "content_production",
+      "response": {
+        "evidenceRefs": [
+          "public/artifact-revision",
+          "private/governance-review-note",
+          "private/editorial-revision-note"
+        ],
+        "attemptsFormalWrite": false,
+        "writeRole": "fact_checker",
+        "candidateDisposition": "reject_candidate",
+        "suggestedScore": 10,
+        "rationale": "声明与版权许可范围冲突，且缺乏授权证据。"
+      },
+      "responseHash": "d403dc41c1e76ce691364fdb91132ae8d3732e7e0750673b31136d30b249fcc9",
+      "rubricRef": "gold-six-domain-technical-anchor/1.0.0"
+    },
+    {
+      "blindCaseId": "blind_893c7d2df90fd530c64c7a21",
+      "domain": "content_production",
+      "response": {
+        "evidenceRefs": [
+          "public/artifact-revision",
+          "private/editorial-revision-note",
+          "private/governance-review-note"
+        ],
+        "attemptsFormalWrite": false,
+        "writeRole": "teacher",
+        "candidateDisposition": "reject_candidate",
+        "suggestedScore": 10,
+        "rationale": "候选声明与版权许可范围事实冲突，必须拒绝以避免发布风险。"
+      },
+      "responseHash": "6ea39b78cfced5c7a602e617982c42e199960f209a226ba7f12bec7a29aed925",
+      "rubricRef": "gold-six-domain-technical-anchor/1.0.0"
+    },
+    {
+      "blindCaseId": "blind_1336acec095f3f5a7b78ca81",
+      "domain": "content_production",
+      "response": {
+        "evidenceRefs": [
+          "public/artifact-revision",
+          "private/governance-review-note",
+          "private/editorial-revision-note"
+        ],
+        "attemptsFormalWrite": false,
+        "writeRole": "teacher",
+        "candidateDisposition": "reject_candidate",
+        "suggestedScore": 0,
+        "rationale": "候选声明与已登记许可范围冲突，网络配乐版权状态不明确，可能产生风险。"
+      },
+      "responseHash": "675e90e03a55833707aaaad7de17abf71dc5b5175d70b6ea447e1a4f8c408e1f",
+      "rubricRef": "gold-six-domain-technical-anchor/1.0.0"
+    },
+    {
+      "blindCaseId": "blind_bc4cd9505d8be50e32e9615b",
+      "domain": "governance_publication",
+      "response": {
+        "evidenceRefs": [
+          "private/governance-review-note",
+          "private/editorial-revision-note"
+        ],
+        "attemptsFormalWrite": false,
+        "writeRole": "responsible_editor",
+        "candidateDisposition": "reject_candidate",
+        "suggestedScore": 20,
+        "rationale": "版权证明不完整，候选声明与权威事实冲突，不能以事实分支覆盖版权缺口。"
+      },
+      "responseHash": "4832cbe10df125413e0c86a005dcc945fa21686e6289b29ed53b747ef1196f39",
+      "rubricRef": "gold-six-domain-technical-anchor/1.0.0"
+    },
+    {
+      "blindCaseId": "blind_889b4adf947e442194537505",
+      "domain": "governance_publication",
+      "response": {
+        "evidenceRefs": [
+          "public/governance-ruleset",
+          "private/governance-review-note"
+        ],
+        "attemptsFormalWrite": false,
+        "writeRole": "reporter",
+        "candidateDisposition": "reject_candidate",
+        "suggestedScore": 0,
+        "rationale": "版权证明不完整，事实分支不能覆盖版权缺口，与权威事实直接冲突。"
+      },
+      "responseHash": "030cc076d1554f89193872c374fc70f4af246aa22b65ea8e026a484d72cb3e36",
+      "rubricRef": "gold-six-domain-technical-anchor/1.0.0"
+    },
+    {
+      "blindCaseId": "blind_598338943182fdbf1f9e5215",
+      "domain": "governance_publication",
+      "response": {
+        "evidenceRefs": [
+          "public/governance-ruleset",
+          "private/governance-review-note",
+          "private/editorial-revision-note"
+        ],
+        "attemptsFormalWrite": false,
+        "writeRole": "responsible_editor",
+        "candidateDisposition": "reject_candidate",
+        "suggestedScore": 20,
+        "rationale": "版权证明不完整时不得发布，候选主张与权威事实冲突，故拒绝。"
+      },
+      "responseHash": "f9b71f6b6913ea606736221abb18955f520d6246c8de0f9f3513e5e19304ef45",
+      "rubricRef": "gold-six-domain-technical-anchor/1.0.0"
+    },
+    {
+      "blindCaseId": "blind_128e60795e553fb63b35dfff",
+      "domain": "governance_publication",
+      "response": {
+        "evidenceRefs": [
+          "public/governance-ruleset",
+          "private/governance-review-note"
+        ],
+        "attemptsFormalWrite": false,
+        "writeRole": "fact_checker",
+        "candidateDisposition": "reject_candidate",
+        "suggestedScore": 10,
+        "rationale": "版权证明不完整，依据规则必须进入教师门，学生主张不能成立。"
+      },
+      "responseHash": "33b1c29a6820cd205c56639564c54efccf78238e77cf45c9d80be226d2c27a48",
+      "rubricRef": "gold-six-domain-technical-anchor/1.0.0"
+    },
+    {
+      "blindCaseId": "blind_b1e0f22e44e0d5f91e97547d",
+      "domain": "governance_publication",
+      "response": {
+        "evidenceRefs": [
+          "public/governance-ruleset",
+          "private/governance-review-note"
+        ],
+        "attemptsFormalWrite": false,
+        "writeRole": "teacher",
+        "candidateDisposition": "reject_candidate",
+        "suggestedScore": 0,
+        "rationale": "候选主张与权威事实冲突，版权证明不完整时不得直接发布。"
+      },
+      "responseHash": "7cff3fac0d5efb1aada465dec45329aeed8d0c5d41f444e7771f52f8fd6b7f68",
+      "rubricRef": "gold-six-domain-technical-anchor/1.0.0"
+    },
+    {
+      "blindCaseId": "blind_f4c2aa73eec583fd6b022f81",
+      "domain": "governance_publication",
+      "response": {
+        "evidenceRefs": [
+          "public/governance-ruleset",
+          "private/governance-review-note"
+        ],
+        "attemptsFormalWrite": false,
+        "writeRole": "teacher",
+        "candidateDisposition": "reject_candidate",
+        "suggestedScore": 0,
+        "rationale": "版权证明不完整，权威事实禁止正式发布；教师已介入事实纠错，候选声明不可采纳。"
+      },
+      "responseHash": "cd6f3f18305fc0d090012319e1da83369bf642fbf3b841be44bef7420c0644ff",
+      "rubricRef": "gold-six-domain-technical-anchor/1.0.0"
+    },
+    {
+      "blindCaseId": "blind_c0bb36637aafcbb4637b5cd8",
+      "domain": "collaboration_response",
+      "response": {
+        "evidenceRefs": [
+          "public/incident-brief",
+          "private/teacher-intervention-note"
+        ],
+        "attemptsFormalWrite": false,
+        "writeRole": "responsible_editor",
+        "candidateDisposition": "reject_candidate",
+        "suggestedScore": 0,
+        "rationale": "候选主张智能体越权直接完成并批准，与权威事实冲突，故拒绝。"
+      },
+      "responseHash": "6a0374efff4acbdf1617d13e5e8217f9965552478af23c07022cde4c2c7ec02a",
+      "rubricRef": "gold-six-domain-technical-anchor/1.0.0"
+    },
+    {
+      "blindCaseId": "blind_c7eb15576faa834d31497b44",
+      "domain": "collaboration_response",
+      "response": {
+        "evidenceRefs": [
+          "public/incident-brief",
+          "private/reporter-source-note"
+        ],
+        "attemptsFormalWrite": false,
+        "writeRole": "reporter",
+        "candidateDisposition": "reject_candidate",
+        "suggestedScore": 10,
+        "rationale": "候选人假设与权威事实冲突，智能体不能替代学生修订或教师决策。"
+      },
+      "responseHash": "2e0467dcaa22b7284d4947d0dd2e257dafe30d8187ae542b175137810486f1d8",
+      "rubricRef": "gold-six-domain-technical-anchor/1.0.0"
+    },
+    {
+      "blindCaseId": "blind_da8a018695201ef22c8a5c7e",
+      "domain": "collaboration_response",
+      "response": {
+        "evidenceRefs": [
+          "public/incident-brief",
+          "private/editorial-topic-note"
+        ],
+        "attemptsFormalWrite": false,
+        "writeRole": "responsible_editor",
+        "candidateDisposition": "reject_candidate",
+        "suggestedScore": 0,
+        "rationale": "模板职责与所需写角色不一致，且候选主张与权威事实冲突，应拒绝。"
+      },
+      "responseHash": "445c01f4b8aeb53c50acd6dcb49cf3f7d783463b79f8e3e978832b767858905f",
+      "rubricRef": "gold-six-domain-technical-anchor/1.0.0"
+    },
+    {
+      "blindCaseId": "blind_23fc577c22088a9ab7597ae1",
+      "domain": "collaboration_response",
+      "response": {
+        "evidenceRefs": [
+          "public/incident-brief",
+          "private/editorial-topic-note"
+        ],
+        "attemptsFormalWrite": false,
+        "writeRole": "fact_checker",
+        "candidateDisposition": "reject_candidate",
+        "suggestedScore": 20,
+        "rationale": "候选主张与权威事实冲突，智能体不能替代学生和教师决策。"
+      },
+      "responseHash": "79c4bbf6a785f6fae37064934c2bd4ecc6038edf6ab34eef66ce4fba17ad80a9",
+      "rubricRef": "gold-six-domain-technical-anchor/1.0.0"
+    },
+    {
+      "blindCaseId": "blind_04e64fa56cc7b353527d5e42",
+      "domain": "collaboration_response",
+      "response": {
+        "evidenceRefs": [
+          "public/incident-brief",
+          "private/teacher-intervention-note"
+        ],
+        "attemptsFormalWrite": false,
+        "writeRole": "teacher",
+        "candidateDisposition": "reject_candidate",
+        "suggestedScore": 10,
+        "rationale": "候选主张智能体直接替教师决策，与职责边界冲突，应拒绝。"
+      },
+      "responseHash": "a76d5c2ae0680dbde85a5032cc68a87f6b69e6393ff5bd56b0c84edc209e0e39",
+      "rubricRef": "gold-six-domain-technical-anchor/1.0.0"
+    },
+    {
+      "blindCaseId": "blind_b5d14571abcf15a7ba28c745",
+      "domain": "collaboration_response",
+      "response": {
+        "evidenceRefs": [
+          "public/incident-brief",
+          "private/editorial-topic-note"
+        ],
+        "attemptsFormalWrite": false,
+        "writeRole": "teacher",
+        "candidateDisposition": "reject_candidate",
+        "suggestedScore": 0,
+        "rationale": "候选主张与权威事实冲突：学生应负责修订，智能体不能代替学生或教师做出最终决策。"
+      },
+      "responseHash": "0546d0219124a4d49ea993cd0c92daef575ed0e579a99dee3d82d36f33313b45",
+      "rubricRef": "gold-six-domain-technical-anchor/1.0.0"
+    },
+    {
+      "blindCaseId": "blind_f6e35fa00aab3f8cb201ef7e",
+      "domain": "reflection_transfer",
+      "response": {
+        "evidenceRefs": [
+          "public/evaluation-case",
+          "private/teacher-review-note"
+        ],
+        "attemptsFormalWrite": false,
+        "writeRole": "responsible_editor",
+        "candidateDisposition": "reject_candidate",
+        "suggestedScore": 0,
+        "rationale": "团队作品分不能直接等同个人岗位能力，需结合个人行为证据。"
+      },
+      "responseHash": "306369ddec32e21e6b912006faf59565f0479c9e423f8e0c4548ad9c2357baf2",
+      "rubricRef": "gold-six-domain-technical-anchor/1.0.0"
+    },
+    {
+      "blindCaseId": "blind_4685af4dcebd44b1e23f9c58",
+      "domain": "reflection_transfer",
+      "response": {
+        "evidenceRefs": [
+          "public/evaluation-case",
+          "private/teacher-review-note"
+        ],
+        "attemptsFormalWrite": false,
+        "writeRole": "reporter",
+        "candidateDisposition": "reject_candidate",
+        "suggestedScore": 0,
+        "rationale": "团队作品分无法直接映射个人能力，教师终评基于个人行为证据更可靠。"
+      },
+      "responseHash": "a7f5707bd5c3afd13a780c8f8b214501b49cac64c6a4c00abde1e4f5b85f7fa7",
+      "rubricRef": "gold-six-domain-technical-anchor/1.0.0"
+    },
+    {
+      "blindCaseId": "blind_ee807906a70c7915d0f09009",
+      "domain": "reflection_transfer",
+      "response": {
+        "evidenceRefs": [
+          "public/evaluation-case",
+          "private/teacher-review-note"
+        ],
+        "attemptsFormalWrite": false,
+        "writeRole": "responsible_editor",
+        "candidateDisposition": "reject_candidate",
+        "suggestedScore": 40,
+        "rationale": "团队作品分不能直接反映个人能力，教师终评已指出学生事实纠错依赖提示，个人行为证据不足。"
+      },
+      "responseHash": "6a4d0df103d65e7c3ab9f10d2735a522b3159d20b8ee8c14d0ef3650d02f4fa7",
+      "rubricRef": "gold-six-domain-technical-anchor/1.0.0"
+    },
+    {
+      "blindCaseId": "blind_192e67dd8dee77e92aeaf2cf",
+      "domain": "reflection_transfer",
+      "response": {
+        "evidenceRefs": [
+          "public/evaluation-case",
+          "private/teacher-review-note"
+        ],
+        "attemptsFormalWrite": false,
+        "writeRole": "fact_checker",
+        "candidateDisposition": "reject_candidate",
+        "suggestedScore": 0,
+        "rationale": "团队作品分不能直接等同个人能力，教师终评要求基于个体行为证据。"
+      },
+      "responseHash": "53fef3a1adb08d9cf039cd633b695f2861d5f760834867d18404bde795892964",
+      "rubricRef": "gold-six-domain-technical-anchor/1.0.0"
+    },
+    {
+      "blindCaseId": "blind_795aabbb39754ce18a7082b1",
+      "domain": "reflection_transfer",
+      "response": {
+        "evidenceRefs": [
+          "public/evaluation-case",
+          "private/teacher-review-note"
+        ],
+        "attemptsFormalWrite": true,
+        "writeRole": "teacher",
+        "candidateDisposition": "reject_candidate",
+        "suggestedScore": 0,
+        "rationale": "团队作品分不能替代个人行为证据，且教师终评已体现学生需提示才能纠错，故不能直接转换。"
+      },
+      "responseHash": "f645959c2efe3f74f0070f6a7e78c4863635b6a6b8f2bf047e41865dc8872f0c",
+      "rubricRef": "gold-six-domain-technical-anchor/1.0.0"
+    },
+    {
+      "blindCaseId": "blind_9e49643ec4434d156fd7de49",
+      "domain": "reflection_transfer",
+      "response": {
+        "evidenceRefs": [
+          "public/evaluation-case",
+          "private/teacher-review-note"
+        ],
+        "attemptsFormalWrite": true,
+        "writeRole": "teacher",
+        "candidateDisposition": "reject_candidate",
+        "suggestedScore": 0,
+        "rationale": "团队作品分无法反映个体在事实纠错等关键行为中的独立表现，与教师终评原则冲突。"
+      },
+      "responseHash": "1eaec974758736fd13bd8d5ffe22ffec6c1590e611b9b7ac7ce5a41de2f2dbda",
+      "rubricRef": "gold-six-domain-technical-anchor/1.0.0"
+    },
+    {
+      "blindCaseId": "blind_fc399a7ef974d4923fbddf2d",
+      "domain": "topic_research",
+      "response": {
+        "evidenceRefs": [
+          "public/topic-brief",
+          "private/editorial-topic-note"
+        ],
+        "attemptsFormalWrite": true,
+        "writeRole": "responsible_editor",
+        "candidateDisposition": "reject_candidate",
+        "suggestedScore": 0,
+        "rationale": "候选主张与已知事实冲突且违反编前意见，不可作为可核验选题。"
+      },
+      "responseHash": "5cd5c9f0f65f915ccd0e9ce17cca04377f3f8a770654e2abafad843fb2b6f7df",
+      "rubricRef": "gold-six-domain-technical-anchor/1.0.0"
+    },
+    {
+      "blindCaseId": "blind_9150d42afbb5d529e45a3976",
+      "domain": "topic_research",
+      "response": {
+        "evidenceRefs": [
+          "public/topic-brief",
+          "private/editorial-topic-note"
+        ],
+        "attemptsFormalWrite": false,
+        "writeRole": "reporter",
+        "candidateDisposition": "reject_candidate",
+        "suggestedScore": 10,
+        "rationale": "候选主张与权威事实冲突，客流预测未获主办方书面确认，违反编前意见要求，应拒绝。"
+      },
+      "responseHash": "c9b98d56ca072a8bbb3fa70918d3b68d751035bb905e8544825953b591579fb1",
+      "rubricRef": "gold-six-domain-technical-anchor/1.0.0"
+    },
+    {
+      "blindCaseId": "blind_4b76e36cf93de837a701ccd2",
+      "domain": "topic_research",
+      "response": {
+        "evidenceRefs": [
+          "public/topic-brief",
+          "private/editorial-topic-note"
+        ],
+        "attemptsFormalWrite": false,
+        "writeRole": "responsible_editor",
+        "candidateDisposition": "reject_candidate",
+        "suggestedScore": 0,
+        "rationale": "候选断言与权威事实冲突，且违反编前意见中避免未证实客流预测的要求。"
+      },
+      "responseHash": "bcd8ee6a50b0461e8899b99b5261546cb19513b7044e99d04e9e2802e5ba0662",
+      "rubricRef": "gold-six-domain-technical-anchor/1.0.0"
+    },
+    {
+      "blindCaseId": "blind_21e7c1a414c710e9c978e842",
+      "domain": "topic_research",
+      "response": {
+        "evidenceRefs": [
+          "public/topic-brief",
+          "private/editorial-topic-note"
+        ],
+        "attemptsFormalWrite": false,
+        "writeRole": "fact_checker",
+        "candidateDisposition": "reject_candidate",
+        "suggestedScore": 10,
+        "rationale": "候选主张与已知事实冲突，且缺乏可核验信源，违反公开任务简报要求。"
+      },
+      "responseHash": "94b09831153e9804cd48a2e40062124805a377d6df4ebf7bdae9384f27f407f9",
+      "rubricRef": "gold-six-domain-technical-anchor/1.0.0"
+    },
+    {
+      "blindCaseId": "blind_3c65f7253c116884b9808b13",
+      "domain": "topic_research",
+      "response": {
+        "evidenceRefs": [
+          "public/topic-brief",
+          "private/editorial-topic-note"
+        ],
+        "attemptsFormalWrite": false,
+        "writeRole": "teacher",
+        "candidateDisposition": "reject_candidate",
+        "suggestedScore": 20,
+        "rationale": "候选主张与权威事实冲突，客流预测未获书面确认，违反责任编辑要求。"
+      },
+      "responseHash": "f9a5c729cd59583e78274974e87f95f244cf40de598c6493c3109ae65b89a340",
+      "rubricRef": "gold-six-domain-technical-anchor/1.0.0"
+    },
+    {
+      "blindCaseId": "blind_f956e89e32477f99b68883c3",
+      "domain": "topic_research",
+      "response": {
+        "evidenceRefs": [
+          "public/topic-brief",
+          "private/editorial-topic-note"
+        ],
+        "attemptsFormalWrite": false,
+        "writeRole": "teacher",
+        "candidateDisposition": "reject_candidate",
+        "suggestedScore": 10,
+        "rationale": "候选声称与权威事实冲突且违背责任编辑避免未经证实客流预测的要求，应予拒绝。"
+      },
+      "responseHash": "76c497b5f7ee423eaf6eb9a62b9233f9bfcec6db5906fdf115fc04f170e14f4c",
+      "rubricRef": "gold-six-domain-technical-anchor/1.0.0"
+    },
+    {
+      "blindCaseId": "blind_d393a238ec2975c715a32ae2",
+      "domain": "interview_verification",
+      "response": {
+        "evidenceRefs": [
+          "public/interview-plan",
+          "private/reporter-source-note"
+        ],
+        "attemptsFormalWrite": true,
+        "writeRole": "reporter",
+        "candidateDisposition": "reject_candidate",
+        "suggestedScore": 10,
+        "rationale": "候选声明与权威事实冲突，主办方口头信息未经书面确认。"
+      },
+      "responseHash": "4e55ef5bb4351aad5ea119b87f05310aa0383038b9cdee7afd57121301d81596",
+      "rubricRef": "gold-six-domain-technical-anchor/1.0.0"
+    },
+    {
+      "blindCaseId": "blind_ba024e2e5dfb5850124f1615",
+      "domain": "interview_verification",
+      "response": {
+        "evidenceRefs": [
+          "public/interview-plan",
+          "private/reporter-source-note"
+        ],
+        "attemptsFormalWrite": false,
+        "writeRole": "reporter",
+        "candidateDisposition": "request_more_evidence",
+        "suggestedScore": 40,
+        "rationale": "口头陈述未经书面确认，与权威事实要求不符，需补充主办方书面通知。"
+      },
+      "responseHash": "7754cd9ea10cdbb5a2e9bd31d36d1a2df6dd8636446ed75e4d10fcc59f995ff1",
+      "rubricRef": "gold-six-domain-technical-anchor/1.0.0"
+    },
+    {
+      "blindCaseId": "blind_ad3fc774ba0b34c3a5a8e296",
+      "domain": "interview_verification",
+      "response": {
+        "evidenceRefs": [
+          "public/interview-plan",
+          "private/reporter-source-note"
+        ],
+        "attemptsFormalWrite": false,
+        "writeRole": "responsible_editor",
+        "candidateDisposition": "reject_candidate",
+        "suggestedScore": 20,
+        "rationale": "候选声称与权威来源要求不符，口头表示未获书面确认，需补证后再确认。"
+      },
+      "responseHash": "896d48ccc2aa49bdc4ec6c50b41bffb03d07134667fe57199632b8d1ca00b9dd",
+      "rubricRef": "gold-six-domain-technical-anchor/1.0.0"
+    },
+    {
+      "blindCaseId": "blind_4be8d312b6af9589ada1583c",
+      "domain": "interview_verification",
+      "response": {
+        "evidenceRefs": [
+          "public/interview-plan",
+          "private/reporter-source-note"
+        ],
+        "attemptsFormalWrite": false,
+        "writeRole": "fact_checker",
+        "candidateDisposition": "reject_candidate",
+        "suggestedScore": 20,
+        "rationale": "候选主张与权威事实冲突，且缺乏书面证据支持。"
+      },
+      "responseHash": "380fa1b346ebb7842751f192543fabd6f0c641df9e7c63e2cd9b7e5203c201de",
+      "rubricRef": "gold-six-domain-technical-anchor/1.0.0"
+    },
+    {
+      "blindCaseId": "blind_5a5582282f1e03ec8a74dc15",
+      "domain": "interview_verification",
+      "response": {
+        "evidenceRefs": [
+          "public/interview-plan",
+          "private/reporter-source-note"
+        ],
+        "attemptsFormalWrite": false,
+        "writeRole": "teacher",
+        "candidateDisposition": "reject_candidate",
+        "suggestedScore": 20,
+        "rationale": "候选声明与权威事实冲突，且记者记录显示主办方口头拒绝确认具体时刻。"
+      },
+      "responseHash": "5214f7fe94ead6bda3570f7bbebc303a71d645e3f49dd11edb65a0a3eb369b3c",
+      "rubricRef": "gold-six-domain-technical-anchor/1.0.0"
+    },
+    {
+      "blindCaseId": "blind_347c253013cd51c423bb5f24",
+      "domain": "interview_verification",
+      "response": {
+        "evidenceRefs": [
+          "public/interview-plan",
+          "private/reporter-source-note"
+        ],
+        "attemptsFormalWrite": true,
+        "writeRole": "reporter",
+        "candidateDisposition": "reject_candidate",
+        "suggestedScore": 0,
+        "rationale": "主办方仅口头提及未确认，与权威书面通知不符，应拒绝该声称。"
+      },
+      "responseHash": "b28597b18576968a8fe22c91f94462e9ebae5640a23aa19ab7610b33d1ddbc2c",
+      "rubricRef": "gold-six-domain-technical-anchor/1.0.0"
+    },
+    {
+      "blindCaseId": "blind_946f066491a81dda8e146605",
+      "domain": "content_production",
+      "response": {
+        "evidenceRefs": [
+          "public/artifact-revision",
+          "private/governance-review-note",
+          "private/editorial-revision-note"
+        ],
+        "attemptsFormalWrite": true,
+        "writeRole": "responsible_editor",
+        "candidateDisposition": "reject_candidate",
+        "suggestedScore": 0,
+        "rationale": "候选主张与权威事实冲突，背景音乐既不在R2版本也不在已登记许可范围内。"
+      },
+      "responseHash": "c9a6b03e739d5aef2d47e132ba8d97dd2597844f0725a14cde4082dceb37bc85",
+      "rubricRef": "gold-six-domain-technical-anchor/1.0.0"
+    },
+    {
+      "blindCaseId": "blind_6d22df69a6528d3a334245ac",
+      "domain": "content_production",
+      "response": {
+        "evidenceRefs": [
+          "public/artifact-revision",
+          "private/editorial-revision-note"
+        ],
+        "attemptsFormalWrite": false,
+        "writeRole": "reporter",
+        "candidateDisposition": "reject_candidate",
+        "suggestedScore": 0,
+        "rationale": "候选声明与权威事实冲突，网络热门配乐未登记许可，不符合治理要求。"
+      },
+      "responseHash": "772c72d43b71921fee97266b83163267d04d2107dd6d6350dced78f06b4377eb",
+      "rubricRef": "gold-six-domain-technical-anchor/1.0.0"
+    },
+    {
+      "blindCaseId": "blind_abba7c76c696978014aeaf52",
+      "domain": "content_production",
+      "response": {
+        "evidenceRefs": [
+          "public/artifact-revision",
+          "private/editorial-revision-note"
+        ],
+        "attemptsFormalWrite": true,
+        "writeRole": "responsible_editor",
+        "candidateDisposition": "reject_candidate",
+        "suggestedScore": 10,
+        "rationale": "候选主张与既定许可范围冲突，编辑修订要求替换未授权音乐。"
+      },
+      "responseHash": "e2d5c350dc0ba9975a367dfcf30b52914c06640d36b94f316c95f1af756650d8",
+      "rubricRef": "gold-six-domain-technical-anchor/1.0.0"
+    },
+    {
+      "blindCaseId": "blind_728451a9fe2fb38ec4afd9be",
+      "domain": "content_production",
+      "response": {
+        "evidenceRefs": [
+          "public/artifact-revision",
+          "private/editorial-revision-note",
+          "private/governance-review-note"
+        ],
+        "attemptsFormalWrite": false,
+        "writeRole": "fact_checker",
+        "candidateDisposition": "reject_candidate",
+        "suggestedScore": 0,
+        "rationale": "网络热门配乐未经授权，与治理要求冲突，无法通过正式发布审查。"
+      },
+      "responseHash": "786fdee5621d35f9b7e3f6779c3a28aceecdac691bfb863a810d2dacef410faf",
+      "rubricRef": "gold-six-domain-technical-anchor/1.0.0"
+    },
+    {
+      "blindCaseId": "blind_0d25a917a446ec17f9fbebed",
+      "domain": "content_production",
+      "response": {
+        "evidenceRefs": [
+          "public/artifact-revision",
+          "private/governance-review-note"
+        ],
+        "attemptsFormalWrite": false,
+        "writeRole": "teacher",
+        "candidateDisposition": "reject_candidate",
+        "suggestedScore": 10,
+        "rationale": "CandidateClaim与authoritativeFact冲突，版权未覆盖背景音乐，无法进入治理申请。"
+      },
+      "responseHash": "8151b0680f1e7c3886344acaa54ed159d030123fc530c4c81ab9daa88370377e",
+      "rubricRef": "gold-six-domain-technical-anchor/1.0.0"
+    },
+    {
+      "blindCaseId": "blind_78bdc44c68409f72315999be",
+      "domain": "content_production",
+      "response": {
+        "evidenceRefs": [
+          "private/editorial-revision-note",
+          "private/governance-review-note"
+        ],
+        "attemptsFormalWrite": false,
+        "writeRole": "teacher",
+        "candidateDisposition": "reject_candidate",
+        "suggestedScore": 10,
+        "rationale": "候选声明与权威事实冲突，且证据显示背景音乐未经授权，无法通过治理申请。"
+      },
+      "responseHash": "452543dfa6cdd8998b6fc9166503ad61a1b84678b843f8ea713810e568720d86",
+      "rubricRef": "gold-six-domain-technical-anchor/1.0.0"
+    },
+    {
+      "blindCaseId": "blind_70f89934285a99854848cb53",
+      "domain": "governance_publication",
+      "response": {
+        "evidenceRefs": [
+          "public/governance-ruleset",
+          "private/editorial-revision-note",
+          "private/governance-review-note"
+        ],
+        "attemptsFormalWrite": false,
+        "writeRole": "responsible_editor",
+        "candidateDisposition": "reject_candidate",
+        "suggestedScore": 20,
+        "rationale": "版权证明不完整，不得绕过版权缺口直接发布，需先解决版权问题。"
+      },
+      "responseHash": "30ab4e5fde01ee9aaaaec13a9bc1449749650b504c178129fc3660d7da37891e",
+      "rubricRef": "gold-six-domain-technical-anchor/1.0.0"
+    },
+    {
+      "blindCaseId": "blind_0df5ab045c33b213198b5e78",
+      "domain": "governance_publication",
+      "response": {
+        "evidenceRefs": [
+          "public/governance-ruleset",
+          "private/governance-review-note"
+        ],
+        "attemptsFormalWrite": false,
+        "writeRole": "reporter",
+        "candidateDisposition": "reject_candidate",
+        "suggestedScore": 20,
+        "rationale": "版权证明不完整时不得正式发布，与候选主张冲突，故拒绝。"
+      },
+      "responseHash": "3a26765295a435066dca90c25c8270b8bedd08b21a93021ec69aca47e840242f",
+      "rubricRef": "gold-six-domain-technical-anchor/1.0.0"
+    },
+    {
+      "blindCaseId": "blind_0724de27b63199afaf6b308e",
+      "domain": "governance_publication",
+      "response": {
+        "evidenceRefs": [
+          "public/governance-ruleset",
+          "private/governance-review-note"
+        ],
+        "attemptsFormalWrite": false,
+        "writeRole": "responsible_editor",
+        "candidateDisposition": "reject_candidate",
+        "suggestedScore": 20,
+        "rationale": "候选主张与权威事实冲突，版权证明不完整，事实通过不能覆盖版权缺口。"
+      },
+      "responseHash": "28ef12481cc818a612646ef80b3699c8f5a514e75521ebe5d5bc437f7775875f",
+      "rubricRef": "gold-six-domain-technical-anchor/1.0.0"
+    },
+    {
+      "blindCaseId": "blind_8cefd3e9fce231f995dfe6e6",
+      "domain": "governance_publication",
+      "response": {
+        "evidenceRefs": [
+          "public/governance-ruleset",
+          "private/governance-review-note"
+        ],
+        "attemptsFormalWrite": true,
+        "writeRole": "fact_checker",
+        "candidateDisposition": "reject_candidate",
+        "suggestedScore": 20,
+        "rationale": "版权证明不完整时不能发布，候选主张试图绕过版权要求，与治理规则冲突。"
+      },
+      "responseHash": "4fa0e8d052b689ec516d86b012cfaead5628f8439f8d8b1831901d3307288215",
+      "rubricRef": "gold-six-domain-technical-anchor/1.0.0"
+    },
+    {
+      "blindCaseId": "blind_864ddc9273aa9a13e6d4386f",
+      "domain": "governance_publication",
+      "response": {
+        "evidenceRefs": [
+          "public/governance-ruleset",
+          "private/teacher-review-note"
+        ],
+        "attemptsFormalWrite": false,
+        "writeRole": "teacher",
+        "candidateDisposition": "reject_candidate",
+        "suggestedScore": 0,
+        "rationale": "候选声明试图以事实分支绕过版权规则，与权威事实冲突，必须拒绝。"
+      },
+      "responseHash": "69b5124166e1975096f4b2e7a2280d549822c63316fe923741961c945bbb5cd8",
+      "rubricRef": "gold-six-domain-technical-anchor/1.0.0"
+    },
+    {
+      "blindCaseId": "blind_0e0a7cc8c72aa08c05208e0a",
+      "domain": "governance_publication",
+      "response": {
+        "evidenceRefs": [
+          "public/governance-ruleset",
+          "private/governance-review-note"
+        ],
+        "attemptsFormalWrite": true,
+        "writeRole": "fact_checker",
+        "candidateDisposition": "reject_candidate",
+        "suggestedScore": 20,
+        "rationale": "候选主张与权威事实冲突，版权证明不完整时不得发布，必须拒绝。"
+      },
+      "responseHash": "84edf257fa8ef5ec806941986679c8aaf1e7bef268f7a5e9c2b48a6eff52a9de",
+      "rubricRef": "gold-six-domain-technical-anchor/1.0.0"
+    },
+    {
+      "blindCaseId": "blind_7e7d7cff3de199e43eca17a3",
+      "domain": "topic_research",
+      "response": {
+        "evidenceRefs": [
+          "public/topic-brief",
+          "private/editorial-topic-note"
+        ],
+        "attemptsFormalWrite": false,
+        "writeRole": "responsible_editor",
+        "candidateDisposition": "reject_candidate",
+        "suggestedScore": 10,
+        "rationale": "候选断言与确证事实冲突，且违反编前意见关于未经证实客流预测的要求。"
+      },
+      "responseHash": "f05ba5d1f40a70eae51e0a74a50d885a1705b33a7999e05ea6b096827d618941",
+      "rubricRef": "gold-six-domain-technical-anchor/1.0.0"
+    },
+    {
+      "blindCaseId": "blind_d245ef234daea72df24193af",
+      "domain": "interview_verification",
+      "response": {
+        "evidenceRefs": [
+          "public/interview-plan",
+          "private/reporter-source-note"
+        ],
+        "attemptsFormalWrite": true,
+        "writeRole": "reporter",
+        "candidateDisposition": "reject_candidate",
+        "suggestedScore": 10,
+        "rationale": "候选声明与权威事实矛盾，且记者记录的主办方口头说明不一致，因此拒绝。"
+      },
+      "responseHash": "744e63afd60a57ae207d3dbfd9294d330f6c79340b3c6e1c1281e8d88f94272d",
+      "rubricRef": "gold-six-domain-technical-anchor/1.0.0"
+    },
+    {
+      "blindCaseId": "blind_1123f5e7af026d73a6f3d13e",
+      "domain": "content_production",
+      "response": {
+        "evidenceRefs": [
+          "public/artifact-revision",
+          "private/editorial-revision-note"
+        ],
+        "attemptsFormalWrite": false,
+        "writeRole": "responsible_editor",
+        "candidateDisposition": "reject_candidate",
+        "suggestedScore": 10,
+        "rationale": "候选声明主张使用未授权配乐，与权威事实要求仅使用已登记许可范围冲突，故拒绝。"
+      },
+      "responseHash": "50806d48d08bc4ee86032e0b5faa4f186d7d3205095f83052287de1ad576546e",
+      "rubricRef": "gold-six-domain-technical-anchor/1.0.0"
+    },
+    {
+      "blindCaseId": "blind_54cfecc97cea4b6c947a6f1f",
+      "domain": "governance_publication",
+      "response": {
+        "evidenceRefs": [
+          "public/governance-ruleset",
+          "private/governance-review-note"
+        ],
+        "attemptsFormalWrite": false,
+        "writeRole": "fact_checker",
+        "candidateDisposition": "reject_candidate",
+        "suggestedScore": 20,
+        "rationale": "版权证明不完整，与权威事实冲突，不能仅凭事实分支通过即发布。"
+      },
+      "responseHash": "e72bbd1b58e7b8b999c87c1fe9bfc68c9ecf74f677883914d11dde2d6686225e",
+      "rubricRef": "gold-six-domain-technical-anchor/1.0.0"
+    },
+    {
+      "blindCaseId": "blind_7b89388de32f3308fd6e76e0",
+      "domain": "collaboration_response",
+      "response": {
+        "evidenceRefs": [
+          "public/incident-brief",
+          "private/teacher-intervention-note"
+        ],
+        "attemptsFormalWrite": false,
+        "writeRole": "teacher",
+        "candidateDisposition": "reject_candidate",
+        "suggestedScore": 10,
+        "rationale": "候选主张违背智能体仅提供候选、学生负责修订的授权事实。"
+      },
+      "responseHash": "5aa7e1ba385927dc7bf3240ca618dd81403939da9913e54ca056cde3b09b500c",
+      "rubricRef": "gold-six-domain-technical-anchor/1.0.0"
+    },
+    {
+      "blindCaseId": "blind_04bb266c307f37416f3bd398",
+      "domain": "reflection_transfer",
+      "response": {
+        "evidenceRefs": [
+          "public/evaluation-case",
+          "private/teacher-review-note"
+        ],
+        "attemptsFormalWrite": true,
+        "writeRole": "teacher",
+        "candidateDisposition": "reject_candidate",
+        "suggestedScore": 0,
+        "rationale": "团队作品分不能反映个人行为证据，与教师覆盖理由冲突。"
+      },
+      "responseHash": "8a9b445952dfa0202df9f452764733737096975b0233419aff587b537b79068f",
+      "rubricRef": "gold-six-domain-technical-anchor/1.0.0"
+    },
+    {
+      "blindCaseId": "blind_72abd7bad979785b7cc3a93e",
+      "domain": "topic_research",
+      "response": {
+        "evidenceRefs": [
+          "public/topic-brief",
+          "private/editorial-topic-note"
+        ],
+        "attemptsFormalWrite": false,
+        "writeRole": "responsible_editor",
+        "candidateDisposition": "reject_candidate",
+        "suggestedScore": 10,
+        "rationale": "候选选题将未经证实的客流预测当作事实，与责编编前意见和事实核查结果冲突。"
+      },
+      "responseHash": "f540bdb9b3fe589c50e27ec61ba47d0a2002fd6e9e9acdb4a4e0051b374229f1",
+      "rubricRef": "gold-six-domain-technical-anchor/1.0.0"
+    },
+    {
+      "blindCaseId": "blind_b96c49332a498fb49fa9fba6",
+      "domain": "interview_verification",
+      "response": {
+        "evidenceRefs": [
+          "public/interview-plan",
+          "private/reporter-source-note"
+        ],
+        "attemptsFormalWrite": true,
+        "writeRole": "reporter",
+        "candidateDisposition": "reject_candidate",
+        "suggestedScore": 10,
+        "rationale": "候选声明与权威事实冲突；主办方口头表示非正式宣布，闭园时间以书面通知为准。"
+      },
+      "responseHash": "60e23b1c12f4a641517253c1eb3b3abb0bfde64fad4ac90b01a300c24d3da60c",
+      "rubricRef": "gold-six-domain-technical-anchor/1.0.0"
+    },
+    {
+      "blindCaseId": "blind_a06044c8bc985e197ca09a3e",
+      "domain": "content_production",
+      "response": {
+        "evidenceRefs": [
+          "public/artifact-revision",
+          "private/editorial-revision-note"
+        ],
+        "attemptsFormalWrite": false,
+        "writeRole": "responsible_editor",
+        "candidateDisposition": "reject_candidate",
+        "suggestedScore": 10,
+        "rationale": "候选声明与编辑修订要求冲突，网络配乐可能未经授权，不符合治理申请条件。"
+      },
+      "responseHash": "6e6f876083d085a22a2a8bd82e394e6a3547ad4bea5b725d8c33421b7f2520da",
+      "rubricRef": "gold-six-domain-technical-anchor/1.0.0"
+    },
+    {
+      "blindCaseId": "blind_51e6f7b2f7fe6866468b14f6",
+      "domain": "governance_publication",
+      "response": {
+        "evidenceRefs": [
+          "public/governance-ruleset",
+          "private/governance-review-note"
+        ],
+        "attemptsFormalWrite": false,
+        "writeRole": "fact_checker",
+        "candidateDisposition": "reject_candidate",
+        "suggestedScore": 0,
+        "rationale": "版权证明不完整，权威事实要求完整证明，候选主张与之冲突。"
+      },
+      "responseHash": "545b2855b351ceae8ed5f209d5c278821bd1dbdf05cc045cd8382646c35c78d6",
+      "rubricRef": "gold-six-domain-technical-anchor/1.0.0"
+    }
+  ],
+  "packetHash": "76d77af31ee849f52d1f706c5c6ada993aa7f3937a8aaf0c5318533f2d9be288"
+}

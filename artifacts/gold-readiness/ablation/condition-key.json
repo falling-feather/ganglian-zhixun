@@ -1,0 +1,646 @@
+{
+  "mappingVersion": "gold-condition-key/1.0.0",
+  "conditionKey": [
+    {
+      "blindCaseId": "blind_b827b75c316b8154935a3d48",
+      "receiptId": "receipt:gold-live-2783f79132cfbc6c0a51ebe7",
+      "observationId": "controlled-live:A:1",
+      "conditionCode": "A",
+      "repetition": 1,
+      "templateId": "experiment/single-generalist"
+    },
+    {
+      "blindCaseId": "blind_685a9c4c8aab9413f8d13efe",
+      "receiptId": "receipt:gold-live-d8f8760197ec6986b9d1c482",
+      "observationId": "controlled-live:A:2",
+      "conditionCode": "A",
+      "repetition": 2,
+      "templateId": "experiment/single-generalist"
+    },
+    {
+      "blindCaseId": "blind_a3c4347edc1f0d76af6599a3",
+      "receiptId": "receipt:gold-live-b0bcb9050fe0165a19b858be",
+      "observationId": "controlled-live:A:3",
+      "conditionCode": "A",
+      "repetition": 3,
+      "templateId": "experiment/single-generalist"
+    },
+    {
+      "blindCaseId": "blind_4329dfd06ed1eae6c8eb1dd5",
+      "receiptId": "receipt:gold-live-9164b8aaf26813d225122b0f",
+      "observationId": "controlled-live:A:4",
+      "conditionCode": "A",
+      "repetition": 4,
+      "templateId": "experiment/single-generalist"
+    },
+    {
+      "blindCaseId": "blind_d0c8fa4a9be475ea5d818ea0",
+      "receiptId": "receipt:gold-live-12ccc694525e3acbb64818e1",
+      "observationId": "controlled-live:A:5",
+      "conditionCode": "A",
+      "repetition": 5,
+      "templateId": "experiment/single-generalist"
+    },
+    {
+      "blindCaseId": "blind_618e8a7e79713f3c2ad5142d",
+      "receiptId": "receipt:gold-live-ee4904645014e77a6d3de1dd",
+      "observationId": "controlled-live:A:6",
+      "conditionCode": "A",
+      "repetition": 6,
+      "templateId": "experiment/single-generalist"
+    },
+    {
+      "blindCaseId": "blind_d34d13c31472b27484d75c24",
+      "receiptId": "receipt:gold-live-d444b45efd5ae2a7d56ae4c7",
+      "observationId": "controlled-live:A:7",
+      "conditionCode": "A",
+      "repetition": 7,
+      "templateId": "experiment/single-generalist"
+    },
+    {
+      "blindCaseId": "blind_ea8b8bfedcf475098144a77d",
+      "receiptId": "receipt:gold-live-e06c81c920e63923e4f2fed7",
+      "observationId": "controlled-live:A:8",
+      "conditionCode": "A",
+      "repetition": 8,
+      "templateId": "experiment/single-generalist"
+    },
+    {
+      "blindCaseId": "blind_b83f20a98301e50d44c7b50a",
+      "receiptId": "receipt:gold-live-7ba61cc818d5ca72d6446688",
+      "observationId": "controlled-live:A:9",
+      "conditionCode": "A",
+      "repetition": 9,
+      "templateId": "experiment/single-generalist"
+    },
+    {
+      "blindCaseId": "blind_362bf10e7e8866ff3c9401dc",
+      "receiptId": "receipt:gold-live-96ecb7c3362c77f87eebab0b",
+      "observationId": "controlled-live:A:10",
+      "conditionCode": "A",
+      "repetition": 10,
+      "templateId": "experiment/single-generalist"
+    },
+    {
+      "blindCaseId": "blind_cc3b2650e4a7bf5e92223fdd",
+      "receiptId": "receipt:gold-live-1b9178e3290804366a1855ea",
+      "observationId": "controlled-live:B:1",
+      "conditionCode": "B",
+      "repetition": 1,
+      "templateId": "assistant/course-navigation"
+    },
+    {
+      "blindCaseId": "blind_b069dd47d589ec00bfbdabc6",
+      "receiptId": "receipt:gold-live-2439a1fa4cdf3a0e24009214",
+      "observationId": "controlled-live:B:1",
+      "conditionCode": "B",
+      "repetition": 1,
+      "templateId": "assistant/interview-structuring"
+    },
+    {
+      "blindCaseId": "blind_0ec068a212494760f827c589",
+      "receiptId": "receipt:gold-live-865a83e3c50021e48e611521",
+      "observationId": "controlled-live:B:1",
+      "conditionCode": "B",
+      "repetition": 1,
+      "templateId": "assistant/content-adaptation"
+    },
+    {
+      "blindCaseId": "blind_3691f8725a62a42957d1253c",
+      "receiptId": "receipt:gold-live-bb9c89c76d77a400d770d3c3",
+      "observationId": "controlled-live:B:1",
+      "conditionCode": "B",
+      "repetition": 1,
+      "templateId": "governance/content-safety"
+    },
+    {
+      "blindCaseId": "blind_47eb5090f3b2a539f1fa6447",
+      "receiptId": "receipt:gold-live-1736e215cb478b6969392190",
+      "observationId": "controlled-live:B:1",
+      "conditionCode": "B",
+      "repetition": 1,
+      "templateId": "assistant/live-intervention"
+    },
+    {
+      "blindCaseId": "blind_148cf3cc954343968228156a",
+      "receiptId": "receipt:gold-live-9c02e9189469b0c5e9c7d35d",
+      "observationId": "controlled-live:B:1",
+      "conditionCode": "B",
+      "repetition": 1,
+      "templateId": "assistant/evaluation-review"
+    },
+    {
+      "blindCaseId": "blind_783e4aab230829dc75aeb92c",
+      "receiptId": "receipt:gold-live-982f13bf2b8e603a06aa286d",
+      "observationId": "controlled-live:B:2",
+      "conditionCode": "B",
+      "repetition": 2,
+      "templateId": "assistant/course-navigation"
+    },
+    {
+      "blindCaseId": "blind_6d62076419f8c8e90e7880e1",
+      "receiptId": "receipt:gold-live-d74125d25703a2269747b0a3",
+      "observationId": "controlled-live:B:2",
+      "conditionCode": "B",
+      "repetition": 2,
+      "templateId": "assistant/interview-structuring"
+    },
+    {
+      "blindCaseId": "blind_b6b47a6c46d9bffaf0d2ed04",
+      "receiptId": "receipt:gold-live-e73d28d319d3efa6589181bd",
+      "observationId": "controlled-live:B:2",
+      "conditionCode": "B",
+      "repetition": 2,
+      "templateId": "assistant/content-adaptation"
+    },
+    {
+      "blindCaseId": "blind_ae57c5d10f79dfb10fe54149",
+      "receiptId": "receipt:gold-live-c56f7d4ff3f799baa438a0bd",
+      "observationId": "controlled-live:B:2",
+      "conditionCode": "B",
+      "repetition": 2,
+      "templateId": "governance/content-safety"
+    },
+    {
+      "blindCaseId": "blind_b313e488900665f5a3c310d5",
+      "receiptId": "receipt:gold-live-1ea20b88548f94dccc7e85a4",
+      "observationId": "controlled-live:B:2",
+      "conditionCode": "B",
+      "repetition": 2,
+      "templateId": "assistant/live-intervention"
+    },
+    {
+      "blindCaseId": "blind_9bc6fc604f9f51ad9b180259",
+      "receiptId": "receipt:gold-live-85c3d369947b7932d4ed32b3",
+      "observationId": "controlled-live:B:2",
+      "conditionCode": "B",
+      "repetition": 2,
+      "templateId": "assistant/evaluation-review"
+    },
+    {
+      "blindCaseId": "blind_e3d978ea6a500f1247611eec",
+      "receiptId": "receipt:gold-live-49feaf2784cb5b19aa54b6ad",
+      "observationId": "controlled-live:B:3",
+      "conditionCode": "B",
+      "repetition": 3,
+      "templateId": "assistant/course-navigation"
+    },
+    {
+      "blindCaseId": "blind_c09af96f598ecb7db16bab33",
+      "receiptId": "receipt:gold-live-3b9260cce0aea86313c50712",
+      "observationId": "controlled-live:B:3",
+      "conditionCode": "B",
+      "repetition": 3,
+      "templateId": "assistant/interview-structuring"
+    },
+    {
+      "blindCaseId": "blind_deb0b2f8ffc1c9576670daf9",
+      "receiptId": "receipt:gold-live-dd87e55f73257c2a7693e7ce",
+      "observationId": "controlled-live:B:3",
+      "conditionCode": "B",
+      "repetition": 3,
+      "templateId": "assistant/content-adaptation"
+    },
+    {
+      "blindCaseId": "blind_7095e60a8005317ea4b49e29",
+      "receiptId": "receipt:gold-live-5354508976a21077ff2dcea1",
+      "observationId": "controlled-live:B:3",
+      "conditionCode": "B",
+      "repetition": 3,
+      "templateId": "governance/content-safety"
+    },
+    {
+      "blindCaseId": "blind_893c7d2df90fd530c64c7a21",
+      "receiptId": "receipt:gold-live-dc2524e6281ce613c6f5e28c",
+      "observationId": "controlled-live:B:3",
+      "conditionCode": "B",
+      "repetition": 3,
+      "templateId": "assistant/live-intervention"
+    },
+    {
+      "blindCaseId": "blind_1336acec095f3f5a7b78ca81",
+      "receiptId": "receipt:gold-live-0b2cf80c861022db68370902",
+      "observationId": "controlled-live:B:3",
+      "conditionCode": "B",
+      "repetition": 3,
+      "templateId": "assistant/evaluation-review"
+    },
+    {
+      "blindCaseId": "blind_bc4cd9505d8be50e32e9615b",
+      "receiptId": "receipt:gold-live-c673c754c8a1fb7c66d80d30",
+      "observationId": "controlled-live:B:4",
+      "conditionCode": "B",
+      "repetition": 4,
+      "templateId": "assistant/course-navigation"
+    },
+    {
+      "blindCaseId": "blind_889b4adf947e442194537505",
+      "receiptId": "receipt:gold-live-b442979cd03b92fcccf6dd34",
+      "observationId": "controlled-live:B:4",
+      "conditionCode": "B",
+      "repetition": 4,
+      "templateId": "assistant/interview-structuring"
+    },
+    {
+      "blindCaseId": "blind_598338943182fdbf1f9e5215",
+      "receiptId": "receipt:gold-live-697787d00fadb17d07ab5727",
+      "observationId": "controlled-live:B:4",
+      "conditionCode": "B",
+      "repetition": 4,
+      "templateId": "assistant/content-adaptation"
+    },
+    {
+      "blindCaseId": "blind_128e60795e553fb63b35dfff",
+      "receiptId": "receipt:gold-live-b0a05df8d072ce5b071dc0ad",
+      "observationId": "controlled-live:B:4",
+      "conditionCode": "B",
+      "repetition": 4,
+      "templateId": "governance/content-safety"
+    },
+    {
+      "blindCaseId": "blind_b1e0f22e44e0d5f91e97547d",
+      "receiptId": "receipt:gold-live-5cda416a70f5ef93e70cab9f",
+      "observationId": "controlled-live:B:4",
+      "conditionCode": "B",
+      "repetition": 4,
+      "templateId": "assistant/live-intervention"
+    },
+    {
+      "blindCaseId": "blind_f4c2aa73eec583fd6b022f81",
+      "receiptId": "receipt:gold-live-73f7cc091c137591278c43b4",
+      "observationId": "controlled-live:B:4",
+      "conditionCode": "B",
+      "repetition": 4,
+      "templateId": "assistant/evaluation-review"
+    },
+    {
+      "blindCaseId": "blind_c0bb36637aafcbb4637b5cd8",
+      "receiptId": "receipt:gold-live-9fbd198a45420e85193b2e9d",
+      "observationId": "controlled-live:B:5",
+      "conditionCode": "B",
+      "repetition": 5,
+      "templateId": "assistant/course-navigation"
+    },
+    {
+      "blindCaseId": "blind_c7eb15576faa834d31497b44",
+      "receiptId": "receipt:gold-live-eab3c4fdec562d1d5b6dc8c1",
+      "observationId": "controlled-live:B:5",
+      "conditionCode": "B",
+      "repetition": 5,
+      "templateId": "assistant/interview-structuring"
+    },
+    {
+      "blindCaseId": "blind_da8a018695201ef22c8a5c7e",
+      "receiptId": "receipt:gold-live-8c606b59107b185b5f87c84d",
+      "observationId": "controlled-live:B:5",
+      "conditionCode": "B",
+      "repetition": 5,
+      "templateId": "assistant/content-adaptation"
+    },
+    {
+      "blindCaseId": "blind_23fc577c22088a9ab7597ae1",
+      "receiptId": "receipt:gold-live-02f7ba9136d406805aff0dbb",
+      "observationId": "controlled-live:B:5",
+      "conditionCode": "B",
+      "repetition": 5,
+      "templateId": "governance/content-safety"
+    },
+    {
+      "blindCaseId": "blind_04e64fa56cc7b353527d5e42",
+      "receiptId": "receipt:gold-live-25ed02a0591cf7e0382c8a74",
+      "observationId": "controlled-live:B:5",
+      "conditionCode": "B",
+      "repetition": 5,
+      "templateId": "assistant/live-intervention"
+    },
+    {
+      "blindCaseId": "blind_b5d14571abcf15a7ba28c745",
+      "receiptId": "receipt:gold-live-7608a72ec778f4d705d929e3",
+      "observationId": "controlled-live:B:5",
+      "conditionCode": "B",
+      "repetition": 5,
+      "templateId": "assistant/evaluation-review"
+    },
+    {
+      "blindCaseId": "blind_f6e35fa00aab3f8cb201ef7e",
+      "receiptId": "receipt:gold-live-1296cf882af48e0ade2b97a3",
+      "observationId": "controlled-live:B:6",
+      "conditionCode": "B",
+      "repetition": 6,
+      "templateId": "assistant/course-navigation"
+    },
+    {
+      "blindCaseId": "blind_4685af4dcebd44b1e23f9c58",
+      "receiptId": "receipt:gold-live-bac7c7d193810c230868adac",
+      "observationId": "controlled-live:B:6",
+      "conditionCode": "B",
+      "repetition": 6,
+      "templateId": "assistant/interview-structuring"
+    },
+    {
+      "blindCaseId": "blind_ee807906a70c7915d0f09009",
+      "receiptId": "receipt:gold-live-a067d4fc21fd470020f4dbe8",
+      "observationId": "controlled-live:B:6",
+      "conditionCode": "B",
+      "repetition": 6,
+      "templateId": "assistant/content-adaptation"
+    },
+    {
+      "blindCaseId": "blind_192e67dd8dee77e92aeaf2cf",
+      "receiptId": "receipt:gold-live-564b683e945102819715b19f",
+      "observationId": "controlled-live:B:6",
+      "conditionCode": "B",
+      "repetition": 6,
+      "templateId": "governance/content-safety"
+    },
+    {
+      "blindCaseId": "blind_795aabbb39754ce18a7082b1",
+      "receiptId": "receipt:gold-live-0537ef5313616897046af75f",
+      "observationId": "controlled-live:B:6",
+      "conditionCode": "B",
+      "repetition": 6,
+      "templateId": "assistant/live-intervention"
+    },
+    {
+      "blindCaseId": "blind_9e49643ec4434d156fd7de49",
+      "receiptId": "receipt:gold-live-3cc9a3409002d71325d51590",
+      "observationId": "controlled-live:B:6",
+      "conditionCode": "B",
+      "repetition": 6,
+      "templateId": "assistant/evaluation-review"
+    },
+    {
+      "blindCaseId": "blind_fc399a7ef974d4923fbddf2d",
+      "receiptId": "receipt:gold-live-e054c38ef058aa48bf910441",
+      "observationId": "controlled-live:B:7",
+      "conditionCode": "B",
+      "repetition": 7,
+      "templateId": "assistant/course-navigation"
+    },
+    {
+      "blindCaseId": "blind_9150d42afbb5d529e45a3976",
+      "receiptId": "receipt:gold-live-5308a6de0aa5ea65462a6af9",
+      "observationId": "controlled-live:B:7",
+      "conditionCode": "B",
+      "repetition": 7,
+      "templateId": "assistant/interview-structuring"
+    },
+    {
+      "blindCaseId": "blind_4b76e36cf93de837a701ccd2",
+      "receiptId": "receipt:gold-live-be9ac4bb5fb0969b218689af",
+      "observationId": "controlled-live:B:7",
+      "conditionCode": "B",
+      "repetition": 7,
+      "templateId": "assistant/content-adaptation"
+    },
+    {
+      "blindCaseId": "blind_21e7c1a414c710e9c978e842",
+      "receiptId": "receipt:gold-live-627767c7f39d8ed30970fc16",
+      "observationId": "controlled-live:B:7",
+      "conditionCode": "B",
+      "repetition": 7,
+      "templateId": "governance/content-safety"
+    },
+    {
+      "blindCaseId": "blind_3c65f7253c116884b9808b13",
+      "receiptId": "receipt:gold-live-9f6908a67ca1a2008707d397",
+      "observationId": "controlled-live:B:7",
+      "conditionCode": "B",
+      "repetition": 7,
+      "templateId": "assistant/live-intervention"
+    },
+    {
+      "blindCaseId": "blind_f956e89e32477f99b68883c3",
+      "receiptId": "receipt:gold-live-970ee8e03b03f3a89e50b944",
+      "observationId": "controlled-live:B:7",
+      "conditionCode": "B",
+      "repetition": 7,
+      "templateId": "assistant/evaluation-review"
+    },
+    {
+      "blindCaseId": "blind_d393a238ec2975c715a32ae2",
+      "receiptId": "receipt:gold-live-9c13f0adab37f12f95cf74cd",
+      "observationId": "controlled-live:B:8",
+      "conditionCode": "B",
+      "repetition": 8,
+      "templateId": "assistant/course-navigation"
+    },
+    {
+      "blindCaseId": "blind_ba024e2e5dfb5850124f1615",
+      "receiptId": "receipt:gold-live-a4c899cc6b267207b20e1080",
+      "observationId": "controlled-live:B:8",
+      "conditionCode": "B",
+      "repetition": 8,
+      "templateId": "assistant/interview-structuring"
+    },
+    {
+      "blindCaseId": "blind_ad3fc774ba0b34c3a5a8e296",
+      "receiptId": "receipt:gold-live-578fbb7dc58857d37b2d94a3",
+      "observationId": "controlled-live:B:8",
+      "conditionCode": "B",
+      "repetition": 8,
+      "templateId": "assistant/content-adaptation"
+    },
+    {
+      "blindCaseId": "blind_4be8d312b6af9589ada1583c",
+      "receiptId": "receipt:gold-live-4d281efb1ff3d5a4cc54d026",
+      "observationId": "controlled-live:B:8",
+      "conditionCode": "B",
+      "repetition": 8,
+      "templateId": "governance/content-safety"
+    },
+    {
+      "blindCaseId": "blind_5a5582282f1e03ec8a74dc15",
+      "receiptId": "receipt:gold-live-fe6b4e7c31a03400647b4bba",
+      "observationId": "controlled-live:B:8",
+      "conditionCode": "B",
+      "repetition": 8,
+      "templateId": "assistant/live-intervention"
+    },
+    {
+      "blindCaseId": "blind_347c253013cd51c423bb5f24",
+      "receiptId": "receipt:gold-live-e8f03f59d9259eb5acc09036",
+      "observationId": "controlled-live:B:8",
+      "conditionCode": "B",
+      "repetition": 8,
+      "templateId": "assistant/evaluation-review"
+    },
+    {
+      "blindCaseId": "blind_946f066491a81dda8e146605",
+      "receiptId": "receipt:gold-live-e09629c3659670bb9fe2155f",
+      "observationId": "controlled-live:B:9",
+      "conditionCode": "B",
+      "repetition": 9,
+      "templateId": "assistant/course-navigation"
+    },
+    {
+      "blindCaseId": "blind_6d22df69a6528d3a334245ac",
+      "receiptId": "receipt:gold-live-ff02e9f47b5c9d29070f4dd2",
+      "observationId": "controlled-live:B:9",
+      "conditionCode": "B",
+      "repetition": 9,
+      "templateId": "assistant/interview-structuring"
+    },
+    {
+      "blindCaseId": "blind_abba7c76c696978014aeaf52",
+      "receiptId": "receipt:gold-live-6f7c581a239ef9b34fc6d882",
+      "observationId": "controlled-live:B:9",
+      "conditionCode": "B",
+      "repetition": 9,
+      "templateId": "assistant/content-adaptation"
+    },
+    {
+      "blindCaseId": "blind_728451a9fe2fb38ec4afd9be",
+      "receiptId": "receipt:gold-live-56e579632f74a08c278069d6",
+      "observationId": "controlled-live:B:9",
+      "conditionCode": "B",
+      "repetition": 9,
+      "templateId": "governance/content-safety"
+    },
+    {
+      "blindCaseId": "blind_0d25a917a446ec17f9fbebed",
+      "receiptId": "receipt:gold-live-0a7a3d903984c72053829778",
+      "observationId": "controlled-live:B:9",
+      "conditionCode": "B",
+      "repetition": 9,
+      "templateId": "assistant/live-intervention"
+    },
+    {
+      "blindCaseId": "blind_78bdc44c68409f72315999be",
+      "receiptId": "receipt:gold-live-aed27b4567f28e4c560ef24f",
+      "observationId": "controlled-live:B:9",
+      "conditionCode": "B",
+      "repetition": 9,
+      "templateId": "assistant/evaluation-review"
+    },
+    {
+      "blindCaseId": "blind_70f89934285a99854848cb53",
+      "receiptId": "receipt:gold-live-b262f1ffa13d103319567c9c",
+      "observationId": "controlled-live:B:10",
+      "conditionCode": "B",
+      "repetition": 10,
+      "templateId": "assistant/course-navigation"
+    },
+    {
+      "blindCaseId": "blind_0df5ab045c33b213198b5e78",
+      "receiptId": "receipt:gold-live-126a6c264fbe51e8e3afd27b",
+      "observationId": "controlled-live:B:10",
+      "conditionCode": "B",
+      "repetition": 10,
+      "templateId": "assistant/interview-structuring"
+    },
+    {
+      "blindCaseId": "blind_0724de27b63199afaf6b308e",
+      "receiptId": "receipt:gold-live-8fe59a873974966611163d45",
+      "observationId": "controlled-live:B:10",
+      "conditionCode": "B",
+      "repetition": 10,
+      "templateId": "assistant/content-adaptation"
+    },
+    {
+      "blindCaseId": "blind_8cefd3e9fce231f995dfe6e6",
+      "receiptId": "receipt:gold-live-4d0dd488710ac8c1bd8a1910",
+      "observationId": "controlled-live:B:10",
+      "conditionCode": "B",
+      "repetition": 10,
+      "templateId": "governance/content-safety"
+    },
+    {
+      "blindCaseId": "blind_864ddc9273aa9a13e6d4386f",
+      "receiptId": "receipt:gold-live-5c81abc8e8f70d88b6d06d1a",
+      "observationId": "controlled-live:B:10",
+      "conditionCode": "B",
+      "repetition": 10,
+      "templateId": "assistant/live-intervention"
+    },
+    {
+      "blindCaseId": "blind_0e0a7cc8c72aa08c05208e0a",
+      "receiptId": "receipt:gold-live-7ab51248d6b6161a77403c29",
+      "observationId": "controlled-live:B:10",
+      "conditionCode": "B",
+      "repetition": 10,
+      "templateId": "assistant/evaluation-review"
+    },
+    {
+      "blindCaseId": "blind_7e7d7cff3de199e43eca17a3",
+      "receiptId": "receipt:gold-live-1fed8ada8e990ac3c56b3df8",
+      "observationId": "controlled-live:C:1",
+      "conditionCode": "C",
+      "repetition": 1,
+      "templateId": "assistant/course-navigation"
+    },
+    {
+      "blindCaseId": "blind_d245ef234daea72df24193af",
+      "receiptId": "receipt:gold-live-b9da3237e674a55896f36259",
+      "observationId": "controlled-live:C:2",
+      "conditionCode": "C",
+      "repetition": 2,
+      "templateId": "assistant/interview-structuring"
+    },
+    {
+      "blindCaseId": "blind_1123f5e7af026d73a6f3d13e",
+      "receiptId": "receipt:gold-live-3cdc1857b6eb1507c3baa62a",
+      "observationId": "controlled-live:C:3",
+      "conditionCode": "C",
+      "repetition": 3,
+      "templateId": "assistant/content-adaptation"
+    },
+    {
+      "blindCaseId": "blind_54cfecc97cea4b6c947a6f1f",
+      "receiptId": "receipt:gold-live-7052c78a829d220c8cdec5f8",
+      "observationId": "controlled-live:C:4",
+      "conditionCode": "C",
+      "repetition": 4,
+      "templateId": "governance/content-safety"
+    },
+    {
+      "blindCaseId": "blind_7b89388de32f3308fd6e76e0",
+      "receiptId": "receipt:gold-live-4e262166aa7d1976e4914491",
+      "observationId": "controlled-live:C:5",
+      "conditionCode": "C",
+      "repetition": 5,
+      "templateId": "assistant/live-intervention"
+    },
+    {
+      "blindCaseId": "blind_04bb266c307f37416f3bd398",
+      "receiptId": "receipt:gold-live-a6f4817aaaa57822418637cd",
+      "observationId": "controlled-live:C:6",
+      "conditionCode": "C",
+      "repetition": 6,
+      "templateId": "assistant/evaluation-review"
+    },
+    {
+      "blindCaseId": "blind_72abd7bad979785b7cc3a93e",
+      "receiptId": "receipt:gold-live-486421a02fefc23dcab32997",
+      "observationId": "controlled-live:C:7",
+      "conditionCode": "C",
+      "repetition": 7,
+      "templateId": "assistant/course-navigation"
+    },
+    {
+      "blindCaseId": "blind_b96c49332a498fb49fa9fba6",
+      "receiptId": "receipt:gold-live-487dc2b8aa38b76020d6c1b8",
+      "observationId": "controlled-live:C:8",
+      "conditionCode": "C",
+      "repetition": 8,
+      "templateId": "assistant/interview-structuring"
+    },
+    {
+      "blindCaseId": "blind_a06044c8bc985e197ca09a3e",
+      "receiptId": "receipt:gold-live-4b84ed843837ddade746c4a5",
+      "observationId": "controlled-live:C:9",
+      "conditionCode": "C",
+      "repetition": 9,
+      "templateId": "assistant/content-adaptation"
+    },
+    {
+      "blindCaseId": "blind_51e6f7b2f7fe6866468b14f6",
+      "receiptId": "receipt:gold-live-be9c22fc9da29ed0a0e499fc",
+      "observationId": "controlled-live:C:10",
+      "conditionCode": "C",
+      "repetition": 10,
+      "templateId": "governance/content-safety"
+    }
+  ],
+  "mappingHash": "08fefabad3f01aefb859b5901bf6fefd380a1846e16a3f341d3efdd0fc1e52cb"
+}

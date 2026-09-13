@@ -1,0 +1,41 @@
+{
+  "schemaVersion": "gold-competition-official-registry/1.0.0",
+  "challengeId": "XA-202603",
+  "sourceCount": 2,
+  "sources": [
+    {
+      "sourceId": "challenge-cup-2026-announcement",
+      "sourceType": "competition_rules",
+      "title": "谁有本事，谁就揭榜！2026年度中国青年科技创新“揭榜挂帅”擂台赛重磅启幕！",
+      "issuer": "全国大学生课外学术科技作品竞赛组委会",
+      "url": "https://www.tiaozhanbei.net/article/15836/",
+      "publishedDate": "2026-04-27",
+      "accessedAt": "2026-07-30T08:34:52.145Z",
+      "contentHash": "e3e1b7b8bfce44283a3470ac71ff87f76a027f4edc4a6fd7c88e3dfdb38380e7",
+      "contentBytes": 160883,
+      "containerHash": null,
+      "containerBytes": null,
+      "locator": "挑战杯官网正文及其“榜题方案汇总材料”官方附件链接",
+      "retrievalKind": "official_html",
+      "verificationNote": "使用挑战杯官网 HTTPS 正文响应逐字节计算 SHA-256；此收据只固定 2026-07-30 的取回快照。"
+    },
+    {
+      "sourceId": "xa-202603-question",
+      "sourceType": "iflytek_requirements",
+      "title": "面向职业教育高水平专业群建设的教学实训与岗位技能智能体开发比赛方案",
+      "issuer": "科大讯飞股份有限公司",
+      "url": "https://www.tiaozhanbei.net/media/ckeditor_uploads/genrui/2026/04/27/%E6%A6%9C%E9%A2%98%E6%96%B9%E6%A1%88%E6%B1%87%E6%80%BB%E6%9D%90%E6%96%99.zip",
+      "publishedDate": "2026-04-27",
+      "accessedAt": "2026-07-30T08:31:00.000Z",
+      "contentHash": "10ce35ffe5e36e1c391a345dc7803f02f7ea58dc61b5ac7ddbd2ef9b7ec48bf3",
+      "contentBytes": 306371,
+      "containerHash": "49b26bba021cc0c83e86c2167c83841d493e314c938e6f36ed96ba1306142eee",
+      "containerBytes": 29161130,
+      "locator": "榜题方案汇总材料/河北雄安新区-新一代信息技术领域17个/XA-202603科大讯飞股份有限公司-面向职业教育高水平专业群建设的教学实训与岗位技能智能体开发比赛方案.pdf",
+      "retrievalKind": "official_archive_document",
+      "verificationNote": "从挑战杯官网首批榜题 ZIP 中提取 XA-202603 原题 PDF，分别固定 ZIP 与 PDF 的字节数及 SHA-256，并完成 14 页文本提取和关键页渲染核验。"
+    }
+  ],
+  "claimBoundary": "本登记只证明指定时点从挑战杯官网取得的赛事正文、官方附件容器与 XA-202603 原题文档具有所列字节数和 SHA-256；它不替代报名回执、发榜单位后续通知、现场规则或主办方资格审查。官网或赛题更新必须新建来源版本，不得原地改写本快照。",
+  "registryHash": "fc1f6257a922defc655aceb61ff9531a4d66a047eba9123f49d00f49fddf0cb4"
+}

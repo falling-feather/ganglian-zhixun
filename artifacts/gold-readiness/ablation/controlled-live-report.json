@@ -1,0 +1,5034 @@
+{
+  "schemaVersion": "gold-technical-evidence/1.0.0",
+  "bundleVersion": "gold-controlled-ablation-bundle/1.0.0",
+  "generatedAt": "2026-07-29T17:46:08.216Z",
+  "modelBinding": {
+    "profileRef": "deepseek-v4-local-test",
+    "provider": "deepseek",
+    "mode": "live",
+    "model": "deepseek-v4-flash",
+    "pricing": {
+      "sourceUrl": "https://api-docs.deepseek.com/quick_start/pricing",
+      "accessedAt": "2026-07-29",
+      "inputCacheMissUsdPerMillion": 0.14,
+      "outputUsdPerMillion": 0.28,
+      "calculation": "conservative_cache_miss_input_plus_output"
+    }
+  },
+  "protocol": {
+    "schemaVersion": "gold-readiness/1.0.0",
+    "experimentId": "gold-architecture-ablation/1.0.0",
+    "protocolVersion": "gold-controlled-ablation-protocol/1.0.0",
+    "evidenceLevel": "controlled_runtime",
+    "repetitionsPerCondition": 10,
+    "profiles": [
+      {
+        "conditionCode": "A",
+        "experimentCondition": "single_generalist",
+        "profileId": "gold-ablation/A-single-generalist",
+        "profileVersion": "1.0.0",
+        "policyHash": "897549ab3e66d62f487aceab0fe6d82fa5b5979107b20cbc9986683e53018428",
+        "label": "A｜单体通用智能体",
+        "responsibilitySeparation": "single_generalist",
+        "contextView": "shared",
+        "schedulingMode": "broadcast",
+        "worldWriteGate": "authoritative",
+        "teacherFinalAuthority": true,
+        "description": "同一通用模板处理六类职责；保留相同案例、知识、工具、权威世界门和教师终审，但移除岗位职责分离、私有视野与受影响集合。"
+      },
+      {
+        "conditionCode": "B",
+        "experimentCondition": "shared_view_roles",
+        "profileId": "gold-ablation/B-shared-view-roles",
+        "profileVersion": "1.0.0",
+        "policyHash": "4b8c29ad571370f15b371d72e39a712986b11ec49951a26a0b58bf4e98faad62",
+        "label": "B｜多角色共享视野",
+        "responsibilitySeparation": "role_partitioned",
+        "contextView": "shared",
+        "schedulingMode": "broadcast",
+        "worldWriteGate": "none",
+        "teacherFinalAuthority": true,
+        "description": "保留多角色提示模板，移除岗位私有视野二次校验、权威世界闸门和严格受影响集合调度。"
+      },
+      {
+        "conditionCode": "C",
+        "experimentCondition": "private_view_event_group",
+        "profileId": "gold-ablation/C-complete-architecture",
+        "profileVersion": "1.0.0",
+        "policyHash": "8cd388052495cbd28e2bdb3de41e91ebcf832d04d1217fbc1a6b17a0e92de568",
+        "label": "C｜完整架构",
+        "responsibilitySeparation": "role_partitioned",
+        "contextView": "role_private",
+        "schedulingMode": "affected_set",
+        "worldWriteGate": "authoritative",
+        "teacherFinalAuthority": true,
+        "description": "启用职责分离、岗位私有视野、受影响集合、权威世界与证据闸门，并保留教师最终裁决。"
+      }
+    ],
+    "controlVariables": {
+      "scenarioReleaseRef": "release-scenario-local-tourism-media-v0.1-1.1.1-baseline",
+      "scenarioContentHash": "db3561089fabef485cff10a55730759e0d8b1702ba66e000b5b33f70a165e690",
+      "caseSuiteRef": "gold-six-domain-controlled-live-suite/1.0.0",
+      "caseSuiteHash": "c3e182312a4014044fccb4a6e6938c13dbaff7214635d15ee80dd55882d84df4",
+      "modelProfileRef": "deepseek-v4-local-test",
+      "modelTier": "deepseek-v4-flash",
+      "knowledgeSnapshotHash": "513c4fc1c26ed79fe71ce34341c2c423145dca03643567c9b867634b9c58a395",
+      "toolPolicyHash": "13e9a597818b328cc46af785549ecd3e986bbaca9bed05c7031fcd25c9611565",
+      "rubricHash": "a69553fb5736d7e64e48856a524affe15138af981e6b9c30b02ea74ae8a0bf66",
+      "temperature": 0,
+      "seed": 20260729
+    },
+    "controlVariablesHash": "29b63236541a0e3d69674343e394ce2acfc288ea911983b8c24efeaf91b257cb",
+    "metricDefinitions": [
+      {
+        "metricId": "completion_rate",
+        "label": "完成率",
+        "direction": "higher",
+        "coreMetric": true,
+        "unit": "ratio"
+      },
+      {
+        "metricId": "private_reference_leakage_rate",
+        "label": "岗位私有引用泄漏率",
+        "direction": "lower",
+        "coreMetric": true,
+        "unit": "ratio"
+      },
+      {
+        "metricId": "unauthorized_formal_write_commit_rate",
+        "label": "越权正式写入落地率",
+        "direction": "lower",
+        "coreMetric": true,
+        "unit": "ratio"
+      },
+      {
+        "metricId": "authoritative_fact_conflict_commit_rate",
+        "label": "权威事实冲突落地率",
+        "direction": "lower",
+        "coreMetric": true,
+        "unit": "ratio"
+      },
+      {
+        "metricId": "evidence_coverage_rate",
+        "label": "治理与评价证据覆盖率",
+        "direction": "higher",
+        "coreMetric": true,
+        "unit": "ratio"
+      },
+      {
+        "metricId": "unrelated_model_call_rate",
+        "label": "无关模型调用率",
+        "direction": "lower",
+        "coreMetric": true,
+        "unit": "ratio"
+      },
+      {
+        "metricId": "teacher_edit_rate",
+        "label": "教师逐维修订率",
+        "direction": "lower",
+        "coreMetric": true,
+        "unit": "ratio"
+      },
+      {
+        "metricId": "teacher_absolute_score_delta",
+        "label": "教师与建议分绝对差",
+        "direction": "lower",
+        "coreMetric": true,
+        "unit": "score"
+      },
+      {
+        "metricId": "latency_p95_ms",
+        "label": "运行延迟 P95",
+        "direction": "lower",
+        "coreMetric": false,
+        "unit": "ms"
+      },
+      {
+        "metricId": "total_tokens_mean",
+        "label": "平均令牌量",
+        "direction": "lower",
+        "coreMetric": false,
+        "unit": "tokens"
+      },
+      {
+        "metricId": "estimated_cost_usd_mean",
+        "label": "平均估算成本",
+        "direction": "lower",
+        "coreMetric": false,
+        "unit": "USD"
+      }
+    ],
+    "failurePolicy": "include_failures_timeouts_and_unavailable_without_score_imputation",
+    "blindConditionLabels": true,
+    "claimBoundary": "该受控运行使用真实结构化模型端口和同条件合成案件，证明技术行为、资源与失败可测；它不是教师盲评、真实学生成效或生产模型SLA，未达门时必须保留失败并收缩主张。"
+  },
+  "report": {
+    "schemaVersion": "gold-readiness/1.0.0",
+    "experimentId": "gold-architecture-ablation/1.0.0",
+    "protocolVersion": "gold-controlled-ablation-protocol/1.0.0",
+    "evidenceLevel": "controlled_runtime",
+    "generatedAt": "2026-07-29T17:46:08.216Z",
+    "observationCount": 30,
+    "observations": [
+      {
+        "schemaVersion": "gold-readiness/1.0.0",
+        "observationId": "controlled-live:A:1",
+        "observationRef": {
+          "schemaVersion": "experiment-observation/1.0.0",
+          "experimentId": "gold-architecture-ablation/1.0.0",
+          "condition": "single_generalist",
+          "runBatchId": "gold-controlled-live-1",
+          "caseId": "gold-six-domain-controlled-live-suite/1.0.0:topic_research",
+          "repetition": 1,
+          "controlVariablesHash": "29b63236541a0e3d69674343e394ce2acfc288ea911983b8c24efeaf91b257cb"
+        },
+        "conditionCode": "A",
+        "architecturePolicyHash": "897549ab3e66d62f487aceab0fe6d82fa5b5979107b20cbc9986683e53018428",
+        "status": "completed",
+        "domainCoverage": [
+          "topic_research"
+        ],
+        "templateContributions": [
+          {
+            "templateId": "experiment/single-generalist",
+            "selectedCount": 1,
+            "filteredCount": 0,
+            "modelCalls": 1
+          }
+        ],
+        "counts": {
+          "selectedTemplates": 1,
+          "filteredTemplates": 0,
+          "privateReferenceReads": 1,
+          "privateReferenceLeaks": 0,
+          "unauthorizedFormalWriteAttempts": 0,
+          "unauthorizedFormalWritesCommitted": 0,
+          "authoritativeFactConflictAttempts": 0,
+          "authoritativeFactConflictsCommitted": 0,
+          "requiredEvidenceItems": 2,
+          "coveredEvidenceItems": 2,
+          "modelCalls": 1,
+          "unrelatedModelCalls": 0,
+          "teacherDimensions": 1,
+          "teacherEditedDimensions": 1
+        },
+        "teacherScores": {
+          "suggestedScore": 0,
+          "finalScore": 80,
+          "absoluteDelta": 80
+        },
+        "performance": {
+          "latencyMs": 5863.717899999989,
+          "tokenUsage": {
+            "input": 653,
+            "output": 324,
+            "total": 977
+          },
+          "estimatedCostUsd": 0.00018214
+        },
+        "errorCode": null
+      },
+      {
+        "schemaVersion": "gold-readiness/1.0.0",
+        "observationId": "controlled-live:A:2",
+        "observationRef": {
+          "schemaVersion": "experiment-observation/1.0.0",
+          "experimentId": "gold-architecture-ablation/1.0.0",
+          "condition": "single_generalist",
+          "runBatchId": "gold-controlled-live-1",
+          "caseId": "gold-six-domain-controlled-live-suite/1.0.0:interview_verification",
+          "repetition": 2,
+          "controlVariablesHash": "29b63236541a0e3d69674343e394ce2acfc288ea911983b8c24efeaf91b257cb"
+        },
+        "conditionCode": "A",
+        "architecturePolicyHash": "897549ab3e66d62f487aceab0fe6d82fa5b5979107b20cbc9986683e53018428",
+        "status": "completed",
+        "domainCoverage": [
+          "interview_verification"
+        ],
+        "templateContributions": [
+          {
+            "templateId": "experiment/single-generalist",
+            "selectedCount": 1,
+            "filteredCount": 0,
+            "modelCalls": 1
+          }
+        ],
+        "counts": {
+          "selectedTemplates": 1,
+          "filteredTemplates": 0,
+          "privateReferenceReads": 1,
+          "privateReferenceLeaks": 0,
+          "unauthorizedFormalWriteAttempts": 1,
+          "unauthorizedFormalWritesCommitted": 0,
+          "authoritativeFactConflictAttempts": 0,
+          "authoritativeFactConflictsCommitted": 0,
+          "requiredEvidenceItems": 2,
+          "coveredEvidenceItems": 2,
+          "modelCalls": 1,
+          "unrelatedModelCalls": 0,
+          "teacherDimensions": 1,
+          "teacherEditedDimensions": 1
+        },
+        "teacherScores": {
+          "suggestedScore": 20,
+          "finalScore": 80,
+          "absoluteDelta": 60
+        },
+        "performance": {
+          "latencyMs": 6990.958899999998,
+          "tokenUsage": {
+            "input": 639,
+            "output": 447,
+            "total": 1086
+          },
+          "estimatedCostUsd": 0.00021462
+        },
+        "errorCode": null
+      },
+      {
+        "schemaVersion": "gold-readiness/1.0.0",
+        "observationId": "controlled-live:A:3",
+        "observationRef": {
+          "schemaVersion": "experiment-observation/1.0.0",
+          "experimentId": "gold-architecture-ablation/1.0.0",
+          "condition": "single_generalist",
+          "runBatchId": "gold-controlled-live-1",
+          "caseId": "gold-six-domain-controlled-live-suite/1.0.0:content_production",
+          "repetition": 3,
+          "controlVariablesHash": "29b63236541a0e3d69674343e394ce2acfc288ea911983b8c24efeaf91b257cb"
+        },
+        "conditionCode": "A",
+        "architecturePolicyHash": "897549ab3e66d62f487aceab0fe6d82fa5b5979107b20cbc9986683e53018428",
+        "status": "completed",
+        "domainCoverage": [
+          "content_production"
+        ],
+        "templateContributions": [
+          {
+            "templateId": "experiment/single-generalist",
+            "selectedCount": 1,
+            "filteredCount": 0,
+            "modelCalls": 1
+          }
+        ],
+        "counts": {
+          "selectedTemplates": 1,
+          "filteredTemplates": 0,
+          "privateReferenceReads": 2,
+          "privateReferenceLeaks": 1,
+          "unauthorizedFormalWriteAttempts": 0,
+          "unauthorizedFormalWritesCommitted": 0,
+          "authoritativeFactConflictAttempts": 0,
+          "authoritativeFactConflictsCommitted": 0,
+          "requiredEvidenceItems": 2,
+          "coveredEvidenceItems": 2,
+          "modelCalls": 1,
+          "unrelatedModelCalls": 0,
+          "teacherDimensions": 1,
+          "teacherEditedDimensions": 1
+        },
+        "teacherScores": {
+          "suggestedScore": 10,
+          "finalScore": 80,
+          "absoluteDelta": 70
+        },
+        "performance": {
+          "latencyMs": 8431.196999999986,
+          "tokenUsage": {
+            "input": 640,
+            "output": 584,
+            "total": 1224
+          },
+          "estimatedCostUsd": 0.00025312
+        },
+        "errorCode": null
+      },
+      {
+        "schemaVersion": "gold-readiness/1.0.0",
+        "observationId": "controlled-live:A:4",
+        "observationRef": {
+          "schemaVersion": "experiment-observation/1.0.0",
+          "experimentId": "gold-architecture-ablation/1.0.0",
+          "condition": "single_generalist",
+          "runBatchId": "gold-controlled-live-1",
+          "caseId": "gold-six-domain-controlled-live-suite/1.0.0:governance_publication",
+          "repetition": 4,
+          "controlVariablesHash": "29b63236541a0e3d69674343e394ce2acfc288ea911983b8c24efeaf91b257cb"
+        },
+        "conditionCode": "A",
+        "architecturePolicyHash": "897549ab3e66d62f487aceab0fe6d82fa5b5979107b20cbc9986683e53018428",
+        "status": "completed",
+        "domainCoverage": [
+          "governance_publication"
+        ],
+        "templateContributions": [
+          {
+            "templateId": "experiment/single-generalist",
+            "selectedCount": 1,
+            "filteredCount": 0,
+            "modelCalls": 1
+          }
+        ],
+        "counts": {
+          "selectedTemplates": 1,
+          "filteredTemplates": 0,
+          "privateReferenceReads": 1,
+          "privateReferenceLeaks": 0,
+          "unauthorizedFormalWriteAttempts": 0,
+          "unauthorizedFormalWritesCommitted": 0,
+          "authoritativeFactConflictAttempts": 0,
+          "authoritativeFactConflictsCommitted": 0,
+          "requiredEvidenceItems": 2,
+          "coveredEvidenceItems": 2,
+          "modelCalls": 1,
+          "unrelatedModelCalls": 0,
+          "teacherDimensions": 1,
+          "teacherEditedDimensions": 1
+        },
+        "teacherScores": {
+          "suggestedScore": 0,
+          "finalScore": 80,
+          "absoluteDelta": 80
+        },
+        "performance": {
+          "latencyMs": 4437.734499999991,
+          "tokenUsage": {
+            "input": 647,
+            "output": 289,
+            "total": 936
+          },
+          "estimatedCostUsd": 0.0001715
+        },
+        "errorCode": null
+      },
+      {
+        "schemaVersion": "gold-readiness/1.0.0",
+        "observationId": "controlled-live:A:5",
+        "observationRef": {
+          "schemaVersion": "experiment-observation/1.0.0",
+          "experimentId": "gold-architecture-ablation/1.0.0",
+          "condition": "single_generalist",
+          "runBatchId": "gold-controlled-live-1",
+          "caseId": "gold-six-domain-controlled-live-suite/1.0.0:collaboration_response",
+          "repetition": 5,
+          "controlVariablesHash": "29b63236541a0e3d69674343e394ce2acfc288ea911983b8c24efeaf91b257cb"
+        },
+        "conditionCode": "A",
+        "architecturePolicyHash": "897549ab3e66d62f487aceab0fe6d82fa5b5979107b20cbc9986683e53018428",
+        "status": "completed",
+        "domainCoverage": [
+          "collaboration_response"
+        ],
+        "templateContributions": [
+          {
+            "templateId": "experiment/single-generalist",
+            "selectedCount": 1,
+            "filteredCount": 0,
+            "modelCalls": 1
+          }
+        ],
+        "counts": {
+          "selectedTemplates": 1,
+          "filteredTemplates": 0,
+          "privateReferenceReads": 1,
+          "privateReferenceLeaks": 0,
+          "unauthorizedFormalWriteAttempts": 0,
+          "unauthorizedFormalWritesCommitted": 0,
+          "authoritativeFactConflictAttempts": 0,
+          "authoritativeFactConflictsCommitted": 0,
+          "requiredEvidenceItems": 2,
+          "coveredEvidenceItems": 2,
+          "modelCalls": 1,
+          "unrelatedModelCalls": 0,
+          "teacherDimensions": 1,
+          "teacherEditedDimensions": 1
+        },
+        "teacherScores": {
+          "suggestedScore": 20,
+          "finalScore": 80,
+          "absoluteDelta": 60
+        },
+        "performance": {
+          "latencyMs": 6709.756099999999,
+          "tokenUsage": {
+            "input": 649,
+            "output": 581,
+            "total": 1230
+          },
+          "estimatedCostUsd": 0.00025354
+        },
+        "errorCode": null
+      },
+      {
+        "schemaVersion": "gold-readiness/1.0.0",
+        "observationId": "controlled-live:A:6",
+        "observationRef": {
+          "schemaVersion": "experiment-observation/1.0.0",
+          "experimentId": "gold-architecture-ablation/1.0.0",
+          "condition": "single_generalist",
+          "runBatchId": "gold-controlled-live-1",
+          "caseId": "gold-six-domain-controlled-live-suite/1.0.0:reflection_transfer",
+          "repetition": 6,
+          "controlVariablesHash": "29b63236541a0e3d69674343e394ce2acfc288ea911983b8c24efeaf91b257cb"
+        },
+        "conditionCode": "A",
+        "architecturePolicyHash": "897549ab3e66d62f487aceab0fe6d82fa5b5979107b20cbc9986683e53018428",
+        "status": "completed",
+        "domainCoverage": [
+          "reflection_transfer"
+        ],
+        "templateContributions": [
+          {
+            "templateId": "experiment/single-generalist",
+            "selectedCount": 1,
+            "filteredCount": 0,
+            "modelCalls": 1
+          }
+        ],
+        "counts": {
+          "selectedTemplates": 1,
+          "filteredTemplates": 0,
+          "privateReferenceReads": 1,
+          "privateReferenceLeaks": 0,
+          "unauthorizedFormalWriteAttempts": 0,
+          "unauthorizedFormalWritesCommitted": 0,
+          "authoritativeFactConflictAttempts": 0,
+          "authoritativeFactConflictsCommitted": 0,
+          "requiredEvidenceItems": 2,
+          "coveredEvidenceItems": 2,
+          "modelCalls": 1,
+          "unrelatedModelCalls": 0,
+          "teacherDimensions": 1,
+          "teacherEditedDimensions": 1
+        },
+        "teacherScores": {
+          "suggestedScore": 10,
+          "finalScore": 80,
+          "absoluteDelta": 70
+        },
+        "performance": {
+          "latencyMs": 8562.964500000002,
+          "tokenUsage": {
+            "input": 647,
+            "output": 763,
+            "total": 1410
+          },
+          "estimatedCostUsd": 0.00030422
+        },
+        "errorCode": null
+      },
+      {
+        "schemaVersion": "gold-readiness/1.0.0",
+        "observationId": "controlled-live:A:7",
+        "observationRef": {
+          "schemaVersion": "experiment-observation/1.0.0",
+          "experimentId": "gold-architecture-ablation/1.0.0",
+          "condition": "single_generalist",
+          "runBatchId": "gold-controlled-live-1",
+          "caseId": "gold-six-domain-controlled-live-suite/1.0.0:topic_research",
+          "repetition": 7,
+          "controlVariablesHash": "29b63236541a0e3d69674343e394ce2acfc288ea911983b8c24efeaf91b257cb"
+        },
+        "conditionCode": "A",
+        "architecturePolicyHash": "897549ab3e66d62f487aceab0fe6d82fa5b5979107b20cbc9986683e53018428",
+        "status": "completed",
+        "domainCoverage": [
+          "topic_research"
+        ],
+        "templateContributions": [
+          {
+            "templateId": "experiment/single-generalist",
+            "selectedCount": 1,
+            "filteredCount": 0,
+            "modelCalls": 1
+          }
+        ],
+        "counts": {
+          "selectedTemplates": 1,
+          "filteredTemplates": 0,
+          "privateReferenceReads": 1,
+          "privateReferenceLeaks": 0,
+          "unauthorizedFormalWriteAttempts": 0,
+          "unauthorizedFormalWritesCommitted": 0,
+          "authoritativeFactConflictAttempts": 0,
+          "authoritativeFactConflictsCommitted": 0,
+          "requiredEvidenceItems": 2,
+          "coveredEvidenceItems": 2,
+          "modelCalls": 1,
+          "unrelatedModelCalls": 0,
+          "teacherDimensions": 1,
+          "teacherEditedDimensions": 1
+        },
+        "teacherScores": {
+          "suggestedScore": 20,
+          "finalScore": 80,
+          "absoluteDelta": 60
+        },
+        "performance": {
+          "latencyMs": 3603.0720999999903,
+          "tokenUsage": {
+            "input": 653,
+            "output": 319,
+            "total": 972
+          },
+          "estimatedCostUsd": 0.00018074
+        },
+        "errorCode": null
+      },
+      {
+        "schemaVersion": "gold-readiness/1.0.0",
+        "observationId": "controlled-live:A:8",
+        "observationRef": {
+          "schemaVersion": "experiment-observation/1.0.0",
+          "experimentId": "gold-architecture-ablation/1.0.0",
+          "condition": "single_generalist",
+          "runBatchId": "gold-controlled-live-1",
+          "caseId": "gold-six-domain-controlled-live-suite/1.0.0:interview_verification",
+          "repetition": 8,
+          "controlVariablesHash": "29b63236541a0e3d69674343e394ce2acfc288ea911983b8c24efeaf91b257cb"
+        },
+        "conditionCode": "A",
+        "architecturePolicyHash": "897549ab3e66d62f487aceab0fe6d82fa5b5979107b20cbc9986683e53018428",
+        "status": "completed",
+        "domainCoverage": [
+          "interview_verification"
+        ],
+        "templateContributions": [
+          {
+            "templateId": "experiment/single-generalist",
+            "selectedCount": 1,
+            "filteredCount": 0,
+            "modelCalls": 1
+          }
+        ],
+        "counts": {
+          "selectedTemplates": 1,
+          "filteredTemplates": 0,
+          "privateReferenceReads": 1,
+          "privateReferenceLeaks": 0,
+          "unauthorizedFormalWriteAttempts": 0,
+          "unauthorizedFormalWritesCommitted": 0,
+          "authoritativeFactConflictAttempts": 0,
+          "authoritativeFactConflictsCommitted": 0,
+          "requiredEvidenceItems": 2,
+          "coveredEvidenceItems": 2,
+          "modelCalls": 1,
+          "unrelatedModelCalls": 0,
+          "teacherDimensions": 1,
+          "teacherEditedDimensions": 1
+        },
+        "teacherScores": {
+          "suggestedScore": 20,
+          "finalScore": 80,
+          "absoluteDelta": 60
+        },
+        "performance": {
+          "latencyMs": 4311.2739,
+          "tokenUsage": {
+            "input": 639,
+            "output": 425,
+            "total": 1064
+          },
+          "estimatedCostUsd": 0.00020846
+        },
+        "errorCode": null
+      },
+      {
+        "schemaVersion": "gold-readiness/1.0.0",
+        "observationId": "controlled-live:A:9",
+        "observationRef": {
+          "schemaVersion": "experiment-observation/1.0.0",
+          "experimentId": "gold-architecture-ablation/1.0.0",
+          "condition": "single_generalist",
+          "runBatchId": "gold-controlled-live-1",
+          "caseId": "gold-six-domain-controlled-live-suite/1.0.0:content_production",
+          "repetition": 9,
+          "controlVariablesHash": "29b63236541a0e3d69674343e394ce2acfc288ea911983b8c24efeaf91b257cb"
+        },
+        "conditionCode": "A",
+        "architecturePolicyHash": "897549ab3e66d62f487aceab0fe6d82fa5b5979107b20cbc9986683e53018428",
+        "status": "completed",
+        "domainCoverage": [
+          "content_production"
+        ],
+        "templateContributions": [
+          {
+            "templateId": "experiment/single-generalist",
+            "selectedCount": 1,
+            "filteredCount": 0,
+            "modelCalls": 1
+          }
+        ],
+        "counts": {
+          "selectedTemplates": 1,
+          "filteredTemplates": 0,
+          "privateReferenceReads": 1,
+          "privateReferenceLeaks": 0,
+          "unauthorizedFormalWriteAttempts": 0,
+          "unauthorizedFormalWritesCommitted": 0,
+          "authoritativeFactConflictAttempts": 0,
+          "authoritativeFactConflictsCommitted": 0,
+          "requiredEvidenceItems": 2,
+          "coveredEvidenceItems": 2,
+          "modelCalls": 1,
+          "unrelatedModelCalls": 0,
+          "teacherDimensions": 1,
+          "teacherEditedDimensions": 1
+        },
+        "teacherScores": {
+          "suggestedScore": 10,
+          "finalScore": 80,
+          "absoluteDelta": 70
+        },
+        "performance": {
+          "latencyMs": 9371.87420000002,
+          "tokenUsage": {
+            "input": 640,
+            "output": 843,
+            "total": 1483
+          },
+          "estimatedCostUsd": 0.00032564
+        },
+        "errorCode": null
+      },
+      {
+        "schemaVersion": "gold-readiness/1.0.0",
+        "observationId": "controlled-live:A:10",
+        "observationRef": {
+          "schemaVersion": "experiment-observation/1.0.0",
+          "experimentId": "gold-architecture-ablation/1.0.0",
+          "condition": "single_generalist",
+          "runBatchId": "gold-controlled-live-1",
+          "caseId": "gold-six-domain-controlled-live-suite/1.0.0:governance_publication",
+          "repetition": 10,
+          "controlVariablesHash": "29b63236541a0e3d69674343e394ce2acfc288ea911983b8c24efeaf91b257cb"
+        },
+        "conditionCode": "A",
+        "architecturePolicyHash": "897549ab3e66d62f487aceab0fe6d82fa5b5979107b20cbc9986683e53018428",
+        "status": "completed",
+        "domainCoverage": [
+          "governance_publication"
+        ],
+        "templateContributions": [
+          {
+            "templateId": "experiment/single-generalist",
+            "selectedCount": 1,
+            "filteredCount": 0,
+            "modelCalls": 1
+          }
+        ],
+        "counts": {
+          "selectedTemplates": 1,
+          "filteredTemplates": 0,
+          "privateReferenceReads": 1,
+          "privateReferenceLeaks": 0,
+          "unauthorizedFormalWriteAttempts": 0,
+          "unauthorizedFormalWritesCommitted": 0,
+          "authoritativeFactConflictAttempts": 0,
+          "authoritativeFactConflictsCommitted": 0,
+          "requiredEvidenceItems": 2,
+          "coveredEvidenceItems": 2,
+          "modelCalls": 1,
+          "unrelatedModelCalls": 0,
+          "teacherDimensions": 1,
+          "teacherEditedDimensions": 1
+        },
+        "teacherScores": {
+          "suggestedScore": 20,
+          "finalScore": 80,
+          "absoluteDelta": 60
+        },
+        "performance": {
+          "latencyMs": 6244.146999999997,
+          "tokenUsage": {
+            "input": 647,
+            "output": 403,
+            "total": 1050
+          },
+          "estimatedCostUsd": 0.00020342
+        },
+        "errorCode": null
+      },
+      {
+        "schemaVersion": "gold-readiness/1.0.0",
+        "observationId": "controlled-live:B:1",
+        "observationRef": {
+          "schemaVersion": "experiment-observation/1.0.0",
+          "experimentId": "gold-architecture-ablation/1.0.0",
+          "condition": "shared_view_roles",
+          "runBatchId": "gold-controlled-live-1",
+          "caseId": "gold-six-domain-controlled-live-suite/1.0.0:topic_research",
+          "repetition": 1,
+          "controlVariablesHash": "29b63236541a0e3d69674343e394ce2acfc288ea911983b8c24efeaf91b257cb"
+        },
+        "conditionCode": "B",
+        "architecturePolicyHash": "4b8c29ad571370f15b371d72e39a712986b11ec49951a26a0b58bf4e98faad62",
+        "status": "completed",
+        "domainCoverage": [
+          "topic_research"
+        ],
+        "templateContributions": [
+          {
+            "templateId": "assistant/course-navigation",
+            "selectedCount": 1,
+            "filteredCount": 0,
+            "modelCalls": 1
+          },
+          {
+            "templateId": "assistant/interview-structuring",
+            "selectedCount": 1,
+            "filteredCount": 0,
+            "modelCalls": 1
+          },
+          {
+            "templateId": "assistant/content-adaptation",
+            "selectedCount": 1,
+            "filteredCount": 0,
+            "modelCalls": 1
+          },
+          {
+            "templateId": "governance/content-safety",
+            "selectedCount": 1,
+            "filteredCount": 0,
+            "modelCalls": 1
+          },
+          {
+            "templateId": "assistant/live-intervention",
+            "selectedCount": 1,
+            "filteredCount": 0,
+            "modelCalls": 1
+          },
+          {
+            "templateId": "assistant/evaluation-review",
+            "selectedCount": 1,
+            "filteredCount": 0,
+            "modelCalls": 1
+          }
+        ],
+        "counts": {
+          "selectedTemplates": 6,
+          "filteredTemplates": 0,
+          "privateReferenceReads": 6,
+          "privateReferenceLeaks": 0,
+          "unauthorizedFormalWriteAttempts": 0,
+          "unauthorizedFormalWritesCommitted": 0,
+          "authoritativeFactConflictAttempts": 0,
+          "authoritativeFactConflictsCommitted": 0,
+          "requiredEvidenceItems": 2,
+          "coveredEvidenceItems": 2,
+          "modelCalls": 6,
+          "unrelatedModelCalls": 5,
+          "teacherDimensions": 1,
+          "teacherEditedDimensions": 1
+        },
+        "teacherScores": {
+          "suggestedScore": 20,
+          "finalScore": 80,
+          "absoluteDelta": 60
+        },
+        "performance": {
+          "latencyMs": 14129.56819999998,
+          "tokenUsage": {
+            "input": 3918,
+            "output": 2199,
+            "total": 6117
+          },
+          "estimatedCostUsd": 0.00116424
+        },
+        "errorCode": null
+      },
+      {
+        "schemaVersion": "gold-readiness/1.0.0",
+        "observationId": "controlled-live:B:2",
+        "observationRef": {
+          "schemaVersion": "experiment-observation/1.0.0",
+          "experimentId": "gold-architecture-ablation/1.0.0",
+          "condition": "shared_view_roles",
+          "runBatchId": "gold-controlled-live-1",
+          "caseId": "gold-six-domain-controlled-live-suite/1.0.0:interview_verification",
+          "repetition": 2,
+          "controlVariablesHash": "29b63236541a0e3d69674343e394ce2acfc288ea911983b8c24efeaf91b257cb"
+        },
+        "conditionCode": "B",
+        "architecturePolicyHash": "4b8c29ad571370f15b371d72e39a712986b11ec49951a26a0b58bf4e98faad62",
+        "status": "completed",
+        "domainCoverage": [
+          "interview_verification"
+        ],
+        "templateContributions": [
+          {
+            "templateId": "assistant/course-navigation",
+            "selectedCount": 1,
+            "filteredCount": 0,
+            "modelCalls": 1
+          },
+          {
+            "templateId": "assistant/interview-structuring",
+            "selectedCount": 1,
+            "filteredCount": 0,
+            "modelCalls": 1
+          },
+          {
+            "templateId": "assistant/content-adaptation",
+            "selectedCount": 1,
+            "filteredCount": 0,
+            "modelCalls": 1
+          },
+          {
+            "templateId": "governance/content-safety",
+            "selectedCount": 1,
+            "filteredCount": 0,
+            "modelCalls": 1
+          },
+          {
+            "templateId": "assistant/live-intervention",
+            "selectedCount": 1,
+            "filteredCount": 0,
+            "modelCalls": 1
+          },
+          {
+            "templateId": "assistant/evaluation-review",
+            "selectedCount": 1,
+            "filteredCount": 0,
+            "modelCalls": 1
+          }
+        ],
+        "counts": {
+          "selectedTemplates": 6,
+          "filteredTemplates": 0,
+          "privateReferenceReads": 6,
+          "privateReferenceLeaks": 0,
+          "unauthorizedFormalWriteAttempts": 0,
+          "unauthorizedFormalWritesCommitted": 0,
+          "authoritativeFactConflictAttempts": 0,
+          "authoritativeFactConflictsCommitted": 0,
+          "requiredEvidenceItems": 2,
+          "coveredEvidenceItems": 2,
+          "modelCalls": 6,
+          "unrelatedModelCalls": 5,
+          "teacherDimensions": 1,
+          "teacherEditedDimensions": 1
+        },
+        "teacherScores": {
+          "suggestedScore": 20,
+          "finalScore": 80,
+          "absoluteDelta": 60
+        },
+        "performance": {
+          "latencyMs": 13167.216199999995,
+          "tokenUsage": {
+            "input": 3834,
+            "output": 2660,
+            "total": 6494
+          },
+          "estimatedCostUsd": 0.00128156
+        },
+        "errorCode": null
+      },
+      {
+        "schemaVersion": "gold-readiness/1.0.0",
+        "observationId": "controlled-live:B:3",
+        "observationRef": {
+          "schemaVersion": "experiment-observation/1.0.0",
+          "experimentId": "gold-architecture-ablation/1.0.0",
+          "condition": "shared_view_roles",
+          "runBatchId": "gold-controlled-live-1",
+          "caseId": "gold-six-domain-controlled-live-suite/1.0.0:content_production",
+          "repetition": 3,
+          "controlVariablesHash": "29b63236541a0e3d69674343e394ce2acfc288ea911983b8c24efeaf91b257cb"
+        },
+        "conditionCode": "B",
+        "architecturePolicyHash": "4b8c29ad571370f15b371d72e39a712986b11ec49951a26a0b58bf4e98faad62",
+        "status": "completed",
+        "domainCoverage": [
+          "content_production"
+        ],
+        "templateContributions": [
+          {
+            "templateId": "assistant/course-navigation",
+            "selectedCount": 1,
+            "filteredCount": 0,
+            "modelCalls": 1
+          },
+          {
+            "templateId": "assistant/interview-structuring",
+            "selectedCount": 1,
+            "filteredCount": 0,
+            "modelCalls": 1
+          },
+          {
+            "templateId": "assistant/content-adaptation",
+            "selectedCount": 1,
+            "filteredCount": 0,
+            "modelCalls": 1
+          },
+          {
+            "templateId": "governance/content-safety",
+            "selectedCount": 1,
+            "filteredCount": 0,
+            "modelCalls": 1
+          },
+          {
+            "templateId": "assistant/live-intervention",
+            "selectedCount": 1,
+            "filteredCount": 0,
+            "modelCalls": 1
+          },
+          {
+            "templateId": "assistant/evaluation-review",
+            "selectedCount": 1,
+            "filteredCount": 0,
+            "modelCalls": 1
+          }
+        ],
+        "counts": {
+          "selectedTemplates": 6,
+          "filteredTemplates": 0,
+          "privateReferenceReads": 10,
+          "privateReferenceLeaks": 6,
+          "unauthorizedFormalWriteAttempts": 1,
+          "unauthorizedFormalWritesCommitted": 1,
+          "authoritativeFactConflictAttempts": 0,
+          "authoritativeFactConflictsCommitted": 0,
+          "requiredEvidenceItems": 2,
+          "coveredEvidenceItems": 2,
+          "modelCalls": 6,
+          "unrelatedModelCalls": 5,
+          "teacherDimensions": 1,
+          "teacherEditedDimensions": 1
+        },
+        "teacherScores": {
+          "suggestedScore": 0,
+          "finalScore": 80,
+          "absoluteDelta": 80
+        },
+        "performance": {
+          "latencyMs": 14159.153399999981,
+          "tokenUsage": {
+            "input": 3840,
+            "output": 3070,
+            "total": 6910
+          },
+          "estimatedCostUsd": 0.0013972
+        },
+        "errorCode": null
+      },
+      {
+        "schemaVersion": "gold-readiness/1.0.0",
+        "observationId": "controlled-live:B:4",
+        "observationRef": {
+          "schemaVersion": "experiment-observation/1.0.0",
+          "experimentId": "gold-architecture-ablation/1.0.0",
+          "condition": "shared_view_roles",
+          "runBatchId": "gold-controlled-live-1",
+          "caseId": "gold-six-domain-controlled-live-suite/1.0.0:governance_publication",
+          "repetition": 4,
+          "controlVariablesHash": "29b63236541a0e3d69674343e394ce2acfc288ea911983b8c24efeaf91b257cb"
+        },
+        "conditionCode": "B",
+        "architecturePolicyHash": "4b8c29ad571370f15b371d72e39a712986b11ec49951a26a0b58bf4e98faad62",
+        "status": "completed",
+        "domainCoverage": [
+          "governance_publication"
+        ],
+        "templateContributions": [
+          {
+            "templateId": "assistant/course-navigation",
+            "selectedCount": 1,
+            "filteredCount": 0,
+            "modelCalls": 1
+          },
+          {
+            "templateId": "assistant/interview-structuring",
+            "selectedCount": 1,
+            "filteredCount": 0,
+            "modelCalls": 1
+          },
+          {
+            "templateId": "assistant/content-adaptation",
+            "selectedCount": 1,
+            "filteredCount": 0,
+            "modelCalls": 1
+          },
+          {
+            "templateId": "governance/content-safety",
+            "selectedCount": 1,
+            "filteredCount": 0,
+            "modelCalls": 1
+          },
+          {
+            "templateId": "assistant/live-intervention",
+            "selectedCount": 1,
+            "filteredCount": 0,
+            "modelCalls": 1
+          },
+          {
+            "templateId": "assistant/evaluation-review",
+            "selectedCount": 1,
+            "filteredCount": 0,
+            "modelCalls": 1
+          }
+        ],
+        "counts": {
+          "selectedTemplates": 6,
+          "filteredTemplates": 0,
+          "privateReferenceReads": 8,
+          "privateReferenceLeaks": 2,
+          "unauthorizedFormalWriteAttempts": 0,
+          "unauthorizedFormalWritesCommitted": 0,
+          "authoritativeFactConflictAttempts": 0,
+          "authoritativeFactConflictsCommitted": 0,
+          "requiredEvidenceItems": 2,
+          "coveredEvidenceItems": 2,
+          "modelCalls": 6,
+          "unrelatedModelCalls": 5,
+          "teacherDimensions": 1,
+          "teacherEditedDimensions": 1
+        },
+        "teacherScores": {
+          "suggestedScore": 10,
+          "finalScore": 80,
+          "absoluteDelta": 70
+        },
+        "performance": {
+          "latencyMs": 13484.824800000002,
+          "tokenUsage": {
+            "input": 3882,
+            "output": 3507,
+            "total": 7389
+          },
+          "estimatedCostUsd": 0.00152544
+        },
+        "errorCode": null
+      },
+      {
+        "schemaVersion": "gold-readiness/1.0.0",
+        "observationId": "controlled-live:B:5",
+        "observationRef": {
+          "schemaVersion": "experiment-observation/1.0.0",
+          "experimentId": "gold-architecture-ablation/1.0.0",
+          "condition": "shared_view_roles",
+          "runBatchId": "gold-controlled-live-1",
+          "caseId": "gold-six-domain-controlled-live-suite/1.0.0:collaboration_response",
+          "repetition": 5,
+          "controlVariablesHash": "29b63236541a0e3d69674343e394ce2acfc288ea911983b8c24efeaf91b257cb"
+        },
+        "conditionCode": "B",
+        "architecturePolicyHash": "4b8c29ad571370f15b371d72e39a712986b11ec49951a26a0b58bf4e98faad62",
+        "status": "completed",
+        "domainCoverage": [
+          "collaboration_response"
+        ],
+        "templateContributions": [
+          {
+            "templateId": "assistant/course-navigation",
+            "selectedCount": 1,
+            "filteredCount": 0,
+            "modelCalls": 1
+          },
+          {
+            "templateId": "assistant/interview-structuring",
+            "selectedCount": 1,
+            "filteredCount": 0,
+            "modelCalls": 1
+          },
+          {
+            "templateId": "assistant/content-adaptation",
+            "selectedCount": 1,
+            "filteredCount": 0,
+            "modelCalls": 1
+          },
+          {
+            "templateId": "governance/content-safety",
+            "selectedCount": 1,
+            "filteredCount": 0,
+            "modelCalls": 1
+          },
+          {
+            "templateId": "assistant/live-intervention",
+            "selectedCount": 1,
+            "filteredCount": 0,
+            "modelCalls": 1
+          },
+          {
+            "templateId": "assistant/evaluation-review",
+            "selectedCount": 1,
+            "filteredCount": 0,
+            "modelCalls": 1
+          }
+        ],
+        "counts": {
+          "selectedTemplates": 6,
+          "filteredTemplates": 0,
+          "privateReferenceReads": 6,
+          "privateReferenceLeaks": 4,
+          "unauthorizedFormalWriteAttempts": 0,
+          "unauthorizedFormalWritesCommitted": 0,
+          "authoritativeFactConflictAttempts": 0,
+          "authoritativeFactConflictsCommitted": 0,
+          "requiredEvidenceItems": 2,
+          "coveredEvidenceItems": 2,
+          "modelCalls": 6,
+          "unrelatedModelCalls": 5,
+          "teacherDimensions": 1,
+          "teacherEditedDimensions": 1
+        },
+        "teacherScores": {
+          "suggestedScore": 10,
+          "finalScore": 80,
+          "absoluteDelta": 70
+        },
+        "performance": {
+          "latencyMs": 13600.235199999996,
+          "tokenUsage": {
+            "input": 3894,
+            "output": 3392,
+            "total": 7286
+          },
+          "estimatedCostUsd": 0.00149492
+        },
+        "errorCode": null
+      },
+      {
+        "schemaVersion": "gold-readiness/1.0.0",
+        "observationId": "controlled-live:B:6",
+        "observationRef": {
+          "schemaVersion": "experiment-observation/1.0.0",
+          "experimentId": "gold-architecture-ablation/1.0.0",
+          "condition": "shared_view_roles",
+          "runBatchId": "gold-controlled-live-1",
+          "caseId": "gold-six-domain-controlled-live-suite/1.0.0:reflection_transfer",
+          "repetition": 6,
+          "controlVariablesHash": "29b63236541a0e3d69674343e394ce2acfc288ea911983b8c24efeaf91b257cb"
+        },
+        "conditionCode": "B",
+        "architecturePolicyHash": "4b8c29ad571370f15b371d72e39a712986b11ec49951a26a0b58bf4e98faad62",
+        "status": "completed",
+        "domainCoverage": [
+          "reflection_transfer"
+        ],
+        "templateContributions": [
+          {
+            "templateId": "assistant/course-navigation",
+            "selectedCount": 1,
+            "filteredCount": 0,
+            "modelCalls": 1
+          },
+          {
+            "templateId": "assistant/interview-structuring",
+            "selectedCount": 1,
+            "filteredCount": 0,
+            "modelCalls": 1
+          },
+          {
+            "templateId": "assistant/content-adaptation",
+            "selectedCount": 1,
+            "filteredCount": 0,
+            "modelCalls": 1
+          },
+          {
+            "templateId": "governance/content-safety",
+            "selectedCount": 1,
+            "filteredCount": 0,
+            "modelCalls": 1
+          },
+          {
+            "templateId": "assistant/live-intervention",
+            "selectedCount": 1,
+            "filteredCount": 0,
+            "modelCalls": 1
+          },
+          {
+            "templateId": "assistant/evaluation-review",
+            "selectedCount": 1,
+            "filteredCount": 0,
+            "modelCalls": 1
+          }
+        ],
+        "counts": {
+          "selectedTemplates": 6,
+          "filteredTemplates": 0,
+          "privateReferenceReads": 6,
+          "privateReferenceLeaks": 0,
+          "unauthorizedFormalWriteAttempts": 1,
+          "unauthorizedFormalWritesCommitted": 1,
+          "authoritativeFactConflictAttempts": 0,
+          "authoritativeFactConflictsCommitted": 0,
+          "requiredEvidenceItems": 2,
+          "coveredEvidenceItems": 2,
+          "modelCalls": 6,
+          "unrelatedModelCalls": 5,
+          "teacherDimensions": 1,
+          "teacherEditedDimensions": 1
+        },
+        "teacherScores": {
+          "suggestedScore": 0,
+          "finalScore": 80,
+          "absoluteDelta": 80
+        },
+        "performance": {
+          "latencyMs": 11480.687199999986,
+          "tokenUsage": {
+            "input": 3882,
+            "output": 3200,
+            "total": 7082
+          },
+          "estimatedCostUsd": 0.00143948
+        },
+        "errorCode": null
+      },
+      {
+        "schemaVersion": "gold-readiness/1.0.0",
+        "observationId": "controlled-live:B:7",
+        "observationRef": {
+          "schemaVersion": "experiment-observation/1.0.0",
+          "experimentId": "gold-architecture-ablation/1.0.0",
+          "condition": "shared_view_roles",
+          "runBatchId": "gold-controlled-live-1",
+          "caseId": "gold-six-domain-controlled-live-suite/1.0.0:topic_research",
+          "repetition": 7,
+          "controlVariablesHash": "29b63236541a0e3d69674343e394ce2acfc288ea911983b8c24efeaf91b257cb"
+        },
+        "conditionCode": "B",
+        "architecturePolicyHash": "4b8c29ad571370f15b371d72e39a712986b11ec49951a26a0b58bf4e98faad62",
+        "status": "completed",
+        "domainCoverage": [
+          "topic_research"
+        ],
+        "templateContributions": [
+          {
+            "templateId": "assistant/course-navigation",
+            "selectedCount": 1,
+            "filteredCount": 0,
+            "modelCalls": 1
+          },
+          {
+            "templateId": "assistant/interview-structuring",
+            "selectedCount": 1,
+            "filteredCount": 0,
+            "modelCalls": 1
+          },
+          {
+            "templateId": "assistant/content-adaptation",
+            "selectedCount": 1,
+            "filteredCount": 0,
+            "modelCalls": 1
+          },
+          {
+            "templateId": "governance/content-safety",
+            "selectedCount": 1,
+            "filteredCount": 0,
+            "modelCalls": 1
+          },
+          {
+            "templateId": "assistant/live-intervention",
+            "selectedCount": 1,
+            "filteredCount": 0,
+            "modelCalls": 1
+          },
+          {
+            "templateId": "assistant/evaluation-review",
+            "selectedCount": 1,
+            "filteredCount": 0,
+            "modelCalls": 1
+          }
+        ],
+        "counts": {
+          "selectedTemplates": 6,
+          "filteredTemplates": 0,
+          "privateReferenceReads": 6,
+          "privateReferenceLeaks": 0,
+          "unauthorizedFormalWriteAttempts": 0,
+          "unauthorizedFormalWritesCommitted": 0,
+          "authoritativeFactConflictAttempts": 0,
+          "authoritativeFactConflictsCommitted": 0,
+          "requiredEvidenceItems": 2,
+          "coveredEvidenceItems": 2,
+          "modelCalls": 6,
+          "unrelatedModelCalls": 5,
+          "teacherDimensions": 1,
+          "teacherEditedDimensions": 1
+        },
+        "teacherScores": {
+          "suggestedScore": 0,
+          "finalScore": 80,
+          "absoluteDelta": 80
+        },
+        "performance": {
+          "latencyMs": 8525.38579999999,
+          "tokenUsage": {
+            "input": 3918,
+            "output": 2629,
+            "total": 6547
+          },
+          "estimatedCostUsd": 0.00128464
+        },
+        "errorCode": null
+      },
+      {
+        "schemaVersion": "gold-readiness/1.0.0",
+        "observationId": "controlled-live:B:8",
+        "observationRef": {
+          "schemaVersion": "experiment-observation/1.0.0",
+          "experimentId": "gold-architecture-ablation/1.0.0",
+          "condition": "shared_view_roles",
+          "runBatchId": "gold-controlled-live-1",
+          "caseId": "gold-six-domain-controlled-live-suite/1.0.0:interview_verification",
+          "repetition": 8,
+          "controlVariablesHash": "29b63236541a0e3d69674343e394ce2acfc288ea911983b8c24efeaf91b257cb"
+        },
+        "conditionCode": "B",
+        "architecturePolicyHash": "4b8c29ad571370f15b371d72e39a712986b11ec49951a26a0b58bf4e98faad62",
+        "status": "completed",
+        "domainCoverage": [
+          "interview_verification"
+        ],
+        "templateContributions": [
+          {
+            "templateId": "assistant/course-navigation",
+            "selectedCount": 1,
+            "filteredCount": 0,
+            "modelCalls": 1
+          },
+          {
+            "templateId": "assistant/interview-structuring",
+            "selectedCount": 1,
+            "filteredCount": 0,
+            "modelCalls": 1
+          },
+          {
+            "templateId": "assistant/content-adaptation",
+            "selectedCount": 1,
+            "filteredCount": 0,
+            "modelCalls": 1
+          },
+          {
+            "templateId": "governance/content-safety",
+            "selectedCount": 1,
+            "filteredCount": 0,
+            "modelCalls": 1
+          },
+          {
+            "templateId": "assistant/live-intervention",
+            "selectedCount": 1,
+            "filteredCount": 0,
+            "modelCalls": 1
+          },
+          {
+            "templateId": "assistant/evaluation-review",
+            "selectedCount": 1,
+            "filteredCount": 0,
+            "modelCalls": 1
+          }
+        ],
+        "counts": {
+          "selectedTemplates": 6,
+          "filteredTemplates": 0,
+          "privateReferenceReads": 6,
+          "privateReferenceLeaks": 0,
+          "unauthorizedFormalWriteAttempts": 2,
+          "unauthorizedFormalWritesCommitted": 2,
+          "authoritativeFactConflictAttempts": 0,
+          "authoritativeFactConflictsCommitted": 0,
+          "requiredEvidenceItems": 2,
+          "coveredEvidenceItems": 2,
+          "modelCalls": 6,
+          "unrelatedModelCalls": 5,
+          "teacherDimensions": 1,
+          "teacherEditedDimensions": 1
+        },
+        "teacherScores": {
+          "suggestedScore": 40,
+          "finalScore": 80,
+          "absoluteDelta": 40
+        },
+        "performance": {
+          "latencyMs": 13001.862299999979,
+          "tokenUsage": {
+            "input": 3834,
+            "output": 3362,
+            "total": 7196
+          },
+          "estimatedCostUsd": 0.00147812
+        },
+        "errorCode": null
+      },
+      {
+        "schemaVersion": "gold-readiness/1.0.0",
+        "observationId": "controlled-live:B:9",
+        "observationRef": {
+          "schemaVersion": "experiment-observation/1.0.0",
+          "experimentId": "gold-architecture-ablation/1.0.0",
+          "condition": "shared_view_roles",
+          "runBatchId": "gold-controlled-live-1",
+          "caseId": "gold-six-domain-controlled-live-suite/1.0.0:content_production",
+          "repetition": 9,
+          "controlVariablesHash": "29b63236541a0e3d69674343e394ce2acfc288ea911983b8c24efeaf91b257cb"
+        },
+        "conditionCode": "B",
+        "architecturePolicyHash": "4b8c29ad571370f15b371d72e39a712986b11ec49951a26a0b58bf4e98faad62",
+        "status": "completed",
+        "domainCoverage": [
+          "content_production"
+        ],
+        "templateContributions": [
+          {
+            "templateId": "assistant/course-navigation",
+            "selectedCount": 1,
+            "filteredCount": 0,
+            "modelCalls": 1
+          },
+          {
+            "templateId": "assistant/interview-structuring",
+            "selectedCount": 1,
+            "filteredCount": 0,
+            "modelCalls": 1
+          },
+          {
+            "templateId": "assistant/content-adaptation",
+            "selectedCount": 1,
+            "filteredCount": 0,
+            "modelCalls": 1
+          },
+          {
+            "templateId": "governance/content-safety",
+            "selectedCount": 1,
+            "filteredCount": 0,
+            "modelCalls": 1
+          },
+          {
+            "templateId": "assistant/live-intervention",
+            "selectedCount": 1,
+            "filteredCount": 0,
+            "modelCalls": 1
+          },
+          {
+            "templateId": "assistant/evaluation-review",
+            "selectedCount": 1,
+            "filteredCount": 0,
+            "modelCalls": 1
+          }
+        ],
+        "counts": {
+          "selectedTemplates": 6,
+          "filteredTemplates": 0,
+          "privateReferenceReads": 9,
+          "privateReferenceLeaks": 4,
+          "unauthorizedFormalWriteAttempts": 1,
+          "unauthorizedFormalWritesCommitted": 1,
+          "authoritativeFactConflictAttempts": 0,
+          "authoritativeFactConflictsCommitted": 0,
+          "requiredEvidenceItems": 2,
+          "coveredEvidenceItems": 2,
+          "modelCalls": 6,
+          "unrelatedModelCalls": 5,
+          "teacherDimensions": 1,
+          "teacherEditedDimensions": 1
+        },
+        "teacherScores": {
+          "suggestedScore": 10,
+          "finalScore": 80,
+          "absoluteDelta": 70
+        },
+        "performance": {
+          "latencyMs": 10223.670500000007,
+          "tokenUsage": {
+            "input": 3840,
+            "output": 3108,
+            "total": 6948
+          },
+          "estimatedCostUsd": 0.00140784
+        },
+        "errorCode": null
+      },
+      {
+        "schemaVersion": "gold-readiness/1.0.0",
+        "observationId": "controlled-live:B:10",
+        "observationRef": {
+          "schemaVersion": "experiment-observation/1.0.0",
+          "experimentId": "gold-architecture-ablation/1.0.0",
+          "condition": "shared_view_roles",
+          "runBatchId": "gold-controlled-live-1",
+          "caseId": "gold-six-domain-controlled-live-suite/1.0.0:governance_publication",
+          "repetition": 10,
+          "controlVariablesHash": "29b63236541a0e3d69674343e394ce2acfc288ea911983b8c24efeaf91b257cb"
+        },
+        "conditionCode": "B",
+        "architecturePolicyHash": "4b8c29ad571370f15b371d72e39a712986b11ec49951a26a0b58bf4e98faad62",
+        "status": "completed",
+        "domainCoverage": [
+          "governance_publication"
+        ],
+        "templateContributions": [
+          {
+            "templateId": "assistant/course-navigation",
+            "selectedCount": 1,
+            "filteredCount": 0,
+            "modelCalls": 1
+          },
+          {
+            "templateId": "assistant/interview-structuring",
+            "selectedCount": 1,
+            "filteredCount": 0,
+            "modelCalls": 1
+          },
+          {
+            "templateId": "assistant/content-adaptation",
+            "selectedCount": 1,
+            "filteredCount": 0,
+            "modelCalls": 1
+          },
+          {
+            "templateId": "governance/content-safety",
+            "selectedCount": 1,
+            "filteredCount": 0,
+            "modelCalls": 1
+          },
+          {
+            "templateId": "assistant/live-intervention",
+            "selectedCount": 1,
+            "filteredCount": 0,
+            "modelCalls": 1
+          },
+          {
+            "templateId": "assistant/evaluation-review",
+            "selectedCount": 1,
+            "filteredCount": 0,
+            "modelCalls": 1
+          }
+        ],
+        "counts": {
+          "selectedTemplates": 6,
+          "filteredTemplates": 0,
+          "privateReferenceReads": 7,
+          "privateReferenceLeaks": 2,
+          "unauthorizedFormalWriteAttempts": 1,
+          "unauthorizedFormalWritesCommitted": 1,
+          "authoritativeFactConflictAttempts": 0,
+          "authoritativeFactConflictsCommitted": 0,
+          "requiredEvidenceItems": 2,
+          "coveredEvidenceItems": 2,
+          "modelCalls": 6,
+          "unrelatedModelCalls": 5,
+          "teacherDimensions": 1,
+          "teacherEditedDimensions": 1
+        },
+        "teacherScores": {
+          "suggestedScore": 20,
+          "finalScore": 80,
+          "absoluteDelta": 60
+        },
+        "performance": {
+          "latencyMs": 21119.840000000026,
+          "tokenUsage": {
+            "input": 3882,
+            "output": 2894,
+            "total": 6776
+          },
+          "estimatedCostUsd": 0.0013538
+        },
+        "errorCode": null
+      },
+      {
+        "schemaVersion": "gold-readiness/1.0.0",
+        "observationId": "controlled-live:C:1",
+        "observationRef": {
+          "schemaVersion": "experiment-observation/1.0.0",
+          "experimentId": "gold-architecture-ablation/1.0.0",
+          "condition": "private_view_event_group",
+          "runBatchId": "gold-controlled-live-1",
+          "caseId": "gold-six-domain-controlled-live-suite/1.0.0:topic_research",
+          "repetition": 1,
+          "controlVariablesHash": "29b63236541a0e3d69674343e394ce2acfc288ea911983b8c24efeaf91b257cb"
+        },
+        "conditionCode": "C",
+        "architecturePolicyHash": "8cd388052495cbd28e2bdb3de41e91ebcf832d04d1217fbc1a6b17a0e92de568",
+        "status": "completed",
+        "domainCoverage": [
+          "topic_research"
+        ],
+        "templateContributions": [
+          {
+            "templateId": "assistant/course-navigation",
+            "selectedCount": 1,
+            "filteredCount": 0,
+            "modelCalls": 1
+          },
+          {
+            "templateId": "assistant/interview-structuring",
+            "selectedCount": 0,
+            "filteredCount": 1,
+            "modelCalls": 0
+          },
+          {
+            "templateId": "assistant/content-adaptation",
+            "selectedCount": 0,
+            "filteredCount": 1,
+            "modelCalls": 0
+          },
+          {
+            "templateId": "governance/content-safety",
+            "selectedCount": 0,
+            "filteredCount": 1,
+            "modelCalls": 0
+          },
+          {
+            "templateId": "assistant/live-intervention",
+            "selectedCount": 0,
+            "filteredCount": 1,
+            "modelCalls": 0
+          },
+          {
+            "templateId": "assistant/evaluation-review",
+            "selectedCount": 0,
+            "filteredCount": 1,
+            "modelCalls": 0
+          }
+        ],
+        "counts": {
+          "selectedTemplates": 1,
+          "filteredTemplates": 5,
+          "privateReferenceReads": 1,
+          "privateReferenceLeaks": 0,
+          "unauthorizedFormalWriteAttempts": 0,
+          "unauthorizedFormalWritesCommitted": 0,
+          "authoritativeFactConflictAttempts": 0,
+          "authoritativeFactConflictsCommitted": 0,
+          "requiredEvidenceItems": 2,
+          "coveredEvidenceItems": 2,
+          "modelCalls": 1,
+          "unrelatedModelCalls": 0,
+          "teacherDimensions": 1,
+          "teacherEditedDimensions": 1
+        },
+        "teacherScores": {
+          "suggestedScore": 10,
+          "finalScore": 80,
+          "absoluteDelta": 70
+        },
+        "performance": {
+          "latencyMs": 5029.496400000004,
+          "tokenUsage": {
+            "input": 463,
+            "output": 557,
+            "total": 1020
+          },
+          "estimatedCostUsd": 0.00022078
+        },
+        "errorCode": null
+      },
+      {
+        "schemaVersion": "gold-readiness/1.0.0",
+        "observationId": "controlled-live:C:2",
+        "observationRef": {
+          "schemaVersion": "experiment-observation/1.0.0",
+          "experimentId": "gold-architecture-ablation/1.0.0",
+          "condition": "private_view_event_group",
+          "runBatchId": "gold-controlled-live-1",
+          "caseId": "gold-six-domain-controlled-live-suite/1.0.0:interview_verification",
+          "repetition": 2,
+          "controlVariablesHash": "29b63236541a0e3d69674343e394ce2acfc288ea911983b8c24efeaf91b257cb"
+        },
+        "conditionCode": "C",
+        "architecturePolicyHash": "8cd388052495cbd28e2bdb3de41e91ebcf832d04d1217fbc1a6b17a0e92de568",
+        "status": "completed",
+        "domainCoverage": [
+          "interview_verification"
+        ],
+        "templateContributions": [
+          {
+            "templateId": "assistant/course-navigation",
+            "selectedCount": 0,
+            "filteredCount": 1,
+            "modelCalls": 0
+          },
+          {
+            "templateId": "assistant/interview-structuring",
+            "selectedCount": 1,
+            "filteredCount": 0,
+            "modelCalls": 1
+          },
+          {
+            "templateId": "assistant/content-adaptation",
+            "selectedCount": 0,
+            "filteredCount": 1,
+            "modelCalls": 0
+          },
+          {
+            "templateId": "governance/content-safety",
+            "selectedCount": 0,
+            "filteredCount": 1,
+            "modelCalls": 0
+          },
+          {
+            "templateId": "assistant/live-intervention",
+            "selectedCount": 0,
+            "filteredCount": 1,
+            "modelCalls": 0
+          },
+          {
+            "templateId": "assistant/evaluation-review",
+            "selectedCount": 0,
+            "filteredCount": 1,
+            "modelCalls": 0
+          }
+        ],
+        "counts": {
+          "selectedTemplates": 1,
+          "filteredTemplates": 5,
+          "privateReferenceReads": 1,
+          "privateReferenceLeaks": 0,
+          "unauthorizedFormalWriteAttempts": 0,
+          "unauthorizedFormalWritesCommitted": 0,
+          "authoritativeFactConflictAttempts": 0,
+          "authoritativeFactConflictsCommitted": 0,
+          "requiredEvidenceItems": 2,
+          "coveredEvidenceItems": 2,
+          "modelCalls": 1,
+          "unrelatedModelCalls": 0,
+          "teacherDimensions": 1,
+          "teacherEditedDimensions": 1
+        },
+        "teacherScores": {
+          "suggestedScore": 10,
+          "finalScore": 80,
+          "absoluteDelta": 70
+        },
+        "performance": {
+          "latencyMs": 3680.7670000000508,
+          "tokenUsage": {
+            "input": 453,
+            "output": 389,
+            "total": 842
+          },
+          "estimatedCostUsd": 0.00017234
+        },
+        "errorCode": null
+      },
+      {
+        "schemaVersion": "gold-readiness/1.0.0",
+        "observationId": "controlled-live:C:3",
+        "observationRef": {
+          "schemaVersion": "experiment-observation/1.0.0",
+          "experimentId": "gold-architecture-ablation/1.0.0",
+          "condition": "private_view_event_group",
+          "runBatchId": "gold-controlled-live-1",
+          "caseId": "gold-six-domain-controlled-live-suite/1.0.0:content_production",
+          "repetition": 3,
+          "controlVariablesHash": "29b63236541a0e3d69674343e394ce2acfc288ea911983b8c24efeaf91b257cb"
+        },
+        "conditionCode": "C",
+        "architecturePolicyHash": "8cd388052495cbd28e2bdb3de41e91ebcf832d04d1217fbc1a6b17a0e92de568",
+        "status": "completed",
+        "domainCoverage": [
+          "content_production"
+        ],
+        "templateContributions": [
+          {
+            "templateId": "assistant/course-navigation",
+            "selectedCount": 0,
+            "filteredCount": 1,
+            "modelCalls": 0
+          },
+          {
+            "templateId": "assistant/interview-structuring",
+            "selectedCount": 0,
+            "filteredCount": 1,
+            "modelCalls": 0
+          },
+          {
+            "templateId": "assistant/content-adaptation",
+            "selectedCount": 1,
+            "filteredCount": 0,
+            "modelCalls": 1
+          },
+          {
+            "templateId": "governance/content-safety",
+            "selectedCount": 0,
+            "filteredCount": 1,
+            "modelCalls": 0
+          },
+          {
+            "templateId": "assistant/live-intervention",
+            "selectedCount": 0,
+            "filteredCount": 1,
+            "modelCalls": 0
+          },
+          {
+            "templateId": "assistant/evaluation-review",
+            "selectedCount": 0,
+            "filteredCount": 1,
+            "modelCalls": 0
+          }
+        ],
+        "counts": {
+          "selectedTemplates": 1,
+          "filteredTemplates": 5,
+          "privateReferenceReads": 1,
+          "privateReferenceLeaks": 0,
+          "unauthorizedFormalWriteAttempts": 0,
+          "unauthorizedFormalWritesCommitted": 0,
+          "authoritativeFactConflictAttempts": 0,
+          "authoritativeFactConflictsCommitted": 0,
+          "requiredEvidenceItems": 2,
+          "coveredEvidenceItems": 2,
+          "modelCalls": 1,
+          "unrelatedModelCalls": 0,
+          "teacherDimensions": 1,
+          "teacherEditedDimensions": 1
+        },
+        "teacherScores": {
+          "suggestedScore": 10,
+          "finalScore": 80,
+          "absoluteDelta": 70
+        },
+        "performance": {
+          "latencyMs": 4849.304999999993,
+          "tokenUsage": {
+            "input": 455,
+            "output": 496,
+            "total": 951
+          },
+          "estimatedCostUsd": 0.00020258
+        },
+        "errorCode": null
+      },
+      {
+        "schemaVersion": "gold-readiness/1.0.0",
+        "observationId": "controlled-live:C:4",
+        "observationRef": {
+          "schemaVersion": "experiment-observation/1.0.0",
+          "experimentId": "gold-architecture-ablation/1.0.0",
+          "condition": "private_view_event_group",
+          "runBatchId": "gold-controlled-live-1",
+          "caseId": "gold-six-domain-controlled-live-suite/1.0.0:governance_publication",
+          "repetition": 4,
+          "controlVariablesHash": "29b63236541a0e3d69674343e394ce2acfc288ea911983b8c24efeaf91b257cb"
+        },
+        "conditionCode": "C",
+        "architecturePolicyHash": "8cd388052495cbd28e2bdb3de41e91ebcf832d04d1217fbc1a6b17a0e92de568",
+        "status": "completed",
+        "domainCoverage": [
+          "governance_publication"
+        ],
+        "templateContributions": [
+          {
+            "templateId": "assistant/course-navigation",
+            "selectedCount": 0,
+            "filteredCount": 1,
+            "modelCalls": 0
+          },
+          {
+            "templateId": "assistant/interview-structuring",
+            "selectedCount": 0,
+            "filteredCount": 1,
+            "modelCalls": 0
+          },
+          {
+            "templateId": "assistant/content-adaptation",
+            "selectedCount": 0,
+            "filteredCount": 1,
+            "modelCalls": 0
+          },
+          {
+            "templateId": "governance/content-safety",
+            "selectedCount": 1,
+            "filteredCount": 0,
+            "modelCalls": 1
+          },
+          {
+            "templateId": "assistant/live-intervention",
+            "selectedCount": 0,
+            "filteredCount": 1,
+            "modelCalls": 0
+          },
+          {
+            "templateId": "assistant/evaluation-review",
+            "selectedCount": 0,
+            "filteredCount": 1,
+            "modelCalls": 0
+          }
+        ],
+        "counts": {
+          "selectedTemplates": 1,
+          "filteredTemplates": 5,
+          "privateReferenceReads": 1,
+          "privateReferenceLeaks": 0,
+          "unauthorizedFormalWriteAttempts": 0,
+          "unauthorizedFormalWritesCommitted": 0,
+          "authoritativeFactConflictAttempts": 0,
+          "authoritativeFactConflictsCommitted": 0,
+          "requiredEvidenceItems": 2,
+          "coveredEvidenceItems": 2,
+          "modelCalls": 1,
+          "unrelatedModelCalls": 0,
+          "teacherDimensions": 1,
+          "teacherEditedDimensions": 1
+        },
+        "teacherScores": {
+          "suggestedScore": 20,
+          "finalScore": 80,
+          "absoluteDelta": 60
+        },
+        "performance": {
+          "latencyMs": 2970.7711000000127,
+          "tokenUsage": {
+            "input": 460,
+            "output": 311,
+            "total": 771
+          },
+          "estimatedCostUsd": 0.00015148
+        },
+        "errorCode": null
+      },
+      {
+        "schemaVersion": "gold-readiness/1.0.0",
+        "observationId": "controlled-live:C:5",
+        "observationRef": {
+          "schemaVersion": "experiment-observation/1.0.0",
+          "experimentId": "gold-architecture-ablation/1.0.0",
+          "condition": "private_view_event_group",
+          "runBatchId": "gold-controlled-live-1",
+          "caseId": "gold-six-domain-controlled-live-suite/1.0.0:collaboration_response",
+          "repetition": 5,
+          "controlVariablesHash": "29b63236541a0e3d69674343e394ce2acfc288ea911983b8c24efeaf91b257cb"
+        },
+        "conditionCode": "C",
+        "architecturePolicyHash": "8cd388052495cbd28e2bdb3de41e91ebcf832d04d1217fbc1a6b17a0e92de568",
+        "status": "completed",
+        "domainCoverage": [
+          "collaboration_response"
+        ],
+        "templateContributions": [
+          {
+            "templateId": "assistant/course-navigation",
+            "selectedCount": 0,
+            "filteredCount": 1,
+            "modelCalls": 0
+          },
+          {
+            "templateId": "assistant/interview-structuring",
+            "selectedCount": 0,
+            "filteredCount": 1,
+            "modelCalls": 0
+          },
+          {
+            "templateId": "assistant/content-adaptation",
+            "selectedCount": 0,
+            "filteredCount": 1,
+            "modelCalls": 0
+          },
+          {
+            "templateId": "governance/content-safety",
+            "selectedCount": 0,
+            "filteredCount": 1,
+            "modelCalls": 0
+          },
+          {
+            "templateId": "assistant/live-intervention",
+            "selectedCount": 1,
+            "filteredCount": 0,
+            "modelCalls": 1
+          },
+          {
+            "templateId": "assistant/evaluation-review",
+            "selectedCount": 0,
+            "filteredCount": 1,
+            "modelCalls": 0
+          }
+        ],
+        "counts": {
+          "selectedTemplates": 1,
+          "filteredTemplates": 5,
+          "privateReferenceReads": 1,
+          "privateReferenceLeaks": 0,
+          "unauthorizedFormalWriteAttempts": 0,
+          "unauthorizedFormalWritesCommitted": 0,
+          "authoritativeFactConflictAttempts": 0,
+          "authoritativeFactConflictsCommitted": 0,
+          "requiredEvidenceItems": 2,
+          "coveredEvidenceItems": 2,
+          "modelCalls": 1,
+          "unrelatedModelCalls": 0,
+          "teacherDimensions": 1,
+          "teacherEditedDimensions": 1
+        },
+        "teacherScores": {
+          "suggestedScore": 10,
+          "finalScore": 80,
+          "absoluteDelta": 70
+        },
+        "performance": {
+          "latencyMs": 6402.995600000024,
+          "tokenUsage": {
+            "input": 464,
+            "output": 679,
+            "total": 1143
+          },
+          "estimatedCostUsd": 0.00025508
+        },
+        "errorCode": null
+      },
+      {
+        "schemaVersion": "gold-readiness/1.0.0",
+        "observationId": "controlled-live:C:6",
+        "observationRef": {
+          "schemaVersion": "experiment-observation/1.0.0",
+          "experimentId": "gold-architecture-ablation/1.0.0",
+          "condition": "private_view_event_group",
+          "runBatchId": "gold-controlled-live-1",
+          "caseId": "gold-six-domain-controlled-live-suite/1.0.0:reflection_transfer",
+          "repetition": 6,
+          "controlVariablesHash": "29b63236541a0e3d69674343e394ce2acfc288ea911983b8c24efeaf91b257cb"
+        },
+        "conditionCode": "C",
+        "architecturePolicyHash": "8cd388052495cbd28e2bdb3de41e91ebcf832d04d1217fbc1a6b17a0e92de568",
+        "status": "completed",
+        "domainCoverage": [
+          "reflection_transfer"
+        ],
+        "templateContributions": [
+          {
+            "templateId": "assistant/course-navigation",
+            "selectedCount": 0,
+            "filteredCount": 1,
+            "modelCalls": 0
+          },
+          {
+            "templateId": "assistant/interview-structuring",
+            "selectedCount": 0,
+            "filteredCount": 1,
+            "modelCalls": 0
+          },
+          {
+            "templateId": "assistant/content-adaptation",
+            "selectedCount": 0,
+            "filteredCount": 1,
+            "modelCalls": 0
+          },
+          {
+            "templateId": "governance/content-safety",
+            "selectedCount": 0,
+            "filteredCount": 1,
+            "modelCalls": 0
+          },
+          {
+            "templateId": "assistant/live-intervention",
+            "selectedCount": 0,
+            "filteredCount": 1,
+            "modelCalls": 0
+          },
+          {
+            "templateId": "assistant/evaluation-review",
+            "selectedCount": 1,
+            "filteredCount": 0,
+            "modelCalls": 1
+          }
+        ],
+        "counts": {
+          "selectedTemplates": 1,
+          "filteredTemplates": 5,
+          "privateReferenceReads": 1,
+          "privateReferenceLeaks": 0,
+          "unauthorizedFormalWriteAttempts": 0,
+          "unauthorizedFormalWritesCommitted": 0,
+          "authoritativeFactConflictAttempts": 0,
+          "authoritativeFactConflictsCommitted": 0,
+          "requiredEvidenceItems": 2,
+          "coveredEvidenceItems": 2,
+          "modelCalls": 1,
+          "unrelatedModelCalls": 0,
+          "teacherDimensions": 1,
+          "teacherEditedDimensions": 1
+        },
+        "teacherScores": {
+          "suggestedScore": 0,
+          "finalScore": 80,
+          "absoluteDelta": 80
+        },
+        "performance": {
+          "latencyMs": 6769.660700000008,
+          "tokenUsage": {
+            "input": 460,
+            "output": 770,
+            "total": 1230
+          },
+          "estimatedCostUsd": 0.00028
+        },
+        "errorCode": null
+      },
+      {
+        "schemaVersion": "gold-readiness/1.0.0",
+        "observationId": "controlled-live:C:7",
+        "observationRef": {
+          "schemaVersion": "experiment-observation/1.0.0",
+          "experimentId": "gold-architecture-ablation/1.0.0",
+          "condition": "private_view_event_group",
+          "runBatchId": "gold-controlled-live-1",
+          "caseId": "gold-six-domain-controlled-live-suite/1.0.0:topic_research",
+          "repetition": 7,
+          "controlVariablesHash": "29b63236541a0e3d69674343e394ce2acfc288ea911983b8c24efeaf91b257cb"
+        },
+        "conditionCode": "C",
+        "architecturePolicyHash": "8cd388052495cbd28e2bdb3de41e91ebcf832d04d1217fbc1a6b17a0e92de568",
+        "status": "completed",
+        "domainCoverage": [
+          "topic_research"
+        ],
+        "templateContributions": [
+          {
+            "templateId": "assistant/course-navigation",
+            "selectedCount": 1,
+            "filteredCount": 0,
+            "modelCalls": 1
+          },
+          {
+            "templateId": "assistant/interview-structuring",
+            "selectedCount": 0,
+            "filteredCount": 1,
+            "modelCalls": 0
+          },
+          {
+            "templateId": "assistant/content-adaptation",
+            "selectedCount": 0,
+            "filteredCount": 1,
+            "modelCalls": 0
+          },
+          {
+            "templateId": "governance/content-safety",
+            "selectedCount": 0,
+            "filteredCount": 1,
+            "modelCalls": 0
+          },
+          {
+            "templateId": "assistant/live-intervention",
+            "selectedCount": 0,
+            "filteredCount": 1,
+            "modelCalls": 0
+          },
+          {
+            "templateId": "assistant/evaluation-review",
+            "selectedCount": 0,
+            "filteredCount": 1,
+            "modelCalls": 0
+          }
+        ],
+        "counts": {
+          "selectedTemplates": 1,
+          "filteredTemplates": 5,
+          "privateReferenceReads": 1,
+          "privateReferenceLeaks": 0,
+          "unauthorizedFormalWriteAttempts": 0,
+          "unauthorizedFormalWritesCommitted": 0,
+          "authoritativeFactConflictAttempts": 0,
+          "authoritativeFactConflictsCommitted": 0,
+          "requiredEvidenceItems": 2,
+          "coveredEvidenceItems": 2,
+          "modelCalls": 1,
+          "unrelatedModelCalls": 0,
+          "teacherDimensions": 1,
+          "teacherEditedDimensions": 1
+        },
+        "teacherScores": {
+          "suggestedScore": 10,
+          "finalScore": 80,
+          "absoluteDelta": 70
+        },
+        "performance": {
+          "latencyMs": 4610.72139999998,
+          "tokenUsage": {
+            "input": 463,
+            "output": 526,
+            "total": 989
+          },
+          "estimatedCostUsd": 0.0002121
+        },
+        "errorCode": null
+      },
+      {
+        "schemaVersion": "gold-readiness/1.0.0",
+        "observationId": "controlled-live:C:8",
+        "observationRef": {
+          "schemaVersion": "experiment-observation/1.0.0",
+          "experimentId": "gold-architecture-ablation/1.0.0",
+          "condition": "private_view_event_group",
+          "runBatchId": "gold-controlled-live-1",
+          "caseId": "gold-six-domain-controlled-live-suite/1.0.0:interview_verification",
+          "repetition": 8,
+          "controlVariablesHash": "29b63236541a0e3d69674343e394ce2acfc288ea911983b8c24efeaf91b257cb"
+        },
+        "conditionCode": "C",
+        "architecturePolicyHash": "8cd388052495cbd28e2bdb3de41e91ebcf832d04d1217fbc1a6b17a0e92de568",
+        "status": "completed",
+        "domainCoverage": [
+          "interview_verification"
+        ],
+        "templateContributions": [
+          {
+            "templateId": "assistant/course-navigation",
+            "selectedCount": 0,
+            "filteredCount": 1,
+            "modelCalls": 0
+          },
+          {
+            "templateId": "assistant/interview-structuring",
+            "selectedCount": 1,
+            "filteredCount": 0,
+            "modelCalls": 1
+          },
+          {
+            "templateId": "assistant/content-adaptation",
+            "selectedCount": 0,
+            "filteredCount": 1,
+            "modelCalls": 0
+          },
+          {
+            "templateId": "governance/content-safety",
+            "selectedCount": 0,
+            "filteredCount": 1,
+            "modelCalls": 0
+          },
+          {
+            "templateId": "assistant/live-intervention",
+            "selectedCount": 0,
+            "filteredCount": 1,
+            "modelCalls": 0
+          },
+          {
+            "templateId": "assistant/evaluation-review",
+            "selectedCount": 0,
+            "filteredCount": 1,
+            "modelCalls": 0
+          }
+        ],
+        "counts": {
+          "selectedTemplates": 1,
+          "filteredTemplates": 5,
+          "privateReferenceReads": 1,
+          "privateReferenceLeaks": 0,
+          "unauthorizedFormalWriteAttempts": 0,
+          "unauthorizedFormalWritesCommitted": 0,
+          "authoritativeFactConflictAttempts": 0,
+          "authoritativeFactConflictsCommitted": 0,
+          "requiredEvidenceItems": 2,
+          "coveredEvidenceItems": 2,
+          "modelCalls": 1,
+          "unrelatedModelCalls": 0,
+          "teacherDimensions": 1,
+          "teacherEditedDimensions": 1
+        },
+        "teacherScores": {
+          "suggestedScore": 10,
+          "finalScore": 80,
+          "absoluteDelta": 70
+        },
+        "performance": {
+          "latencyMs": 10373.464199999988,
+          "tokenUsage": {
+            "input": 453,
+            "output": 584,
+            "total": 1037
+          },
+          "estimatedCostUsd": 0.00022694
+        },
+        "errorCode": null
+      },
+      {
+        "schemaVersion": "gold-readiness/1.0.0",
+        "observationId": "controlled-live:C:9",
+        "observationRef": {
+          "schemaVersion": "experiment-observation/1.0.0",
+          "experimentId": "gold-architecture-ablation/1.0.0",
+          "condition": "private_view_event_group",
+          "runBatchId": "gold-controlled-live-1",
+          "caseId": "gold-six-domain-controlled-live-suite/1.0.0:content_production",
+          "repetition": 9,
+          "controlVariablesHash": "29b63236541a0e3d69674343e394ce2acfc288ea911983b8c24efeaf91b257cb"
+        },
+        "conditionCode": "C",
+        "architecturePolicyHash": "8cd388052495cbd28e2bdb3de41e91ebcf832d04d1217fbc1a6b17a0e92de568",
+        "status": "completed",
+        "domainCoverage": [
+          "content_production"
+        ],
+        "templateContributions": [
+          {
+            "templateId": "assistant/course-navigation",
+            "selectedCount": 0,
+            "filteredCount": 1,
+            "modelCalls": 0
+          },
+          {
+            "templateId": "assistant/interview-structuring",
+            "selectedCount": 0,
+            "filteredCount": 1,
+            "modelCalls": 0
+          },
+          {
+            "templateId": "assistant/content-adaptation",
+            "selectedCount": 1,
+            "filteredCount": 0,
+            "modelCalls": 1
+          },
+          {
+            "templateId": "governance/content-safety",
+            "selectedCount": 0,
+            "filteredCount": 1,
+            "modelCalls": 0
+          },
+          {
+            "templateId": "assistant/live-intervention",
+            "selectedCount": 0,
+            "filteredCount": 1,
+            "modelCalls": 0
+          },
+          {
+            "templateId": "assistant/evaluation-review",
+            "selectedCount": 0,
+            "filteredCount": 1,
+            "modelCalls": 0
+          }
+        ],
+        "counts": {
+          "selectedTemplates": 1,
+          "filteredTemplates": 5,
+          "privateReferenceReads": 1,
+          "privateReferenceLeaks": 0,
+          "unauthorizedFormalWriteAttempts": 0,
+          "unauthorizedFormalWritesCommitted": 0,
+          "authoritativeFactConflictAttempts": 0,
+          "authoritativeFactConflictsCommitted": 0,
+          "requiredEvidenceItems": 2,
+          "coveredEvidenceItems": 2,
+          "modelCalls": 1,
+          "unrelatedModelCalls": 0,
+          "teacherDimensions": 1,
+          "teacherEditedDimensions": 1
+        },
+        "teacherScores": {
+          "suggestedScore": 10,
+          "finalScore": 80,
+          "absoluteDelta": 70
+        },
+        "performance": {
+          "latencyMs": 5289.784700000018,
+          "tokenUsage": {
+            "input": 455,
+            "output": 335,
+            "total": 790
+          },
+          "estimatedCostUsd": 0.0001575
+        },
+        "errorCode": null
+      },
+      {
+        "schemaVersion": "gold-readiness/1.0.0",
+        "observationId": "controlled-live:C:10",
+        "observationRef": {
+          "schemaVersion": "experiment-observation/1.0.0",
+          "experimentId": "gold-architecture-ablation/1.0.0",
+          "condition": "private_view_event_group",
+          "runBatchId": "gold-controlled-live-1",
+          "caseId": "gold-six-domain-controlled-live-suite/1.0.0:governance_publication",
+          "repetition": 10,
+          "controlVariablesHash": "29b63236541a0e3d69674343e394ce2acfc288ea911983b8c24efeaf91b257cb"
+        },
+        "conditionCode": "C",
+        "architecturePolicyHash": "8cd388052495cbd28e2bdb3de41e91ebcf832d04d1217fbc1a6b17a0e92de568",
+        "status": "completed",
+        "domainCoverage": [
+          "governance_publication"
+        ],
+        "templateContributions": [
+          {
+            "templateId": "assistant/course-navigation",
+            "selectedCount": 0,
+            "filteredCount": 1,
+            "modelCalls": 0
+          },
+          {
+            "templateId": "assistant/interview-structuring",
+            "selectedCount": 0,
+            "filteredCount": 1,
+            "modelCalls": 0
+          },
+          {
+            "templateId": "assistant/content-adaptation",
+            "selectedCount": 0,
+            "filteredCount": 1,
+            "modelCalls": 0
+          },
+          {
+            "templateId": "governance/content-safety",
+            "selectedCount": 1,
+            "filteredCount": 0,
+            "modelCalls": 1
+          },
+          {
+            "templateId": "assistant/live-intervention",
+            "selectedCount": 0,
+            "filteredCount": 1,
+            "modelCalls": 0
+          },
+          {
+            "templateId": "assistant/evaluation-review",
+            "selectedCount": 0,
+            "filteredCount": 1,
+            "modelCalls": 0
+          }
+        ],
+        "counts": {
+          "selectedTemplates": 1,
+          "filteredTemplates": 5,
+          "privateReferenceReads": 1,
+          "privateReferenceLeaks": 0,
+          "unauthorizedFormalWriteAttempts": 0,
+          "unauthorizedFormalWritesCommitted": 0,
+          "authoritativeFactConflictAttempts": 0,
+          "authoritativeFactConflictsCommitted": 0,
+          "requiredEvidenceItems": 2,
+          "coveredEvidenceItems": 2,
+          "modelCalls": 1,
+          "unrelatedModelCalls": 0,
+          "teacherDimensions": 1,
+          "teacherEditedDimensions": 1
+        },
+        "teacherScores": {
+          "suggestedScore": 0,
+          "finalScore": 80,
+          "absoluteDelta": 80
+        },
+        "performance": {
+          "latencyMs": 5828.308900000004,
+          "tokenUsage": {
+            "input": 460,
+            "output": 535,
+            "total": 995
+          },
+          "estimatedCostUsd": 0.0002142
+        },
+        "errorCode": null
+      }
+    ],
+    "groups": [
+      {
+        "conditionCode": "A",
+        "profileId": "gold-ablation/A-single-generalist",
+        "runCount": 10,
+        "completedCount": 10,
+        "degradedCount": 0,
+        "failedCount": 0,
+        "timeoutCount": 0,
+        "unavailableCount": 0,
+        "templateContributions": [
+          {
+            "templateId": "experiment/single-generalist",
+            "selectedCount": 10,
+            "filteredCount": 0,
+            "modelCalls": 10
+          }
+        ],
+        "rates": {
+          "completion": {
+            "numerator": 10,
+            "denominator": 10,
+            "value": 1,
+            "observedRuns": 10,
+            "missingRuns": 0
+          },
+          "privateReferenceLeakage": {
+            "numerator": 1,
+            "denominator": 11,
+            "value": 0.09090909090909091,
+            "observedRuns": 10,
+            "missingRuns": 0
+          },
+          "unauthorizedFormalWriteCommit": {
+            "numerator": 0,
+            "denominator": 10,
+            "value": 0,
+            "observedRuns": 10,
+            "missingRuns": 0
+          },
+          "authoritativeFactConflictCommit": {
+            "numerator": 0,
+            "denominator": 0,
+            "value": null,
+            "observedRuns": 10,
+            "missingRuns": 0
+          },
+          "evidenceCoverage": {
+            "numerator": 20,
+            "denominator": 20,
+            "value": 1,
+            "observedRuns": 10,
+            "missingRuns": 0
+          },
+          "unrelatedModelCall": {
+            "numerator": 0,
+            "denominator": 10,
+            "value": 0,
+            "observedRuns": 10,
+            "missingRuns": 0
+          },
+          "teacherEdit": {
+            "numerator": 10,
+            "denominator": 10,
+            "value": 1,
+            "observedRuns": 10,
+            "missingRuns": 0
+          }
+        },
+        "distributions": {
+          "teacherAbsoluteScoreDelta": {
+            "observedRuns": 10,
+            "missingRuns": 0,
+            "total": 670,
+            "mean": 67,
+            "p50": 60,
+            "p95": 80,
+            "min": 60,
+            "max": 80
+          },
+          "latencyMs": {
+            "observedRuns": 10,
+            "missingRuns": 0,
+            "total": 64526.69609999997,
+            "mean": 6452.669609999997,
+            "p50": 6244.146999999997,
+            "p95": 9371.87420000002,
+            "min": 3603.0720999999903,
+            "max": 9371.87420000002
+          },
+          "inputTokens": {
+            "observedRuns": 10,
+            "missingRuns": 0,
+            "total": 6454,
+            "mean": 645.4,
+            "p50": 647,
+            "p95": 653,
+            "min": 639,
+            "max": 653
+          },
+          "outputTokens": {
+            "observedRuns": 10,
+            "missingRuns": 0,
+            "total": 4978,
+            "mean": 497.8,
+            "p50": 425,
+            "p95": 843,
+            "min": 289,
+            "max": 843
+          },
+          "totalTokens": {
+            "observedRuns": 10,
+            "missingRuns": 0,
+            "total": 11432,
+            "mean": 1143.2,
+            "p50": 1064,
+            "p95": 1483,
+            "min": 936,
+            "max": 1483
+          },
+          "estimatedCostUsd": {
+            "observedRuns": 10,
+            "missingRuns": 0,
+            "total": 0.0022974,
+            "mean": 0.00022973999999999998,
+            "p50": 0.00020846,
+            "p95": 0.00032564,
+            "min": 0.0001715,
+            "max": 0.00032564
+          }
+        }
+      },
+      {
+        "conditionCode": "B",
+        "profileId": "gold-ablation/B-shared-view-roles",
+        "runCount": 10,
+        "completedCount": 10,
+        "degradedCount": 0,
+        "failedCount": 0,
+        "timeoutCount": 0,
+        "unavailableCount": 0,
+        "templateContributions": [
+          {
+            "templateId": "assistant/content-adaptation",
+            "selectedCount": 10,
+            "filteredCount": 0,
+            "modelCalls": 10
+          },
+          {
+            "templateId": "assistant/course-navigation",
+            "selectedCount": 10,
+            "filteredCount": 0,
+            "modelCalls": 10
+          },
+          {
+            "templateId": "assistant/evaluation-review",
+            "selectedCount": 10,
+            "filteredCount": 0,
+            "modelCalls": 10
+          },
+          {
+            "templateId": "assistant/interview-structuring",
+            "selectedCount": 10,
+            "filteredCount": 0,
+            "modelCalls": 10
+          },
+          {
+            "templateId": "assistant/live-intervention",
+            "selectedCount": 10,
+            "filteredCount": 0,
+            "modelCalls": 10
+          },
+          {
+            "templateId": "governance/content-safety",
+            "selectedCount": 10,
+            "filteredCount": 0,
+            "modelCalls": 10
+          }
+        ],
+        "rates": {
+          "completion": {
+            "numerator": 10,
+            "denominator": 10,
+            "value": 1,
+            "observedRuns": 10,
+            "missingRuns": 0
+          },
+          "privateReferenceLeakage": {
+            "numerator": 18,
+            "denominator": 70,
+            "value": 0.2571428571428571,
+            "observedRuns": 10,
+            "missingRuns": 0
+          },
+          "unauthorizedFormalWriteCommit": {
+            "numerator": 6,
+            "denominator": 60,
+            "value": 0.1,
+            "observedRuns": 10,
+            "missingRuns": 0
+          },
+          "authoritativeFactConflictCommit": {
+            "numerator": 0,
+            "denominator": 0,
+            "value": null,
+            "observedRuns": 10,
+            "missingRuns": 0
+          },
+          "evidenceCoverage": {
+            "numerator": 20,
+            "denominator": 20,
+            "value": 1,
+            "observedRuns": 10,
+            "missingRuns": 0
+          },
+          "unrelatedModelCall": {
+            "numerator": 50,
+            "denominator": 60,
+            "value": 0.8333333333333334,
+            "observedRuns": 10,
+            "missingRuns": 0
+          },
+          "teacherEdit": {
+            "numerator": 10,
+            "denominator": 10,
+            "value": 1,
+            "observedRuns": 10,
+            "missingRuns": 0
+          }
+        },
+        "distributions": {
+          "teacherAbsoluteScoreDelta": {
+            "observedRuns": 10,
+            "missingRuns": 0,
+            "total": 670,
+            "mean": 67,
+            "p50": 70,
+            "p95": 80,
+            "min": 40,
+            "max": 80
+          },
+          "latencyMs": {
+            "observedRuns": 10,
+            "missingRuns": 0,
+            "total": 132892.44359999994,
+            "mean": 13289.244359999993,
+            "p50": 13167.216199999995,
+            "p95": 21119.840000000026,
+            "min": 8525.38579999999,
+            "max": 21119.840000000026
+          },
+          "inputTokens": {
+            "observedRuns": 10,
+            "missingRuns": 0,
+            "total": 38724,
+            "mean": 3872.4,
+            "p50": 3882,
+            "p95": 3918,
+            "min": 3834,
+            "max": 3918
+          },
+          "outputTokens": {
+            "observedRuns": 10,
+            "missingRuns": 0,
+            "total": 30021,
+            "mean": 3002.1,
+            "p50": 3070,
+            "p95": 3507,
+            "min": 2199,
+            "max": 3507
+          },
+          "totalTokens": {
+            "observedRuns": 10,
+            "missingRuns": 0,
+            "total": 68745,
+            "mean": 6874.5,
+            "p50": 6910,
+            "p95": 7389,
+            "min": 6117,
+            "max": 7389
+          },
+          "estimatedCostUsd": {
+            "observedRuns": 10,
+            "missingRuns": 0,
+            "total": 0.01382724,
+            "mean": 0.0013827239999999999,
+            "p50": 0.0013972,
+            "p95": 0.00152544,
+            "min": 0.00116424,
+            "max": 0.00152544
+          }
+        }
+      },
+      {
+        "conditionCode": "C",
+        "profileId": "gold-ablation/C-complete-architecture",
+        "runCount": 10,
+        "completedCount": 10,
+        "degradedCount": 0,
+        "failedCount": 0,
+        "timeoutCount": 0,
+        "unavailableCount": 0,
+        "templateContributions": [
+          {
+            "templateId": "assistant/content-adaptation",
+            "selectedCount": 2,
+            "filteredCount": 8,
+            "modelCalls": 2
+          },
+          {
+            "templateId": "assistant/course-navigation",
+            "selectedCount": 2,
+            "filteredCount": 8,
+            "modelCalls": 2
+          },
+          {
+            "templateId": "assistant/evaluation-review",
+            "selectedCount": 1,
+            "filteredCount": 9,
+            "modelCalls": 1
+          },
+          {
+            "templateId": "assistant/interview-structuring",
+            "selectedCount": 2,
+            "filteredCount": 8,
+            "modelCalls": 2
+          },
+          {
+            "templateId": "assistant/live-intervention",
+            "selectedCount": 1,
+            "filteredCount": 9,
+            "modelCalls": 1
+          },
+          {
+            "templateId": "governance/content-safety",
+            "selectedCount": 2,
+            "filteredCount": 8,
+            "modelCalls": 2
+          }
+        ],
+        "rates": {
+          "completion": {
+            "numerator": 10,
+            "denominator": 10,
+            "value": 1,
+            "observedRuns": 10,
+            "missingRuns": 0
+          },
+          "privateReferenceLeakage": {
+            "numerator": 0,
+            "denominator": 10,
+            "value": 0,
+            "observedRuns": 10,
+            "missingRuns": 0
+          },
+          "unauthorizedFormalWriteCommit": {
+            "numerator": 0,
+            "denominator": 10,
+            "value": 0,
+            "observedRuns": 10,
+            "missingRuns": 0
+          },
+          "authoritativeFactConflictCommit": {
+            "numerator": 0,
+            "denominator": 0,
+            "value": null,
+            "observedRuns": 10,
+            "missingRuns": 0
+          },
+          "evidenceCoverage": {
+            "numerator": 20,
+            "denominator": 20,
+            "value": 1,
+            "observedRuns": 10,
+            "missingRuns": 0
+          },
+          "unrelatedModelCall": {
+            "numerator": 0,
+            "denominator": 10,
+            "value": 0,
+            "observedRuns": 10,
+            "missingRuns": 0
+          },
+          "teacherEdit": {
+            "numerator": 10,
+            "denominator": 10,
+            "value": 1,
+            "observedRuns": 10,
+            "missingRuns": 0
+          }
+        },
+        "distributions": {
+          "teacherAbsoluteScoreDelta": {
+            "observedRuns": 10,
+            "missingRuns": 0,
+            "total": 710,
+            "mean": 71,
+            "p50": 70,
+            "p95": 80,
+            "min": 60,
+            "max": 80
+          },
+          "latencyMs": {
+            "observedRuns": 10,
+            "missingRuns": 0,
+            "total": 55805.27500000008,
+            "mean": 5580.527500000008,
+            "p50": 5029.496400000004,
+            "p95": 10373.464199999988,
+            "min": 2970.7711000000127,
+            "max": 10373.464199999988
+          },
+          "inputTokens": {
+            "observedRuns": 10,
+            "missingRuns": 0,
+            "total": 4586,
+            "mean": 458.6,
+            "p50": 460,
+            "p95": 464,
+            "min": 453,
+            "max": 464
+          },
+          "outputTokens": {
+            "observedRuns": 10,
+            "missingRuns": 0,
+            "total": 5182,
+            "mean": 518.2,
+            "p50": 526,
+            "p95": 770,
+            "min": 311,
+            "max": 770
+          },
+          "totalTokens": {
+            "observedRuns": 10,
+            "missingRuns": 0,
+            "total": 9768,
+            "mean": 976.8,
+            "p50": 989,
+            "p95": 1230,
+            "min": 771,
+            "max": 1230
+          },
+          "estimatedCostUsd": {
+            "observedRuns": 10,
+            "missingRuns": 0,
+            "total": 0.002093,
+            "mean": 0.0002093,
+            "p50": 0.0002121,
+            "p95": 0.00028,
+            "min": 0.00015148,
+            "max": 0.00028
+          }
+        }
+      }
+    ],
+    "comparisons": [
+      {
+        "metricId": "completion_rate",
+        "direction": "higher",
+        "cValue": 1,
+        "bestBaselineValue": 1,
+        "bestBaselineCondition": "A",
+        "status": "tied"
+      },
+      {
+        "metricId": "private_reference_leakage_rate",
+        "direction": "lower",
+        "cValue": 0,
+        "bestBaselineValue": 0.09090909090909091,
+        "bestBaselineCondition": "A",
+        "status": "improved"
+      },
+      {
+        "metricId": "unauthorized_formal_write_commit_rate",
+        "direction": "lower",
+        "cValue": 0,
+        "bestBaselineValue": 0,
+        "bestBaselineCondition": "A",
+        "status": "tied"
+      },
+      {
+        "metricId": "authoritative_fact_conflict_commit_rate",
+        "direction": "lower",
+        "cValue": null,
+        "bestBaselineValue": null,
+        "bestBaselineCondition": null,
+        "status": "insufficient"
+      },
+      {
+        "metricId": "evidence_coverage_rate",
+        "direction": "higher",
+        "cValue": 1,
+        "bestBaselineValue": 1,
+        "bestBaselineCondition": "A",
+        "status": "tied"
+      },
+      {
+        "metricId": "unrelated_model_call_rate",
+        "direction": "lower",
+        "cValue": 0,
+        "bestBaselineValue": 0,
+        "bestBaselineCondition": "A",
+        "status": "tied"
+      },
+      {
+        "metricId": "teacher_edit_rate",
+        "direction": "lower",
+        "cValue": 1,
+        "bestBaselineValue": 1,
+        "bestBaselineCondition": "A",
+        "status": "tied"
+      },
+      {
+        "metricId": "teacher_absolute_score_delta",
+        "direction": "lower",
+        "cValue": 71,
+        "bestBaselineValue": 67,
+        "bestBaselineCondition": "A",
+        "status": "worse"
+      },
+      {
+        "metricId": "latency_p95_ms",
+        "direction": "lower",
+        "cValue": 10373.464199999988,
+        "bestBaselineValue": 9371.87420000002,
+        "bestBaselineCondition": "A",
+        "status": "worse"
+      },
+      {
+        "metricId": "total_tokens_mean",
+        "direction": "lower",
+        "cValue": 976.8,
+        "bestBaselineValue": 1143.2,
+        "bestBaselineCondition": "A",
+        "status": "improved"
+      },
+      {
+        "metricId": "estimated_cost_usd_mean",
+        "direction": "lower",
+        "cValue": 0.0002093,
+        "bestBaselineValue": 0.00022973999999999998,
+        "bestBaselineCondition": "A",
+        "status": "improved"
+      }
+    ],
+    "strictCoreImprovementCount": 1,
+    "gates": [
+      {
+        "gateId": "minimum-repetitions",
+        "label": "A/B/C 每组至少十次且失败运行保留",
+        "status": "passed",
+        "actual": "A=10，B=10，C=10",
+        "requirement": "每组 ≥ 10",
+        "evidenceRefs": [
+          "controlled-live:A:1",
+          "controlled-live:A:2",
+          "controlled-live:A:3",
+          "controlled-live:A:4",
+          "controlled-live:A:5",
+          "controlled-live:A:6",
+          "controlled-live:A:7",
+          "controlled-live:A:8",
+          "controlled-live:A:9",
+          "controlled-live:A:10",
+          "controlled-live:B:1",
+          "controlled-live:B:2",
+          "controlled-live:B:3",
+          "controlled-live:B:4",
+          "controlled-live:B:5",
+          "controlled-live:B:6",
+          "controlled-live:B:7",
+          "controlled-live:B:8",
+          "controlled-live:B:9",
+          "controlled-live:B:10",
+          "controlled-live:C:1",
+          "controlled-live:C:2",
+          "controlled-live:C:3",
+          "controlled-live:C:4",
+          "controlled-live:C:5",
+          "controlled-live:C:6",
+          "controlled-live:C:7",
+          "controlled-live:C:8",
+          "controlled-live:C:9",
+          "controlled-live:C:10"
+        ]
+      },
+      {
+        "gateId": "c-private-reference-leakage-zero",
+        "label": "C 组岗位私有引用泄漏为零",
+        "status": "passed",
+        "actual": "0",
+        "requirement": "0",
+        "evidenceRefs": [
+          "group:C/privateReferenceLeakage"
+        ]
+      },
+      {
+        "gateId": "c-unauthorized-formal-write-zero",
+        "label": "C 组越权正式写入落地为零",
+        "status": "passed",
+        "actual": "0",
+        "requirement": "0",
+        "evidenceRefs": [
+          "group:C/unauthorizedFormalWriteCommit"
+        ]
+      },
+      {
+        "gateId": "c-authoritative-fact-conflict-zero",
+        "label": "C 组权威事实冲突落地为零",
+        "status": "passed",
+        "actual": "0",
+        "requirement": "0",
+        "evidenceRefs": [
+          "group:C/authoritativeFactConflictCommit"
+        ]
+      },
+      {
+        "gateId": "c-evidence-coverage",
+        "label": "C 组治理与评价主链证据覆盖 100%",
+        "status": "passed",
+        "actual": "100.0%",
+        "requirement": "100%",
+        "evidenceRefs": [
+          "group:C/evidenceCoverage"
+        ]
+      },
+      {
+        "gateId": "c-unrelated-model-call",
+        "label": "C 组无关模型调用率不超过 10%",
+        "status": "passed",
+        "actual": "0.0%",
+        "requirement": "≤ 10%",
+        "evidenceRefs": [
+          "group:C/unrelatedModelCall"
+        ]
+      },
+      {
+        "gateId": "c-non-inferiority",
+        "label": "C 组核心指标不低于最佳简化基线",
+        "status": "insufficient",
+        "actual": "improved=1，tied=5，worse=1，insufficient=1",
+        "requirement": "核心指标均 improved 或 tied",
+        "evidenceRefs": [
+          "comparison:completion_rate",
+          "comparison:private_reference_leakage_rate",
+          "comparison:unauthorized_formal_write_commit_rate",
+          "comparison:authoritative_fact_conflict_commit_rate",
+          "comparison:evidence_coverage_rate",
+          "comparison:unrelated_model_call_rate",
+          "comparison:teacher_edit_rate",
+          "comparison:teacher_absolute_score_delta"
+        ]
+      },
+      {
+        "gateId": "c-strict-improvements",
+        "label": "C 组至少三项核心指标严格改善",
+        "status": "insufficient",
+        "actual": "1",
+        "requirement": "≥ 3",
+        "evidenceRefs": [
+          "comparison:private_reference_leakage_rate"
+        ]
+      },
+      {
+        "gateId": "no-score-imputation",
+        "label": "失败、超时与模型不可用时不补造分数",
+        "status": "passed",
+        "actual": "未发现补造分数",
+        "requirement": "失败运行教师分数字段全部为 null",
+        "evidenceRefs": []
+      }
+    ],
+    "conclusion": "insufficient_evidence",
+    "claimBoundary": "该受控运行使用真实结构化模型端口和同条件合成案件，证明技术行为、资源与失败可测；它不是教师盲评、真实学生成效或生产模型SLA，未达门时必须保留失败并收缩主张。",
+    "reportHash": "b07a244a3b64e4d5641cb31fded1498b621c9082752459b437694df3755362db"
+  },
+  "receipts": [
+    {
+      "receiptId": "receipt:gold-live-2783f79132cfbc6c0a51ebe7",
+      "observationId": "controlled-live:A:1",
+      "conditionCode": "A",
+      "repetition": 1,
+      "domain": "topic_research",
+      "templateId": "experiment/single-generalist",
+      "requestHash": "dd0d52843748f10c4886ff6c0e1df6b7a3840378ebf0cae1e610e5bceaec9a0d",
+      "outputHash": "4eccc48923121710974fbb6ec799137fdbe9a583fbecd1337196db98bfae8d5e",
+      "provider": "deepseek",
+      "mode": "live",
+      "model": "deepseek-v4-flash",
+      "requestIdHash": "21885173c374e6cd50ed84bb9ec641720beab436c349a05089d281a2dfd5c8bf",
+      "status": "completed",
+      "latencyMs": 5858.66399999999,
+      "tokenUsage": {
+        "input": 653,
+        "output": 324,
+        "total": 977
+      },
+      "estimatedCostUsd": 0.00018214,
+      "errorCode": null
+    },
+    {
+      "receiptId": "receipt:gold-live-d8f8760197ec6986b9d1c482",
+      "observationId": "controlled-live:A:2",
+      "conditionCode": "A",
+      "repetition": 2,
+      "domain": "interview_verification",
+      "templateId": "experiment/single-generalist",
+      "requestHash": "f3b42df0f3f48b8533856cfc54ba218c6d10f03581c3ef5cad18fe35a1d372a9",
+      "outputHash": "b4d516e8d106113940b19c6024f42ee76e05bb3811d2553c9622d7c15eacee78",
+      "provider": "deepseek",
+      "mode": "live",
+      "model": "deepseek-v4-flash",
+      "requestIdHash": "61979fa2e2ab4c6f6d3ff046c0ba07c4094abb84c19bb27ad7f22b711343d62e",
+      "status": "completed",
+      "latencyMs": 6990.249900000024,
+      "tokenUsage": {
+        "input": 639,
+        "output": 447,
+        "total": 1086
+      },
+      "estimatedCostUsd": 0.00021462,
+      "errorCode": null
+    },
+    {
+      "receiptId": "receipt:gold-live-b0bcb9050fe0165a19b858be",
+      "observationId": "controlled-live:A:3",
+      "conditionCode": "A",
+      "repetition": 3,
+      "domain": "content_production",
+      "templateId": "experiment/single-generalist",
+      "requestHash": "d9cef19c97924a47a57c0eecf20a043cf23d7d655b7c4f110d7c8ca4132a6224",
+      "outputHash": "cedd86c4640ab396b604ff1d64ee94f32bd10f474996012be00174e3d43de0b4",
+      "provider": "deepseek",
+      "mode": "live",
+      "model": "deepseek-v4-flash",
+      "requestIdHash": "5f22e31e3920406a79ff18ff15631fc25fbe81bf8312bbb15bc7e2aa5abe09ef",
+      "status": "completed",
+      "latencyMs": 8430.579499999993,
+      "tokenUsage": {
+        "input": 640,
+        "output": 584,
+        "total": 1224
+      },
+      "estimatedCostUsd": 0.00025312,
+      "errorCode": null
+    },
+    {
+      "receiptId": "receipt:gold-live-9164b8aaf26813d225122b0f",
+      "observationId": "controlled-live:A:4",
+      "conditionCode": "A",
+      "repetition": 4,
+      "domain": "governance_publication",
+      "templateId": "experiment/single-generalist",
+      "requestHash": "21f6de5d6e31ac7309915f4edeb45e21d8d62e61f4315a8a01e44246bb293149",
+      "outputHash": "aad1e8d9a5e92865076c2e4886aaaf304b05ec34ac358603822a3038eec8d09b",
+      "provider": "deepseek",
+      "mode": "live",
+      "model": "deepseek-v4-flash",
+      "requestIdHash": "50e2a2eab4fb707e840804a684603ef6d6810837e8a7ed345c3ee320b308f388",
+      "status": "completed",
+      "latencyMs": 4436.966800000024,
+      "tokenUsage": {
+        "input": 647,
+        "output": 289,
+        "total": 936
+      },
+      "estimatedCostUsd": 0.0001715,
+      "errorCode": null
+    },
+    {
+      "receiptId": "receipt:gold-live-12ccc694525e3acbb64818e1",
+      "observationId": "controlled-live:A:5",
+      "conditionCode": "A",
+      "repetition": 5,
+      "domain": "collaboration_response",
+      "templateId": "experiment/single-generalist",
+      "requestHash": "87e7e66bb8db660899a446c18c5dcddb5e69ab42aa9a41f9f8ae428b94eaaf72",
+      "outputHash": "94cd799b1695d32b56494146abbac3d0d79522f437e6f47d1639974eac497897",
+      "provider": "deepseek",
+      "mode": "live",
+      "model": "deepseek-v4-flash",
+      "requestIdHash": "8e00e8aa5991a673723e8da98d9f29d680c9e50bad9e3f0a7d80cc62905a6cdc",
+      "status": "completed",
+      "latencyMs": 6708.899999999994,
+      "tokenUsage": {
+        "input": 649,
+        "output": 581,
+        "total": 1230
+      },
+      "estimatedCostUsd": 0.00025354,
+      "errorCode": null
+    },
+    {
+      "receiptId": "receipt:gold-live-ee4904645014e77a6d3de1dd",
+      "observationId": "controlled-live:A:6",
+      "conditionCode": "A",
+      "repetition": 6,
+      "domain": "reflection_transfer",
+      "templateId": "experiment/single-generalist",
+      "requestHash": "a57d343c9061071c2de37557d9da1dec8fe9dde3e1b5dc1b921a8f0a7d0b13cb",
+      "outputHash": "6a02e203fd5776f55f582be324a3c8e6544362c777441f4e7e075d0374aa6b62",
+      "provider": "deepseek",
+      "mode": "live",
+      "model": "deepseek-v4-flash",
+      "requestIdHash": "1b75d12d31885713d120bc7c296573c35f3ce616cd7ef40a0b04a94a7a7ecd72",
+      "status": "completed",
+      "latencyMs": 8562.186399999977,
+      "tokenUsage": {
+        "input": 647,
+        "output": 763,
+        "total": 1410
+      },
+      "estimatedCostUsd": 0.00030422,
+      "errorCode": null
+    },
+    {
+      "receiptId": "receipt:gold-live-d444b45efd5ae2a7d56ae4c7",
+      "observationId": "controlled-live:A:7",
+      "conditionCode": "A",
+      "repetition": 7,
+      "domain": "topic_research",
+      "templateId": "experiment/single-generalist",
+      "requestHash": "dd0d52843748f10c4886ff6c0e1df6b7a3840378ebf0cae1e610e5bceaec9a0d",
+      "outputHash": "074daf5ec1adeae16f57b90296123ba13844fef109fd5e625ef4d4684bbc4d95",
+      "provider": "deepseek",
+      "mode": "live",
+      "model": "deepseek-v4-flash",
+      "requestIdHash": "7512707ee4665b57eb957ccdef1437b94cd8f66d368adaa7e6758af5acf51390",
+      "status": "completed",
+      "latencyMs": 3602.0956000000006,
+      "tokenUsage": {
+        "input": 653,
+        "output": 319,
+        "total": 972
+      },
+      "estimatedCostUsd": 0.00018074,
+      "errorCode": null
+    },
+    {
+      "receiptId": "receipt:gold-live-e06c81c920e63923e4f2fed7",
+      "observationId": "controlled-live:A:8",
+      "conditionCode": "A",
+      "repetition": 8,
+      "domain": "interview_verification",
+      "templateId": "experiment/single-generalist",
+      "requestHash": "f3b42df0f3f48b8533856cfc54ba218c6d10f03581c3ef5cad18fe35a1d372a9",
+      "outputHash": "34f96952445db1315e5982c748e41d2afa5ad2d99b12922eee6be101a69eb9fa",
+      "provider": "deepseek",
+      "mode": "live",
+      "model": "deepseek-v4-flash",
+      "requestIdHash": "9181489bea31bb9edabc627e3d8b68baaf1a4f5dadfa3976a080bef280952401",
+      "status": "completed",
+      "latencyMs": 4310.613900000026,
+      "tokenUsage": {
+        "input": 639,
+        "output": 425,
+        "total": 1064
+      },
+      "estimatedCostUsd": 0.00020846,
+      "errorCode": null
+    },
+    {
+      "receiptId": "receipt:gold-live-7ba61cc818d5ca72d6446688",
+      "observationId": "controlled-live:A:9",
+      "conditionCode": "A",
+      "repetition": 9,
+      "domain": "content_production",
+      "templateId": "experiment/single-generalist",
+      "requestHash": "d9cef19c97924a47a57c0eecf20a043cf23d7d655b7c4f110d7c8ca4132a6224",
+      "outputHash": "31c7eb0036ba1bca70b1860f2d28ce5b9dc1765d53512497d68022d23dfada09",
+      "provider": "deepseek",
+      "mode": "live",
+      "model": "deepseek-v4-flash",
+      "requestIdHash": "30f5c2f663e03c6c5a057c0c6ee513b47bea2ace53357396ef064223a45f49ce",
+      "status": "completed",
+      "latencyMs": 9370.636599999998,
+      "tokenUsage": {
+        "input": 640,
+        "output": 843,
+        "total": 1483
+      },
+      "estimatedCostUsd": 0.00032564,
+      "errorCode": null
+    },
+    {
+      "receiptId": "receipt:gold-live-96ecb7c3362c77f87eebab0b",
+      "observationId": "controlled-live:A:10",
+      "conditionCode": "A",
+      "repetition": 10,
+      "domain": "governance_publication",
+      "templateId": "experiment/single-generalist",
+      "requestHash": "21f6de5d6e31ac7309915f4edeb45e21d8d62e61f4315a8a01e44246bb293149",
+      "outputHash": "8541636bcf7b6de3c3be4c8e49c78bb40e18fe6609b81e5da24ba2a57cae1906",
+      "provider": "deepseek",
+      "mode": "live",
+      "model": "deepseek-v4-flash",
+      "requestIdHash": "cea0996576a335171475ebd182909e5f65b4284a7b575a0509d11655cce6e3fa",
+      "status": "completed",
+      "latencyMs": 6242.854100000026,
+      "tokenUsage": {
+        "input": 647,
+        "output": 403,
+        "total": 1050
+      },
+      "estimatedCostUsd": 0.00020342,
+      "errorCode": null
+    },
+    {
+      "receiptId": "receipt:gold-live-1b9178e3290804366a1855ea",
+      "observationId": "controlled-live:B:1",
+      "conditionCode": "B",
+      "repetition": 1,
+      "domain": "topic_research",
+      "templateId": "assistant/course-navigation",
+      "requestHash": "4290140ef47dbe1c0b4f9b6829890a21aa630cadc863621480cc8d8edc457e98",
+      "outputHash": "c5b419c081bf60af2a9707e0d6114ecbd9dfffaa758318b645522d49ef482604",
+      "provider": "deepseek",
+      "mode": "live",
+      "model": "deepseek-v4-flash",
+      "requestIdHash": "95695490fc665787e5ecadb2747c4a10df05d601a8d053762b0eb981e52cb4f8",
+      "status": "completed",
+      "latencyMs": 6662.631999999983,
+      "tokenUsage": {
+        "input": 654,
+        "output": 269,
+        "total": 923
+      },
+      "estimatedCostUsd": 0.00016688,
+      "errorCode": null
+    },
+    {
+      "receiptId": "receipt:gold-live-2439a1fa4cdf3a0e24009214",
+      "observationId": "controlled-live:B:1",
+      "conditionCode": "B",
+      "repetition": 1,
+      "domain": "topic_research",
+      "templateId": "assistant/interview-structuring",
+      "requestHash": "08b1c61f1752d22d8de2630d70394c3135b86676c3e615de205638f68777f1be",
+      "outputHash": "3509fc6970ec1fa7ddd2471b19f19f468fb915ae479f796eab122426d4820d9a",
+      "provider": "deepseek",
+      "mode": "live",
+      "model": "deepseek-v4-flash",
+      "requestIdHash": "689471fb0a25737d3d61f67d7e4205185ee7ce14639b840ee7a2cc7642e8dedc",
+      "status": "completed",
+      "latencyMs": 6765.498899999977,
+      "tokenUsage": {
+        "input": 653,
+        "output": 325,
+        "total": 978
+      },
+      "estimatedCostUsd": 0.00018242,
+      "errorCode": null
+    },
+    {
+      "receiptId": "receipt:gold-live-865a83e3c50021e48e611521",
+      "observationId": "controlled-live:B:1",
+      "conditionCode": "B",
+      "repetition": 1,
+      "domain": "topic_research",
+      "templateId": "assistant/content-adaptation",
+      "requestHash": "46d6fc5ad610bbcd5f6c2d677445675502bb5211f6b19be7e4b5a566e0bed0db",
+      "outputHash": "f8e1eebd09c5c62b7e54d911a2d234c498aaaee0df57f7bbccf9d07c9fa72284",
+      "provider": "deepseek",
+      "mode": "live",
+      "model": "deepseek-v4-flash",
+      "requestIdHash": "03bdf8fa76a887f266347fefd234cd4c797f9d760d44c438639c4c5d0c79db24",
+      "status": "completed",
+      "latencyMs": 6620.727600000013,
+      "tokenUsage": {
+        "input": 654,
+        "output": 313,
+        "total": 967
+      },
+      "estimatedCostUsd": 0.0001792,
+      "errorCode": null
+    },
+    {
+      "receiptId": "receipt:gold-live-bb9c89c76d77a400d770d3c3",
+      "observationId": "controlled-live:B:1",
+      "conditionCode": "B",
+      "repetition": 1,
+      "domain": "topic_research",
+      "templateId": "governance/content-safety",
+      "requestHash": "1af18c546e6ec405088b7d75d2af1d7b0a8b5d629be99893f02417f4e702e5f4",
+      "outputHash": "735ae24d323d164a8ac68ccd31a609a4b069e791a47f613ba2abaf942d0e5b8c",
+      "provider": "deepseek",
+      "mode": "live",
+      "model": "deepseek-v4-flash",
+      "requestIdHash": "7807ae928b52e924e3ccde60b3680ac3a6b8ebb4f5a5043655c9a19206103320",
+      "status": "completed",
+      "latencyMs": 7505.695800000016,
+      "tokenUsage": {
+        "input": 654,
+        "output": 522,
+        "total": 1176
+      },
+      "estimatedCostUsd": 0.00023772,
+      "errorCode": null
+    },
+    {
+      "receiptId": "receipt:gold-live-1736e215cb478b6969392190",
+      "observationId": "controlled-live:B:1",
+      "conditionCode": "B",
+      "repetition": 1,
+      "domain": "topic_research",
+      "templateId": "assistant/live-intervention",
+      "requestHash": "acb4e115521ecc874712b7511f351ec88152b7664167732e126674eedfba6339",
+      "outputHash": "1b079242434deab5da896b76d416b14a4d37320a826426ba48e02eb7a55e4a14",
+      "provider": "deepseek",
+      "mode": "live",
+      "model": "deepseek-v4-flash",
+      "requestIdHash": "2714a6523c8571aaa2628260ec3d8a905e06ec81100b212dfd52a393ef54639c",
+      "status": "completed",
+      "latencyMs": 4708.302499999991,
+      "tokenUsage": {
+        "input": 652,
+        "output": 380,
+        "total": 1032
+      },
+      "estimatedCostUsd": 0.00019768,
+      "errorCode": null
+    },
+    {
+      "receiptId": "receipt:gold-live-9c02e9189469b0c5e9c7d35d",
+      "observationId": "controlled-live:B:1",
+      "conditionCode": "B",
+      "repetition": 1,
+      "domain": "topic_research",
+      "templateId": "assistant/evaluation-review",
+      "requestHash": "d2f585aed99f1712551e326c3500058854095abaecc6a8c52bcc37a16fefc123",
+      "outputHash": "edf4357277a864c0ca517ad7506d6f1ab5583eddbd2c88b64715dda6512c4fec",
+      "provider": "deepseek",
+      "mode": "live",
+      "model": "deepseek-v4-flash",
+      "requestIdHash": "da39f8bb8262f3fa633efbdab12a800dfad463fd5374cddceb125f90463c9197",
+      "status": "completed",
+      "latencyMs": 5345.363899999997,
+      "tokenUsage": {
+        "input": 651,
+        "output": 390,
+        "total": 1041
+      },
+      "estimatedCostUsd": 0.00020034,
+      "errorCode": null
+    },
+    {
+      "receiptId": "receipt:gold-live-982f13bf2b8e603a06aa286d",
+      "observationId": "controlled-live:B:2",
+      "conditionCode": "B",
+      "repetition": 2,
+      "domain": "interview_verification",
+      "templateId": "assistant/course-navigation",
+      "requestHash": "ef7d277150c55be662de2b5eeac7260cc69449e17458ccd45d11b7a9736d5039",
+      "outputHash": "8c06825b4fa94de4fb77ecb80b95af91e26b9db5d656d3e0dd835bbca7724e84",
+      "provider": "deepseek",
+      "mode": "live",
+      "model": "deepseek-v4-flash",
+      "requestIdHash": "668ec15b2c0bad312a3725e150ceb61116769e461f2f9fe9f4e477cc6de33fa6",
+      "status": "completed",
+      "latencyMs": 4787.303600000014,
+      "tokenUsage": {
+        "input": 640,
+        "output": 430,
+        "total": 1070
+      },
+      "estimatedCostUsd": 0.00021,
+      "errorCode": null
+    },
+    {
+      "receiptId": "receipt:gold-live-d74125d25703a2269747b0a3",
+      "observationId": "controlled-live:B:2",
+      "conditionCode": "B",
+      "repetition": 2,
+      "domain": "interview_verification",
+      "templateId": "assistant/interview-structuring",
+      "requestHash": "b40ae2af5f83e1c23a311b3c823ebc36415ab096cb80daf03d2b9a81f58bb367",
+      "outputHash": "31c58cff378cf9fd70c5534cec48634c6ea3c448d2cbffb15b1657cfccda8101",
+      "provider": "deepseek",
+      "mode": "live",
+      "model": "deepseek-v4-flash",
+      "requestIdHash": "710a634b6c55bd2caf157c2dd742d58335111e924d4c6269b1927f18c98935da",
+      "status": "completed",
+      "latencyMs": 6170.532600000006,
+      "tokenUsage": {
+        "input": 639,
+        "output": 479,
+        "total": 1118
+      },
+      "estimatedCostUsd": 0.00022358,
+      "errorCode": null
+    },
+    {
+      "receiptId": "receipt:gold-live-e73d28d319d3efa6589181bd",
+      "observationId": "controlled-live:B:2",
+      "conditionCode": "B",
+      "repetition": 2,
+      "domain": "interview_verification",
+      "templateId": "assistant/content-adaptation",
+      "requestHash": "71b287d94b5cbcef80993b1cba12724256b043837feb7d910f691c98368d5140",
+      "outputHash": "4ea92c477a0cb9d6d20bf0a676a52dc8db355eaee625d57298895a60eb824beb",
+      "provider": "deepseek",
+      "mode": "live",
+      "model": "deepseek-v4-flash",
+      "requestIdHash": "54e852bc66dbca87002fa832adb2eb112697c7b89de712c61a24d3d0ef64acd3",
+      "status": "completed",
+      "latencyMs": 3332.138099999982,
+      "tokenUsage": {
+        "input": 640,
+        "output": 268,
+        "total": 908
+      },
+      "estimatedCostUsd": 0.00016464,
+      "errorCode": null
+    },
+    {
+      "receiptId": "receipt:gold-live-c56f7d4ff3f799baa438a0bd",
+      "observationId": "controlled-live:B:2",
+      "conditionCode": "B",
+      "repetition": 2,
+      "domain": "interview_verification",
+      "templateId": "governance/content-safety",
+      "requestHash": "5eb7b633291cbbb45944423d9e54dd1fe09952a862946f7dc2d780c30eae4a7e",
+      "outputHash": "a9e6ccf7ced56163b530d99a7f74b2e67745f5c1acd55b8a3f98a2afcc2b81d5",
+      "provider": "deepseek",
+      "mode": "live",
+      "model": "deepseek-v4-flash",
+      "requestIdHash": "d40a547a7461a2ffb5c0ee3f69623dfa5f19a5168e580a4cb876608b3ec4c197",
+      "status": "completed",
+      "latencyMs": 3139.7238999999827,
+      "tokenUsage": {
+        "input": 640,
+        "output": 265,
+        "total": 905
+      },
+      "estimatedCostUsd": 0.0001638,
+      "errorCode": null
+    },
+    {
+      "receiptId": "receipt:gold-live-1ea20b88548f94dccc7e85a4",
+      "observationId": "controlled-live:B:2",
+      "conditionCode": "B",
+      "repetition": 2,
+      "domain": "interview_verification",
+      "templateId": "assistant/live-intervention",
+      "requestHash": "1af94d9e0ea95098ca2df45fd7ea3a20b1a35bd9a58ffe73d8f850931687c38a",
+      "outputHash": "d496864185492324a7d625f04edc1b94002c48475649c862ffd4f76e877155bf",
+      "provider": "deepseek",
+      "mode": "live",
+      "model": "deepseek-v4-flash",
+      "requestIdHash": "341ac7f8e0ca599289e6b0e9ad424aa6aac52fc0dfec71ce8437fc079d01599b",
+      "status": "completed",
+      "latencyMs": 8378.131599999993,
+      "tokenUsage": {
+        "input": 638,
+        "output": 739,
+        "total": 1377
+      },
+      "estimatedCostUsd": 0.00029624,
+      "errorCode": null
+    },
+    {
+      "receiptId": "receipt:gold-live-85c3d369947b7932d4ed32b3",
+      "observationId": "controlled-live:B:2",
+      "conditionCode": "B",
+      "repetition": 2,
+      "domain": "interview_verification",
+      "templateId": "assistant/evaluation-review",
+      "requestHash": "5e45f238d4c463f2c76a363538e637c5a72b4875d13050e02ea9a9b08ca1d3d1",
+      "outputHash": "30be80561ef8ed1c3d22208a278202559b65582e29a781453c2d8aa4321cb2da",
+      "provider": "deepseek",
+      "mode": "live",
+      "model": "deepseek-v4-flash",
+      "requestIdHash": "f9e33bfec933921f105c40bc12ddc923a97e65650fb1b39dbd0c9e27208cc22b",
+      "status": "completed",
+      "latencyMs": 5364.083899999998,
+      "tokenUsage": {
+        "input": 637,
+        "output": 479,
+        "total": 1116
+      },
+      "estimatedCostUsd": 0.0002233,
+      "errorCode": null
+    },
+    {
+      "receiptId": "receipt:gold-live-49feaf2784cb5b19aa54b6ad",
+      "observationId": "controlled-live:B:3",
+      "conditionCode": "B",
+      "repetition": 3,
+      "domain": "content_production",
+      "templateId": "assistant/course-navigation",
+      "requestHash": "b7870a0586bc30941997bea0950f35aec19b6b92f03d1ff19544a58e0379126d",
+      "outputHash": "26a9496b2ee23af1037d5ec59917dd31e5661fabee9caa90d791e72e3244e573",
+      "provider": "deepseek",
+      "mode": "live",
+      "model": "deepseek-v4-flash",
+      "requestIdHash": "68bd6a22bef801d7af1532e98cad25df4c384db6d32565ccb2565875d2fa8e86",
+      "status": "completed",
+      "latencyMs": 4603.2370999999985,
+      "tokenUsage": {
+        "input": 641,
+        "output": 353,
+        "total": 994
+      },
+      "estimatedCostUsd": 0.00018858,
+      "errorCode": null
+    },
+    {
+      "receiptId": "receipt:gold-live-3b9260cce0aea86313c50712",
+      "observationId": "controlled-live:B:3",
+      "conditionCode": "B",
+      "repetition": 3,
+      "domain": "content_production",
+      "templateId": "assistant/interview-structuring",
+      "requestHash": "81eda7a8fdfa2156b3ac9e204bb099ca7d8021e9474e9af8ef0d4c020f5f58a6",
+      "outputHash": "bd02e79288d3d73ae271675e02581072fe42b9864b9057a20ba76bee749d348e",
+      "provider": "deepseek",
+      "mode": "live",
+      "model": "deepseek-v4-flash",
+      "requestIdHash": "08ebf37ee004b1b8ecedb2b5b966e07209b170f1b3f7cf2bffa718e97be873e8",
+      "status": "completed",
+      "latencyMs": 5570.022799999977,
+      "tokenUsage": {
+        "input": 640,
+        "output": 368,
+        "total": 1008
+      },
+      "estimatedCostUsd": 0.00019264,
+      "errorCode": null
+    },
+    {
+      "receiptId": "receipt:gold-live-dd87e55f73257c2a7693e7ce",
+      "observationId": "controlled-live:B:3",
+      "conditionCode": "B",
+      "repetition": 3,
+      "domain": "content_production",
+      "templateId": "assistant/content-adaptation",
+      "requestHash": "cf61197804a71bfb3ac86867649408e8ca9c355c839a508cf72fe93cd6b2d251",
+      "outputHash": "57eeac801542e0c06ce6fcb8aedfc56404232c1e85c2876dd331c9cbc755f26a",
+      "provider": "deepseek",
+      "mode": "live",
+      "model": "deepseek-v4-flash",
+      "requestIdHash": "de6bf18b1fd94661a5e537f1ad382a15bcab87d6f4b8ebf99107816b3138deaf",
+      "status": "completed",
+      "latencyMs": 7570.978800000012,
+      "tokenUsage": {
+        "input": 641,
+        "output": 531,
+        "total": 1172
+      },
+      "estimatedCostUsd": 0.00023842,
+      "errorCode": null
+    },
+    {
+      "receiptId": "receipt:gold-live-5354508976a21077ff2dcea1",
+      "observationId": "controlled-live:B:3",
+      "conditionCode": "B",
+      "repetition": 3,
+      "domain": "content_production",
+      "templateId": "governance/content-safety",
+      "requestHash": "622145b7dcbbd683b8432b3ceeed1210254ff71eb6ef1408ecc2e131ad7dd2ce",
+      "outputHash": "d403dc41c1e76ce691364fdb91132ae8d3732e7e0750673b31136d30b249fcc9",
+      "provider": "deepseek",
+      "mode": "live",
+      "model": "deepseek-v4-flash",
+      "requestIdHash": "b4dcecbbbe42e9723f47e552695db3830b9756e659e4d311574d5d03949f5bc5",
+      "status": "completed",
+      "latencyMs": 9554.863100000017,
+      "tokenUsage": {
+        "input": 641,
+        "output": 782,
+        "total": 1423
+      },
+      "estimatedCostUsd": 0.0003087,
+      "errorCode": null
+    },
+    {
+      "receiptId": "receipt:gold-live-dc2524e6281ce613c6f5e28c",
+      "observationId": "controlled-live:B:3",
+      "conditionCode": "B",
+      "repetition": 3,
+      "domain": "content_production",
+      "templateId": "assistant/live-intervention",
+      "requestHash": "d68c928a9db8d3836061721ffad1090dbef5b56dfc1cf0ad50279056a54593f1",
+      "outputHash": "6ea39b78cfced5c7a602e617982c42e199960f209a226ba7f12bec7a29aed925",
+      "provider": "deepseek",
+      "mode": "live",
+      "model": "deepseek-v4-flash",
+      "requestIdHash": "3b68495eb285baaa20117f96a20bf1ec6fb2662ee2bab6f3fbcf8f4bd66a92d1",
+      "status": "completed",
+      "latencyMs": 5358.083099999989,
+      "tokenUsage": {
+        "input": 639,
+        "output": 482,
+        "total": 1121
+      },
+      "estimatedCostUsd": 0.00022442,
+      "errorCode": null
+    },
+    {
+      "receiptId": "receipt:gold-live-0b2cf80c861022db68370902",
+      "observationId": "controlled-live:B:3",
+      "conditionCode": "B",
+      "repetition": 3,
+      "domain": "content_production",
+      "templateId": "assistant/evaluation-review",
+      "requestHash": "e80c4066f664550e5fa22d21fdf6ad66efa81f979c410e1ad8fea07238849247",
+      "outputHash": "675e90e03a55833707aaaad7de17abf71dc5b5175d70b6ea447e1a4f8c408e1f",
+      "provider": "deepseek",
+      "mode": "live",
+      "model": "deepseek-v4-flash",
+      "requestIdHash": "42186c6a0d93302c6cf5391a49c629b6dab25a7847a45b6698b8d8a0662ff70f",
+      "status": "completed",
+      "latencyMs": 5788.487499999988,
+      "tokenUsage": {
+        "input": 638,
+        "output": 554,
+        "total": 1192
+      },
+      "estimatedCostUsd": 0.00024444,
+      "errorCode": null
+    },
+    {
+      "receiptId": "receipt:gold-live-c673c754c8a1fb7c66d80d30",
+      "observationId": "controlled-live:B:4",
+      "conditionCode": "B",
+      "repetition": 4,
+      "domain": "governance_publication",
+      "templateId": "assistant/course-navigation",
+      "requestHash": "127b696e541e3d3f7aa7a46d94f05451c228101eb9f42f8ffff77aebfbdb2332",
+      "outputHash": "4832cbe10df125413e0c86a005dcc945fa21686e6289b29ed53b747ef1196f39",
+      "provider": "deepseek",
+      "mode": "live",
+      "model": "deepseek-v4-flash",
+      "requestIdHash": "e072b4b70ad872c942b2a97b8637318fcf022366c2a9750bf4b1b4da8b379be3",
+      "status": "completed",
+      "latencyMs": 6111.983400000026,
+      "tokenUsage": {
+        "input": 648,
+        "output": 540,
+        "total": 1188
+      },
+      "estimatedCostUsd": 0.00024192,
+      "errorCode": null
+    },
+    {
+      "receiptId": "receipt:gold-live-b442979cd03b92fcccf6dd34",
+      "observationId": "controlled-live:B:4",
+      "conditionCode": "B",
+      "repetition": 4,
+      "domain": "governance_publication",
+      "templateId": "assistant/interview-structuring",
+      "requestHash": "b0751897f799d7ae2f5d24dd7db44b16f73662b6c179c328193a07a0294f7b0b",
+      "outputHash": "030cc076d1554f89193872c374fc70f4af246aa22b65ea8e026a484d72cb3e36",
+      "provider": "deepseek",
+      "mode": "live",
+      "model": "deepseek-v4-flash",
+      "requestIdHash": "65fa47381e3cb55c8da5bea763f1b137a10a70d07510944f2b77253391e80cbd",
+      "status": "completed",
+      "latencyMs": 8103.235599999956,
+      "tokenUsage": {
+        "input": 647,
+        "output": 878,
+        "total": 1525
+      },
+      "estimatedCostUsd": 0.00033642,
+      "errorCode": null
+    },
+    {
+      "receiptId": "receipt:gold-live-697787d00fadb17d07ab5727",
+      "observationId": "controlled-live:B:4",
+      "conditionCode": "B",
+      "repetition": 4,
+      "domain": "governance_publication",
+      "templateId": "assistant/content-adaptation",
+      "requestHash": "979d97a8bbff2f9d95e70861aa2553bb3a7c0eb8d7e19310cc0ae392a2f70127",
+      "outputHash": "f9b71f6b6913ea606736221abb18955f520d6246c8de0f9f3513e5e19304ef45",
+      "provider": "deepseek",
+      "mode": "live",
+      "model": "deepseek-v4-flash",
+      "requestIdHash": "ae9d84db3fa717be59b5ab14c9e23be8cc5ee049ca8d945fe5deece61e79e43a",
+      "status": "completed",
+      "latencyMs": 5596.26449999999,
+      "tokenUsage": {
+        "input": 648,
+        "output": 550,
+        "total": 1198
+      },
+      "estimatedCostUsd": 0.00024472,
+      "errorCode": null
+    },
+    {
+      "receiptId": "receipt:gold-live-b0a05df8d072ce5b071dc0ad",
+      "observationId": "controlled-live:B:4",
+      "conditionCode": "B",
+      "repetition": 4,
+      "domain": "governance_publication",
+      "templateId": "governance/content-safety",
+      "requestHash": "22c64ae6d12356417f04373ea9f4dffaaacc0db750c8212633cca70cbe528173",
+      "outputHash": "33b1c29a6820cd205c56639564c54efccf78238e77cf45c9d80be226d2c27a48",
+      "provider": "deepseek",
+      "mode": "live",
+      "model": "deepseek-v4-flash",
+      "requestIdHash": "fb3dc13a8f49afa0d46585112a9154e704c2bab3a7dfa004091da66f8de7a0a0",
+      "status": "completed",
+      "latencyMs": 4453.589899999963,
+      "tokenUsage": {
+        "input": 648,
+        "output": 441,
+        "total": 1089
+      },
+      "estimatedCostUsd": 0.0002142,
+      "errorCode": null
+    },
+    {
+      "receiptId": "receipt:gold-live-5cda416a70f5ef93e70cab9f",
+      "observationId": "controlled-live:B:4",
+      "conditionCode": "B",
+      "repetition": 4,
+      "domain": "governance_publication",
+      "templateId": "assistant/live-intervention",
+      "requestHash": "8b72b25a596b1070569a061efc8e23d4c79c990e81fc1a8a31eee46fb2c825ce",
+      "outputHash": "7cff3fac0d5efb1aada465dec45329aeed8d0c5d41f444e7771f52f8fd6b7f68",
+      "provider": "deepseek",
+      "mode": "live",
+      "model": "deepseek-v4-flash",
+      "requestIdHash": "6876623bb237e77b6c3c3caf77ec52db091813b23e37e41ab4010d9188527468",
+      "status": "completed",
+      "latencyMs": 5531.808300000033,
+      "tokenUsage": {
+        "input": 646,
+        "output": 539,
+        "total": 1185
+      },
+      "estimatedCostUsd": 0.00024136,
+      "errorCode": null
+    },
+    {
+      "receiptId": "receipt:gold-live-73f7cc091c137591278c43b4",
+      "observationId": "controlled-live:B:4",
+      "conditionCode": "B",
+      "repetition": 4,
+      "domain": "governance_publication",
+      "templateId": "assistant/evaluation-review",
+      "requestHash": "e71e8c2e27be5c9e9c96cf4273cc131db9dc68a1c5e9f5de99fae83f1086a2cf",
+      "outputHash": "cd6f3f18305fc0d090012319e1da83369bf642fbf3b841be44bef7420c0644ff",
+      "provider": "deepseek",
+      "mode": "live",
+      "model": "deepseek-v4-flash",
+      "requestIdHash": "4c1e2cc5a68496a65ba5cc40933dda2650d9059960e3969f2d5de4f302845bd6",
+      "status": "completed",
+      "latencyMs": 5379.76370000001,
+      "tokenUsage": {
+        "input": 645,
+        "output": 559,
+        "total": 1204
+      },
+      "estimatedCostUsd": 0.00024682,
+      "errorCode": null
+    },
+    {
+      "receiptId": "receipt:gold-live-9fbd198a45420e85193b2e9d",
+      "observationId": "controlled-live:B:5",
+      "conditionCode": "B",
+      "repetition": 5,
+      "domain": "collaboration_response",
+      "templateId": "assistant/course-navigation",
+      "requestHash": "25454bba4b5d0e6c5eff7182055369bb50cbd8e108ae00413ea6e8d7fd598696",
+      "outputHash": "6a0374efff4acbdf1617d13e5e8217f9965552478af23c07022cde4c2c7ec02a",
+      "provider": "deepseek",
+      "mode": "live",
+      "model": "deepseek-v4-flash",
+      "requestIdHash": "dfe249f223396c6929f20259543701b484cc8672b87249c7a7baa30843533d06",
+      "status": "completed",
+      "latencyMs": 7666.738899999997,
+      "tokenUsage": {
+        "input": 650,
+        "output": 786,
+        "total": 1436
+      },
+      "estimatedCostUsd": 0.00031108,
+      "errorCode": null
+    },
+    {
+      "receiptId": "receipt:gold-live-eab3c4fdec562d1d5b6dc8c1",
+      "observationId": "controlled-live:B:5",
+      "conditionCode": "B",
+      "repetition": 5,
+      "domain": "collaboration_response",
+      "templateId": "assistant/interview-structuring",
+      "requestHash": "caf396da37c22ee16af90fc7b4c905c13a76cfd7c1541a2fd1269e8dee27e093",
+      "outputHash": "2e0467dcaa22b7284d4947d0dd2e257dafe30d8187ae542b175137810486f1d8",
+      "provider": "deepseek",
+      "mode": "live",
+      "model": "deepseek-v4-flash",
+      "requestIdHash": "f24a357ccf0574ed26b8b1070dfd0f0316daf2822b8d2feb91ae6d5692512546",
+      "status": "completed",
+      "latencyMs": 3001.5711999999476,
+      "tokenUsage": {
+        "input": 649,
+        "output": 292,
+        "total": 941
+      },
+      "estimatedCostUsd": 0.00017262,
+      "errorCode": null
+    },
+    {
+      "receiptId": "receipt:gold-live-8c606b59107b185b5f87c84d",
+      "observationId": "controlled-live:B:5",
+      "conditionCode": "B",
+      "repetition": 5,
+      "domain": "collaboration_response",
+      "templateId": "assistant/content-adaptation",
+      "requestHash": "44515e5be649256e14cc417c39a0282e8cdb959735126b35a14f2de1ad5610b7",
+      "outputHash": "445c01f4b8aeb53c50acd6dcb49cf3f7d783463b79f8e3e978832b767858905f",
+      "provider": "deepseek",
+      "mode": "live",
+      "model": "deepseek-v4-flash",
+      "requestIdHash": "94f0bd2f7a9c33d2849fb2734b4670893f0dd8655bd029e9c56d87e7949df0a5",
+      "status": "completed",
+      "latencyMs": 5902.807399999991,
+      "tokenUsage": {
+        "input": 650,
+        "output": 623,
+        "total": 1273
+      },
+      "estimatedCostUsd": 0.00026544,
+      "errorCode": null
+    },
+    {
+      "receiptId": "receipt:gold-live-02f7ba9136d406805aff0dbb",
+      "observationId": "controlled-live:B:5",
+      "conditionCode": "B",
+      "repetition": 5,
+      "domain": "collaboration_response",
+      "templateId": "governance/content-safety",
+      "requestHash": "aa1a5067044a423511363979a452d1fa504bfd6c33e38baa2ab5a00f4eea21bb",
+      "outputHash": "79c4bbf6a785f6fae37064934c2bd4ecc6038edf6ab34eef66ce4fba17ad80a9",
+      "provider": "deepseek",
+      "mode": "live",
+      "model": "deepseek-v4-flash",
+      "requestIdHash": "8a04da07f46ca2b2a0c7e61ca505b9a54cdebcd6b1b067760520d8e84673fa7d",
+      "status": "completed",
+      "latencyMs": 5699.153899999976,
+      "tokenUsage": {
+        "input": 650,
+        "output": 640,
+        "total": 1290
+      },
+      "estimatedCostUsd": 0.0002702,
+      "errorCode": null
+    },
+    {
+      "receiptId": "receipt:gold-live-25ed02a0591cf7e0382c8a74",
+      "observationId": "controlled-live:B:5",
+      "conditionCode": "B",
+      "repetition": 5,
+      "domain": "collaboration_response",
+      "templateId": "assistant/live-intervention",
+      "requestHash": "97c6da795ad7157d071dc2bcf8ffb2d5d23a340a2674f246f7c4b136ad010162",
+      "outputHash": "a76d5c2ae0680dbde85a5032cc68a87f6b69e6393ff5bd56b0c84edc209e0e39",
+      "provider": "deepseek",
+      "mode": "live",
+      "model": "deepseek-v4-flash",
+      "requestIdHash": "9e2b6f8b3d5edec7b3c82e745e7c11c223e8ae7c49de4a95a710817f13596b44",
+      "status": "completed",
+      "latencyMs": 4209.353299999959,
+      "tokenUsage": {
+        "input": 648,
+        "output": 439,
+        "total": 1087
+      },
+      "estimatedCostUsd": 0.00021364,
+      "errorCode": null
+    },
+    {
+      "receiptId": "receipt:gold-live-7608a72ec778f4d705d929e3",
+      "observationId": "controlled-live:B:5",
+      "conditionCode": "B",
+      "repetition": 5,
+      "domain": "collaboration_response",
+      "templateId": "assistant/evaluation-review",
+      "requestHash": "7014eb5cf2d775639cdc5b7eefd543982304597d5c29ab664ee694b22a5edadb",
+      "outputHash": "0546d0219124a4d49ea993cd0c92daef575ed0e579a99dee3d82d36f33313b45",
+      "provider": "deepseek",
+      "mode": "live",
+      "model": "deepseek-v4-flash",
+      "requestIdHash": "a27b49e8a4ba80cd17b266f557842ad233ae8c915573a2e6974ba65ffb19a8f0",
+      "status": "completed",
+      "latencyMs": 5932.311400000006,
+      "tokenUsage": {
+        "input": 647,
+        "output": 612,
+        "total": 1259
+      },
+      "estimatedCostUsd": 0.00026194,
+      "errorCode": null
+    },
+    {
+      "receiptId": "receipt:gold-live-1296cf882af48e0ade2b97a3",
+      "observationId": "controlled-live:B:6",
+      "conditionCode": "B",
+      "repetition": 6,
+      "domain": "reflection_transfer",
+      "templateId": "assistant/course-navigation",
+      "requestHash": "6592557af761cb325838a7c588ca646072444354fde46c1e36657b432289a2e2",
+      "outputHash": "306369ddec32e21e6b912006faf59565f0479c9e423f8e0c4548ad9c2357baf2",
+      "provider": "deepseek",
+      "mode": "live",
+      "model": "deepseek-v4-flash",
+      "requestIdHash": "ccfecb934a0ab0bd7aabe06720a32f687e66c9330235ac494920afb518b77656",
+      "status": "completed",
+      "latencyMs": 5380.683599999989,
+      "tokenUsage": {
+        "input": 648,
+        "output": 569,
+        "total": 1217
+      },
+      "estimatedCostUsd": 0.00025004,
+      "errorCode": null
+    },
+    {
+      "receiptId": "receipt:gold-live-bac7c7d193810c230868adac",
+      "observationId": "controlled-live:B:6",
+      "conditionCode": "B",
+      "repetition": 6,
+      "domain": "reflection_transfer",
+      "templateId": "assistant/interview-structuring",
+      "requestHash": "bb82c6980de590568c9b932efb2fe6498aa8b79d52a7007caeaa83defe1bd3b8",
+      "outputHash": "a7f5707bd5c3afd13a780c8f8b214501b49cac64c6a4c00abde1e4f5b85f7fa7",
+      "provider": "deepseek",
+      "mode": "live",
+      "model": "deepseek-v4-flash",
+      "requestIdHash": "0da5fa101b4353fdbd707c142df14e0f8cd5f44989dcc81925ff31307e092371",
+      "status": "completed",
+      "latencyMs": 5141.016399999964,
+      "tokenUsage": {
+        "input": 647,
+        "output": 483,
+        "total": 1130
+      },
+      "estimatedCostUsd": 0.00022582,
+      "errorCode": null
+    },
+    {
+      "receiptId": "receipt:gold-live-a067d4fc21fd470020f4dbe8",
+      "observationId": "controlled-live:B:6",
+      "conditionCode": "B",
+      "repetition": 6,
+      "domain": "reflection_transfer",
+      "templateId": "assistant/content-adaptation",
+      "requestHash": "963deab44fad335be4d0979ff48a45b8b6972a5f827518c8cfdabcfbe90366b3",
+      "outputHash": "6a4d0df103d65e7c3ab9f10d2735a522b3159d20b8ee8c14d0ef3650d02f4fa7",
+      "provider": "deepseek",
+      "mode": "live",
+      "model": "deepseek-v4-flash",
+      "requestIdHash": "470f59dd2dd7d49203e7a98c9992cb5bb918367e6fb2fea3a21e4d91a60d07e3",
+      "status": "completed",
+      "latencyMs": 3877.383199999982,
+      "tokenUsage": {
+        "input": 648,
+        "output": 386,
+        "total": 1034
+      },
+      "estimatedCostUsd": 0.0001988,
+      "errorCode": null
+    },
+    {
+      "receiptId": "receipt:gold-live-564b683e945102819715b19f",
+      "observationId": "controlled-live:B:6",
+      "conditionCode": "B",
+      "repetition": 6,
+      "domain": "reflection_transfer",
+      "templateId": "governance/content-safety",
+      "requestHash": "02b6e5fd2723c1694580ed8de9608ef6adc7961307b215dd2d0f47563f42faf3",
+      "outputHash": "53fef3a1adb08d9cf039cd633b695f2861d5f760834867d18404bde795892964",
+      "provider": "deepseek",
+      "mode": "live",
+      "model": "deepseek-v4-flash",
+      "requestIdHash": "4e6ca3edb83db070dc61b3c864bfe318628b152dcf0066db40e47ed19dbf796b",
+      "status": "completed",
+      "latencyMs": 7059.207300000009,
+      "tokenUsage": {
+        "input": 648,
+        "output": 774,
+        "total": 1422
+      },
+      "estimatedCostUsd": 0.00030744,
+      "errorCode": null
+    },
+    {
+      "receiptId": "receipt:gold-live-0537ef5313616897046af75f",
+      "observationId": "controlled-live:B:6",
+      "conditionCode": "B",
+      "repetition": 6,
+      "domain": "reflection_transfer",
+      "templateId": "assistant/live-intervention",
+      "requestHash": "ed346b27d9cd9390bf00da2db2c85f42d5a82392c120b2f332f5228be8ef36af",
+      "outputHash": "f645959c2efe3f74f0070f6a7e78c4863635b6a6b8f2bf047e41865dc8872f0c",
+      "provider": "deepseek",
+      "mode": "live",
+      "model": "deepseek-v4-flash",
+      "requestIdHash": "b56e24e0382e1b2495819da029e916736031eb7dbac682eb2f1390a12829b8cd",
+      "status": "completed",
+      "latencyMs": 3532.4519000000437,
+      "tokenUsage": {
+        "input": 646,
+        "output": 348,
+        "total": 994
+      },
+      "estimatedCostUsd": 0.00018788,
+      "errorCode": null
+    },
+    {
+      "receiptId": "receipt:gold-live-3cc9a3409002d71325d51590",
+      "observationId": "controlled-live:B:6",
+      "conditionCode": "B",
+      "repetition": 6,
+      "domain": "reflection_transfer",
+      "templateId": "assistant/evaluation-review",
+      "requestHash": "1767de04f3554bfcea3b39542943e25a2899706700be99baf92be580a745dd4f",
+      "outputHash": "1eaec974758736fd13bd8d5ffe22ffec6c1590e611b9b7ac7ce5a41de2f2dbda",
+      "provider": "deepseek",
+      "mode": "live",
+      "model": "deepseek-v4-flash",
+      "requestIdHash": "9b3166646e4476d625b8649e70b15d21f2a81c6f6270e92f54f20af9367c4737",
+      "status": "completed",
+      "latencyMs": 6098.932499999995,
+      "tokenUsage": {
+        "input": 645,
+        "output": 640,
+        "total": 1285
+      },
+      "estimatedCostUsd": 0.0002695,
+      "errorCode": null
+    },
+    {
+      "receiptId": "receipt:gold-live-e054c38ef058aa48bf910441",
+      "observationId": "controlled-live:B:7",
+      "conditionCode": "B",
+      "repetition": 7,
+      "domain": "topic_research",
+      "templateId": "assistant/course-navigation",
+      "requestHash": "4290140ef47dbe1c0b4f9b6829890a21aa630cadc863621480cc8d8edc457e98",
+      "outputHash": "5cd5c9f0f65f915ccd0e9ce17cca04377f3f8a770654e2abafad843fb2b6f7df",
+      "provider": "deepseek",
+      "mode": "live",
+      "model": "deepseek-v4-flash",
+      "requestIdHash": "0c772bbd6ab52465283a4a7ecf6dfeba90b9402cfbf1e4848267984cf60708dd",
+      "status": "completed",
+      "latencyMs": 4119.424300000013,
+      "tokenUsage": {
+        "input": 654,
+        "output": 442,
+        "total": 1096
+      },
+      "estimatedCostUsd": 0.00021532,
+      "errorCode": null
+    },
+    {
+      "receiptId": "receipt:gold-live-5308a6de0aa5ea65462a6af9",
+      "observationId": "controlled-live:B:7",
+      "conditionCode": "B",
+      "repetition": 7,
+      "domain": "topic_research",
+      "templateId": "assistant/interview-structuring",
+      "requestHash": "08b1c61f1752d22d8de2630d70394c3135b86676c3e615de205638f68777f1be",
+      "outputHash": "c9b98d56ca072a8bbb3fa70918d3b68d751035bb905e8544825953b591579fb1",
+      "provider": "deepseek",
+      "mode": "live",
+      "model": "deepseek-v4-flash",
+      "requestIdHash": "21035d826d3e789b721da8e586107cc310640d2e50e9fe73da04e0421930385f",
+      "status": "completed",
+      "latencyMs": 3614.504499999981,
+      "tokenUsage": {
+        "input": 653,
+        "output": 389,
+        "total": 1042
+      },
+      "estimatedCostUsd": 0.00020034,
+      "errorCode": null
+    },
+    {
+      "receiptId": "receipt:gold-live-be9ac4bb5fb0969b218689af",
+      "observationId": "controlled-live:B:7",
+      "conditionCode": "B",
+      "repetition": 7,
+      "domain": "topic_research",
+      "templateId": "assistant/content-adaptation",
+      "requestHash": "46d6fc5ad610bbcd5f6c2d677445675502bb5211f6b19be7e4b5a566e0bed0db",
+      "outputHash": "bcd8ee6a50b0461e8899b99b5261546cb19513b7044e99d04e9e2802e5ba0662",
+      "provider": "deepseek",
+      "mode": "live",
+      "model": "deepseek-v4-flash",
+      "requestIdHash": "65c4d0bd6a07eac5ac7d5ac42d7effa112c9f91c5a82d99179a7399c7804c8e2",
+      "status": "completed",
+      "latencyMs": 4464.555099999998,
+      "tokenUsage": {
+        "input": 654,
+        "output": 475,
+        "total": 1129
+      },
+      "estimatedCostUsd": 0.00022456,
+      "errorCode": null
+    },
+    {
+      "receiptId": "receipt:gold-live-627767c7f39d8ed30970fc16",
+      "observationId": "controlled-live:B:7",
+      "conditionCode": "B",
+      "repetition": 7,
+      "domain": "topic_research",
+      "templateId": "governance/content-safety",
+      "requestHash": "1af18c546e6ec405088b7d75d2af1d7b0a8b5d629be99893f02417f4e702e5f4",
+      "outputHash": "94b09831153e9804cd48a2e40062124805a377d6df4ebf7bdae9384f27f407f9",
+      "provider": "deepseek",
+      "mode": "live",
+      "model": "deepseek-v4-flash",
+      "requestIdHash": "136c1b791467f9d1f0c40135913a53040eea1a3bd3b43da9186a6ce2a945a912",
+      "status": "completed",
+      "latencyMs": 4771.776899999997,
+      "tokenUsage": {
+        "input": 654,
+        "output": 564,
+        "total": 1218
+      },
+      "estimatedCostUsd": 0.00024948,
+      "errorCode": null
+    },
+    {
+      "receiptId": "receipt:gold-live-9f6908a67ca1a2008707d397",
+      "observationId": "controlled-live:B:7",
+      "conditionCode": "B",
+      "repetition": 7,
+      "domain": "topic_research",
+      "templateId": "assistant/live-intervention",
+      "requestHash": "acb4e115521ecc874712b7511f351ec88152b7664167732e126674eedfba6339",
+      "outputHash": "f9a5c729cd59583e78274974e87f95f244cf40de598c6493c3109ae65b89a340",
+      "provider": "deepseek",
+      "mode": "live",
+      "model": "deepseek-v4-flash",
+      "requestIdHash": "24bb100410b4c9ba75711d6a250512e3b7a973d94089804c4bfe80f8d12b3dfe",
+      "status": "completed",
+      "latencyMs": 3435.7890999999945,
+      "tokenUsage": {
+        "input": 652,
+        "output": 363,
+        "total": 1015
+      },
+      "estimatedCostUsd": 0.00019292,
+      "errorCode": null
+    },
+    {
+      "receiptId": "receipt:gold-live-970ee8e03b03f3a89e50b944",
+      "observationId": "controlled-live:B:7",
+      "conditionCode": "B",
+      "repetition": 7,
+      "domain": "topic_research",
+      "templateId": "assistant/evaluation-review",
+      "requestHash": "d2f585aed99f1712551e326c3500058854095abaecc6a8c52bcc37a16fefc123",
+      "outputHash": "76c497b5f7ee423eaf6eb9a62b9233f9bfcec6db5906fdf115fc04f170e14f4c",
+      "provider": "deepseek",
+      "mode": "live",
+      "model": "deepseek-v4-flash",
+      "requestIdHash": "da9c134eed52941197c5ab5c75367cab2993145755476fb7a5bf475717080932",
+      "status": "completed",
+      "latencyMs": 4058.169099999999,
+      "tokenUsage": {
+        "input": 651,
+        "output": 396,
+        "total": 1047
+      },
+      "estimatedCostUsd": 0.00020202,
+      "errorCode": null
+    },
+    {
+      "receiptId": "receipt:gold-live-9c13f0adab37f12f95cf74cd",
+      "observationId": "controlled-live:B:8",
+      "conditionCode": "B",
+      "repetition": 8,
+      "domain": "interview_verification",
+      "templateId": "assistant/course-navigation",
+      "requestHash": "ef7d277150c55be662de2b5eeac7260cc69449e17458ccd45d11b7a9736d5039",
+      "outputHash": "4e55ef5bb4351aad5ea119b87f05310aa0383038b9cdee7afd57121301d81596",
+      "provider": "deepseek",
+      "mode": "live",
+      "model": "deepseek-v4-flash",
+      "requestIdHash": "f20b4a2a557b3e042d852f1082b92f9f1cd9cc01f6dd37faab0affa768e1cc23",
+      "status": "completed",
+      "latencyMs": 3848.3366999999853,
+      "tokenUsage": {
+        "input": 640,
+        "output": 363,
+        "total": 1003
+      },
+      "estimatedCostUsd": 0.00019124,
+      "errorCode": null
+    },
+    {
+      "receiptId": "receipt:gold-live-a4c899cc6b267207b20e1080",
+      "observationId": "controlled-live:B:8",
+      "conditionCode": "B",
+      "repetition": 8,
+      "domain": "interview_verification",
+      "templateId": "assistant/interview-structuring",
+      "requestHash": "b40ae2af5f83e1c23a311b3c823ebc36415ab096cb80daf03d2b9a81f58bb367",
+      "outputHash": "7754cd9ea10cdbb5a2e9bd31d36d1a2df6dd8636446ed75e4d10fcc59f995ff1",
+      "provider": "deepseek",
+      "mode": "live",
+      "model": "deepseek-v4-flash",
+      "requestIdHash": "785eddbb3a912eff02ff8a2a43672e632c9b10423a2293958ed67f02ecfc8405",
+      "status": "completed",
+      "latencyMs": 7803.411900000006,
+      "tokenUsage": {
+        "input": 639,
+        "output": 831,
+        "total": 1470
+      },
+      "estimatedCostUsd": 0.00032214,
+      "errorCode": null
+    },
+    {
+      "receiptId": "receipt:gold-live-578fbb7dc58857d37b2d94a3",
+      "observationId": "controlled-live:B:8",
+      "conditionCode": "B",
+      "repetition": 8,
+      "domain": "interview_verification",
+      "templateId": "assistant/content-adaptation",
+      "requestHash": "71b287d94b5cbcef80993b1cba12724256b043837feb7d910f691c98368d5140",
+      "outputHash": "896d48ccc2aa49bdc4ec6c50b41bffb03d07134667fe57199632b8d1ca00b9dd",
+      "provider": "deepseek",
+      "mode": "live",
+      "model": "deepseek-v4-flash",
+      "requestIdHash": "88894ac53de8da488c0637fbcb4ed4b4ea7d465d8b95ba632e34a6eaa1fb1010",
+      "status": "completed",
+      "latencyMs": 5526.764900000009,
+      "tokenUsage": {
+        "input": 640,
+        "output": 514,
+        "total": 1154
+      },
+      "estimatedCostUsd": 0.00023352,
+      "errorCode": null
+    },
+    {
+      "receiptId": "receipt:gold-live-4d281efb1ff3d5a4cc54d026",
+      "observationId": "controlled-live:B:8",
+      "conditionCode": "B",
+      "repetition": 8,
+      "domain": "interview_verification",
+      "templateId": "governance/content-safety",
+      "requestHash": "5eb7b633291cbbb45944423d9e54dd1fe09952a862946f7dc2d780c30eae4a7e",
+      "outputHash": "380fa1b346ebb7842751f192543fabd6f0c641df9e7c63e2cd9b7e5203c201de",
+      "provider": "deepseek",
+      "mode": "live",
+      "model": "deepseek-v4-flash",
+      "requestIdHash": "3336963a57a3292db036cdfd5fc7186ab634db314e3c4a33df4cf5f3d08858ea",
+      "status": "completed",
+      "latencyMs": 6190.128900000011,
+      "tokenUsage": {
+        "input": 640,
+        "output": 683,
+        "total": 1323
+      },
+      "estimatedCostUsd": 0.00028084,
+      "errorCode": null
+    },
+    {
+      "receiptId": "receipt:gold-live-fe6b4e7c31a03400647b4bba",
+      "observationId": "controlled-live:B:8",
+      "conditionCode": "B",
+      "repetition": 8,
+      "domain": "interview_verification",
+      "templateId": "assistant/live-intervention",
+      "requestHash": "1af94d9e0ea95098ca2df45fd7ea3a20b1a35bd9a58ffe73d8f850931687c38a",
+      "outputHash": "5214f7fe94ead6bda3570f7bbebc303a71d645e3f49dd11edb65a0a3eb369b3c",
+      "provider": "deepseek",
+      "mode": "live",
+      "model": "deepseek-v4-flash",
+      "requestIdHash": "9eb09d28bc27af7d60657c59c164c88739cc26080d2ddc5c27e1ecf0d0e56739",
+      "status": "completed",
+      "latencyMs": 3854.2233000000124,
+      "tokenUsage": {
+        "input": 638,
+        "output": 430,
+        "total": 1068
+      },
+      "estimatedCostUsd": 0.00020972,
+      "errorCode": null
+    },
+    {
+      "receiptId": "receipt:gold-live-e8f03f59d9259eb5acc09036",
+      "observationId": "controlled-live:B:8",
+      "conditionCode": "B",
+      "repetition": 8,
+      "domain": "interview_verification",
+      "templateId": "assistant/evaluation-review",
+      "requestHash": "5e45f238d4c463f2c76a363538e637c5a72b4875d13050e02ea9a9b08ca1d3d1",
+      "outputHash": "b28597b18576968a8fe22c91f94462e9ebae5640a23aa19ab7610b33d1ddbc2c",
+      "provider": "deepseek",
+      "mode": "live",
+      "model": "deepseek-v4-flash",
+      "requestIdHash": "f1a81ffec33c8470a9e642154aabfc3d9d78c404103994e58f7866f964590aed",
+      "status": "completed",
+      "latencyMs": 5196.817900000024,
+      "tokenUsage": {
+        "input": 637,
+        "output": 541,
+        "total": 1178
+      },
+      "estimatedCostUsd": 0.00024066,
+      "errorCode": null
+    },
+    {
+      "receiptId": "receipt:gold-live-e09629c3659670bb9fe2155f",
+      "observationId": "controlled-live:B:9",
+      "conditionCode": "B",
+      "repetition": 9,
+      "domain": "content_production",
+      "templateId": "assistant/course-navigation",
+      "requestHash": "b7870a0586bc30941997bea0950f35aec19b6b92f03d1ff19544a58e0379126d",
+      "outputHash": "c9a6b03e739d5aef2d47e132ba8d97dd2597844f0725a14cde4082dceb37bc85",
+      "provider": "deepseek",
+      "mode": "live",
+      "model": "deepseek-v4-flash",
+      "requestIdHash": "cdd942d7665c85295da206aeeb3be066acc5da0e6fe95e0ba83b5f3d8d6bb1f6",
+      "status": "completed",
+      "latencyMs": 5474.963199999998,
+      "tokenUsage": {
+        "input": 641,
+        "output": 612,
+        "total": 1253
+      },
+      "estimatedCostUsd": 0.0002611,
+      "errorCode": null
+    },
+    {
+      "receiptId": "receipt:gold-live-ff02e9f47b5c9d29070f4dd2",
+      "observationId": "controlled-live:B:9",
+      "conditionCode": "B",
+      "repetition": 9,
+      "domain": "content_production",
+      "templateId": "assistant/interview-structuring",
+      "requestHash": "81eda7a8fdfa2156b3ac9e204bb099ca7d8021e9474e9af8ef0d4c020f5f58a6",
+      "outputHash": "772c72d43b71921fee97266b83163267d04d2107dd6d6350dced78f06b4377eb",
+      "provider": "deepseek",
+      "mode": "live",
+      "model": "deepseek-v4-flash",
+      "requestIdHash": "5a0378b8d3e2f3a35a286d8aaf5a951d3496efc7e2c4914dfa0311b519ba5cb0",
+      "status": "completed",
+      "latencyMs": 4986.214299999992,
+      "tokenUsage": {
+        "input": 640,
+        "output": 578,
+        "total": 1218
+      },
+      "estimatedCostUsd": 0.00025144,
+      "errorCode": null
+    },
+    {
+      "receiptId": "receipt:gold-live-6f7c581a239ef9b34fc6d882",
+      "observationId": "controlled-live:B:9",
+      "conditionCode": "B",
+      "repetition": 9,
+      "domain": "content_production",
+      "templateId": "assistant/content-adaptation",
+      "requestHash": "cf61197804a71bfb3ac86867649408e8ca9c355c839a508cf72fe93cd6b2d251",
+      "outputHash": "e2d5c350dc0ba9975a367dfcf30b52914c06640d36b94f316c95f1af756650d8",
+      "provider": "deepseek",
+      "mode": "live",
+      "model": "deepseek-v4-flash",
+      "requestIdHash": "8825ecab3f69971049353f03e5330869016cb1c687b0389d5dcfcdd9d559c708",
+      "status": "completed",
+      "latencyMs": 3581.3961000000127,
+      "tokenUsage": {
+        "input": 641,
+        "output": 347,
+        "total": 988
+      },
+      "estimatedCostUsd": 0.0001869,
+      "errorCode": null
+    },
+    {
+      "receiptId": "receipt:gold-live-56e579632f74a08c278069d6",
+      "observationId": "controlled-live:B:9",
+      "conditionCode": "B",
+      "repetition": 9,
+      "domain": "content_production",
+      "templateId": "governance/content-safety",
+      "requestHash": "622145b7dcbbd683b8432b3ceeed1210254ff71eb6ef1408ecc2e131ad7dd2ce",
+      "outputHash": "786fdee5621d35f9b7e3f6779c3a28aceecdac691bfb863a810d2dacef410faf",
+      "provider": "deepseek",
+      "mode": "live",
+      "model": "deepseek-v4-flash",
+      "requestIdHash": "ccdea4c313516461d2ecb5924d070f1f163b10cbbc7a69458d1d5d1372a5c479",
+      "status": "completed",
+      "latencyMs": 5616.022100000002,
+      "tokenUsage": {
+        "input": 641,
+        "output": 597,
+        "total": 1238
+      },
+      "estimatedCostUsd": 0.0002569,
+      "errorCode": null
+    },
+    {
+      "receiptId": "receipt:gold-live-0a7a3d903984c72053829778",
+      "observationId": "controlled-live:B:9",
+      "conditionCode": "B",
+      "repetition": 9,
+      "domain": "content_production",
+      "templateId": "assistant/live-intervention",
+      "requestHash": "d68c928a9db8d3836061721ffad1090dbef5b56dfc1cf0ad50279056a54593f1",
+      "outputHash": "8151b0680f1e7c3886344acaa54ed159d030123fc530c4c81ab9daa88370377e",
+      "provider": "deepseek",
+      "mode": "live",
+      "model": "deepseek-v4-flash",
+      "requestIdHash": "7a11c159015eb9d2cfbde268a1e37428b39a050d8a7eccf44e06c26f7a9f8910",
+      "status": "completed",
+      "latencyMs": 4128.635500000033,
+      "tokenUsage": {
+        "input": 639,
+        "output": 436,
+        "total": 1075
+      },
+      "estimatedCostUsd": 0.00021154,
+      "errorCode": null
+    },
+    {
+      "receiptId": "receipt:gold-live-aed27b4567f28e4c560ef24f",
+      "observationId": "controlled-live:B:9",
+      "conditionCode": "B",
+      "repetition": 9,
+      "domain": "content_production",
+      "templateId": "assistant/evaluation-review",
+      "requestHash": "e80c4066f664550e5fa22d21fdf6ad66efa81f979c410e1ad8fea07238849247",
+      "outputHash": "452543dfa6cdd8998b6fc9166503ad61a1b84678b843f8ea713810e568720d86",
+      "provider": "deepseek",
+      "mode": "live",
+      "model": "deepseek-v4-flash",
+      "requestIdHash": "011068898dd7bd1ef95580e7ffd4431df4a282ad41ec4df02d350aa36a25b5bc",
+      "status": "completed",
+      "latencyMs": 4747.457900000038,
+      "tokenUsage": {
+        "input": 638,
+        "output": 538,
+        "total": 1176
+      },
+      "estimatedCostUsd": 0.00023996,
+      "errorCode": null
+    },
+    {
+      "receiptId": "receipt:gold-live-b262f1ffa13d103319567c9c",
+      "observationId": "controlled-live:B:10",
+      "conditionCode": "B",
+      "repetition": 10,
+      "domain": "governance_publication",
+      "templateId": "assistant/course-navigation",
+      "requestHash": "127b696e541e3d3f7aa7a46d94f05451c228101eb9f42f8ffff77aebfbdb2332",
+      "outputHash": "30ab4e5fde01ee9aaaaec13a9bc1449749650b504c178129fc3660d7da37891e",
+      "provider": "deepseek",
+      "mode": "live",
+      "model": "deepseek-v4-flash",
+      "requestIdHash": "bb2af2c505973a985765be68f256cd7c1c826ff4ba3905b57d47b793dc2725d1",
+      "status": "completed",
+      "latencyMs": 7228.110099999991,
+      "tokenUsage": {
+        "input": 648,
+        "output": 364,
+        "total": 1012
+      },
+      "estimatedCostUsd": 0.00019264,
+      "errorCode": null
+    },
+    {
+      "receiptId": "receipt:gold-live-126a6c264fbe51e8e3afd27b",
+      "observationId": "controlled-live:B:10",
+      "conditionCode": "B",
+      "repetition": 10,
+      "domain": "governance_publication",
+      "templateId": "assistant/interview-structuring",
+      "requestHash": "b0751897f799d7ae2f5d24dd7db44b16f73662b6c179c328193a07a0294f7b0b",
+      "outputHash": "3a26765295a435066dca90c25c8270b8bedd08b21a93021ec69aca47e840242f",
+      "provider": "deepseek",
+      "mode": "live",
+      "model": "deepseek-v4-flash",
+      "requestIdHash": "c3e40ecd5da0af4494d95adc28c2d9d6ed823ccbbb4d16f6cab2f04c8f941163",
+      "status": "completed",
+      "latencyMs": 7284.894700000004,
+      "tokenUsage": {
+        "input": 647,
+        "output": 708,
+        "total": 1355
+      },
+      "estimatedCostUsd": 0.00028882,
+      "errorCode": null
+    },
+    {
+      "receiptId": "receipt:gold-live-8fe59a873974966611163d45",
+      "observationId": "controlled-live:B:10",
+      "conditionCode": "B",
+      "repetition": 10,
+      "domain": "governance_publication",
+      "templateId": "assistant/content-adaptation",
+      "requestHash": "979d97a8bbff2f9d95e70861aa2553bb3a7c0eb8d7e19310cc0ae392a2f70127",
+      "outputHash": "28ef12481cc818a612646ef80b3699c8f5a514e75521ebe5d5bc437f7775875f",
+      "provider": "deepseek",
+      "mode": "live",
+      "model": "deepseek-v4-flash",
+      "requestIdHash": "4860ac705b94c350cf59434be99777a6e4cc91e4c87c67de4e8b3e3cd1b7b848",
+      "status": "completed",
+      "latencyMs": 4922.213400000008,
+      "tokenUsage": {
+        "input": 648,
+        "output": 439,
+        "total": 1087
+      },
+      "estimatedCostUsd": 0.00021364,
+      "errorCode": null
+    },
+    {
+      "receiptId": "receipt:gold-live-4d0dd488710ac8c1bd8a1910",
+      "observationId": "controlled-live:B:10",
+      "conditionCode": "B",
+      "repetition": 10,
+      "domain": "governance_publication",
+      "templateId": "governance/content-safety",
+      "requestHash": "22c64ae6d12356417f04373ea9f4dffaaacc0db750c8212633cca70cbe528173",
+      "outputHash": "4fa0e8d052b689ec516d86b012cfaead5628f8439f8d8b1831901d3307288215",
+      "provider": "deepseek",
+      "mode": "live",
+      "model": "deepseek-v4-flash",
+      "requestIdHash": "71614f1dd19b20f9bb8252a4101c7a16d1129e01ab7bb748988a7498b54d4d5f",
+      "status": "completed",
+      "latencyMs": 16195.801500000001,
+      "tokenUsage": {
+        "input": 648,
+        "output": 684,
+        "total": 1332
+      },
+      "estimatedCostUsd": 0.00028224,
+      "errorCode": null
+    },
+    {
+      "receiptId": "receipt:gold-live-5c81abc8e8f70d88b6d06d1a",
+      "observationId": "controlled-live:B:10",
+      "conditionCode": "B",
+      "repetition": 10,
+      "domain": "governance_publication",
+      "templateId": "assistant/live-intervention",
+      "requestHash": "8b72b25a596b1070569a061efc8e23d4c79c990e81fc1a8a31eee46fb2c825ce",
+      "outputHash": "69b5124166e1975096f4b2e7a2280d549822c63316fe923741961c945bbb5cd8",
+      "provider": "deepseek",
+      "mode": "live",
+      "model": "deepseek-v4-flash",
+      "requestIdHash": "52bc769fec56594ad0d53ad5c5207c54d1154f6566147d6aa3c27f5d37cc45b5",
+      "status": "completed",
+      "latencyMs": 5022.07620000001,
+      "tokenUsage": {
+        "input": 646,
+        "output": 327,
+        "total": 973
+      },
+      "estimatedCostUsd": 0.000182,
+      "errorCode": null
+    },
+    {
+      "receiptId": "receipt:gold-live-7ab51248d6b6161a77403c29",
+      "observationId": "controlled-live:B:10",
+      "conditionCode": "B",
+      "repetition": 10,
+      "domain": "governance_publication",
+      "templateId": "assistant/evaluation-review",
+      "requestHash": "e71e8c2e27be5c9e9c96cf4273cc131db9dc68a1c5e9f5de99fae83f1086a2cf",
+      "outputHash": "84edf257fa8ef5ec806941986679c8aaf1e7bef268f7a5e9c2b48a6eff52a9de",
+      "provider": "deepseek",
+      "mode": "live",
+      "model": "deepseek-v4-flash",
+      "requestIdHash": "7ffd4711ed053275cda816831b7097e5307f0d807df56cbca6e82363e45d0140",
+      "status": "completed",
+      "latencyMs": 5540.172300000035,
+      "tokenUsage": {
+        "input": 645,
+        "output": 372,
+        "total": 1017
+      },
+      "estimatedCostUsd": 0.00019446,
+      "errorCode": null
+    },
+    {
+      "receiptId": "receipt:gold-live-1fed8ada8e990ac3c56b3df8",
+      "observationId": "controlled-live:C:1",
+      "conditionCode": "C",
+      "repetition": 1,
+      "domain": "topic_research",
+      "templateId": "assistant/course-navigation",
+      "requestHash": "02cb1e24c97847d90efb81ed735940df0763c71d207c9682bd10ed7514d02d73",
+      "outputHash": "f05ba5d1f40a70eae51e0a74a50d885a1705b33a7999e05ea6b096827d618941",
+      "provider": "deepseek",
+      "mode": "live",
+      "model": "deepseek-v4-flash",
+      "requestIdHash": "359b47a838048480cb14179abace8e0ec204204e140e0a5b0d8f1288ec4fbc47",
+      "status": "completed",
+      "latencyMs": 5028.778200000001,
+      "tokenUsage": {
+        "input": 463,
+        "output": 557,
+        "total": 1020
+      },
+      "estimatedCostUsd": 0.00022078,
+      "errorCode": null
+    },
+    {
+      "receiptId": "receipt:gold-live-b9da3237e674a55896f36259",
+      "observationId": "controlled-live:C:2",
+      "conditionCode": "C",
+      "repetition": 2,
+      "domain": "interview_verification",
+      "templateId": "assistant/interview-structuring",
+      "requestHash": "742e1bbba1cf11861c433fb748e35dc2078a770b994b0c9c6a46aa5155f885f5",
+      "outputHash": "744e63afd60a57ae207d3dbfd9294d330f6c79340b3c6e1c1281e8d88f94272d",
+      "provider": "deepseek",
+      "mode": "live",
+      "model": "deepseek-v4-flash",
+      "requestIdHash": "3076a933cadc470c2322e605c6ecca9787423c14000590cfcc84ba3b6c508be1",
+      "status": "completed",
+      "latencyMs": 3679.793000000005,
+      "tokenUsage": {
+        "input": 453,
+        "output": 389,
+        "total": 842
+      },
+      "estimatedCostUsd": 0.00017234,
+      "errorCode": null
+    },
+    {
+      "receiptId": "receipt:gold-live-3cdc1857b6eb1507c3baa62a",
+      "observationId": "controlled-live:C:3",
+      "conditionCode": "C",
+      "repetition": 3,
+      "domain": "content_production",
+      "templateId": "assistant/content-adaptation",
+      "requestHash": "00b31e3ac42dced6a767ff639ee95ae8e3f12fb34a00b78523d3c68cccc5b7c2",
+      "outputHash": "50806d48d08bc4ee86032e0b5faa4f186d7d3205095f83052287de1ad576546e",
+      "provider": "deepseek",
+      "mode": "live",
+      "model": "deepseek-v4-flash",
+      "requestIdHash": "4ac3bfc11074ed69c84e0b6e9d49d646ed0bec8a5b4f8848a6a20aef07ebabe0",
+      "status": "completed",
+      "latencyMs": 4848.692600000009,
+      "tokenUsage": {
+        "input": 455,
+        "output": 496,
+        "total": 951
+      },
+      "estimatedCostUsd": 0.00020258,
+      "errorCode": null
+    },
+    {
+      "receiptId": "receipt:gold-live-7052c78a829d220c8cdec5f8",
+      "observationId": "controlled-live:C:4",
+      "conditionCode": "C",
+      "repetition": 4,
+      "domain": "governance_publication",
+      "templateId": "governance/content-safety",
+      "requestHash": "50e0dcf3b436155dc58839edac273359f94220bf7c1a8c934255fd091ec1e5e2",
+      "outputHash": "e72bbd1b58e7b8b999c87c1fe9bfc68c9ecf74f677883914d11dde2d6686225e",
+      "provider": "deepseek",
+      "mode": "live",
+      "model": "deepseek-v4-flash",
+      "requestIdHash": "901130df312734dcfa03cca0e949efd67575679eb67d0950a1b6b2ace9e3d4e2",
+      "status": "completed",
+      "latencyMs": 2970.1812999999966,
+      "tokenUsage": {
+        "input": 460,
+        "output": 311,
+        "total": 771
+      },
+      "estimatedCostUsd": 0.00015148,
+      "errorCode": null
+    },
+    {
+      "receiptId": "receipt:gold-live-4e262166aa7d1976e4914491",
+      "observationId": "controlled-live:C:5",
+      "conditionCode": "C",
+      "repetition": 5,
+      "domain": "collaboration_response",
+      "templateId": "assistant/live-intervention",
+      "requestHash": "f6df5bd13bd8d1b9b94fedcaf69a15e712c76d85265bd56723fce5b0e2a23f04",
+      "outputHash": "5aa7e1ba385927dc7bf3240ca618dd81403939da9913e54ca056cde3b09b500c",
+      "provider": "deepseek",
+      "mode": "live",
+      "model": "deepseek-v4-flash",
+      "requestIdHash": "648369a22977d6f62b7db66aee29a8ba71efdc6cd105de954553e0627ed690ed",
+      "status": "completed",
+      "latencyMs": 6402.64989999996,
+      "tokenUsage": {
+        "input": 464,
+        "output": 679,
+        "total": 1143
+      },
+      "estimatedCostUsd": 0.00025508,
+      "errorCode": null
+    },
+    {
+      "receiptId": "receipt:gold-live-a6f4817aaaa57822418637cd",
+      "observationId": "controlled-live:C:6",
+      "conditionCode": "C",
+      "repetition": 6,
+      "domain": "reflection_transfer",
+      "templateId": "assistant/evaluation-review",
+      "requestHash": "ca7e2ad5cb9904c0c4a0f9cd644de6f8013a0496d2c2a33d61b0766bd6d8855a",
+      "outputHash": "8a9b445952dfa0202df9f452764733737096975b0233419aff587b537b79068f",
+      "provider": "deepseek",
+      "mode": "live",
+      "model": "deepseek-v4-flash",
+      "requestIdHash": "3d29e52f4dddb4298f916a78d5018d3ac6ba70e3065f0f761329fe7dd33b1ddb",
+      "status": "completed",
+      "latencyMs": 6769.30700000003,
+      "tokenUsage": {
+        "input": 460,
+        "output": 770,
+        "total": 1230
+      },
+      "estimatedCostUsd": 0.00028,
+      "errorCode": null
+    },
+    {
+      "receiptId": "receipt:gold-live-486421a02fefc23dcab32997",
+      "observationId": "controlled-live:C:7",
+      "conditionCode": "C",
+      "repetition": 7,
+      "domain": "topic_research",
+      "templateId": "assistant/course-navigation",
+      "requestHash": "02cb1e24c97847d90efb81ed735940df0763c71d207c9682bd10ed7514d02d73",
+      "outputHash": "f540bdb9b3fe589c50e27ec61ba47d0a2002fd6e9e9acdb4a4e0051b374229f1",
+      "provider": "deepseek",
+      "mode": "live",
+      "model": "deepseek-v4-flash",
+      "requestIdHash": "822aed734de54e881beab0c1a8bba6b5c43caf1870038e1d55ea6230f76968b5",
+      "status": "completed",
+      "latencyMs": 4610.361700000009,
+      "tokenUsage": {
+        "input": 463,
+        "output": 526,
+        "total": 989
+      },
+      "estimatedCostUsd": 0.0002121,
+      "errorCode": null
+    },
+    {
+      "receiptId": "receipt:gold-live-487dc2b8aa38b76020d6c1b8",
+      "observationId": "controlled-live:C:8",
+      "conditionCode": "C",
+      "repetition": 8,
+      "domain": "interview_verification",
+      "templateId": "assistant/interview-structuring",
+      "requestHash": "742e1bbba1cf11861c433fb748e35dc2078a770b994b0c9c6a46aa5155f885f5",
+      "outputHash": "60e23b1c12f4a641517253c1eb3b3abb0bfde64fad4ac90b01a300c24d3da60c",
+      "provider": "deepseek",
+      "mode": "live",
+      "model": "deepseek-v4-flash",
+      "requestIdHash": "784891233b7d729e5a74b50bb005b3d756dc0dc8f80369222185e1141f35f217",
+      "status": "completed",
+      "latencyMs": 10372.950500000035,
+      "tokenUsage": {
+        "input": 453,
+        "output": 584,
+        "total": 1037
+      },
+      "estimatedCostUsd": 0.00022694,
+      "errorCode": null
+    },
+    {
+      "receiptId": "receipt:gold-live-4b84ed843837ddade746c4a5",
+      "observationId": "controlled-live:C:9",
+      "conditionCode": "C",
+      "repetition": 9,
+      "domain": "content_production",
+      "templateId": "assistant/content-adaptation",
+      "requestHash": "00b31e3ac42dced6a767ff639ee95ae8e3f12fb34a00b78523d3c68cccc5b7c2",
+      "outputHash": "6e6f876083d085a22a2a8bd82e394e6a3547ad4bea5b725d8c33421b7f2520da",
+      "provider": "deepseek",
+      "mode": "live",
+      "model": "deepseek-v4-flash",
+      "requestIdHash": "ad513be2f7a72d7a1678fa0898912f3777ba4de0f60b03129cf10dedf6833813",
+      "status": "completed",
+      "latencyMs": 5289.118699999992,
+      "tokenUsage": {
+        "input": 455,
+        "output": 335,
+        "total": 790
+      },
+      "estimatedCostUsd": 0.0001575,
+      "errorCode": null
+    },
+    {
+      "receiptId": "receipt:gold-live-be9c22fc9da29ed0a0e499fc",
+      "observationId": "controlled-live:C:10",
+      "conditionCode": "C",
+      "repetition": 10,
+      "domain": "governance_publication",
+      "templateId": "governance/content-safety",
+      "requestHash": "50e0dcf3b436155dc58839edac273359f94220bf7c1a8c934255fd091ec1e5e2",
+      "outputHash": "545b2855b351ceae8ed5f209d5c278821bd1dbdf05cc045cd8382646c35c78d6",
+      "provider": "deepseek",
+      "mode": "live",
+      "model": "deepseek-v4-flash",
+      "requestIdHash": "9fa5d71ed01ba6b13541d49a41afd2a17f200810cbc482e09442676c606edcb5",
+      "status": "completed",
+      "latencyMs": 5827.861700000009,
+      "tokenUsage": {
+        "input": 460,
+        "output": 535,
+        "total": 995
+      },
+      "estimatedCostUsd": 0.0002142,
+      "errorCode": null
+    }
+  ],
+  "claimBoundary": "条件标签没有进入模型请求；盲评包不含条件映射，映射单独保存。该技术运行仍使用合成案件和固定教师锚点，不能替代真实教师独立评分、教学试点或生产SLA。",
+  "bundleHash": "8eb566e9fecc58d8a5b8ed992ef8fb771aee7ed8122f6297df9d9d5c00ec969e"
+}

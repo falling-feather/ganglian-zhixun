@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>融岗智训｜课程到终评详细全流程</title>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      @font-face {
+        font-family: "Microsoft YaHei";
+        src: local("Microsoft YaHei");
+        font-style: normal;
+        font-weight: 300 900;
+      }
+
+      @font-face {
+        font-family: "Cascadia Mono";
+        src: local("Cascadia Mono");
+        font-style: normal;
+        font-weight: 300 800;
+      }
+
+      * { box-sizing: border-box; }
+
+      html,
+      body {
+        width: 1280px;
+        height: 720px;
+        margin: 0;
+        overflow: hidden;
+        background: #071827;
+        color: #f2f7fa;
+        font-family: "Microsoft YaHei", sans-serif;
+      }
+
+      #detailed-workflow {
+        position: relative;
+        width: 1280px;
+        height: 720px;
+        overflow: hidden;
+        background: #071827;
+      }
+
+      #raw-video {
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        display: block;
+        width: 1280px;
+        height: 720px;
+        object-fit: cover;
+        background: #071827;
+        opacity: 0;
+      }
+
+      .overlay-composition {
+        position: absolute;
+        inset: 0;
+        z-index: 8;
+        width: 1280px;
+        height: 720px;
+        pointer-events: none;
+      }
+
+      .brand-scene {
+        position: absolute;
+        inset: 0;
+        z-index: 12;
+        display: flex;
+        align-items: center;
+        padding: 72px 104px;
+        overflow: hidden;
+        background: #071827;
+      }
+
+      .grid {
+        position: absolute;
+        inset: 0;
+        opacity: 0.16;
+        background-image:
+          linear-gradient(rgba(36, 199, 201, 0.22) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(36, 199, 201, 0.22) 1px, transparent 1px);
+        background-size: 72px 72px;
+      }
+
+      .accent-disc {
+        position: absolute;
+        right: 62px;
+        width: 470px;
+        height: 470px;
+        border: 1px solid rgba(36, 199, 201, 0.28);
+        border-radius: 50%;
+        box-shadow: inset 0 0 0 72px rgba(36, 199, 201, 0.035);
+      }
+
+      .brand-content {
+        position: relative;
+        z-index: 2;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        width: 100%;
+        max-width: 980px;
+        gap: 20px;
+      }
+
+      .kicker {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        color: #24c7c9;
+        font-family: "Cascadia Mono", monospace;
+        font-size: 18px;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+      }
+
+      .kicker::before {
+        width: 40px;
+        height: 3px;
+        background: #24c7c9;
+        content: "";
+      }
+
+      .brand-title {
+        max-width: 1080px;
+        margin: 0;
+        font-size: 70px;
+        font-weight: 900;
+        line-height: 1.12;
+        letter-spacing: -0.045em;
+      }
+
+      .brand-subtitle {
+        max-width: 900px;
+        margin: 0;
+        color: #c4d4dc;
+        font-size: 25px;
+        font-weight: 350;
+        line-height: 1.55;
+      }
+
+      .flow-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 8px;
+      }
+
+      .flow-row span {
+        padding: 10px 15px;
+        border: 1px solid rgba(36, 199, 201, 0.34);
+        border-radius: 9px;
+        background: #0d2b3a;
+        color: #f2f7fa;
+        font-size: 17px;
+        font-weight: 700;
+      }
+
+      .score-lock {
+        display: inline-flex;
+        align-items: baseline;
+        gap: 14px;
+        padding: 13px 18px;
+        border-left: 4px solid #24c7c9;
+        background: #0d2b3a;
+      }
+
+      .score-lock strong {
+        color: #24c7c9;
+        font-family: "Cascadia Mono", monospace;
+        font-size: 34px;
+      }
+
+      #outro { z-index: 14; }
+    </style>
+  </head>
+  <body>
+    <main id="detailed-workflow" data-composition-id="ronggang-detailed-workflow" data-width="1280" data-height="720" data-start="0" data-duration="434">
+      <section id="intro" class="clip brand-scene" data-start="0" data-duration="6" data-track-index="2">
+        <div class="grid" data-layout-ignore=""></div>
+        <div id="intro-disc" class="accent-disc" data-layout-ignore=""></div>
+        <div class="brand-content">
+          <div id="intro-kicker" class="kicker">RONGGANG ZHI XUN · DETAILED WORKFLOW</div>
+          <h1 id="intro-title" class="brand-title">课程到终评详细全流程</h1>
+          <p id="intro-subtitle" class="brand-subtitle">真实完成选课、岗位协作、教师门禁、四域治理、R1 / R2、终评与学生反馈。</p>
+          <div id="intro-flow" class="flow-row">
+            <span>选课认领</span><span>角色智能体</span><span>治理纠错</span><span>不可变修订</span><span>92.2 分终评</span>
+          </div>
+        </div>
+      </section>
+
+      <video id="raw-video" class="clip" data-start="6" data-duration="421" data-track-index="0" src="assets/course-to-review-raw.mp4" muted playsinline preload="auto"></video>
+
+      <div id="student-overlay" class="clip overlay-composition" data-composition-id="student-overlay-host" data-composition-src="compositions/01-student.html" data-start="6" data-duration="69" data-track-index="3"></div>
+      <div id="governance-overlay" class="clip overlay-composition" data-composition-id="governance-overlay-host" data-composition-src="compositions/02-governance.html" data-start="75" data-duration="214" data-track-index="3"></div>
+      <div id="review-overlay" class="clip overlay-composition" data-composition-id="review-overlay-host" data-composition-src="compositions/03-review.html" data-start="289" data-duration="138" data-track-index="3"></div>
+
+      <section id="outro" class="clip brand-scene" data-start="427" data-duration="7" data-track-index="2">
+        <div class="grid" data-layout-ignore=""></div>
+        <div id="outro-disc" class="accent-disc" data-layout-ignore=""></div>
+        <div class="brand-content">
+          <div id="outro-kicker" class="kicker">WORKFLOW COMPLETE</div>
+          <h2 id="outro-title" class="brand-title">从真实行为到可追溯评价</h2>
+          <p id="outro-subtitle" class="brand-subtitle">智能体给建议，教师掌握最终门禁；失败可纠正、版本可比较、成绩可回看。</p>
+          <div id="outro-score" class="score-lock"><strong>92.2</strong><span>教师终评已锁定 · 学生反馈已发布</span></div>
+        </div>
+      </section>
+    </main>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      var tl = gsap.timeline({ paused: true });
+
+      tl.fromTo("#intro-disc", { opacity: 0.15, scale: 0.86 }, { opacity: 0.65, scale: 1, duration: 4.8, ease: "sine.out", immediateRender: false }, 0.2);
+      tl.fromTo("#intro-kicker", { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.5, ease: "power2.out", immediateRender: false }, 0.35);
+      tl.fromTo("#intro-title", { opacity: 0, y: 38 }, { opacity: 1, y: 0, duration: 0.72, ease: "power3.out", immediateRender: false }, 0.55);
+      tl.fromTo("#intro-subtitle", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.56, ease: "power2.out", immediateRender: false }, 0.95);
+      tl.fromTo("#intro-flow", { opacity: 0, x: -24 }, { opacity: 1, x: 0, duration: 0.56, ease: "power2.out", immediateRender: false }, 1.25);
+      tl.to("#intro", { opacity: 0, scale: 1.015, duration: 0.55, ease: "power2.inOut" }, 5.38);
+
+      tl.fromTo("#raw-video", { opacity: 0 }, { opacity: 1, duration: 0.45, ease: "power1.out", immediateRender: false }, 6);
+      tl.to("#raw-video", { opacity: 0, duration: 0.5, ease: "power1.in" }, 426.45);
+
+      tl.fromTo("#outro", { opacity: 0 }, { opacity: 1, duration: 0.5, ease: "power2.out", immediateRender: false }, 427);
+      tl.fromTo("#outro-disc", { opacity: 0.15, scale: 0.88 }, { opacity: 0.62, scale: 1, duration: 5.6, ease: "sine.out", immediateRender: false }, 427.15);
+      tl.fromTo("#outro-kicker", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.42, ease: "power2.out", immediateRender: false }, 427.35);
+      tl.fromTo("#outro-title", { opacity: 0, y: 34 }, { opacity: 1, y: 0, duration: 0.64, ease: "power3.out", immediateRender: false }, 427.55);
+      tl.fromTo("#outro-subtitle", { opacity: 0, y: 22 }, { opacity: 1, y: 0, duration: 0.52, ease: "power2.out", immediateRender: false }, 427.9);
+      tl.fromTo("#outro-score", { opacity: 0, x: -28 }, { opacity: 1, x: 0, duration: 0.58, ease: "power2.out", immediateRender: false }, 428.25);
+
+      window.__timelines["ronggang-detailed-workflow"] = tl;
+    </script>
+  </body>
+</html>

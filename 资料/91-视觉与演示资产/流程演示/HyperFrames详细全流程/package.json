@@ -1,0 +1,11 @@
+{
+  "name": "ronggang-detailed-workflow-video",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "npx --yes hyperframes@0.7.88 preview",
+    "check": "npx --yes hyperframes@0.7.88 check",
+    "inspect": "npx --yes hyperframes@0.7.88 inspect",
+    "render": "npx --yes hyperframes@0.7.88 render"
+  }
+}

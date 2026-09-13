@@ -1,0 +1,224 @@
+{
+  "schemaVersion": "gold-technical-evidence/1.0.0",
+  "manifestVersion": "gold-technical-evidence-manifest/1.0.0",
+  "generatedAt": "2026-07-29T21:54:15.950Z",
+  "productVersion": "1.0.0",
+  "sourceGitCommit": "3678898313191777232f6b203e5bb3dd8e0e411f",
+  "sourceTreeState": "clean",
+  "planHash": "407a7dfa9882affce6ad4028c4b5deaf3dbd144888fc4999a4f73aae8de12ce0",
+  "scenarioBindings": [
+    {
+      "role": "flagship",
+      "scenarioId": "scenario-local-tourism-media-v0.1",
+      "version": "1.1.1",
+      "releaseRef": "release-scenario-local-tourism-media-v0.1-1.1.1-baseline",
+      "contentHash": "db3561089fabef485cff10a55730759e0d8b1702ba66e000b5b33f70a165e690"
+    },
+    {
+      "role": "transfer",
+      "scenarioId": "scenario-heritage-night-tour-capacity-v1",
+      "version": "1.0.0",
+      "releaseRef": "release-scenario-heritage-night-tour-capacity-v1-1.0.0-baseline",
+      "contentHash": "9e3068e126b8df944af7152f0d76dfba7374860335802442e9c161c4a284074d"
+    }
+  ],
+  "modelBindings": [
+    {
+      "evidenceKind": "contract",
+      "profileRef": "deterministic-contract-model/1.0.0",
+      "provider": "deterministic",
+      "mode": "mock",
+      "model": "gold-contract-replay-v1",
+      "promptAndPolicyHash": "7f7e345fc0719d62d63143f8581915a248df673d4ead3be3c63c52cfa8b4de6f"
+    }
+  ],
+  "gateSummary": {
+    "technicalGates": {
+      "passed": 10,
+      "failed": 0,
+      "insufficient": 0
+    },
+    "causalClaims": {
+      "passed": 5,
+      "failed": 0,
+      "insufficient": 0
+    },
+    "controlledLiveAblation": "not_run",
+    "transferProof": "passed"
+  },
+  "validationReceipts": [
+    {
+      "receiptId": "scenario-package-validation",
+      "command": "internal: validateScenarioPackage(flagship, transfer)",
+      "scope": "旗舰与迁移情境的Schema、引用与内容哈希",
+      "status": "passed",
+      "startedAt": "2026-07-29T21:54:15.950Z",
+      "durationMs": 0,
+      "resultSummary": "两个情境均通过编译校验，且定义哈希与发布绑定一致。",
+      "outputHash": "01c5dbe66439c82efa1965fa55774537226c8e2992471d6ed672dd6ae8232f66"
+    },
+    {
+      "receiptId": "ablation-contract-replay",
+      "command": "internal: runGoldContractReplay(protocol)",
+      "scope": "A/B/C确定性工程合同与失败关闭门",
+      "status": "passed",
+      "startedAt": "2026-07-29T21:54:15.950Z",
+      "durationMs": 0,
+      "resultSummary": "合同回放30次，全部工程门通过。",
+      "outputHash": "1306a7bd1b1b417dd4ac5decb1e66c2e64a041cd6563de6883e81d75b6feb14f"
+    },
+    {
+      "receiptId": "transfer-runtime-scan",
+      "command": "internal: scan transfer topic markers in forbidden runtime paths",
+      "scope": "第二情境题材专用内核代码扫描",
+      "status": "passed",
+      "startedAt": "2026-07-29T21:54:15.950Z",
+      "durationMs": 0,
+      "resultSummary": "扫描4个受限路径，未发现迁移题材标记。",
+      "outputHash": "044bdef9e3d5068383758c5631c71a64dd0dda7121f0b522dcea3b0262e7b8a5"
+    },
+    {
+      "receiptId": "api-local-action-performance",
+      "command": "node node_modules/vitest/vitest.mjs run apps/api/test/gold-performance.test.ts --maxWorkers=1 --reporter=verbose",
+      "scope": "本地世界行动确认P50/P95",
+      "status": "passed",
+      "startedAt": "2026-07-29T21:54:16.782Z",
+      "durationMs": 14874.1332,
+      "resultSummary": "本地世界行动性能测试通过，精确分位数见performance/summary.json。",
+      "outputHash": "291da4bb508ca7795466c1cf2647b4e6ca7e2a0d6e32030575d3c294aebe7cc0"
+    },
+    {
+      "receiptId": "agent-runtime-tests",
+      "command": "pnpm --filter @ronggang/agent-runtime test",
+      "scope": "多智能体合同、调度、视野、失败与Live执行器",
+      "status": "passed",
+      "startedAt": "2026-07-29T21:54:31.657Z",
+      "durationMs": 3393.0485999999983,
+      "resultSummary": "智能体运行时测试通过。",
+      "outputHash": "23bb855c57a90291c763af1232a662ece1424f9dcadaf218d2e942d68951fa6e"
+    },
+    {
+      "receiptId": "world-core-tests",
+      "command": "pnpm --filter @ronggang/world-core test",
+      "scope": "统一世界、情境后果、版本哈希与旧版回归",
+      "status": "passed",
+      "startedAt": "2026-07-29T21:54:35.050Z",
+      "durationMs": 3888.846599999997,
+      "resultSummary": "世界核心测试通过。",
+      "outputHash": "a77bc3ecdb75c6eaf29e14522610cbc3469c0ca0a8ae1924255fd20bcecd7ce8"
+    },
+    {
+      "receiptId": "browser-golden-path",
+      "command": "pnpm test:e2e:built",
+      "scope": "Chromium双维度黄金路径、时间线与可见界面",
+      "status": "passed",
+      "startedAt": "2026-07-29T21:54:38.939Z",
+      "durationMs": 89328.80239999999,
+      "resultSummary": "Chromium黄金路径全部通过。",
+      "outputHash": "97698ce30ef9dd1c2035815c5945b0e115284347da59b2b82d44031724c98fc5"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "technical-plan.json",
+      "sha256": "f530fc99af2117e567b64de521f997364d85b8142e12825c06f9a091076711b6",
+      "bytes": 17492,
+      "mediaType": "application/json",
+      "evidenceRefs": [
+        "qa-002:technical-plan",
+        "plan:407a7dfa9882affce6ad4028c4b5deaf3dbd144888fc4999a4f73aae8de12ce0"
+      ]
+    },
+    {
+      "path": "validation/receipts.json",
+      "sha256": "bfea79bd32a82cf2a6aa0a654a5a7ae132700078b1a2a14e12254fea29c97671",
+      "bytes": 3488,
+      "mediaType": "application/json",
+      "evidenceRefs": [
+        "receipt:scenario-package-validation",
+        "receipt:ablation-contract-replay",
+        "receipt:transfer-runtime-scan",
+        "receipt:api-local-action-performance",
+        "receipt:agent-runtime-tests",
+        "receipt:world-core-tests",
+        "receipt:browser-golden-path"
+      ]
+    },
+    {
+      "path": "gates/evidence-assessment.json",
+      "sha256": "6dc97b34ac1dd548df63044208f9784095bad046c2c41a84cf923f581aae732e",
+      "bytes": 10286,
+      "mediaType": "application/json",
+      "evidenceRefs": [
+        "qa-002:ten-technical-gates",
+        "qa-002:five-causal-claims"
+      ]
+    },
+    {
+      "path": "demo/golden-demo.md",
+      "sha256": "f82490f7c6e33dc981472a2d4eb939d946884767ee4f93eb263584ccd6d2f3e8",
+      "bytes": 4102,
+      "mediaType": "text/markdown; charset=utf-8",
+      "evidenceRefs": [
+        "qa-002:8-12-minute-golden-demo"
+      ]
+    },
+    {
+      "path": "ablation/preregistration.json",
+      "sha256": "060405d535387ab7249308cf0387a3ffeb09391bec9cdc554c38e93fccd64cd4",
+      "bytes": 15985,
+      "mediaType": "application/json",
+      "evidenceRefs": [
+        "qa-002:controlled-ablation-preregistration",
+        "preregistration:097fca65be5dba4653dcaa21402769c51328284764078175418c109c0d5bd0d3"
+      ]
+    },
+    {
+      "path": "ablation/contract-report.json",
+      "sha256": "6a56ed9e4a07f87b74156338c671c5e832b08b350c1200788563c7f1c4d423b1",
+      "bytes": 105584,
+      "mediaType": "application/json",
+      "evidenceRefs": [
+        "qa-002:abc-contract-replay",
+        "report:1306a7bd1b1b417dd4ac5decb1e66c2e64a041cd6563de6883e81d75b6feb14f"
+      ]
+    },
+    {
+      "path": "transfer/configuration-proof.json",
+      "sha256": "c1cb1f3997b21678597dd7aabee7e891a70a919a8f8ef1465ddd866140ea366a",
+      "bytes": 3071,
+      "mediaType": "application/json",
+      "evidenceRefs": [
+        "qa-002:configuration-only-transfer",
+        "proof:7292036feb6857809b4995d4ec82bb9b438a89d13a03b66b20b182f7a0441a92"
+      ]
+    },
+    {
+      "path": "performance/summary.json",
+      "sha256": "8b22d7386c2f2239e7f7748b608a98b42b1bc6ad475b261cfa8b00a7d8bf5a0c",
+      "bytes": 1589,
+      "mediaType": "application/json",
+      "evidenceRefs": [
+        "qa-002:latency-token-cost-disclosure"
+      ]
+    }
+  ],
+  "excludedSensitiveFields": [
+    "apiKey",
+    "rawPrompt",
+    "rawPrivateMemory",
+    "rawMaterial",
+    "rawProviderRequestId",
+    "teacherIdentity",
+    "studentIdentity"
+  ],
+  "knownLimitations": [
+    "迁移工时只覆盖本次前瞻新微型情境从冻结模板到首次可运行发布的连续配置创作，不回填旧情境历史，也不外推跨专业规模化生产。",
+    "异步进度可见时延6.3ms来自确定性Chromium单样本，只证明当前原型点击后可见反馈，不代表生产网络分布。",
+    "本次未运行真实模型A/B/C受控消融；已密封V1.1协议097fca65be5dba4653dcaa21402769c51328284764078175418c109c0d5bd0d3，但只有确定性工程合同，不得外推模型表现。",
+    "真实教师双盲评分、评分者一致性和学生试点属于QA-003，当前证据包不包含这些结论。",
+    "sourceTreeState=clean指生成前Git已跟踪文件无改动；未跟踪且未进入提交树的本地材料不属于证据源。"
+  ],
+  "generationCommand": "node scripts/generate-gold-readiness-evidence.mjs --full",
+  "manifestHash": "4158502d137ffb3acb8175077d45090cfaaeb04c3ba7169b52ac3fb18dc14788"
+}

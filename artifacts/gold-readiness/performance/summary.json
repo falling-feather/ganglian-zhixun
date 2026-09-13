@@ -1,0 +1,46 @@
+{
+  "schemaVersion": "gold-technical-evidence/1.0.0",
+  "generatedAt": "2026-07-29T21:54:15.950Z",
+  "localAction": {
+    "status": "passed",
+    "environment": "fastify-inject-memory-test",
+    "samples": 12,
+    "p50Ms": 31.74,
+    "p95Ms": 38.279,
+    "maxMs": 38.279,
+    "targetP95Ms": 500,
+    "evidenceRefs": [
+      "validation/receipts.json::api-local-action-performance"
+    ]
+  },
+  "asyncProgress": {
+    "status": "passed",
+    "targetVisibleWithinMs": 1000,
+    "observedWithinMs": 6.3,
+    "evidenceRefs": [
+      "validation/receipts.json::browser-golden-path#GOLD_ASYNC_PROGRESS_METRIC",
+      "e2e/ronggang-full-loop.spec.ts::.student-action-progress"
+    ]
+  },
+  "liveModel": {
+    "status": "insufficient",
+    "environment": "not_run",
+    "samples": 0,
+    "p50Ms": null,
+    "p95Ms": null,
+    "maxMs": null,
+    "targetP95Ms": 8000,
+    "evidenceRefs": [
+      "pending:controlled-live-ablation"
+    ],
+    "requestedCalls": 0,
+    "completedCalls": 0,
+    "failedCalls": 0,
+    "tokenUsage": null,
+    "estimatedCostUsd": null,
+    "costCalculation": null
+  },
+  "overallStatus": "insufficient",
+  "claimBoundary": "本地行动只代表Fastify内存注入环境；Live时延、Token与成本覆盖本次受控合成案件全部可观测调用，任一调用缺失用量时总Token/成本保持null；异步进度时延由确定性Chromium在真实点击捕获点与.student-action-progress首次可见之间用performance.now单样本计时，不代表生产网络分布。",
+  "summaryHash": "e7e90cbb89db6f518df46d6b41eba51c1de83c0391a7b36d13531d235d113b23"
+}

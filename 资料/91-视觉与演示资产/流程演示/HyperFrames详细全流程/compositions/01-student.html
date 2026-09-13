@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>学生阶段透明说明层</title>
+  </head>
+  <body>
+    <template id="student-beat-template">
+      <div
+        id="student-beat"
+        data-composition-id="student-beat"
+        data-width="1280"
+        data-height="720"
+      >
+        <section
+          id="student-chapter-1"
+          class="clip chapter-pill"
+          data-start="0"
+          data-duration="13"
+          data-track-index="0"
+        >
+          <span class="chapter-index">01</span>
+          <span class="chapter-title">选课与进入课程</span>
+          <span class="chapter-status" aria-hidden="true"></span>
+        </section>
+
+        <aside
+          id="student-note-1"
+          class="clip lower-third"
+          data-start="0"
+          data-duration="4"
+          data-track-index="1"
+        >
+          <span class="note-marker" aria-hidden="true"></span>
+          <p>未认领时保持空状态；认领后加载岗位任务</p>
+        </aside>
+
+        <div
+          id="student-transition"
+          class="clip transition-sweep"
+          data-start="12.55"
+          data-duration="0.45"
+          data-track-index="2"
+          data-layout-ignore
+          aria-hidden="true"
+        ></div>
+
+        <section
+          id="student-chapter-2"
+          class="clip chapter-pill"
+          data-start="13"
+          data-duration="56"
+          data-track-index="0"
+        >
+          <span class="chapter-index">02</span>
+          <span class="chapter-title">岗位协作与角色智能体</span>
+          <span class="chapter-status" aria-hidden="true"></span>
+        </section>
+
+        <aside
+          id="student-note-2"
+          class="clip lower-third"
+          data-start="13"
+          data-duration="4"
+          data-track-index="1"
+        >
+          <span class="note-marker" aria-hidden="true"></span>
+          <p>责任编辑与记者分工，DeepSeek 角色智能体输出引用与承诺</p>
+        </aside>
+
+        <style>
+          @font-face {
+            font-family: "Microsoft YaHei";
+            src: local("Microsoft YaHei");
+            font-style: normal;
+            font-weight: 300 900;
+          }
+
+          @font-face {
+            font-family: "Cascadia Mono";
+            src: local("Cascadia Mono");
+            font-style: normal;
+            font-weight: 300 800;
+          }
+
+          #student-beat {
+            position: relative;
+            width: 1280px;
+            height: 720px;
+            overflow: hidden;
+            background: rgba(7, 24, 39, 0);
+            color: #f2f7fa;
+            font-family: "Microsoft YaHei", sans-serif;
+            pointer-events: none;
+          }
+
+          #student-beat *,
+          #student-beat *::before,
+          #student-beat *::after {
+            box-sizing: border-box;
+          }
+
+          #student-beat .chapter-pill {
+            position: absolute;
+            top: 22px;
+            left: 26px;
+            z-index: 5;
+            display: flex;
+            align-items: center;
+            width: max-content;
+            max-width: 460px;
+            min-height: 46px;
+            margin: 0;
+            padding: 7px 16px 7px 8px;
+            gap: 11px;
+            overflow: hidden;
+            border: 1px solid rgba(58, 221, 224, 0.58);
+            border-radius: 14px;
+            background: rgba(13, 43, 58, 0.93);
+            box-shadow: 0 12px 34px rgba(5, 27, 46, 0.28);
+            backdrop-filter: blur(10px);
+            will-change: transform, opacity;
+          }
+
+          #student-beat .chapter-index {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 32px;
+            height: 32px;
+            border-radius: 10px;
+            background: #24c7c9;
+            color: #071827;
+            font-family: "Cascadia Mono", monospace;
+            font-size: 17px;
+            font-weight: 800;
+            line-height: 1;
+            font-variant-numeric: tabular-nums;
+            will-change: transform, opacity;
+          }
+
+          #student-beat .chapter-title {
+            overflow: hidden;
+            color: #f2f7fa;
+            font-size: 22px;
+            font-weight: 900;
+            line-height: 1.25;
+            letter-spacing: -0.025em;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            will-change: transform, opacity;
+          }
+
+          #student-beat .chapter-status {
+            width: 7px;
+            height: 7px;
+            margin-left: 2px;
+            flex: 0 0 auto;
+            border-radius: 50%;
+            background: #70f2d1;
+            box-shadow: 0 0 0 4px rgba(112, 242, 209, 0.14);
+            will-change: transform, opacity;
+          }
+
+          #student-beat .lower-third {
+            position: absolute;
+            bottom: 28px;
+            left: 28px;
+            z-index: 6;
+            display: flex;
+            align-items: center;
+            width: min(620px, calc(100% - 56px));
+            min-height: 72px;
+            margin: 0;
+            padding: 14px 22px 14px 18px;
+            gap: 15px;
+            overflow: hidden;
+            border: 1px solid rgba(58, 221, 224, 0.38);
+            border-radius: 16px;
+            background: rgba(13, 43, 58, 0.93);
+            box-shadow: 0 18px 48px rgba(5, 27, 46, 0.3);
+            backdrop-filter: blur(12px);
+            will-change: transform, opacity;
+          }
+
+          #student-beat .note-marker {
+            width: 5px;
+            height: 42px;
+            flex: 0 0 auto;
+            border-radius: 999px;
+            background: #24c7c9;
+            box-shadow: 0 0 20px rgba(36, 199, 201, 0.44);
+            transform-origin: center bottom;
+            will-change: transform, opacity;
+          }
+
+          #student-beat .lower-third p {
+            max-width: 540px;
+            margin: 0;
+            color: #f2f7fa;
+            font-size: 20px;
+            font-weight: 350;
+            line-height: 1.45;
+            letter-spacing: 0.005em;
+            will-change: transform, opacity;
+          }
+
+          #student-beat .transition-sweep {
+            position: absolute;
+            top: 21px;
+            left: 25px;
+            z-index: 8;
+            width: 570px;
+            height: 48px;
+            border-radius: 15px;
+            background: rgba(36, 199, 201, 0.32);
+            box-shadow: 0 0 34px rgba(36, 199, 201, 0.34);
+            transform-origin: left center;
+            will-change: transform, opacity;
+          }
+        </style>
+
+        <script>
+          window.__timelines = window.__timelines || {};
+          var studentTimeline = gsap.timeline({ paused: true });
+
+          studentTimeline.from(
+            "#student-chapter-1",
+            { x: -42, opacity: 0, scale: 0.96, duration: 0.48, ease: "expo.out" },
+            0.18
+          );
+          studentTimeline.from(
+            "#student-chapter-1 .chapter-index",
+            { rotation: -8, scale: 0.78, opacity: 0, duration: 0.34, ease: "power2.out" },
+            0.3
+          );
+          studentTimeline.from(
+            "#student-chapter-1 .chapter-title",
+            { x: -18, opacity: 0, duration: 0.42, ease: "power3.out" },
+            0.38
+          );
+          studentTimeline.from(
+            "#student-chapter-1 .chapter-status",
+            { scale: 0, opacity: 0, duration: 0.28, ease: "circ.out" },
+            0.56
+          );
+          studentTimeline.from(
+            "#student-note-1",
+            { x: -58, opacity: 0, duration: 0.58, ease: "power4.out" },
+            0.24
+          );
+          studentTimeline.from(
+            "#student-note-1 .note-marker",
+            { scaleY: 0, opacity: 0, duration: 0.32, ease: "circ.out" },
+            0.46
+          );
+          studentTimeline.from(
+            "#student-note-1 p",
+            { y: 16, opacity: 0, duration: 0.46, ease: "sine.out" },
+            0.52
+          );
+          studentTimeline.to(
+            "#student-note-1",
+            { x: -24, opacity: 0, duration: 0.26, ease: "power2.in" },
+            3.68
+          );
+
+          studentTimeline.fromTo(
+            "#student-transition",
+            { scaleX: 0, opacity: 0 },
+            { scaleX: 1, opacity: 1, duration: 0.22, ease: "power3.inOut" },
+            12.55
+          );
+          studentTimeline.from(
+            "#student-chapter-2",
+            { x: 48, opacity: 0, scale: 0.97, duration: 0.52, ease: "expo.out", immediateRender: false },
+            13.08
+          );
+          studentTimeline.from(
+            "#student-chapter-2 .chapter-index",
+            { rotation: 7, scale: 0.78, opacity: 0, duration: 0.36, ease: "power2.out", immediateRender: false },
+            13.22
+          );
+          studentTimeline.from(
+            "#student-chapter-2 .chapter-title",
+            { x: 20, opacity: 0, duration: 0.44, ease: "power3.out", immediateRender: false },
+            13.32
+          );
+          studentTimeline.from(
+            "#student-chapter-2 .chapter-status",
+            { scale: 0, opacity: 0, duration: 0.3, ease: "circ.out", immediateRender: false },
+            13.5
+          );
+          studentTimeline.from(
+            "#student-note-2",
+            { x: -62, opacity: 0, duration: 0.62, ease: "power4.out", immediateRender: false },
+            13.16
+          );
+          studentTimeline.from(
+            "#student-note-2 .note-marker",
+            { scaleY: 0, opacity: 0, duration: 0.34, ease: "circ.out", immediateRender: false },
+            13.42
+          );
+          studentTimeline.from(
+            "#student-note-2 p",
+            { y: 18, opacity: 0, duration: 0.5, ease: "sine.out", immediateRender: false },
+            13.5
+          );
+          studentTimeline.to(
+            "#student-note-2",
+            { x: -24, opacity: 0, duration: 0.28, ease: "power2.in" },
+            16.66
+          );
+
+          studentTimeline.to(
+            "#student-chapter-2",
+            { y: -16, opacity: 0, duration: 0.46, ease: "power2.in" },
+            68.42
+          );
+
+          window.__timelines["student-beat"] = studentTimeline;
+        </script>
+      </div>
+    </template>
+  </body>
+</html>

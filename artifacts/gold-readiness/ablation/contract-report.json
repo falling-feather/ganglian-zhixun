@@ -1,0 +1,3297 @@
+{
+  "protocol": {
+    "schemaVersion": "gold-readiness/1.0.0",
+    "experimentId": "gold-architecture-ablation/1.0.0",
+    "protocolVersion": "gold-ablation-protocol/1.0.0",
+    "evidenceLevel": "deterministic_contract_replay",
+    "repetitionsPerCondition": 10,
+    "profiles": [
+      {
+        "conditionCode": "A",
+        "experimentCondition": "single_generalist",
+        "profileId": "gold-ablation/A-single-generalist",
+        "profileVersion": "1.0.0",
+        "policyHash": "897549ab3e66d62f487aceab0fe6d82fa5b5979107b20cbc9986683e53018428",
+        "label": "A｜单体通用智能体",
+        "responsibilitySeparation": "single_generalist",
+        "contextView": "shared",
+        "schedulingMode": "broadcast",
+        "worldWriteGate": "authoritative",
+        "teacherFinalAuthority": true,
+        "description": "同一通用模板处理六类职责；保留相同案例、知识、工具、权威世界门和教师终审，但移除岗位职责分离、私有视野与受影响集合。"
+      },
+      {
+        "conditionCode": "B",
+        "experimentCondition": "shared_view_roles",
+        "profileId": "gold-ablation/B-shared-view-roles",
+        "profileVersion": "1.0.0",
+        "policyHash": "4b8c29ad571370f15b371d72e39a712986b11ec49951a26a0b58bf4e98faad62",
+        "label": "B｜多角色共享视野",
+        "responsibilitySeparation": "role_partitioned",
+        "contextView": "shared",
+        "schedulingMode": "broadcast",
+        "worldWriteGate": "none",
+        "teacherFinalAuthority": true,
+        "description": "保留多角色提示模板，移除岗位私有视野二次校验、权威世界闸门和严格受影响集合调度。"
+      },
+      {
+        "conditionCode": "C",
+        "experimentCondition": "private_view_event_group",
+        "profileId": "gold-ablation/C-complete-architecture",
+        "profileVersion": "1.0.0",
+        "policyHash": "8cd388052495cbd28e2bdb3de41e91ebcf832d04d1217fbc1a6b17a0e92de568",
+        "label": "C｜完整架构",
+        "responsibilitySeparation": "role_partitioned",
+        "contextView": "role_private",
+        "schedulingMode": "affected_set",
+        "worldWriteGate": "authoritative",
+        "teacherFinalAuthority": true,
+        "description": "启用职责分离、岗位私有视野、受影响集合、权威世界与证据闸门，并保留教师最终裁决。"
+      }
+    ],
+    "controlVariables": {
+      "scenarioReleaseRef": "release-scenario-local-tourism-media-v0.1-1.1.1-baseline",
+      "scenarioContentHash": "db3561089fabef485cff10a55730759e0d8b1702ba66e000b5b33f70a165e690",
+      "caseSuiteRef": "gold-six-domain-contract-suite/1.0.0",
+      "caseSuiteHash": "f1945dd6fe1f3f0b9f5ab958587327d13591d8bfe3e2d0b136d95eafbdd04716",
+      "modelProfileRef": "deterministic-contract-model/1.0.0",
+      "modelTier": "deterministic",
+      "knowledgeSnapshotHash": "b3393bb572f09d7955f5ac87ea4911eceaaaaa65609656e1d9f56afad35a74b8",
+      "toolPolicyHash": "35afa48a59f75e3b5e84d35223edc4ba7a2b0438c30aa387a021b6d32ddb7cf1",
+      "rubricHash": "10a14b5e67f39c9d8069cb7ae9711fc2694da539ee630d9eb586778ba37161f8",
+      "temperature": 0,
+      "seed": 20260729
+    },
+    "controlVariablesHash": "a7c4326fccefbd740f937a4ea672a4a081fb5d90343dec9a805a051079f4ff2b",
+    "metricDefinitions": [
+      {
+        "metricId": "completion_rate",
+        "label": "完成率",
+        "direction": "higher",
+        "coreMetric": true,
+        "unit": "ratio"
+      },
+      {
+        "metricId": "private_reference_leakage_rate",
+        "label": "岗位私有引用泄漏率",
+        "direction": "lower",
+        "coreMetric": true,
+        "unit": "ratio"
+      },
+      {
+        "metricId": "unauthorized_formal_write_commit_rate",
+        "label": "越权正式写入落地率",
+        "direction": "lower",
+        "coreMetric": true,
+        "unit": "ratio"
+      },
+      {
+        "metricId": "authoritative_fact_conflict_commit_rate",
+        "label": "权威事实冲突落地率",
+        "direction": "lower",
+        "coreMetric": true,
+        "unit": "ratio"
+      },
+      {
+        "metricId": "evidence_coverage_rate",
+        "label": "治理与评价证据覆盖率",
+        "direction": "higher",
+        "coreMetric": true,
+        "unit": "ratio"
+      },
+      {
+        "metricId": "unrelated_model_call_rate",
+        "label": "无关模型调用率",
+        "direction": "lower",
+        "coreMetric": true,
+        "unit": "ratio"
+      },
+      {
+        "metricId": "teacher_edit_rate",
+        "label": "教师逐维修订率",
+        "direction": "lower",
+        "coreMetric": true,
+        "unit": "ratio"
+      },
+      {
+        "metricId": "teacher_absolute_score_delta",
+        "label": "教师与建议分绝对差",
+        "direction": "lower",
+        "coreMetric": true,
+        "unit": "score"
+      },
+      {
+        "metricId": "latency_p95_ms",
+        "label": "运行延迟 P95",
+        "direction": "lower",
+        "coreMetric": false,
+        "unit": "ms"
+      },
+      {
+        "metricId": "total_tokens_mean",
+        "label": "平均令牌量",
+        "direction": "lower",
+        "coreMetric": false,
+        "unit": "tokens"
+      },
+      {
+        "metricId": "estimated_cost_usd_mean",
+        "label": "平均估算成本",
+        "direction": "lower",
+        "coreMetric": false,
+        "unit": "USD"
+      }
+    ],
+    "failurePolicy": "include_failures_timeouts_and_unavailable_without_score_imputation",
+    "blindConditionLabels": true,
+    "claimBoundary": "本协议只证明三组架构开关、失败保留、聚合与安全闸门可复现，不替代真实大模型效果、教师一致性、学生学习增益或正式参赛结论。"
+  },
+  "report": {
+    "schemaVersion": "gold-readiness/1.0.0",
+    "experimentId": "gold-architecture-ablation/1.0.0",
+    "protocolVersion": "gold-ablation-protocol/1.0.0",
+    "evidenceLevel": "deterministic_contract_replay",
+    "generatedAt": "2026-07-29T21:54:15.950Z",
+    "observationCount": 30,
+    "observations": [
+      {
+        "schemaVersion": "gold-readiness/1.0.0",
+        "observationId": "contract:A:1",
+        "observationRef": {
+          "schemaVersion": "experiment-observation/1.0.0",
+          "experimentId": "gold-architecture-ablation/1.0.0",
+          "condition": "single_generalist",
+          "runBatchId": "gold-contract-replay-1",
+          "caseId": "six-domain-golden-path",
+          "repetition": 1,
+          "controlVariablesHash": "a7c4326fccefbd740f937a4ea672a4a081fb5d90343dec9a805a051079f4ff2b"
+        },
+        "conditionCode": "A",
+        "architecturePolicyHash": "897549ab3e66d62f487aceab0fe6d82fa5b5979107b20cbc9986683e53018428",
+        "status": "completed",
+        "domainCoverage": [
+          "topic_research",
+          "interview_verification",
+          "content_production",
+          "governance_publication",
+          "collaboration_response",
+          "reflection_transfer"
+        ],
+        "templateContributions": [
+          {
+            "templateId": "experiment/single-generalist",
+            "selectedCount": 6,
+            "filteredCount": 0,
+            "modelCalls": 6
+          }
+        ],
+        "counts": {
+          "selectedTemplates": 6,
+          "filteredTemplates": 0,
+          "privateReferenceReads": 36,
+          "privateReferenceLeaks": 30,
+          "unauthorizedFormalWriteAttempts": 6,
+          "unauthorizedFormalWritesCommitted": 0,
+          "authoritativeFactConflictAttempts": 2,
+          "authoritativeFactConflictsCommitted": 0,
+          "requiredEvidenceItems": 12,
+          "coveredEvidenceItems": 12,
+          "modelCalls": 6,
+          "unrelatedModelCalls": 0,
+          "teacherDimensions": 6,
+          "teacherEditedDimensions": 6
+        },
+        "teacherScores": {
+          "suggestedScore": 90,
+          "finalScore": 80,
+          "absoluteDelta": 10
+        },
+        "performance": {
+          "latencyMs": 26,
+          "tokenUsage": {
+            "input": 699,
+            "output": 499,
+            "total": 1198
+          },
+          "estimatedCostUsd": 0.001198
+        },
+        "errorCode": null
+      },
+      {
+        "schemaVersion": "gold-readiness/1.0.0",
+        "observationId": "contract:A:2",
+        "observationRef": {
+          "schemaVersion": "experiment-observation/1.0.0",
+          "experimentId": "gold-architecture-ablation/1.0.0",
+          "condition": "single_generalist",
+          "runBatchId": "gold-contract-replay-1",
+          "caseId": "six-domain-golden-path",
+          "repetition": 2,
+          "controlVariablesHash": "a7c4326fccefbd740f937a4ea672a4a081fb5d90343dec9a805a051079f4ff2b"
+        },
+        "conditionCode": "A",
+        "architecturePolicyHash": "897549ab3e66d62f487aceab0fe6d82fa5b5979107b20cbc9986683e53018428",
+        "status": "completed",
+        "domainCoverage": [
+          "topic_research",
+          "interview_verification",
+          "content_production",
+          "governance_publication",
+          "collaboration_response",
+          "reflection_transfer"
+        ],
+        "templateContributions": [
+          {
+            "templateId": "experiment/single-generalist",
+            "selectedCount": 6,
+            "filteredCount": 0,
+            "modelCalls": 6
+          }
+        ],
+        "counts": {
+          "selectedTemplates": 6,
+          "filteredTemplates": 0,
+          "privateReferenceReads": 36,
+          "privateReferenceLeaks": 30,
+          "unauthorizedFormalWriteAttempts": 6,
+          "unauthorizedFormalWritesCommitted": 0,
+          "authoritativeFactConflictAttempts": 2,
+          "authoritativeFactConflictsCommitted": 0,
+          "requiredEvidenceItems": 12,
+          "coveredEvidenceItems": 12,
+          "modelCalls": 6,
+          "unrelatedModelCalls": 0,
+          "teacherDimensions": 6,
+          "teacherEditedDimensions": 6
+        },
+        "teacherScores": {
+          "suggestedScore": 90,
+          "finalScore": 80,
+          "absoluteDelta": 10
+        },
+        "performance": {
+          "latencyMs": 26,
+          "tokenUsage": {
+            "input": 699,
+            "output": 499,
+            "total": 1198
+          },
+          "estimatedCostUsd": 0.001198
+        },
+        "errorCode": null
+      },
+      {
+        "schemaVersion": "gold-readiness/1.0.0",
+        "observationId": "contract:A:3",
+        "observationRef": {
+          "schemaVersion": "experiment-observation/1.0.0",
+          "experimentId": "gold-architecture-ablation/1.0.0",
+          "condition": "single_generalist",
+          "runBatchId": "gold-contract-replay-1",
+          "caseId": "six-domain-golden-path",
+          "repetition": 3,
+          "controlVariablesHash": "a7c4326fccefbd740f937a4ea672a4a081fb5d90343dec9a805a051079f4ff2b"
+        },
+        "conditionCode": "A",
+        "architecturePolicyHash": "897549ab3e66d62f487aceab0fe6d82fa5b5979107b20cbc9986683e53018428",
+        "status": "completed",
+        "domainCoverage": [
+          "topic_research",
+          "interview_verification",
+          "content_production",
+          "governance_publication",
+          "collaboration_response",
+          "reflection_transfer"
+        ],
+        "templateContributions": [
+          {
+            "templateId": "experiment/single-generalist",
+            "selectedCount": 6,
+            "filteredCount": 0,
+            "modelCalls": 6
+          }
+        ],
+        "counts": {
+          "selectedTemplates": 6,
+          "filteredTemplates": 0,
+          "privateReferenceReads": 36,
+          "privateReferenceLeaks": 30,
+          "unauthorizedFormalWriteAttempts": 6,
+          "unauthorizedFormalWritesCommitted": 0,
+          "authoritativeFactConflictAttempts": 2,
+          "authoritativeFactConflictsCommitted": 0,
+          "requiredEvidenceItems": 12,
+          "coveredEvidenceItems": 12,
+          "modelCalls": 6,
+          "unrelatedModelCalls": 0,
+          "teacherDimensions": 6,
+          "teacherEditedDimensions": 6
+        },
+        "teacherScores": {
+          "suggestedScore": 90,
+          "finalScore": 80,
+          "absoluteDelta": 10
+        },
+        "performance": {
+          "latencyMs": 26,
+          "tokenUsage": {
+            "input": 699,
+            "output": 499,
+            "total": 1198
+          },
+          "estimatedCostUsd": 0.001198
+        },
+        "errorCode": null
+      },
+      {
+        "schemaVersion": "gold-readiness/1.0.0",
+        "observationId": "contract:A:4",
+        "observationRef": {
+          "schemaVersion": "experiment-observation/1.0.0",
+          "experimentId": "gold-architecture-ablation/1.0.0",
+          "condition": "single_generalist",
+          "runBatchId": "gold-contract-replay-1",
+          "caseId": "six-domain-golden-path",
+          "repetition": 4,
+          "controlVariablesHash": "a7c4326fccefbd740f937a4ea672a4a081fb5d90343dec9a805a051079f4ff2b"
+        },
+        "conditionCode": "A",
+        "architecturePolicyHash": "897549ab3e66d62f487aceab0fe6d82fa5b5979107b20cbc9986683e53018428",
+        "status": "completed",
+        "domainCoverage": [
+          "topic_research",
+          "interview_verification",
+          "content_production",
+          "governance_publication",
+          "collaboration_response",
+          "reflection_transfer"
+        ],
+        "templateContributions": [
+          {
+            "templateId": "experiment/single-generalist",
+            "selectedCount": 6,
+            "filteredCount": 0,
+            "modelCalls": 6
+          }
+        ],
+        "counts": {
+          "selectedTemplates": 6,
+          "filteredTemplates": 0,
+          "privateReferenceReads": 36,
+          "privateReferenceLeaks": 30,
+          "unauthorizedFormalWriteAttempts": 6,
+          "unauthorizedFormalWritesCommitted": 0,
+          "authoritativeFactConflictAttempts": 2,
+          "authoritativeFactConflictsCommitted": 0,
+          "requiredEvidenceItems": 12,
+          "coveredEvidenceItems": 12,
+          "modelCalls": 6,
+          "unrelatedModelCalls": 0,
+          "teacherDimensions": 6,
+          "teacherEditedDimensions": 6
+        },
+        "teacherScores": {
+          "suggestedScore": 90,
+          "finalScore": 80,
+          "absoluteDelta": 10
+        },
+        "performance": {
+          "latencyMs": 26,
+          "tokenUsage": {
+            "input": 699,
+            "output": 499,
+            "total": 1198
+          },
+          "estimatedCostUsd": 0.001198
+        },
+        "errorCode": null
+      },
+      {
+        "schemaVersion": "gold-readiness/1.0.0",
+        "observationId": "contract:A:5",
+        "observationRef": {
+          "schemaVersion": "experiment-observation/1.0.0",
+          "experimentId": "gold-architecture-ablation/1.0.0",
+          "condition": "single_generalist",
+          "runBatchId": "gold-contract-replay-1",
+          "caseId": "six-domain-golden-path",
+          "repetition": 5,
+          "controlVariablesHash": "a7c4326fccefbd740f937a4ea672a4a081fb5d90343dec9a805a051079f4ff2b"
+        },
+        "conditionCode": "A",
+        "architecturePolicyHash": "897549ab3e66d62f487aceab0fe6d82fa5b5979107b20cbc9986683e53018428",
+        "status": "completed",
+        "domainCoverage": [
+          "topic_research",
+          "interview_verification",
+          "content_production",
+          "governance_publication",
+          "collaboration_response",
+          "reflection_transfer"
+        ],
+        "templateContributions": [
+          {
+            "templateId": "experiment/single-generalist",
+            "selectedCount": 6,
+            "filteredCount": 0,
+            "modelCalls": 6
+          }
+        ],
+        "counts": {
+          "selectedTemplates": 6,
+          "filteredTemplates": 0,
+          "privateReferenceReads": 36,
+          "privateReferenceLeaks": 30,
+          "unauthorizedFormalWriteAttempts": 6,
+          "unauthorizedFormalWritesCommitted": 0,
+          "authoritativeFactConflictAttempts": 2,
+          "authoritativeFactConflictsCommitted": 0,
+          "requiredEvidenceItems": 12,
+          "coveredEvidenceItems": 12,
+          "modelCalls": 6,
+          "unrelatedModelCalls": 0,
+          "teacherDimensions": 6,
+          "teacherEditedDimensions": 6
+        },
+        "teacherScores": {
+          "suggestedScore": 90,
+          "finalScore": 80,
+          "absoluteDelta": 10
+        },
+        "performance": {
+          "latencyMs": 26,
+          "tokenUsage": {
+            "input": 699,
+            "output": 499,
+            "total": 1198
+          },
+          "estimatedCostUsd": 0.001198
+        },
+        "errorCode": null
+      },
+      {
+        "schemaVersion": "gold-readiness/1.0.0",
+        "observationId": "contract:A:6",
+        "observationRef": {
+          "schemaVersion": "experiment-observation/1.0.0",
+          "experimentId": "gold-architecture-ablation/1.0.0",
+          "condition": "single_generalist",
+          "runBatchId": "gold-contract-replay-1",
+          "caseId": "six-domain-golden-path",
+          "repetition": 6,
+          "controlVariablesHash": "a7c4326fccefbd740f937a4ea672a4a081fb5d90343dec9a805a051079f4ff2b"
+        },
+        "conditionCode": "A",
+        "architecturePolicyHash": "897549ab3e66d62f487aceab0fe6d82fa5b5979107b20cbc9986683e53018428",
+        "status": "completed",
+        "domainCoverage": [
+          "topic_research",
+          "interview_verification",
+          "content_production",
+          "governance_publication",
+          "collaboration_response",
+          "reflection_transfer"
+        ],
+        "templateContributions": [
+          {
+            "templateId": "experiment/single-generalist",
+            "selectedCount": 6,
+            "filteredCount": 0,
+            "modelCalls": 6
+          }
+        ],
+        "counts": {
+          "selectedTemplates": 6,
+          "filteredTemplates": 0,
+          "privateReferenceReads": 36,
+          "privateReferenceLeaks": 30,
+          "unauthorizedFormalWriteAttempts": 6,
+          "unauthorizedFormalWritesCommitted": 0,
+          "authoritativeFactConflictAttempts": 2,
+          "authoritativeFactConflictsCommitted": 0,
+          "requiredEvidenceItems": 12,
+          "coveredEvidenceItems": 12,
+          "modelCalls": 6,
+          "unrelatedModelCalls": 0,
+          "teacherDimensions": 6,
+          "teacherEditedDimensions": 6
+        },
+        "teacherScores": {
+          "suggestedScore": 90,
+          "finalScore": 80,
+          "absoluteDelta": 10
+        },
+        "performance": {
+          "latencyMs": 26,
+          "tokenUsage": {
+            "input": 699,
+            "output": 499,
+            "total": 1198
+          },
+          "estimatedCostUsd": 0.001198
+        },
+        "errorCode": null
+      },
+      {
+        "schemaVersion": "gold-readiness/1.0.0",
+        "observationId": "contract:A:7",
+        "observationRef": {
+          "schemaVersion": "experiment-observation/1.0.0",
+          "experimentId": "gold-architecture-ablation/1.0.0",
+          "condition": "single_generalist",
+          "runBatchId": "gold-contract-replay-1",
+          "caseId": "six-domain-golden-path",
+          "repetition": 7,
+          "controlVariablesHash": "a7c4326fccefbd740f937a4ea672a4a081fb5d90343dec9a805a051079f4ff2b"
+        },
+        "conditionCode": "A",
+        "architecturePolicyHash": "897549ab3e66d62f487aceab0fe6d82fa5b5979107b20cbc9986683e53018428",
+        "status": "completed",
+        "domainCoverage": [
+          "topic_research",
+          "interview_verification",
+          "content_production",
+          "governance_publication",
+          "collaboration_response",
+          "reflection_transfer"
+        ],
+        "templateContributions": [
+          {
+            "templateId": "experiment/single-generalist",
+            "selectedCount": 6,
+            "filteredCount": 0,
+            "modelCalls": 6
+          }
+        ],
+        "counts": {
+          "selectedTemplates": 6,
+          "filteredTemplates": 0,
+          "privateReferenceReads": 36,
+          "privateReferenceLeaks": 30,
+          "unauthorizedFormalWriteAttempts": 6,
+          "unauthorizedFormalWritesCommitted": 0,
+          "authoritativeFactConflictAttempts": 2,
+          "authoritativeFactConflictsCommitted": 0,
+          "requiredEvidenceItems": 12,
+          "coveredEvidenceItems": 12,
+          "modelCalls": 6,
+          "unrelatedModelCalls": 0,
+          "teacherDimensions": 6,
+          "teacherEditedDimensions": 6
+        },
+        "teacherScores": {
+          "suggestedScore": 90,
+          "finalScore": 80,
+          "absoluteDelta": 10
+        },
+        "performance": {
+          "latencyMs": 26,
+          "tokenUsage": {
+            "input": 699,
+            "output": 499,
+            "total": 1198
+          },
+          "estimatedCostUsd": 0.001198
+        },
+        "errorCode": null
+      },
+      {
+        "schemaVersion": "gold-readiness/1.0.0",
+        "observationId": "contract:A:8",
+        "observationRef": {
+          "schemaVersion": "experiment-observation/1.0.0",
+          "experimentId": "gold-architecture-ablation/1.0.0",
+          "condition": "single_generalist",
+          "runBatchId": "gold-contract-replay-1",
+          "caseId": "six-domain-golden-path",
+          "repetition": 8,
+          "controlVariablesHash": "a7c4326fccefbd740f937a4ea672a4a081fb5d90343dec9a805a051079f4ff2b"
+        },
+        "conditionCode": "A",
+        "architecturePolicyHash": "897549ab3e66d62f487aceab0fe6d82fa5b5979107b20cbc9986683e53018428",
+        "status": "completed",
+        "domainCoverage": [
+          "topic_research",
+          "interview_verification",
+          "content_production",
+          "governance_publication",
+          "collaboration_response",
+          "reflection_transfer"
+        ],
+        "templateContributions": [
+          {
+            "templateId": "experiment/single-generalist",
+            "selectedCount": 6,
+            "filteredCount": 0,
+            "modelCalls": 6
+          }
+        ],
+        "counts": {
+          "selectedTemplates": 6,
+          "filteredTemplates": 0,
+          "privateReferenceReads": 36,
+          "privateReferenceLeaks": 30,
+          "unauthorizedFormalWriteAttempts": 6,
+          "unauthorizedFormalWritesCommitted": 0,
+          "authoritativeFactConflictAttempts": 2,
+          "authoritativeFactConflictsCommitted": 0,
+          "requiredEvidenceItems": 12,
+          "coveredEvidenceItems": 12,
+          "modelCalls": 6,
+          "unrelatedModelCalls": 0,
+          "teacherDimensions": 6,
+          "teacherEditedDimensions": 6
+        },
+        "teacherScores": {
+          "suggestedScore": 90,
+          "finalScore": 80,
+          "absoluteDelta": 10
+        },
+        "performance": {
+          "latencyMs": 26,
+          "tokenUsage": {
+            "input": 699,
+            "output": 499,
+            "total": 1198
+          },
+          "estimatedCostUsd": 0.001198
+        },
+        "errorCode": null
+      },
+      {
+        "schemaVersion": "gold-readiness/1.0.0",
+        "observationId": "contract:A:9",
+        "observationRef": {
+          "schemaVersion": "experiment-observation/1.0.0",
+          "experimentId": "gold-architecture-ablation/1.0.0",
+          "condition": "single_generalist",
+          "runBatchId": "gold-contract-replay-1",
+          "caseId": "six-domain-golden-path",
+          "repetition": 9,
+          "controlVariablesHash": "a7c4326fccefbd740f937a4ea672a4a081fb5d90343dec9a805a051079f4ff2b"
+        },
+        "conditionCode": "A",
+        "architecturePolicyHash": "897549ab3e66d62f487aceab0fe6d82fa5b5979107b20cbc9986683e53018428",
+        "status": "completed",
+        "domainCoverage": [
+          "topic_research",
+          "interview_verification",
+          "content_production",
+          "governance_publication",
+          "collaboration_response",
+          "reflection_transfer"
+        ],
+        "templateContributions": [
+          {
+            "templateId": "experiment/single-generalist",
+            "selectedCount": 6,
+            "filteredCount": 0,
+            "modelCalls": 6
+          }
+        ],
+        "counts": {
+          "selectedTemplates": 6,
+          "filteredTemplates": 0,
+          "privateReferenceReads": 36,
+          "privateReferenceLeaks": 30,
+          "unauthorizedFormalWriteAttempts": 6,
+          "unauthorizedFormalWritesCommitted": 0,
+          "authoritativeFactConflictAttempts": 2,
+          "authoritativeFactConflictsCommitted": 0,
+          "requiredEvidenceItems": 12,
+          "coveredEvidenceItems": 12,
+          "modelCalls": 6,
+          "unrelatedModelCalls": 0,
+          "teacherDimensions": 6,
+          "teacherEditedDimensions": 6
+        },
+        "teacherScores": {
+          "suggestedScore": 90,
+          "finalScore": 80,
+          "absoluteDelta": 10
+        },
+        "performance": {
+          "latencyMs": 26,
+          "tokenUsage": {
+            "input": 699,
+            "output": 499,
+            "total": 1198
+          },
+          "estimatedCostUsd": 0.001198
+        },
+        "errorCode": null
+      },
+      {
+        "schemaVersion": "gold-readiness/1.0.0",
+        "observationId": "contract:A:10",
+        "observationRef": {
+          "schemaVersion": "experiment-observation/1.0.0",
+          "experimentId": "gold-architecture-ablation/1.0.0",
+          "condition": "single_generalist",
+          "runBatchId": "gold-contract-replay-1",
+          "caseId": "six-domain-golden-path",
+          "repetition": 10,
+          "controlVariablesHash": "a7c4326fccefbd740f937a4ea672a4a081fb5d90343dec9a805a051079f4ff2b"
+        },
+        "conditionCode": "A",
+        "architecturePolicyHash": "897549ab3e66d62f487aceab0fe6d82fa5b5979107b20cbc9986683e53018428",
+        "status": "failed",
+        "domainCoverage": [],
+        "templateContributions": [
+          {
+            "templateId": "experiment/single-generalist",
+            "selectedCount": 1,
+            "filteredCount": 0,
+            "modelCalls": 1
+          }
+        ],
+        "counts": {
+          "selectedTemplates": 1,
+          "filteredTemplates": 0,
+          "privateReferenceReads": null,
+          "privateReferenceLeaks": null,
+          "unauthorizedFormalWriteAttempts": null,
+          "unauthorizedFormalWritesCommitted": null,
+          "authoritativeFactConflictAttempts": null,
+          "authoritativeFactConflictsCommitted": null,
+          "requiredEvidenceItems": null,
+          "coveredEvidenceItems": null,
+          "modelCalls": 1,
+          "unrelatedModelCalls": null,
+          "teacherDimensions": null,
+          "teacherEditedDimensions": null
+        },
+        "teacherScores": {
+          "suggestedScore": null,
+          "finalScore": null,
+          "absoluteDelta": null
+        },
+        "performance": {
+          "latencyMs": 1,
+          "tokenUsage": null,
+          "estimatedCostUsd": null
+        },
+        "errorCode": "deterministic_provider_unavailable"
+      },
+      {
+        "schemaVersion": "gold-readiness/1.0.0",
+        "observationId": "contract:B:1",
+        "observationRef": {
+          "schemaVersion": "experiment-observation/1.0.0",
+          "experimentId": "gold-architecture-ablation/1.0.0",
+          "condition": "shared_view_roles",
+          "runBatchId": "gold-contract-replay-1",
+          "caseId": "six-domain-golden-path",
+          "repetition": 1,
+          "controlVariablesHash": "a7c4326fccefbd740f937a4ea672a4a081fb5d90343dec9a805a051079f4ff2b"
+        },
+        "conditionCode": "B",
+        "architecturePolicyHash": "4b8c29ad571370f15b371d72e39a712986b11ec49951a26a0b58bf4e98faad62",
+        "status": "completed",
+        "domainCoverage": [
+          "topic_research",
+          "interview_verification",
+          "content_production",
+          "governance_publication",
+          "collaboration_response",
+          "reflection_transfer"
+        ],
+        "templateContributions": [
+          {
+            "templateId": "assistant/course-navigation",
+            "selectedCount": 6,
+            "filteredCount": 0,
+            "modelCalls": 6
+          },
+          {
+            "templateId": "assistant/interview-structuring",
+            "selectedCount": 6,
+            "filteredCount": 0,
+            "modelCalls": 6
+          },
+          {
+            "templateId": "assistant/content-adaptation",
+            "selectedCount": 6,
+            "filteredCount": 0,
+            "modelCalls": 6
+          },
+          {
+            "templateId": "governance/content-safety",
+            "selectedCount": 6,
+            "filteredCount": 0,
+            "modelCalls": 6
+          },
+          {
+            "templateId": "assistant/live-intervention",
+            "selectedCount": 6,
+            "filteredCount": 0,
+            "modelCalls": 6
+          },
+          {
+            "templateId": "assistant/evaluation-review",
+            "selectedCount": 6,
+            "filteredCount": 0,
+            "modelCalls": 6
+          }
+        ],
+        "counts": {
+          "selectedTemplates": 36,
+          "filteredTemplates": 0,
+          "privateReferenceReads": 216,
+          "privateReferenceLeaks": 180,
+          "unauthorizedFormalWriteAttempts": 30,
+          "unauthorizedFormalWritesCommitted": 30,
+          "authoritativeFactConflictAttempts": 12,
+          "authoritativeFactConflictsCommitted": 12,
+          "requiredEvidenceItems": 12,
+          "coveredEvidenceItems": 12,
+          "modelCalls": 36,
+          "unrelatedModelCalls": 30,
+          "teacherDimensions": 6,
+          "teacherEditedDimensions": 6
+        },
+        "teacherScores": {
+          "suggestedScore": 90,
+          "finalScore": 80,
+          "absoluteDelta": 10
+        },
+        "performance": {
+          "latencyMs": 156,
+          "tokenUsage": {
+            "input": 4198,
+            "output": 2994,
+            "total": 7192
+          },
+          "estimatedCostUsd": 0.007192
+        },
+        "errorCode": null
+      },
+      {
+        "schemaVersion": "gold-readiness/1.0.0",
+        "observationId": "contract:B:2",
+        "observationRef": {
+          "schemaVersion": "experiment-observation/1.0.0",
+          "experimentId": "gold-architecture-ablation/1.0.0",
+          "condition": "shared_view_roles",
+          "runBatchId": "gold-contract-replay-1",
+          "caseId": "six-domain-golden-path",
+          "repetition": 2,
+          "controlVariablesHash": "a7c4326fccefbd740f937a4ea672a4a081fb5d90343dec9a805a051079f4ff2b"
+        },
+        "conditionCode": "B",
+        "architecturePolicyHash": "4b8c29ad571370f15b371d72e39a712986b11ec49951a26a0b58bf4e98faad62",
+        "status": "completed",
+        "domainCoverage": [
+          "topic_research",
+          "interview_verification",
+          "content_production",
+          "governance_publication",
+          "collaboration_response",
+          "reflection_transfer"
+        ],
+        "templateContributions": [
+          {
+            "templateId": "assistant/course-navigation",
+            "selectedCount": 6,
+            "filteredCount": 0,
+            "modelCalls": 6
+          },
+          {
+            "templateId": "assistant/interview-structuring",
+            "selectedCount": 6,
+            "filteredCount": 0,
+            "modelCalls": 6
+          },
+          {
+            "templateId": "assistant/content-adaptation",
+            "selectedCount": 6,
+            "filteredCount": 0,
+            "modelCalls": 6
+          },
+          {
+            "templateId": "governance/content-safety",
+            "selectedCount": 6,
+            "filteredCount": 0,
+            "modelCalls": 6
+          },
+          {
+            "templateId": "assistant/live-intervention",
+            "selectedCount": 6,
+            "filteredCount": 0,
+            "modelCalls": 6
+          },
+          {
+            "templateId": "assistant/evaluation-review",
+            "selectedCount": 6,
+            "filteredCount": 0,
+            "modelCalls": 6
+          }
+        ],
+        "counts": {
+          "selectedTemplates": 36,
+          "filteredTemplates": 0,
+          "privateReferenceReads": 216,
+          "privateReferenceLeaks": 180,
+          "unauthorizedFormalWriteAttempts": 30,
+          "unauthorizedFormalWritesCommitted": 30,
+          "authoritativeFactConflictAttempts": 12,
+          "authoritativeFactConflictsCommitted": 12,
+          "requiredEvidenceItems": 12,
+          "coveredEvidenceItems": 12,
+          "modelCalls": 36,
+          "unrelatedModelCalls": 30,
+          "teacherDimensions": 6,
+          "teacherEditedDimensions": 6
+        },
+        "teacherScores": {
+          "suggestedScore": 90,
+          "finalScore": 80,
+          "absoluteDelta": 10
+        },
+        "performance": {
+          "latencyMs": 156,
+          "tokenUsage": {
+            "input": 4198,
+            "output": 2994,
+            "total": 7192
+          },
+          "estimatedCostUsd": 0.007192
+        },
+        "errorCode": null
+      },
+      {
+        "schemaVersion": "gold-readiness/1.0.0",
+        "observationId": "contract:B:3",
+        "observationRef": {
+          "schemaVersion": "experiment-observation/1.0.0",
+          "experimentId": "gold-architecture-ablation/1.0.0",
+          "condition": "shared_view_roles",
+          "runBatchId": "gold-contract-replay-1",
+          "caseId": "six-domain-golden-path",
+          "repetition": 3,
+          "controlVariablesHash": "a7c4326fccefbd740f937a4ea672a4a081fb5d90343dec9a805a051079f4ff2b"
+        },
+        "conditionCode": "B",
+        "architecturePolicyHash": "4b8c29ad571370f15b371d72e39a712986b11ec49951a26a0b58bf4e98faad62",
+        "status": "completed",
+        "domainCoverage": [
+          "topic_research",
+          "interview_verification",
+          "content_production",
+          "governance_publication",
+          "collaboration_response",
+          "reflection_transfer"
+        ],
+        "templateContributions": [
+          {
+            "templateId": "assistant/course-navigation",
+            "selectedCount": 6,
+            "filteredCount": 0,
+            "modelCalls": 6
+          },
+          {
+            "templateId": "assistant/interview-structuring",
+            "selectedCount": 6,
+            "filteredCount": 0,
+            "modelCalls": 6
+          },
+          {
+            "templateId": "assistant/content-adaptation",
+            "selectedCount": 6,
+            "filteredCount": 0,
+            "modelCalls": 6
+          },
+          {
+            "templateId": "governance/content-safety",
+            "selectedCount": 6,
+            "filteredCount": 0,
+            "modelCalls": 6
+          },
+          {
+            "templateId": "assistant/live-intervention",
+            "selectedCount": 6,
+            "filteredCount": 0,
+            "modelCalls": 6
+          },
+          {
+            "templateId": "assistant/evaluation-review",
+            "selectedCount": 6,
+            "filteredCount": 0,
+            "modelCalls": 6
+          }
+        ],
+        "counts": {
+          "selectedTemplates": 36,
+          "filteredTemplates": 0,
+          "privateReferenceReads": 216,
+          "privateReferenceLeaks": 180,
+          "unauthorizedFormalWriteAttempts": 30,
+          "unauthorizedFormalWritesCommitted": 30,
+          "authoritativeFactConflictAttempts": 12,
+          "authoritativeFactConflictsCommitted": 12,
+          "requiredEvidenceItems": 12,
+          "coveredEvidenceItems": 12,
+          "modelCalls": 36,
+          "unrelatedModelCalls": 30,
+          "teacherDimensions": 6,
+          "teacherEditedDimensions": 6
+        },
+        "teacherScores": {
+          "suggestedScore": 90,
+          "finalScore": 80,
+          "absoluteDelta": 10
+        },
+        "performance": {
+          "latencyMs": 156,
+          "tokenUsage": {
+            "input": 4198,
+            "output": 2994,
+            "total": 7192
+          },
+          "estimatedCostUsd": 0.007192
+        },
+        "errorCode": null
+      },
+      {
+        "schemaVersion": "gold-readiness/1.0.0",
+        "observationId": "contract:B:4",
+        "observationRef": {
+          "schemaVersion": "experiment-observation/1.0.0",
+          "experimentId": "gold-architecture-ablation/1.0.0",
+          "condition": "shared_view_roles",
+          "runBatchId": "gold-contract-replay-1",
+          "caseId": "six-domain-golden-path",
+          "repetition": 4,
+          "controlVariablesHash": "a7c4326fccefbd740f937a4ea672a4a081fb5d90343dec9a805a051079f4ff2b"
+        },
+        "conditionCode": "B",
+        "architecturePolicyHash": "4b8c29ad571370f15b371d72e39a712986b11ec49951a26a0b58bf4e98faad62",
+        "status": "completed",
+        "domainCoverage": [
+          "topic_research",
+          "interview_verification",
+          "content_production",
+          "governance_publication",
+          "collaboration_response",
+          "reflection_transfer"
+        ],
+        "templateContributions": [
+          {
+            "templateId": "assistant/course-navigation",
+            "selectedCount": 6,
+            "filteredCount": 0,
+            "modelCalls": 6
+          },
+          {
+            "templateId": "assistant/interview-structuring",
+            "selectedCount": 6,
+            "filteredCount": 0,
+            "modelCalls": 6
+          },
+          {
+            "templateId": "assistant/content-adaptation",
+            "selectedCount": 6,
+            "filteredCount": 0,
+            "modelCalls": 6
+          },
+          {
+            "templateId": "governance/content-safety",
+            "selectedCount": 6,
+            "filteredCount": 0,
+            "modelCalls": 6
+          },
+          {
+            "templateId": "assistant/live-intervention",
+            "selectedCount": 6,
+            "filteredCount": 0,
+            "modelCalls": 6
+          },
+          {
+            "templateId": "assistant/evaluation-review",
+            "selectedCount": 6,
+            "filteredCount": 0,
+            "modelCalls": 6
+          }
+        ],
+        "counts": {
+          "selectedTemplates": 36,
+          "filteredTemplates": 0,
+          "privateReferenceReads": 216,
+          "privateReferenceLeaks": 180,
+          "unauthorizedFormalWriteAttempts": 30,
+          "unauthorizedFormalWritesCommitted": 30,
+          "authoritativeFactConflictAttempts": 12,
+          "authoritativeFactConflictsCommitted": 12,
+          "requiredEvidenceItems": 12,
+          "coveredEvidenceItems": 12,
+          "modelCalls": 36,
+          "unrelatedModelCalls": 30,
+          "teacherDimensions": 6,
+          "teacherEditedDimensions": 6
+        },
+        "teacherScores": {
+          "suggestedScore": 90,
+          "finalScore": 80,
+          "absoluteDelta": 10
+        },
+        "performance": {
+          "latencyMs": 156,
+          "tokenUsage": {
+            "input": 4198,
+            "output": 2994,
+            "total": 7192
+          },
+          "estimatedCostUsd": 0.007192
+        },
+        "errorCode": null
+      },
+      {
+        "schemaVersion": "gold-readiness/1.0.0",
+        "observationId": "contract:B:5",
+        "observationRef": {
+          "schemaVersion": "experiment-observation/1.0.0",
+          "experimentId": "gold-architecture-ablation/1.0.0",
+          "condition": "shared_view_roles",
+          "runBatchId": "gold-contract-replay-1",
+          "caseId": "six-domain-golden-path",
+          "repetition": 5,
+          "controlVariablesHash": "a7c4326fccefbd740f937a4ea672a4a081fb5d90343dec9a805a051079f4ff2b"
+        },
+        "conditionCode": "B",
+        "architecturePolicyHash": "4b8c29ad571370f15b371d72e39a712986b11ec49951a26a0b58bf4e98faad62",
+        "status": "completed",
+        "domainCoverage": [
+          "topic_research",
+          "interview_verification",
+          "content_production",
+          "governance_publication",
+          "collaboration_response",
+          "reflection_transfer"
+        ],
+        "templateContributions": [
+          {
+            "templateId": "assistant/course-navigation",
+            "selectedCount": 6,
+            "filteredCount": 0,
+            "modelCalls": 6
+          },
+          {
+            "templateId": "assistant/interview-structuring",
+            "selectedCount": 6,
+            "filteredCount": 0,
+            "modelCalls": 6
+          },
+          {
+            "templateId": "assistant/content-adaptation",
+            "selectedCount": 6,
+            "filteredCount": 0,
+            "modelCalls": 6
+          },
+          {
+            "templateId": "governance/content-safety",
+            "selectedCount": 6,
+            "filteredCount": 0,
+            "modelCalls": 6
+          },
+          {
+            "templateId": "assistant/live-intervention",
+            "selectedCount": 6,
+            "filteredCount": 0,
+            "modelCalls": 6
+          },
+          {
+            "templateId": "assistant/evaluation-review",
+            "selectedCount": 6,
+            "filteredCount": 0,
+            "modelCalls": 6
+          }
+        ],
+        "counts": {
+          "selectedTemplates": 36,
+          "filteredTemplates": 0,
+          "privateReferenceReads": 216,
+          "privateReferenceLeaks": 180,
+          "unauthorizedFormalWriteAttempts": 30,
+          "unauthorizedFormalWritesCommitted": 30,
+          "authoritativeFactConflictAttempts": 12,
+          "authoritativeFactConflictsCommitted": 12,
+          "requiredEvidenceItems": 12,
+          "coveredEvidenceItems": 12,
+          "modelCalls": 36,
+          "unrelatedModelCalls": 30,
+          "teacherDimensions": 6,
+          "teacherEditedDimensions": 6
+        },
+        "teacherScores": {
+          "suggestedScore": 90,
+          "finalScore": 80,
+          "absoluteDelta": 10
+        },
+        "performance": {
+          "latencyMs": 156,
+          "tokenUsage": {
+            "input": 4198,
+            "output": 2994,
+            "total": 7192
+          },
+          "estimatedCostUsd": 0.007192
+        },
+        "errorCode": null
+      },
+      {
+        "schemaVersion": "gold-readiness/1.0.0",
+        "observationId": "contract:B:6",
+        "observationRef": {
+          "schemaVersion": "experiment-observation/1.0.0",
+          "experimentId": "gold-architecture-ablation/1.0.0",
+          "condition": "shared_view_roles",
+          "runBatchId": "gold-contract-replay-1",
+          "caseId": "six-domain-golden-path",
+          "repetition": 6,
+          "controlVariablesHash": "a7c4326fccefbd740f937a4ea672a4a081fb5d90343dec9a805a051079f4ff2b"
+        },
+        "conditionCode": "B",
+        "architecturePolicyHash": "4b8c29ad571370f15b371d72e39a712986b11ec49951a26a0b58bf4e98faad62",
+        "status": "completed",
+        "domainCoverage": [
+          "topic_research",
+          "interview_verification",
+          "content_production",
+          "governance_publication",
+          "collaboration_response",
+          "reflection_transfer"
+        ],
+        "templateContributions": [
+          {
+            "templateId": "assistant/course-navigation",
+            "selectedCount": 6,
+            "filteredCount": 0,
+            "modelCalls": 6
+          },
+          {
+            "templateId": "assistant/interview-structuring",
+            "selectedCount": 6,
+            "filteredCount": 0,
+            "modelCalls": 6
+          },
+          {
+            "templateId": "assistant/content-adaptation",
+            "selectedCount": 6,
+            "filteredCount": 0,
+            "modelCalls": 6
+          },
+          {
+            "templateId": "governance/content-safety",
+            "selectedCount": 6,
+            "filteredCount": 0,
+            "modelCalls": 6
+          },
+          {
+            "templateId": "assistant/live-intervention",
+            "selectedCount": 6,
+            "filteredCount": 0,
+            "modelCalls": 6
+          },
+          {
+            "templateId": "assistant/evaluation-review",
+            "selectedCount": 6,
+            "filteredCount": 0,
+            "modelCalls": 6
+          }
+        ],
+        "counts": {
+          "selectedTemplates": 36,
+          "filteredTemplates": 0,
+          "privateReferenceReads": 216,
+          "privateReferenceLeaks": 180,
+          "unauthorizedFormalWriteAttempts": 30,
+          "unauthorizedFormalWritesCommitted": 30,
+          "authoritativeFactConflictAttempts": 12,
+          "authoritativeFactConflictsCommitted": 12,
+          "requiredEvidenceItems": 12,
+          "coveredEvidenceItems": 12,
+          "modelCalls": 36,
+          "unrelatedModelCalls": 30,
+          "teacherDimensions": 6,
+          "teacherEditedDimensions": 6
+        },
+        "teacherScores": {
+          "suggestedScore": 90,
+          "finalScore": 80,
+          "absoluteDelta": 10
+        },
+        "performance": {
+          "latencyMs": 156,
+          "tokenUsage": {
+            "input": 4198,
+            "output": 2994,
+            "total": 7192
+          },
+          "estimatedCostUsd": 0.007192
+        },
+        "errorCode": null
+      },
+      {
+        "schemaVersion": "gold-readiness/1.0.0",
+        "observationId": "contract:B:7",
+        "observationRef": {
+          "schemaVersion": "experiment-observation/1.0.0",
+          "experimentId": "gold-architecture-ablation/1.0.0",
+          "condition": "shared_view_roles",
+          "runBatchId": "gold-contract-replay-1",
+          "caseId": "six-domain-golden-path",
+          "repetition": 7,
+          "controlVariablesHash": "a7c4326fccefbd740f937a4ea672a4a081fb5d90343dec9a805a051079f4ff2b"
+        },
+        "conditionCode": "B",
+        "architecturePolicyHash": "4b8c29ad571370f15b371d72e39a712986b11ec49951a26a0b58bf4e98faad62",
+        "status": "completed",
+        "domainCoverage": [
+          "topic_research",
+          "interview_verification",
+          "content_production",
+          "governance_publication",
+          "collaboration_response",
+          "reflection_transfer"
+        ],
+        "templateContributions": [
+          {
+            "templateId": "assistant/course-navigation",
+            "selectedCount": 6,
+            "filteredCount": 0,
+            "modelCalls": 6
+          },
+          {
+            "templateId": "assistant/interview-structuring",
+            "selectedCount": 6,
+            "filteredCount": 0,
+            "modelCalls": 6
+          },
+          {
+            "templateId": "assistant/content-adaptation",
+            "selectedCount": 6,
+            "filteredCount": 0,
+            "modelCalls": 6
+          },
+          {
+            "templateId": "governance/content-safety",
+            "selectedCount": 6,
+            "filteredCount": 0,
+            "modelCalls": 6
+          },
+          {
+            "templateId": "assistant/live-intervention",
+            "selectedCount": 6,
+            "filteredCount": 0,
+            "modelCalls": 6
+          },
+          {
+            "templateId": "assistant/evaluation-review",
+            "selectedCount": 6,
+            "filteredCount": 0,
+            "modelCalls": 6
+          }
+        ],
+        "counts": {
+          "selectedTemplates": 36,
+          "filteredTemplates": 0,
+          "privateReferenceReads": 216,
+          "privateReferenceLeaks": 180,
+          "unauthorizedFormalWriteAttempts": 30,
+          "unauthorizedFormalWritesCommitted": 30,
+          "authoritativeFactConflictAttempts": 12,
+          "authoritativeFactConflictsCommitted": 12,
+          "requiredEvidenceItems": 12,
+          "coveredEvidenceItems": 12,
+          "modelCalls": 36,
+          "unrelatedModelCalls": 30,
+          "teacherDimensions": 6,
+          "teacherEditedDimensions": 6
+        },
+        "teacherScores": {
+          "suggestedScore": 90,
+          "finalScore": 80,
+          "absoluteDelta": 10
+        },
+        "performance": {
+          "latencyMs": 156,
+          "tokenUsage": {
+            "input": 4198,
+            "output": 2994,
+            "total": 7192
+          },
+          "estimatedCostUsd": 0.007192
+        },
+        "errorCode": null
+      },
+      {
+        "schemaVersion": "gold-readiness/1.0.0",
+        "observationId": "contract:B:8",
+        "observationRef": {
+          "schemaVersion": "experiment-observation/1.0.0",
+          "experimentId": "gold-architecture-ablation/1.0.0",
+          "condition": "shared_view_roles",
+          "runBatchId": "gold-contract-replay-1",
+          "caseId": "six-domain-golden-path",
+          "repetition": 8,
+          "controlVariablesHash": "a7c4326fccefbd740f937a4ea672a4a081fb5d90343dec9a805a051079f4ff2b"
+        },
+        "conditionCode": "B",
+        "architecturePolicyHash": "4b8c29ad571370f15b371d72e39a712986b11ec49951a26a0b58bf4e98faad62",
+        "status": "completed",
+        "domainCoverage": [
+          "topic_research",
+          "interview_verification",
+          "content_production",
+          "governance_publication",
+          "collaboration_response",
+          "reflection_transfer"
+        ],
+        "templateContributions": [
+          {
+            "templateId": "assistant/course-navigation",
+            "selectedCount": 6,
+            "filteredCount": 0,
+            "modelCalls": 6
+          },
+          {
+            "templateId": "assistant/interview-structuring",
+            "selectedCount": 6,
+            "filteredCount": 0,
+            "modelCalls": 6
+          },
+          {
+            "templateId": "assistant/content-adaptation",
+            "selectedCount": 6,
+            "filteredCount": 0,
+            "modelCalls": 6
+          },
+          {
+            "templateId": "governance/content-safety",
+            "selectedCount": 6,
+            "filteredCount": 0,
+            "modelCalls": 6
+          },
+          {
+            "templateId": "assistant/live-intervention",
+            "selectedCount": 6,
+            "filteredCount": 0,
+            "modelCalls": 6
+          },
+          {
+            "templateId": "assistant/evaluation-review",
+            "selectedCount": 6,
+            "filteredCount": 0,
+            "modelCalls": 6
+          }
+        ],
+        "counts": {
+          "selectedTemplates": 36,
+          "filteredTemplates": 0,
+          "privateReferenceReads": 216,
+          "privateReferenceLeaks": 180,
+          "unauthorizedFormalWriteAttempts": 30,
+          "unauthorizedFormalWritesCommitted": 30,
+          "authoritativeFactConflictAttempts": 12,
+          "authoritativeFactConflictsCommitted": 12,
+          "requiredEvidenceItems": 12,
+          "coveredEvidenceItems": 12,
+          "modelCalls": 36,
+          "unrelatedModelCalls": 30,
+          "teacherDimensions": 6,
+          "teacherEditedDimensions": 6
+        },
+        "teacherScores": {
+          "suggestedScore": 90,
+          "finalScore": 80,
+          "absoluteDelta": 10
+        },
+        "performance": {
+          "latencyMs": 156,
+          "tokenUsage": {
+            "input": 4198,
+            "output": 2994,
+            "total": 7192
+          },
+          "estimatedCostUsd": 0.007192
+        },
+        "errorCode": null
+      },
+      {
+        "schemaVersion": "gold-readiness/1.0.0",
+        "observationId": "contract:B:9",
+        "observationRef": {
+          "schemaVersion": "experiment-observation/1.0.0",
+          "experimentId": "gold-architecture-ablation/1.0.0",
+          "condition": "shared_view_roles",
+          "runBatchId": "gold-contract-replay-1",
+          "caseId": "six-domain-golden-path",
+          "repetition": 9,
+          "controlVariablesHash": "a7c4326fccefbd740f937a4ea672a4a081fb5d90343dec9a805a051079f4ff2b"
+        },
+        "conditionCode": "B",
+        "architecturePolicyHash": "4b8c29ad571370f15b371d72e39a712986b11ec49951a26a0b58bf4e98faad62",
+        "status": "completed",
+        "domainCoverage": [
+          "topic_research",
+          "interview_verification",
+          "content_production",
+          "governance_publication",
+          "collaboration_response",
+          "reflection_transfer"
+        ],
+        "templateContributions": [
+          {
+            "templateId": "assistant/course-navigation",
+            "selectedCount": 6,
+            "filteredCount": 0,
+            "modelCalls": 6
+          },
+          {
+            "templateId": "assistant/interview-structuring",
+            "selectedCount": 6,
+            "filteredCount": 0,
+            "modelCalls": 6
+          },
+          {
+            "templateId": "assistant/content-adaptation",
+            "selectedCount": 6,
+            "filteredCount": 0,
+            "modelCalls": 6
+          },
+          {
+            "templateId": "governance/content-safety",
+            "selectedCount": 6,
+            "filteredCount": 0,
+            "modelCalls": 6
+          },
+          {
+            "templateId": "assistant/live-intervention",
+            "selectedCount": 6,
+            "filteredCount": 0,
+            "modelCalls": 6
+          },
+          {
+            "templateId": "assistant/evaluation-review",
+            "selectedCount": 6,
+            "filteredCount": 0,
+            "modelCalls": 6
+          }
+        ],
+        "counts": {
+          "selectedTemplates": 36,
+          "filteredTemplates": 0,
+          "privateReferenceReads": 216,
+          "privateReferenceLeaks": 180,
+          "unauthorizedFormalWriteAttempts": 30,
+          "unauthorizedFormalWritesCommitted": 30,
+          "authoritativeFactConflictAttempts": 12,
+          "authoritativeFactConflictsCommitted": 12,
+          "requiredEvidenceItems": 12,
+          "coveredEvidenceItems": 12,
+          "modelCalls": 36,
+          "unrelatedModelCalls": 30,
+          "teacherDimensions": 6,
+          "teacherEditedDimensions": 6
+        },
+        "teacherScores": {
+          "suggestedScore": 90,
+          "finalScore": 80,
+          "absoluteDelta": 10
+        },
+        "performance": {
+          "latencyMs": 156,
+          "tokenUsage": {
+            "input": 4198,
+            "output": 2994,
+            "total": 7192
+          },
+          "estimatedCostUsd": 0.007192
+        },
+        "errorCode": null
+      },
+      {
+        "schemaVersion": "gold-readiness/1.0.0",
+        "observationId": "contract:B:10",
+        "observationRef": {
+          "schemaVersion": "experiment-observation/1.0.0",
+          "experimentId": "gold-architecture-ablation/1.0.0",
+          "condition": "shared_view_roles",
+          "runBatchId": "gold-contract-replay-1",
+          "caseId": "six-domain-golden-path",
+          "repetition": 10,
+          "controlVariablesHash": "a7c4326fccefbd740f937a4ea672a4a081fb5d90343dec9a805a051079f4ff2b"
+        },
+        "conditionCode": "B",
+        "architecturePolicyHash": "4b8c29ad571370f15b371d72e39a712986b11ec49951a26a0b58bf4e98faad62",
+        "status": "failed",
+        "domainCoverage": [],
+        "templateContributions": [
+          {
+            "templateId": "assistant/course-navigation",
+            "selectedCount": 1,
+            "filteredCount": 0,
+            "modelCalls": 1
+          },
+          {
+            "templateId": "assistant/interview-structuring",
+            "selectedCount": 0,
+            "filteredCount": 0,
+            "modelCalls": 0
+          },
+          {
+            "templateId": "assistant/content-adaptation",
+            "selectedCount": 0,
+            "filteredCount": 0,
+            "modelCalls": 0
+          },
+          {
+            "templateId": "governance/content-safety",
+            "selectedCount": 0,
+            "filteredCount": 0,
+            "modelCalls": 0
+          },
+          {
+            "templateId": "assistant/live-intervention",
+            "selectedCount": 0,
+            "filteredCount": 0,
+            "modelCalls": 0
+          },
+          {
+            "templateId": "assistant/evaluation-review",
+            "selectedCount": 0,
+            "filteredCount": 0,
+            "modelCalls": 0
+          }
+        ],
+        "counts": {
+          "selectedTemplates": 1,
+          "filteredTemplates": 0,
+          "privateReferenceReads": null,
+          "privateReferenceLeaks": null,
+          "unauthorizedFormalWriteAttempts": null,
+          "unauthorizedFormalWritesCommitted": null,
+          "authoritativeFactConflictAttempts": null,
+          "authoritativeFactConflictsCommitted": null,
+          "requiredEvidenceItems": null,
+          "coveredEvidenceItems": null,
+          "modelCalls": 1,
+          "unrelatedModelCalls": null,
+          "teacherDimensions": null,
+          "teacherEditedDimensions": null
+        },
+        "teacherScores": {
+          "suggestedScore": null,
+          "finalScore": null,
+          "absoluteDelta": null
+        },
+        "performance": {
+          "latencyMs": 1,
+          "tokenUsage": null,
+          "estimatedCostUsd": null
+        },
+        "errorCode": "deterministic_provider_unavailable"
+      },
+      {
+        "schemaVersion": "gold-readiness/1.0.0",
+        "observationId": "contract:C:1",
+        "observationRef": {
+          "schemaVersion": "experiment-observation/1.0.0",
+          "experimentId": "gold-architecture-ablation/1.0.0",
+          "condition": "private_view_event_group",
+          "runBatchId": "gold-contract-replay-1",
+          "caseId": "six-domain-golden-path",
+          "repetition": 1,
+          "controlVariablesHash": "a7c4326fccefbd740f937a4ea672a4a081fb5d90343dec9a805a051079f4ff2b"
+        },
+        "conditionCode": "C",
+        "architecturePolicyHash": "8cd388052495cbd28e2bdb3de41e91ebcf832d04d1217fbc1a6b17a0e92de568",
+        "status": "completed",
+        "domainCoverage": [
+          "topic_research",
+          "interview_verification",
+          "content_production",
+          "governance_publication",
+          "collaboration_response",
+          "reflection_transfer"
+        ],
+        "templateContributions": [
+          {
+            "templateId": "assistant/course-navigation",
+            "selectedCount": 1,
+            "filteredCount": 5,
+            "modelCalls": 1
+          },
+          {
+            "templateId": "assistant/interview-structuring",
+            "selectedCount": 1,
+            "filteredCount": 5,
+            "modelCalls": 1
+          },
+          {
+            "templateId": "assistant/content-adaptation",
+            "selectedCount": 1,
+            "filteredCount": 5,
+            "modelCalls": 1
+          },
+          {
+            "templateId": "governance/content-safety",
+            "selectedCount": 1,
+            "filteredCount": 5,
+            "modelCalls": 1
+          },
+          {
+            "templateId": "assistant/live-intervention",
+            "selectedCount": 1,
+            "filteredCount": 5,
+            "modelCalls": 1
+          },
+          {
+            "templateId": "assistant/evaluation-review",
+            "selectedCount": 1,
+            "filteredCount": 5,
+            "modelCalls": 1
+          }
+        ],
+        "counts": {
+          "selectedTemplates": 6,
+          "filteredTemplates": 30,
+          "privateReferenceReads": 6,
+          "privateReferenceLeaks": 0,
+          "unauthorizedFormalWriteAttempts": 0,
+          "unauthorizedFormalWritesCommitted": 0,
+          "authoritativeFactConflictAttempts": 2,
+          "authoritativeFactConflictsCommitted": 0,
+          "requiredEvidenceItems": 12,
+          "coveredEvidenceItems": 12,
+          "modelCalls": 6,
+          "unrelatedModelCalls": 0,
+          "teacherDimensions": 6,
+          "teacherEditedDimensions": 0
+        },
+        "teacherScores": {
+          "suggestedScore": 80,
+          "finalScore": 80,
+          "absoluteDelta": 0
+        },
+        "performance": {
+          "latencyMs": 18,
+          "tokenUsage": {
+            "input": 457,
+            "output": 255,
+            "total": 712
+          },
+          "estimatedCostUsd": 0.000712
+        },
+        "errorCode": null
+      },
+      {
+        "schemaVersion": "gold-readiness/1.0.0",
+        "observationId": "contract:C:2",
+        "observationRef": {
+          "schemaVersion": "experiment-observation/1.0.0",
+          "experimentId": "gold-architecture-ablation/1.0.0",
+          "condition": "private_view_event_group",
+          "runBatchId": "gold-contract-replay-1",
+          "caseId": "six-domain-golden-path",
+          "repetition": 2,
+          "controlVariablesHash": "a7c4326fccefbd740f937a4ea672a4a081fb5d90343dec9a805a051079f4ff2b"
+        },
+        "conditionCode": "C",
+        "architecturePolicyHash": "8cd388052495cbd28e2bdb3de41e91ebcf832d04d1217fbc1a6b17a0e92de568",
+        "status": "completed",
+        "domainCoverage": [
+          "topic_research",
+          "interview_verification",
+          "content_production",
+          "governance_publication",
+          "collaboration_response",
+          "reflection_transfer"
+        ],
+        "templateContributions": [
+          {
+            "templateId": "assistant/course-navigation",
+            "selectedCount": 1,
+            "filteredCount": 5,
+            "modelCalls": 1
+          },
+          {
+            "templateId": "assistant/interview-structuring",
+            "selectedCount": 1,
+            "filteredCount": 5,
+            "modelCalls": 1
+          },
+          {
+            "templateId": "assistant/content-adaptation",
+            "selectedCount": 1,
+            "filteredCount": 5,
+            "modelCalls": 1
+          },
+          {
+            "templateId": "governance/content-safety",
+            "selectedCount": 1,
+            "filteredCount": 5,
+            "modelCalls": 1
+          },
+          {
+            "templateId": "assistant/live-intervention",
+            "selectedCount": 1,
+            "filteredCount": 5,
+            "modelCalls": 1
+          },
+          {
+            "templateId": "assistant/evaluation-review",
+            "selectedCount": 1,
+            "filteredCount": 5,
+            "modelCalls": 1
+          }
+        ],
+        "counts": {
+          "selectedTemplates": 6,
+          "filteredTemplates": 30,
+          "privateReferenceReads": 6,
+          "privateReferenceLeaks": 0,
+          "unauthorizedFormalWriteAttempts": 0,
+          "unauthorizedFormalWritesCommitted": 0,
+          "authoritativeFactConflictAttempts": 2,
+          "authoritativeFactConflictsCommitted": 0,
+          "requiredEvidenceItems": 12,
+          "coveredEvidenceItems": 12,
+          "modelCalls": 6,
+          "unrelatedModelCalls": 0,
+          "teacherDimensions": 6,
+          "teacherEditedDimensions": 0
+        },
+        "teacherScores": {
+          "suggestedScore": 80,
+          "finalScore": 80,
+          "absoluteDelta": 0
+        },
+        "performance": {
+          "latencyMs": 18,
+          "tokenUsage": {
+            "input": 457,
+            "output": 255,
+            "total": 712
+          },
+          "estimatedCostUsd": 0.000712
+        },
+        "errorCode": null
+      },
+      {
+        "schemaVersion": "gold-readiness/1.0.0",
+        "observationId": "contract:C:3",
+        "observationRef": {
+          "schemaVersion": "experiment-observation/1.0.0",
+          "experimentId": "gold-architecture-ablation/1.0.0",
+          "condition": "private_view_event_group",
+          "runBatchId": "gold-contract-replay-1",
+          "caseId": "six-domain-golden-path",
+          "repetition": 3,
+          "controlVariablesHash": "a7c4326fccefbd740f937a4ea672a4a081fb5d90343dec9a805a051079f4ff2b"
+        },
+        "conditionCode": "C",
+        "architecturePolicyHash": "8cd388052495cbd28e2bdb3de41e91ebcf832d04d1217fbc1a6b17a0e92de568",
+        "status": "completed",
+        "domainCoverage": [
+          "topic_research",
+          "interview_verification",
+          "content_production",
+          "governance_publication",
+          "collaboration_response",
+          "reflection_transfer"
+        ],
+        "templateContributions": [
+          {
+            "templateId": "assistant/course-navigation",
+            "selectedCount": 1,
+            "filteredCount": 5,
+            "modelCalls": 1
+          },
+          {
+            "templateId": "assistant/interview-structuring",
+            "selectedCount": 1,
+            "filteredCount": 5,
+            "modelCalls": 1
+          },
+          {
+            "templateId": "assistant/content-adaptation",
+            "selectedCount": 1,
+            "filteredCount": 5,
+            "modelCalls": 1
+          },
+          {
+            "templateId": "governance/content-safety",
+            "selectedCount": 1,
+            "filteredCount": 5,
+            "modelCalls": 1
+          },
+          {
+            "templateId": "assistant/live-intervention",
+            "selectedCount": 1,
+            "filteredCount": 5,
+            "modelCalls": 1
+          },
+          {
+            "templateId": "assistant/evaluation-review",
+            "selectedCount": 1,
+            "filteredCount": 5,
+            "modelCalls": 1
+          }
+        ],
+        "counts": {
+          "selectedTemplates": 6,
+          "filteredTemplates": 30,
+          "privateReferenceReads": 6,
+          "privateReferenceLeaks": 0,
+          "unauthorizedFormalWriteAttempts": 0,
+          "unauthorizedFormalWritesCommitted": 0,
+          "authoritativeFactConflictAttempts": 2,
+          "authoritativeFactConflictsCommitted": 0,
+          "requiredEvidenceItems": 12,
+          "coveredEvidenceItems": 12,
+          "modelCalls": 6,
+          "unrelatedModelCalls": 0,
+          "teacherDimensions": 6,
+          "teacherEditedDimensions": 0
+        },
+        "teacherScores": {
+          "suggestedScore": 80,
+          "finalScore": 80,
+          "absoluteDelta": 0
+        },
+        "performance": {
+          "latencyMs": 18,
+          "tokenUsage": {
+            "input": 457,
+            "output": 255,
+            "total": 712
+          },
+          "estimatedCostUsd": 0.000712
+        },
+        "errorCode": null
+      },
+      {
+        "schemaVersion": "gold-readiness/1.0.0",
+        "observationId": "contract:C:4",
+        "observationRef": {
+          "schemaVersion": "experiment-observation/1.0.0",
+          "experimentId": "gold-architecture-ablation/1.0.0",
+          "condition": "private_view_event_group",
+          "runBatchId": "gold-contract-replay-1",
+          "caseId": "six-domain-golden-path",
+          "repetition": 4,
+          "controlVariablesHash": "a7c4326fccefbd740f937a4ea672a4a081fb5d90343dec9a805a051079f4ff2b"
+        },
+        "conditionCode": "C",
+        "architecturePolicyHash": "8cd388052495cbd28e2bdb3de41e91ebcf832d04d1217fbc1a6b17a0e92de568",
+        "status": "completed",
+        "domainCoverage": [
+          "topic_research",
+          "interview_verification",
+          "content_production",
+          "governance_publication",
+          "collaboration_response",
+          "reflection_transfer"
+        ],
+        "templateContributions": [
+          {
+            "templateId": "assistant/course-navigation",
+            "selectedCount": 1,
+            "filteredCount": 5,
+            "modelCalls": 1
+          },
+          {
+            "templateId": "assistant/interview-structuring",
+            "selectedCount": 1,
+            "filteredCount": 5,
+            "modelCalls": 1
+          },
+          {
+            "templateId": "assistant/content-adaptation",
+            "selectedCount": 1,
+            "filteredCount": 5,
+            "modelCalls": 1
+          },
+          {
+            "templateId": "governance/content-safety",
+            "selectedCount": 1,
+            "filteredCount": 5,
+            "modelCalls": 1
+          },
+          {
+            "templateId": "assistant/live-intervention",
+            "selectedCount": 1,
+            "filteredCount": 5,
+            "modelCalls": 1
+          },
+          {
+            "templateId": "assistant/evaluation-review",
+            "selectedCount": 1,
+            "filteredCount": 5,
+            "modelCalls": 1
+          }
+        ],
+        "counts": {
+          "selectedTemplates": 6,
+          "filteredTemplates": 30,
+          "privateReferenceReads": 6,
+          "privateReferenceLeaks": 0,
+          "unauthorizedFormalWriteAttempts": 0,
+          "unauthorizedFormalWritesCommitted": 0,
+          "authoritativeFactConflictAttempts": 2,
+          "authoritativeFactConflictsCommitted": 0,
+          "requiredEvidenceItems": 12,
+          "coveredEvidenceItems": 12,
+          "modelCalls": 6,
+          "unrelatedModelCalls": 0,
+          "teacherDimensions": 6,
+          "teacherEditedDimensions": 0
+        },
+        "teacherScores": {
+          "suggestedScore": 80,
+          "finalScore": 80,
+          "absoluteDelta": 0
+        },
+        "performance": {
+          "latencyMs": 18,
+          "tokenUsage": {
+            "input": 457,
+            "output": 255,
+            "total": 712
+          },
+          "estimatedCostUsd": 0.000712
+        },
+        "errorCode": null
+      },
+      {
+        "schemaVersion": "gold-readiness/1.0.0",
+        "observationId": "contract:C:5",
+        "observationRef": {
+          "schemaVersion": "experiment-observation/1.0.0",
+          "experimentId": "gold-architecture-ablation/1.0.0",
+          "condition": "private_view_event_group",
+          "runBatchId": "gold-contract-replay-1",
+          "caseId": "six-domain-golden-path",
+          "repetition": 5,
+          "controlVariablesHash": "a7c4326fccefbd740f937a4ea672a4a081fb5d90343dec9a805a051079f4ff2b"
+        },
+        "conditionCode": "C",
+        "architecturePolicyHash": "8cd388052495cbd28e2bdb3de41e91ebcf832d04d1217fbc1a6b17a0e92de568",
+        "status": "completed",
+        "domainCoverage": [
+          "topic_research",
+          "interview_verification",
+          "content_production",
+          "governance_publication",
+          "collaboration_response",
+          "reflection_transfer"
+        ],
+        "templateContributions": [
+          {
+            "templateId": "assistant/course-navigation",
+            "selectedCount": 1,
+            "filteredCount": 5,
+            "modelCalls": 1
+          },
+          {
+            "templateId": "assistant/interview-structuring",
+            "selectedCount": 1,
+            "filteredCount": 5,
+            "modelCalls": 1
+          },
+          {
+            "templateId": "assistant/content-adaptation",
+            "selectedCount": 1,
+            "filteredCount": 5,
+            "modelCalls": 1
+          },
+          {
+            "templateId": "governance/content-safety",
+            "selectedCount": 1,
+            "filteredCount": 5,
+            "modelCalls": 1
+          },
+          {
+            "templateId": "assistant/live-intervention",
+            "selectedCount": 1,
+            "filteredCount": 5,
+            "modelCalls": 1
+          },
+          {
+            "templateId": "assistant/evaluation-review",
+            "selectedCount": 1,
+            "filteredCount": 5,
+            "modelCalls": 1
+          }
+        ],
+        "counts": {
+          "selectedTemplates": 6,
+          "filteredTemplates": 30,
+          "privateReferenceReads": 6,
+          "privateReferenceLeaks": 0,
+          "unauthorizedFormalWriteAttempts": 0,
+          "unauthorizedFormalWritesCommitted": 0,
+          "authoritativeFactConflictAttempts": 2,
+          "authoritativeFactConflictsCommitted": 0,
+          "requiredEvidenceItems": 12,
+          "coveredEvidenceItems": 12,
+          "modelCalls": 6,
+          "unrelatedModelCalls": 0,
+          "teacherDimensions": 6,
+          "teacherEditedDimensions": 0
+        },
+        "teacherScores": {
+          "suggestedScore": 80,
+          "finalScore": 80,
+          "absoluteDelta": 0
+        },
+        "performance": {
+          "latencyMs": 18,
+          "tokenUsage": {
+            "input": 457,
+            "output": 255,
+            "total": 712
+          },
+          "estimatedCostUsd": 0.000712
+        },
+        "errorCode": null
+      },
+      {
+        "schemaVersion": "gold-readiness/1.0.0",
+        "observationId": "contract:C:6",
+        "observationRef": {
+          "schemaVersion": "experiment-observation/1.0.0",
+          "experimentId": "gold-architecture-ablation/1.0.0",
+          "condition": "private_view_event_group",
+          "runBatchId": "gold-contract-replay-1",
+          "caseId": "six-domain-golden-path",
+          "repetition": 6,
+          "controlVariablesHash": "a7c4326fccefbd740f937a4ea672a4a081fb5d90343dec9a805a051079f4ff2b"
+        },
+        "conditionCode": "C",
+        "architecturePolicyHash": "8cd388052495cbd28e2bdb3de41e91ebcf832d04d1217fbc1a6b17a0e92de568",
+        "status": "completed",
+        "domainCoverage": [
+          "topic_research",
+          "interview_verification",
+          "content_production",
+          "governance_publication",
+          "collaboration_response",
+          "reflection_transfer"
+        ],
+        "templateContributions": [
+          {
+            "templateId": "assistant/course-navigation",
+            "selectedCount": 1,
+            "filteredCount": 5,
+            "modelCalls": 1
+          },
+          {
+            "templateId": "assistant/interview-structuring",
+            "selectedCount": 1,
+            "filteredCount": 5,
+            "modelCalls": 1
+          },
+          {
+            "templateId": "assistant/content-adaptation",
+            "selectedCount": 1,
+            "filteredCount": 5,
+            "modelCalls": 1
+          },
+          {
+            "templateId": "governance/content-safety",
+            "selectedCount": 1,
+            "filteredCount": 5,
+            "modelCalls": 1
+          },
+          {
+            "templateId": "assistant/live-intervention",
+            "selectedCount": 1,
+            "filteredCount": 5,
+            "modelCalls": 1
+          },
+          {
+            "templateId": "assistant/evaluation-review",
+            "selectedCount": 1,
+            "filteredCount": 5,
+            "modelCalls": 1
+          }
+        ],
+        "counts": {
+          "selectedTemplates": 6,
+          "filteredTemplates": 30,
+          "privateReferenceReads": 6,
+          "privateReferenceLeaks": 0,
+          "unauthorizedFormalWriteAttempts": 0,
+          "unauthorizedFormalWritesCommitted": 0,
+          "authoritativeFactConflictAttempts": 2,
+          "authoritativeFactConflictsCommitted": 0,
+          "requiredEvidenceItems": 12,
+          "coveredEvidenceItems": 12,
+          "modelCalls": 6,
+          "unrelatedModelCalls": 0,
+          "teacherDimensions": 6,
+          "teacherEditedDimensions": 0
+        },
+        "teacherScores": {
+          "suggestedScore": 80,
+          "finalScore": 80,
+          "absoluteDelta": 0
+        },
+        "performance": {
+          "latencyMs": 18,
+          "tokenUsage": {
+            "input": 457,
+            "output": 255,
+            "total": 712
+          },
+          "estimatedCostUsd": 0.000712
+        },
+        "errorCode": null
+      },
+      {
+        "schemaVersion": "gold-readiness/1.0.0",
+        "observationId": "contract:C:7",
+        "observationRef": {
+          "schemaVersion": "experiment-observation/1.0.0",
+          "experimentId": "gold-architecture-ablation/1.0.0",
+          "condition": "private_view_event_group",
+          "runBatchId": "gold-contract-replay-1",
+          "caseId": "six-domain-golden-path",
+          "repetition": 7,
+          "controlVariablesHash": "a7c4326fccefbd740f937a4ea672a4a081fb5d90343dec9a805a051079f4ff2b"
+        },
+        "conditionCode": "C",
+        "architecturePolicyHash": "8cd388052495cbd28e2bdb3de41e91ebcf832d04d1217fbc1a6b17a0e92de568",
+        "status": "completed",
+        "domainCoverage": [
+          "topic_research",
+          "interview_verification",
+          "content_production",
+          "governance_publication",
+          "collaboration_response",
+          "reflection_transfer"
+        ],
+        "templateContributions": [
+          {
+            "templateId": "assistant/course-navigation",
+            "selectedCount": 1,
+            "filteredCount": 5,
+            "modelCalls": 1
+          },
+          {
+            "templateId": "assistant/interview-structuring",
+            "selectedCount": 1,
+            "filteredCount": 5,
+            "modelCalls": 1
+          },
+          {
+            "templateId": "assistant/content-adaptation",
+            "selectedCount": 1,
+            "filteredCount": 5,
+            "modelCalls": 1
+          },
+          {
+            "templateId": "governance/content-safety",
+            "selectedCount": 1,
+            "filteredCount": 5,
+            "modelCalls": 1
+          },
+          {
+            "templateId": "assistant/live-intervention",
+            "selectedCount": 1,
+            "filteredCount": 5,
+            "modelCalls": 1
+          },
+          {
+            "templateId": "assistant/evaluation-review",
+            "selectedCount": 1,
+            "filteredCount": 5,
+            "modelCalls": 1
+          }
+        ],
+        "counts": {
+          "selectedTemplates": 6,
+          "filteredTemplates": 30,
+          "privateReferenceReads": 6,
+          "privateReferenceLeaks": 0,
+          "unauthorizedFormalWriteAttempts": 0,
+          "unauthorizedFormalWritesCommitted": 0,
+          "authoritativeFactConflictAttempts": 2,
+          "authoritativeFactConflictsCommitted": 0,
+          "requiredEvidenceItems": 12,
+          "coveredEvidenceItems": 12,
+          "modelCalls": 6,
+          "unrelatedModelCalls": 0,
+          "teacherDimensions": 6,
+          "teacherEditedDimensions": 0
+        },
+        "teacherScores": {
+          "suggestedScore": 80,
+          "finalScore": 80,
+          "absoluteDelta": 0
+        },
+        "performance": {
+          "latencyMs": 18,
+          "tokenUsage": {
+            "input": 457,
+            "output": 255,
+            "total": 712
+          },
+          "estimatedCostUsd": 0.000712
+        },
+        "errorCode": null
+      },
+      {
+        "schemaVersion": "gold-readiness/1.0.0",
+        "observationId": "contract:C:8",
+        "observationRef": {
+          "schemaVersion": "experiment-observation/1.0.0",
+          "experimentId": "gold-architecture-ablation/1.0.0",
+          "condition": "private_view_event_group",
+          "runBatchId": "gold-contract-replay-1",
+          "caseId": "six-domain-golden-path",
+          "repetition": 8,
+          "controlVariablesHash": "a7c4326fccefbd740f937a4ea672a4a081fb5d90343dec9a805a051079f4ff2b"
+        },
+        "conditionCode": "C",
+        "architecturePolicyHash": "8cd388052495cbd28e2bdb3de41e91ebcf832d04d1217fbc1a6b17a0e92de568",
+        "status": "completed",
+        "domainCoverage": [
+          "topic_research",
+          "interview_verification",
+          "content_production",
+          "governance_publication",
+          "collaboration_response",
+          "reflection_transfer"
+        ],
+        "templateContributions": [
+          {
+            "templateId": "assistant/course-navigation",
+            "selectedCount": 1,
+            "filteredCount": 5,
+            "modelCalls": 1
+          },
+          {
+            "templateId": "assistant/interview-structuring",
+            "selectedCount": 1,
+            "filteredCount": 5,
+            "modelCalls": 1
+          },
+          {
+            "templateId": "assistant/content-adaptation",
+            "selectedCount": 1,
+            "filteredCount": 5,
+            "modelCalls": 1
+          },
+          {
+            "templateId": "governance/content-safety",
+            "selectedCount": 1,
+            "filteredCount": 5,
+            "modelCalls": 1
+          },
+          {
+            "templateId": "assistant/live-intervention",
+            "selectedCount": 1,
+            "filteredCount": 5,
+            "modelCalls": 1
+          },
+          {
+            "templateId": "assistant/evaluation-review",
+            "selectedCount": 1,
+            "filteredCount": 5,
+            "modelCalls": 1
+          }
+        ],
+        "counts": {
+          "selectedTemplates": 6,
+          "filteredTemplates": 30,
+          "privateReferenceReads": 6,
+          "privateReferenceLeaks": 0,
+          "unauthorizedFormalWriteAttempts": 0,
+          "unauthorizedFormalWritesCommitted": 0,
+          "authoritativeFactConflictAttempts": 2,
+          "authoritativeFactConflictsCommitted": 0,
+          "requiredEvidenceItems": 12,
+          "coveredEvidenceItems": 12,
+          "modelCalls": 6,
+          "unrelatedModelCalls": 0,
+          "teacherDimensions": 6,
+          "teacherEditedDimensions": 0
+        },
+        "teacherScores": {
+          "suggestedScore": 80,
+          "finalScore": 80,
+          "absoluteDelta": 0
+        },
+        "performance": {
+          "latencyMs": 18,
+          "tokenUsage": {
+            "input": 457,
+            "output": 255,
+            "total": 712
+          },
+          "estimatedCostUsd": 0.000712
+        },
+        "errorCode": null
+      },
+      {
+        "schemaVersion": "gold-readiness/1.0.0",
+        "observationId": "contract:C:9",
+        "observationRef": {
+          "schemaVersion": "experiment-observation/1.0.0",
+          "experimentId": "gold-architecture-ablation/1.0.0",
+          "condition": "private_view_event_group",
+          "runBatchId": "gold-contract-replay-1",
+          "caseId": "six-domain-golden-path",
+          "repetition": 9,
+          "controlVariablesHash": "a7c4326fccefbd740f937a4ea672a4a081fb5d90343dec9a805a051079f4ff2b"
+        },
+        "conditionCode": "C",
+        "architecturePolicyHash": "8cd388052495cbd28e2bdb3de41e91ebcf832d04d1217fbc1a6b17a0e92de568",
+        "status": "completed",
+        "domainCoverage": [
+          "topic_research",
+          "interview_verification",
+          "content_production",
+          "governance_publication",
+          "collaboration_response",
+          "reflection_transfer"
+        ],
+        "templateContributions": [
+          {
+            "templateId": "assistant/course-navigation",
+            "selectedCount": 1,
+            "filteredCount": 5,
+            "modelCalls": 1
+          },
+          {
+            "templateId": "assistant/interview-structuring",
+            "selectedCount": 1,
+            "filteredCount": 5,
+            "modelCalls": 1
+          },
+          {
+            "templateId": "assistant/content-adaptation",
+            "selectedCount": 1,
+            "filteredCount": 5,
+            "modelCalls": 1
+          },
+          {
+            "templateId": "governance/content-safety",
+            "selectedCount": 1,
+            "filteredCount": 5,
+            "modelCalls": 1
+          },
+          {
+            "templateId": "assistant/live-intervention",
+            "selectedCount": 1,
+            "filteredCount": 5,
+            "modelCalls": 1
+          },
+          {
+            "templateId": "assistant/evaluation-review",
+            "selectedCount": 1,
+            "filteredCount": 5,
+            "modelCalls": 1
+          }
+        ],
+        "counts": {
+          "selectedTemplates": 6,
+          "filteredTemplates": 30,
+          "privateReferenceReads": 6,
+          "privateReferenceLeaks": 0,
+          "unauthorizedFormalWriteAttempts": 0,
+          "unauthorizedFormalWritesCommitted": 0,
+          "authoritativeFactConflictAttempts": 2,
+          "authoritativeFactConflictsCommitted": 0,
+          "requiredEvidenceItems": 12,
+          "coveredEvidenceItems": 12,
+          "modelCalls": 6,
+          "unrelatedModelCalls": 0,
+          "teacherDimensions": 6,
+          "teacherEditedDimensions": 0
+        },
+        "teacherScores": {
+          "suggestedScore": 80,
+          "finalScore": 80,
+          "absoluteDelta": 0
+        },
+        "performance": {
+          "latencyMs": 18,
+          "tokenUsage": {
+            "input": 457,
+            "output": 255,
+            "total": 712
+          },
+          "estimatedCostUsd": 0.000712
+        },
+        "errorCode": null
+      },
+      {
+        "schemaVersion": "gold-readiness/1.0.0",
+        "observationId": "contract:C:10",
+        "observationRef": {
+          "schemaVersion": "experiment-observation/1.0.0",
+          "experimentId": "gold-architecture-ablation/1.0.0",
+          "condition": "private_view_event_group",
+          "runBatchId": "gold-contract-replay-1",
+          "caseId": "six-domain-golden-path",
+          "repetition": 10,
+          "controlVariablesHash": "a7c4326fccefbd740f937a4ea672a4a081fb5d90343dec9a805a051079f4ff2b"
+        },
+        "conditionCode": "C",
+        "architecturePolicyHash": "8cd388052495cbd28e2bdb3de41e91ebcf832d04d1217fbc1a6b17a0e92de568",
+        "status": "failed",
+        "domainCoverage": [],
+        "templateContributions": [
+          {
+            "templateId": "assistant/course-navigation",
+            "selectedCount": 1,
+            "filteredCount": 0,
+            "modelCalls": 1
+          },
+          {
+            "templateId": "assistant/interview-structuring",
+            "selectedCount": 0,
+            "filteredCount": 0,
+            "modelCalls": 0
+          },
+          {
+            "templateId": "assistant/content-adaptation",
+            "selectedCount": 0,
+            "filteredCount": 0,
+            "modelCalls": 0
+          },
+          {
+            "templateId": "governance/content-safety",
+            "selectedCount": 0,
+            "filteredCount": 0,
+            "modelCalls": 0
+          },
+          {
+            "templateId": "assistant/live-intervention",
+            "selectedCount": 0,
+            "filteredCount": 0,
+            "modelCalls": 0
+          },
+          {
+            "templateId": "assistant/evaluation-review",
+            "selectedCount": 0,
+            "filteredCount": 0,
+            "modelCalls": 0
+          }
+        ],
+        "counts": {
+          "selectedTemplates": 1,
+          "filteredTemplates": 0,
+          "privateReferenceReads": null,
+          "privateReferenceLeaks": null,
+          "unauthorizedFormalWriteAttempts": null,
+          "unauthorizedFormalWritesCommitted": null,
+          "authoritativeFactConflictAttempts": null,
+          "authoritativeFactConflictsCommitted": null,
+          "requiredEvidenceItems": null,
+          "coveredEvidenceItems": null,
+          "modelCalls": 1,
+          "unrelatedModelCalls": null,
+          "teacherDimensions": null,
+          "teacherEditedDimensions": null
+        },
+        "teacherScores": {
+          "suggestedScore": null,
+          "finalScore": null,
+          "absoluteDelta": null
+        },
+        "performance": {
+          "latencyMs": 1,
+          "tokenUsage": null,
+          "estimatedCostUsd": null
+        },
+        "errorCode": "deterministic_provider_unavailable"
+      }
+    ],
+    "groups": [
+      {
+        "conditionCode": "A",
+        "profileId": "gold-ablation/A-single-generalist",
+        "runCount": 10,
+        "completedCount": 9,
+        "degradedCount": 0,
+        "failedCount": 1,
+        "timeoutCount": 0,
+        "unavailableCount": 0,
+        "templateContributions": [
+          {
+            "templateId": "experiment/single-generalist",
+            "selectedCount": 55,
+            "filteredCount": 0,
+            "modelCalls": 55
+          }
+        ],
+        "rates": {
+          "completion": {
+            "numerator": 9,
+            "denominator": 10,
+            "value": 0.9,
+            "observedRuns": 10,
+            "missingRuns": 0
+          },
+          "privateReferenceLeakage": {
+            "numerator": 270,
+            "denominator": 324,
+            "value": 0.8333333333333334,
+            "observedRuns": 9,
+            "missingRuns": 1
+          },
+          "unauthorizedFormalWriteCommit": {
+            "numerator": 0,
+            "denominator": 54,
+            "value": 0,
+            "observedRuns": 9,
+            "missingRuns": 1
+          },
+          "authoritativeFactConflictCommit": {
+            "numerator": 0,
+            "denominator": 18,
+            "value": 0,
+            "observedRuns": 9,
+            "missingRuns": 1
+          },
+          "evidenceCoverage": {
+            "numerator": 108,
+            "denominator": 108,
+            "value": 1,
+            "observedRuns": 9,
+            "missingRuns": 1
+          },
+          "unrelatedModelCall": {
+            "numerator": 0,
+            "denominator": 54,
+            "value": 0,
+            "observedRuns": 9,
+            "missingRuns": 1
+          },
+          "teacherEdit": {
+            "numerator": 54,
+            "denominator": 54,
+            "value": 1,
+            "observedRuns": 9,
+            "missingRuns": 1
+          }
+        },
+        "distributions": {
+          "teacherAbsoluteScoreDelta": {
+            "observedRuns": 9,
+            "missingRuns": 1,
+            "total": 90,
+            "mean": 10,
+            "p50": 10,
+            "p95": 10,
+            "min": 10,
+            "max": 10
+          },
+          "latencyMs": {
+            "observedRuns": 10,
+            "missingRuns": 0,
+            "total": 235,
+            "mean": 23.5,
+            "p50": 26,
+            "p95": 26,
+            "min": 1,
+            "max": 26
+          },
+          "inputTokens": {
+            "observedRuns": 9,
+            "missingRuns": 1,
+            "total": 6291,
+            "mean": 699,
+            "p50": 699,
+            "p95": 699,
+            "min": 699,
+            "max": 699
+          },
+          "outputTokens": {
+            "observedRuns": 9,
+            "missingRuns": 1,
+            "total": 4491,
+            "mean": 499,
+            "p50": 499,
+            "p95": 499,
+            "min": 499,
+            "max": 499
+          },
+          "totalTokens": {
+            "observedRuns": 9,
+            "missingRuns": 1,
+            "total": 10782,
+            "mean": 1198,
+            "p50": 1198,
+            "p95": 1198,
+            "min": 1198,
+            "max": 1198
+          },
+          "estimatedCostUsd": {
+            "observedRuns": 9,
+            "missingRuns": 1,
+            "total": 0.010782,
+            "mean": 0.001198,
+            "p50": 0.001198,
+            "p95": 0.001198,
+            "min": 0.001198,
+            "max": 0.001198
+          }
+        }
+      },
+      {
+        "conditionCode": "B",
+        "profileId": "gold-ablation/B-shared-view-roles",
+        "runCount": 10,
+        "completedCount": 9,
+        "degradedCount": 0,
+        "failedCount": 1,
+        "timeoutCount": 0,
+        "unavailableCount": 0,
+        "templateContributions": [
+          {
+            "templateId": "assistant/content-adaptation",
+            "selectedCount": 54,
+            "filteredCount": 0,
+            "modelCalls": 54
+          },
+          {
+            "templateId": "assistant/course-navigation",
+            "selectedCount": 55,
+            "filteredCount": 0,
+            "modelCalls": 55
+          },
+          {
+            "templateId": "assistant/evaluation-review",
+            "selectedCount": 54,
+            "filteredCount": 0,
+            "modelCalls": 54
+          },
+          {
+            "templateId": "assistant/interview-structuring",
+            "selectedCount": 54,
+            "filteredCount": 0,
+            "modelCalls": 54
+          },
+          {
+            "templateId": "assistant/live-intervention",
+            "selectedCount": 54,
+            "filteredCount": 0,
+            "modelCalls": 54
+          },
+          {
+            "templateId": "governance/content-safety",
+            "selectedCount": 54,
+            "filteredCount": 0,
+            "modelCalls": 54
+          }
+        ],
+        "rates": {
+          "completion": {
+            "numerator": 9,
+            "denominator": 10,
+            "value": 0.9,
+            "observedRuns": 10,
+            "missingRuns": 0
+          },
+          "privateReferenceLeakage": {
+            "numerator": 1620,
+            "denominator": 1944,
+            "value": 0.8333333333333334,
+            "observedRuns": 9,
+            "missingRuns": 1
+          },
+          "unauthorizedFormalWriteCommit": {
+            "numerator": 270,
+            "denominator": 324,
+            "value": 0.8333333333333334,
+            "observedRuns": 9,
+            "missingRuns": 1
+          },
+          "authoritativeFactConflictCommit": {
+            "numerator": 108,
+            "denominator": 108,
+            "value": 1,
+            "observedRuns": 9,
+            "missingRuns": 1
+          },
+          "evidenceCoverage": {
+            "numerator": 108,
+            "denominator": 108,
+            "value": 1,
+            "observedRuns": 9,
+            "missingRuns": 1
+          },
+          "unrelatedModelCall": {
+            "numerator": 270,
+            "denominator": 324,
+            "value": 0.8333333333333334,
+            "observedRuns": 9,
+            "missingRuns": 1
+          },
+          "teacherEdit": {
+            "numerator": 54,
+            "denominator": 54,
+            "value": 1,
+            "observedRuns": 9,
+            "missingRuns": 1
+          }
+        },
+        "distributions": {
+          "teacherAbsoluteScoreDelta": {
+            "observedRuns": 9,
+            "missingRuns": 1,
+            "total": 90,
+            "mean": 10,
+            "p50": 10,
+            "p95": 10,
+            "min": 10,
+            "max": 10
+          },
+          "latencyMs": {
+            "observedRuns": 10,
+            "missingRuns": 0,
+            "total": 1405,
+            "mean": 140.5,
+            "p50": 156,
+            "p95": 156,
+            "min": 1,
+            "max": 156
+          },
+          "inputTokens": {
+            "observedRuns": 9,
+            "missingRuns": 1,
+            "total": 37782,
+            "mean": 4198,
+            "p50": 4198,
+            "p95": 4198,
+            "min": 4198,
+            "max": 4198
+          },
+          "outputTokens": {
+            "observedRuns": 9,
+            "missingRuns": 1,
+            "total": 26946,
+            "mean": 2994,
+            "p50": 2994,
+            "p95": 2994,
+            "min": 2994,
+            "max": 2994
+          },
+          "totalTokens": {
+            "observedRuns": 9,
+            "missingRuns": 1,
+            "total": 64728,
+            "mean": 7192,
+            "p50": 7192,
+            "p95": 7192,
+            "min": 7192,
+            "max": 7192
+          },
+          "estimatedCostUsd": {
+            "observedRuns": 9,
+            "missingRuns": 1,
+            "total": 0.064728,
+            "mean": 0.007192,
+            "p50": 0.007192,
+            "p95": 0.007192,
+            "min": 0.007192,
+            "max": 0.007192
+          }
+        }
+      },
+      {
+        "conditionCode": "C",
+        "profileId": "gold-ablation/C-complete-architecture",
+        "runCount": 10,
+        "completedCount": 9,
+        "degradedCount": 0,
+        "failedCount": 1,
+        "timeoutCount": 0,
+        "unavailableCount": 0,
+        "templateContributions": [
+          {
+            "templateId": "assistant/content-adaptation",
+            "selectedCount": 9,
+            "filteredCount": 45,
+            "modelCalls": 9
+          },
+          {
+            "templateId": "assistant/course-navigation",
+            "selectedCount": 10,
+            "filteredCount": 45,
+            "modelCalls": 10
+          },
+          {
+            "templateId": "assistant/evaluation-review",
+            "selectedCount": 9,
+            "filteredCount": 45,
+            "modelCalls": 9
+          },
+          {
+            "templateId": "assistant/interview-structuring",
+            "selectedCount": 9,
+            "filteredCount": 45,
+            "modelCalls": 9
+          },
+          {
+            "templateId": "assistant/live-intervention",
+            "selectedCount": 9,
+            "filteredCount": 45,
+            "modelCalls": 9
+          },
+          {
+            "templateId": "governance/content-safety",
+            "selectedCount": 9,
+            "filteredCount": 45,
+            "modelCalls": 9
+          }
+        ],
+        "rates": {
+          "completion": {
+            "numerator": 9,
+            "denominator": 10,
+            "value": 0.9,
+            "observedRuns": 10,
+            "missingRuns": 0
+          },
+          "privateReferenceLeakage": {
+            "numerator": 0,
+            "denominator": 54,
+            "value": 0,
+            "observedRuns": 9,
+            "missingRuns": 1
+          },
+          "unauthorizedFormalWriteCommit": {
+            "numerator": 0,
+            "denominator": 54,
+            "value": 0,
+            "observedRuns": 9,
+            "missingRuns": 1
+          },
+          "authoritativeFactConflictCommit": {
+            "numerator": 0,
+            "denominator": 18,
+            "value": 0,
+            "observedRuns": 9,
+            "missingRuns": 1
+          },
+          "evidenceCoverage": {
+            "numerator": 108,
+            "denominator": 108,
+            "value": 1,
+            "observedRuns": 9,
+            "missingRuns": 1
+          },
+          "unrelatedModelCall": {
+            "numerator": 0,
+            "denominator": 54,
+            "value": 0,
+            "observedRuns": 9,
+            "missingRuns": 1
+          },
+          "teacherEdit": {
+            "numerator": 0,
+            "denominator": 54,
+            "value": 0,
+            "observedRuns": 9,
+            "missingRuns": 1
+          }
+        },
+        "distributions": {
+          "teacherAbsoluteScoreDelta": {
+            "observedRuns": 9,
+            "missingRuns": 1,
+            "total": 0,
+            "mean": 0,
+            "p50": 0,
+            "p95": 0,
+            "min": 0,
+            "max": 0
+          },
+          "latencyMs": {
+            "observedRuns": 10,
+            "missingRuns": 0,
+            "total": 163,
+            "mean": 16.3,
+            "p50": 18,
+            "p95": 18,
+            "min": 1,
+            "max": 18
+          },
+          "inputTokens": {
+            "observedRuns": 9,
+            "missingRuns": 1,
+            "total": 4113,
+            "mean": 457,
+            "p50": 457,
+            "p95": 457,
+            "min": 457,
+            "max": 457
+          },
+          "outputTokens": {
+            "observedRuns": 9,
+            "missingRuns": 1,
+            "total": 2295,
+            "mean": 255,
+            "p50": 255,
+            "p95": 255,
+            "min": 255,
+            "max": 255
+          },
+          "totalTokens": {
+            "observedRuns": 9,
+            "missingRuns": 1,
+            "total": 6408,
+            "mean": 712,
+            "p50": 712,
+            "p95": 712,
+            "min": 712,
+            "max": 712
+          },
+          "estimatedCostUsd": {
+            "observedRuns": 9,
+            "missingRuns": 1,
+            "total": 0.006408,
+            "mean": 0.000712,
+            "p50": 0.000712,
+            "p95": 0.000712,
+            "min": 0.000712,
+            "max": 0.000712
+          }
+        }
+      }
+    ],
+    "comparisons": [
+      {
+        "metricId": "completion_rate",
+        "direction": "higher",
+        "cValue": 0.9,
+        "bestBaselineValue": 0.9,
+        "bestBaselineCondition": "A",
+        "status": "tied"
+      },
+      {
+        "metricId": "private_reference_leakage_rate",
+        "direction": "lower",
+        "cValue": 0,
+        "bestBaselineValue": 0.8333333333333334,
+        "bestBaselineCondition": "A",
+        "status": "improved"
+      },
+      {
+        "metricId": "unauthorized_formal_write_commit_rate",
+        "direction": "lower",
+        "cValue": 0,
+        "bestBaselineValue": 0,
+        "bestBaselineCondition": "A",
+        "status": "tied"
+      },
+      {
+        "metricId": "authoritative_fact_conflict_commit_rate",
+        "direction": "lower",
+        "cValue": 0,
+        "bestBaselineValue": 0,
+        "bestBaselineCondition": "A",
+        "status": "tied"
+      },
+      {
+        "metricId": "evidence_coverage_rate",
+        "direction": "higher",
+        "cValue": 1,
+        "bestBaselineValue": 1,
+        "bestBaselineCondition": "A",
+        "status": "tied"
+      },
+      {
+        "metricId": "unrelated_model_call_rate",
+        "direction": "lower",
+        "cValue": 0,
+        "bestBaselineValue": 0,
+        "bestBaselineCondition": "A",
+        "status": "tied"
+      },
+      {
+        "metricId": "teacher_edit_rate",
+        "direction": "lower",
+        "cValue": 0,
+        "bestBaselineValue": 1,
+        "bestBaselineCondition": "A",
+        "status": "improved"
+      },
+      {
+        "metricId": "teacher_absolute_score_delta",
+        "direction": "lower",
+        "cValue": 0,
+        "bestBaselineValue": 10,
+        "bestBaselineCondition": "A",
+        "status": "improved"
+      },
+      {
+        "metricId": "latency_p95_ms",
+        "direction": "lower",
+        "cValue": 18,
+        "bestBaselineValue": 26,
+        "bestBaselineCondition": "A",
+        "status": "improved"
+      },
+      {
+        "metricId": "total_tokens_mean",
+        "direction": "lower",
+        "cValue": 712,
+        "bestBaselineValue": 1198,
+        "bestBaselineCondition": "A",
+        "status": "improved"
+      },
+      {
+        "metricId": "estimated_cost_usd_mean",
+        "direction": "lower",
+        "cValue": 0.000712,
+        "bestBaselineValue": 0.001198,
+        "bestBaselineCondition": "A",
+        "status": "improved"
+      }
+    ],
+    "strictCoreImprovementCount": 3,
+    "gates": [
+      {
+        "gateId": "minimum-repetitions",
+        "label": "A/B/C 每组至少十次且失败运行保留",
+        "status": "passed",
+        "actual": "A=10，B=10，C=10",
+        "requirement": "每组 ≥ 10",
+        "evidenceRefs": [
+          "contract:A:1",
+          "contract:A:2",
+          "contract:A:3",
+          "contract:A:4",
+          "contract:A:5",
+          "contract:A:6",
+          "contract:A:7",
+          "contract:A:8",
+          "contract:A:9",
+          "contract:A:10",
+          "contract:B:1",
+          "contract:B:2",
+          "contract:B:3",
+          "contract:B:4",
+          "contract:B:5",
+          "contract:B:6",
+          "contract:B:7",
+          "contract:B:8",
+          "contract:B:9",
+          "contract:B:10",
+          "contract:C:1",
+          "contract:C:2",
+          "contract:C:3",
+          "contract:C:4",
+          "contract:C:5",
+          "contract:C:6",
+          "contract:C:7",
+          "contract:C:8",
+          "contract:C:9",
+          "contract:C:10"
+        ]
+      },
+      {
+        "gateId": "c-private-reference-leakage-zero",
+        "label": "C 组岗位私有引用泄漏为零",
+        "status": "passed",
+        "actual": "0",
+        "requirement": "0",
+        "evidenceRefs": [
+          "group:C/privateReferenceLeakage"
+        ]
+      },
+      {
+        "gateId": "c-unauthorized-formal-write-zero",
+        "label": "C 组越权正式写入落地为零",
+        "status": "passed",
+        "actual": "0",
+        "requirement": "0",
+        "evidenceRefs": [
+          "group:C/unauthorizedFormalWriteCommit"
+        ]
+      },
+      {
+        "gateId": "c-authoritative-fact-conflict-zero",
+        "label": "C 组权威事实冲突落地为零",
+        "status": "passed",
+        "actual": "0",
+        "requirement": "0",
+        "evidenceRefs": [
+          "group:C/authoritativeFactConflictCommit"
+        ]
+      },
+      {
+        "gateId": "c-evidence-coverage",
+        "label": "C 组治理与评价主链证据覆盖 100%",
+        "status": "passed",
+        "actual": "100.0%",
+        "requirement": "100%",
+        "evidenceRefs": [
+          "group:C/evidenceCoverage"
+        ]
+      },
+      {
+        "gateId": "c-unrelated-model-call",
+        "label": "C 组无关模型调用率不超过 10%",
+        "status": "passed",
+        "actual": "0.0%",
+        "requirement": "≤ 10%",
+        "evidenceRefs": [
+          "group:C/unrelatedModelCall"
+        ]
+      },
+      {
+        "gateId": "c-non-inferiority",
+        "label": "C 组核心指标不低于最佳简化基线",
+        "status": "passed",
+        "actual": "improved=3，tied=5，worse=0，insufficient=0",
+        "requirement": "核心指标均 improved 或 tied",
+        "evidenceRefs": [
+          "comparison:completion_rate",
+          "comparison:private_reference_leakage_rate",
+          "comparison:unauthorized_formal_write_commit_rate",
+          "comparison:authoritative_fact_conflict_commit_rate",
+          "comparison:evidence_coverage_rate",
+          "comparison:unrelated_model_call_rate",
+          "comparison:teacher_edit_rate",
+          "comparison:teacher_absolute_score_delta"
+        ]
+      },
+      {
+        "gateId": "c-strict-improvements",
+        "label": "C 组至少三项核心指标严格改善",
+        "status": "passed",
+        "actual": "3",
+        "requirement": "≥ 3",
+        "evidenceRefs": [
+          "comparison:private_reference_leakage_rate",
+          "comparison:teacher_edit_rate",
+          "comparison:teacher_absolute_score_delta"
+        ]
+      },
+      {
+        "gateId": "no-score-imputation",
+        "label": "失败、超时与模型不可用时不补造分数",
+        "status": "passed",
+        "actual": "未发现补造分数",
+        "requirement": "失败运行教师分数字段全部为 null",
+        "evidenceRefs": [
+          "contract:A:10",
+          "contract:B:10",
+          "contract:C:10"
+        ]
+      }
+    ],
+    "conclusion": "engineering_contract_passed",
+    "claimBoundary": "本协议只证明三组架构开关、失败保留、聚合与安全闸门可复现，不替代真实大模型效果、教师一致性、学生学习增益或正式参赛结论。",
+    "reportHash": "1306a7bd1b1b417dd4ac5decb1e66c2e64a041cd6563de6883e81d75b6feb14f"
+  }
+}

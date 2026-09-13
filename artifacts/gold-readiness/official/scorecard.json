@@ -1,0 +1,340 @@
+{
+  "schemaVersion": "gold-competition-scorecard/1.0.0",
+  "challengeId": "XA-202603",
+  "sourceRegistryHash": "fc1f6257a922defc655aceb61ff9531a4d66a047eba9123f49d00f49fddf0cb4",
+  "requirementMatrixHash": "9e4a55b1d66da84c9c7150d63d46c51493e83d80f5c44b86080550c71b359767",
+  "totalMaxScore": 100,
+  "dimensions": [
+    {
+      "dimensionId": "functional_completeness_and_practicality",
+      "title": "功能完整性与实用性",
+      "maxScore": 30,
+      "itemIds": [
+        "work_completion",
+        "creative_practicality"
+      ]
+    },
+    {
+      "dimensionId": "technical_implementation_and_content_quality",
+      "title": "技术实现与内容质量",
+      "maxScore": 50,
+      "itemIds": [
+        "technical_implementation_rationality",
+        "professional_content_accuracy"
+      ]
+    },
+    {
+      "dimensionId": "application_potential_and_completion_quality",
+      "title": "应用潜力与完成质量",
+      "maxScore": 20,
+      "itemIds": [
+        "extensibility",
+        "validation_and_feedback"
+      ]
+    }
+  ],
+  "items": [
+    {
+      "scoreItemId": "work_completion",
+      "dimensionId": "functional_completeness_and_practicality",
+      "title": "作品完成度",
+      "maxScore": 10,
+      "sourceLocator": "原题第6节“功能完整性与实用性”（PDF第8页）",
+      "criteria": [
+        "核心功能完整可交互，输入问题能够获得有效反馈。",
+        "运行过程无明显卡顿或功能缺失。",
+        "可运行程序、简要说明文档和演示视频等提交材料齐全。"
+      ],
+      "evidenceStatus": "insufficient",
+      "evidenceRefs": [
+        "artifacts/gold-readiness/demo/formal-v1.1.16-pass/run.json",
+        "artifacts/gold-readiness/demo/formal-v1.1.16-pass/screenshot-manifest.json",
+        "apps/api/src/server.ts",
+        "apps/web/src/App.tsx"
+      ],
+      "materialBindings": [
+        {
+          "materialId": "demo",
+          "status": "planned",
+          "expectedSection": "稳定访问地址、演示账号、运行说明与演示视频",
+          "relativePath": null,
+          "locator": null,
+          "fileSha256": null,
+          "rationale": "已有冻结本地演示证据，但尚无可公开访问地址、正式账号说明和最终演示视频文件。"
+        },
+        {
+          "materialId": "pitch_deck",
+          "status": "planned",
+          "expectedSection": "作品概览、核心功能闭环与完成度证明",
+          "relativePath": null,
+          "locator": null,
+          "fileSha256": null,
+          "rationale": "最终100MB以内作品方案PPT尚未形成，不能预填页码。"
+        },
+        {
+          "materialId": "technical_report",
+          "status": "planned",
+          "expectedSection": "环境准备、启动、复现与失败降级说明",
+          "relativePath": null,
+          "locator": null,
+          "fileSha256": null,
+          "rationale": "最终技术报告尚未形成，当前开发者文档不等于正式提交材料。"
+        }
+      ],
+      "assessment": {
+        "status": "not_reviewed",
+        "score": null,
+        "reviewerCount": 0,
+        "reviewedAt": null,
+        "receiptHash": null,
+        "rationale": "尚未组织独立模拟评审，不以内部演示通过自动换算官方得分。"
+      },
+      "rationale": "520.805秒冻结演示、截图哈希、前后端应用和连续交互已经证明本地原型可运行，但公开Demo、最终说明文档、演示视频和完整提交材料仍未形成。",
+      "nextAction": "部署稳定Demo并冻结访问地址、账号说明、演示视频与文件哈希，再由独立评审按10分项冻结模拟评分。"
+    },
+    {
+      "scoreItemId": "creative_practicality",
+      "dimensionId": "functional_completeness_and_practicality",
+      "title": "创意实用度",
+      "maxScore": 20,
+      "sourceLocator": "原题第6节“功能完整性与实用性”（PDF第8页）",
+      "criteria": [
+        "场景明确描述目标用户、具体环节和真实痛点。",
+        "解决方案紧扣四大开发方向之一并体现以岗定教。",
+        "设计贴合教学实际且具备在同类实训场景复用的可行性。"
+      ],
+      "evidenceStatus": "insufficient",
+      "evidenceRefs": [
+        "doc/02-子文档/23-融岗智训产品设计定型稿.md",
+        "packages/world-core/src/scenario.ts",
+        "artifacts/gold-readiness/transfer/configuration-proof.json"
+      ],
+      "materialBindings": [
+        {
+          "materialId": "pitch_deck",
+          "status": "planned",
+          "expectedSection": "目标用户、真实环节、痛点、以岗定教与同域复用",
+          "relativePath": null,
+          "locator": null,
+          "fileSha256": null,
+          "rationale": "最终作品方案尚未形成，不能把内部设计稿页码当作提交页码。"
+        },
+        {
+          "materialId": "user_feedback",
+          "status": "planned",
+          "expectedSection": "目标专业教师场景核验摘要与脱敏身份说明",
+          "relativePath": null,
+          "locator": null,
+          "fileSha256": null,
+          "rationale": "尚无目标专业教师对场景痛点的真实核验收据。"
+        }
+      ],
+      "assessment": {
+        "status": "not_reviewed",
+        "score": null,
+        "reviewerCount": 0,
+        "reviewedAt": null,
+        "receiptHash": null,
+        "rationale": "尚未组织独立模拟评审，不以产品设计完整度替代真实场景实用性判断。"
+      },
+      "rationale": "原型已聚焦融媒体采编岗位、具体人物与事件冲突，并完成同域异题迁移，但真实教学一线教师尚未确认该痛点和复用价值。",
+      "nextAction": "邀请至少一名目标专业教师核验场景与痛点，冻结脱敏访谈摘要，再把主方向和复用边界写入最终PPT。"
+    },
+    {
+      "scoreItemId": "technical_implementation_rationality",
+      "dimensionId": "technical_implementation_and_content_quality",
+      "title": "技术实现合理性",
+      "maxScore": 25,
+      "sourceLocator": "原题第6节“技术实现与内容质量”（PDF第8页）",
+      "criteria": [
+        "技术工具选择恰当，交互流程清晰。",
+        "支持模糊提问澄清和步骤引导。",
+        "知识库包含50条以上专业内容并逐条标注简要来源。"
+      ],
+      "evidenceStatus": "insufficient",
+      "evidenceRefs": [
+        "artifacts/gold-readiness/manifest.json",
+        "packages/context-engine/src/rag.ts",
+        "packages/world-core/src/scenario-experience.ts",
+        "apps/web/src/components/student-workbench.tsx"
+      ],
+      "materialBindings": [
+        {
+          "materialId": "pitch_deck",
+          "status": "planned",
+          "expectedSection": "技术架构、工具选择、多轮澄清与步骤引导",
+          "relativePath": null,
+          "locator": null,
+          "fileSha256": null,
+          "rationale": "最终PPT尚未形成，技术架构现状不能自动成为提交页码。"
+        },
+        {
+          "materialId": "technical_report",
+          "status": "planned",
+          "expectedSection": "50条以上知识清单、来源、版本、页码或条款号",
+          "relativePath": null,
+          "locator": null,
+          "fileSha256": null,
+          "rationale": "当前只有16条版本化知识切片，且权威外部出处尚不完整。"
+        }
+      ],
+      "assessment": {
+        "status": "not_reviewed",
+        "score": null,
+        "reviewerCount": 0,
+        "reviewedAt": null,
+        "receiptHash": null,
+        "rationale": "尚未组织独立模拟评审，不以工程测试数量替代本项评分。"
+      },
+      "rationale": "统一世界内核、受控智能体调度、RAG、澄清与步骤反馈均已实现，但官方明确要求的50条以上带来源专业知识尚未达到。",
+      "nextAction": "把知识条目扩充到不少于50条，逐条绑定权威来源和位置，并增加数量、来源完整性及高风险抽检自动门。"
+    },
+    {
+      "scoreItemId": "professional_content_accuracy",
+      "dimensionId": "technical_implementation_and_content_quality",
+      "title": "内容专业准确性",
+      "maxScore": 25,
+      "sourceLocator": "原题第6节“技术实现与内容质量”（PDF第8页）",
+      "criteria": [
+        "输出符合行业规范或教学标准且无原则性错误。",
+        "关键回答具有依据并包含必要安全提示。",
+        "语言口语化、逻辑清晰，能够辅助学习理解。"
+      ],
+      "evidenceStatus": "insufficient",
+      "evidenceRefs": [
+        "packages/context-engine/src/rag.ts",
+        "packages/world-core/src/governance-execution.ts",
+        "packages/world-core/src/scenario.ts",
+        "packages/agent-runtime/src/gold-pilot-readiness.ts"
+      ],
+      "materialBindings": [
+        {
+          "materialId": "technical_report",
+          "status": "planned",
+          "expectedSection": "职业标准、行业规范、教材依据与高风险回答抽检",
+          "relativePath": null,
+          "locator": null,
+          "fileSha256": null,
+          "rationale": "权威外部出处、版本和教师抽检结果尚未汇编成正式报告。"
+        },
+        {
+          "materialId": "pitch_deck",
+          "status": "planned",
+          "expectedSection": "引用链、安全提示、教师裁决与原则性错误控制",
+          "relativePath": null,
+          "locator": null,
+          "fileSha256": null,
+          "rationale": "最终PPT尚未形成，不能预填页码或宣称专业准确性已验证。"
+        }
+      ],
+      "assessment": {
+        "status": "not_reviewed",
+        "score": null,
+        "reviewerCount": 0,
+        "reviewedAt": null,
+        "receiptHash": null,
+        "rationale": "尚未组织独立模拟评审，不以治理规则存在替代专业内容审查。"
+      },
+      "rationale": "系统已有引用白名单、确定性红线、安全提示和教师终审，但尚无目标专业教师对权威来源和高风险回答的真实抽检收据。",
+      "nextAction": "完成50条权威知识后，由目标专业教师抽检关键回答、引用与安全提示，冻结问题处置和脱敏复核收据。"
+    },
+    {
+      "scoreItemId": "extensibility",
+      "dimensionId": "application_potential_and_completion_quality",
+      "title": "可拓展性",
+      "maxScore": 10,
+      "sourceLocator": "原题第6节“应用潜力与完成质量”（PDF第8页）",
+      "criteria": [
+        "模块设计清晰且模块化程度高。",
+        "能够简要适配相近专业、岗位或实训场景。",
+        "提供适配方法、适配范围和无需复杂修改的边界说明。"
+      ],
+      "evidenceStatus": "passed",
+      "evidenceRefs": [
+        "artifacts/gold-readiness/transfer/configuration-proof.json",
+        "packages/scenario-catalog/src/catalog.ts",
+        "packages/world-core/src/scenario-experience.ts"
+      ],
+      "materialBindings": [
+        {
+          "materialId": "pitch_deck",
+          "status": "planned",
+          "expectedSection": "第二情境迁移实证、适配方法、适配范围与限制",
+          "relativePath": null,
+          "locator": null,
+          "fileSha256": null,
+          "rationale": "迁移证据已经通过，但最终PPT尚未形成，当前没有可复核材料页码。"
+        },
+        {
+          "materialId": "technical_report",
+          "status": "planned",
+          "expectedSection": "配置差异、前瞻工时、内核扫描与适配步骤",
+          "relativePath": null,
+          "locator": null,
+          "fileSha256": null,
+          "rationale": "配置迁移证明尚未汇编到最终技术报告。"
+        }
+      ],
+      "assessment": {
+        "status": "not_reviewed",
+        "score": null,
+        "reviewerCount": 0,
+        "reviewedAt": null,
+        "receiptHash": null,
+        "rationale": "尚未组织独立模拟评审；证据通过不等于自动获得10分。"
+      },
+      "rationale": "第二微型情境已通过不可变发布、配置迁移、结构校验、题材内核扫描和11.4115分钟前瞻工时门，当前工程证据支持同域异题可迁移性。",
+      "nextAction": "把迁移清单、工时、差异和边界写入最终PPT与技术报告，登记真实页码和文件哈希后再冻结模拟评分。"
+    },
+    {
+      "scoreItemId": "validation_and_feedback",
+      "dimensionId": "application_potential_and_completion_quality",
+      "title": "验证与反馈",
+      "maxScore": 10,
+      "sourceLocator": "原题第6节“应用潜力与完成质量”（PDF第8—9页）",
+      "criteria": [
+        "提供2至3名目标教师或学生的试用反馈并标注身份类型。",
+        "反馈具体说明优点和可改进方向，体现功能可用和内容有效。",
+        "说明文档结构规范，包含痛点、方案、技术工具和使用方法。"
+      ],
+      "evidenceStatus": "insufficient",
+      "evidenceRefs": [
+        "packages/agent-runtime/src/gold-pilot-study.ts",
+        "packages/agent-runtime/src/gold-pilot-readiness.ts",
+        "packages/agent-runtime/src/gold-competition-readiness.ts"
+      ],
+      "materialBindings": [
+        {
+          "materialId": "user_feedback",
+          "status": "planned",
+          "expectedSection": "2至3名目标用户的脱敏身份、试用记录、优点与改进意见",
+          "relativePath": null,
+          "locator": null,
+          "fileSha256": null,
+          "rationale": "试点工作流已经实现，但仓库没有真实教师或学生反馈。"
+        },
+        {
+          "materialId": "pitch_deck",
+          "status": "planned",
+          "expectedSection": "真实反馈摘要、已采纳改进与仍待处理问题",
+          "relativePath": null,
+          "locator": null,
+          "fileSha256": null,
+          "rationale": "最终PPT尚未形成，不能用空工作流或演示数据填充反馈页。"
+        }
+      ],
+      "assessment": {
+        "status": "not_reviewed",
+        "score": null,
+        "reviewerCount": 0,
+        "reviewedAt": null,
+        "receiptHash": null,
+        "rationale": "尚未组织独立模拟评审，不以试点基础设施存在替代真实反馈。"
+      },
+      "rationale": "知情、退出、去标识、交叉试点和冻结报告工作流已具备，但没有2至3名目标用户真实试用与具体反馈，因此证据仍不足。",
+      "nextAction": "完成至少2至3名目标用户真实试用，冻结脱敏身份说明、具体优点和改进意见，并将处置结果写入正式材料。"
+    }
+  ],
+  "claimBoundary": "该得分卡只固定XA-202603原题的30/50/20结构、六项证据状态、材料定位门和独立模拟评审收据；证据就绪权重不是得分，内部模拟评分不是发榜单位官方评分。任何未评审、无真实文件哈希或无页码/时间码定位的项目都必须保持未闭合。",
+  "scorecardHash": "c4443b6f1da32d87ab9d800675f7a8836987664b84030f8f6a62b99372202c42"
+}

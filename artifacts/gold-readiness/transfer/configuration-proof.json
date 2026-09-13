@@ -1,0 +1,69 @@
+{
+  "schemaVersion": "gold-technical-evidence/1.0.0",
+  "generatedAt": "2026-07-29T21:54:15.950Z",
+  "scenarioBinding": {
+    "role": "transfer",
+    "scenarioId": "scenario-heritage-night-tour-capacity-v1",
+    "version": "1.0.0",
+    "releaseRef": "release-scenario-heritage-night-tour-capacity-v1-1.0.0-baseline",
+    "contentHash": "9e3068e126b8df944af7152f0d76dfba7374860335802442e9c161c4a284074d"
+  },
+  "configurationSourceRefs": [
+    "packages/world-core/src/heritage-night-tour-scenario.ts::heritageNightTourScenarioV100"
+  ],
+  "validation": {
+    "valid": true,
+    "issueCount": 0,
+    "definitionHash": "9e3068e126b8df944af7152f0d76dfba7374860335802442e9c161c4a284074d",
+    "validationStamp": "8c4a05888ff61acd383a80b7c1aad72fc1a9d2c9a3e71f681a61295905d1a3ae"
+  },
+  "observedStructure": {
+    "studentRoleIds": [
+      "student-editor",
+      "student-reporter"
+    ],
+    "privateNpcActorIds": [
+      "agent-interviewee",
+      "agent-platform"
+    ],
+    "nodeIds": [
+      "brief",
+      "source",
+      "release"
+    ],
+    "eventPolicyCount": 1,
+    "teacherApprovalPolicyCount": 1,
+    "rubricCriterionCount": 3
+  },
+  "forbiddenRuntimeScan": {
+    "scannedPaths": [
+      "apps/web/src",
+      "packages/agent-runtime/src",
+      "packages/world-core/src/engine.ts",
+      "packages/world-core/src/structured-world.ts"
+    ],
+    "topicMarkers": [
+      "scenario-heritage-night-tour-capacity-v1",
+      "非遗夜游承载量与错峰融媒通报"
+    ],
+    "matches": [],
+    "status": "passed"
+  },
+  "architectureStatus": "passed",
+  "authoringTime": {
+    "targetMaxMinutes": 480,
+    "observedMinutes": 11.411466666666668,
+    "runId": "qa-002-forward-transfer-heritage-night-tour-v1",
+    "startedAt": "2026-07-29T19:54:46.741Z",
+    "completedAt": "2026-07-29T20:06:11.429Z",
+    "elapsedMs": 684688,
+    "baselineGitCommit": "045fab16a947ca051c8fe27a23eaedfe1742b83a",
+    "evidenceSnapshotGitCommit": "7586bac3909b2ce3774721cfe7cbd2ad25628bfb",
+    "status": "passed",
+    "evidenceRef": "artifacts/gold-transfer-authoring/qa-002-forward-transfer-heritage-night-tour-v1/run.json",
+    "rationale": "前瞻运行qa-002-forward-transfer-heritage-night-tour-v1从干净基线连续计时到首次校验、不可变发布和技术烟测，状态为passed；运行记录、事件日志和创作文件已按Git证据快照7586bac3909b2ce3774721cfe7cbd2ad25628bfb逐字节复核，当前目标发布另按版本与内容哈希复核；该工时不回填历史情境。"
+  },
+  "overallStatus": "passed",
+  "claimBoundary": "该证明确认前瞻新微型情境由通用ScenarioPackage配置完成、结构达标、受限内核无题材标记，历史创作文件由不可变Git快照逐字节复核，当前目标发布由版本与内容哈希独立复核，且从冻结模板起点到首次校验、不可变发布和技术烟测的连续工时不超过八小时；它不回填旧情境工时，也不代表教师评价效度、学生成效或生产SLA。",
+  "proofHash": "7292036feb6857809b4995d4ec82bb9b438a89d13a03b66b20b182f7a0441a92"
+}

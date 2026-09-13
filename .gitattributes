@@ -1,0 +1,19 @@
+* text=auto
+
+*.md text eol=lf
+*.json text eol=lf
+*.jsonl text eol=lf
+*.yaml text eol=lf
+*.yml text eol=lf
+*.ts text eol=lf
+*.tsx text eol=lf
+*.css text eol=lf
+*.html text eol=lf
+*.svg text eol=lf
+
+*.png binary
+*.pdf binary
+*.docx binary
+
+# 历史交流稿按原字节归档，不用当前代码风格改写用户资产。
+资料/90-历史资料归档/交流审查稿/** -diff

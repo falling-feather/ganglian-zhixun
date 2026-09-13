@@ -1,0 +1,324 @@
+{
+  "schemaVersion": "gold-technical-evidence/1.0.0",
+  "generatedAt": "2026-07-29T21:54:15.950Z",
+  "technicalGates": [
+    {
+      "label": "双维度连续性",
+      "status": "passed",
+      "evidence": [
+        {
+          "kind": "automated_test",
+          "ref": "e2e/ronggang-full-loop.spec.ts::双维度共用同一投影",
+          "observed": true
+        },
+        {
+          "kind": "timeline",
+          "ref": "e2e/ronggang-full-loop.spec.ts::同一世界时间线",
+          "observed": true
+        },
+        {
+          "kind": "visible_ui",
+          "ref": "e2e/chromium::学生课程操作与世界互动",
+          "observed": true
+        }
+      ],
+      "rationale": "所需自动化、运行或界面证据均已由本次版本化验证收据确认。",
+      "gateId": "dual_dimension_continuity"
+    },
+    {
+      "label": "同一世界权威链",
+      "status": "passed",
+      "evidence": [
+        {
+          "kind": "automated_test",
+          "ref": "packages/world-core/test::权威世界写入门",
+          "observed": true
+        },
+        {
+          "kind": "runtime_trace",
+          "ref": "packages/world-core/test::事件溯源投影",
+          "observed": true
+        },
+        {
+          "kind": "version_hash",
+          "ref": "scenario-package-validation::旗舰与迁移哈希",
+          "observed": true
+        }
+      ],
+      "rationale": "所需自动化、运行或界面证据均已由本次版本化验证收据确认。",
+      "gateId": "single_world_authority"
+    },
+    {
+      "label": "模板、实例与任务可追踪",
+      "status": "passed",
+      "evidence": [
+        {
+          "kind": "automated_test",
+          "ref": "packages/agent-runtime/test::模板实例任务追踪",
+          "observed": true
+        },
+        {
+          "kind": "runtime_trace",
+          "ref": "e2e/ronggang-full-loop.spec.ts::教师智能体运行轨迹",
+          "observed": true
+        }
+      ],
+      "rationale": "所需自动化、运行或界面证据均已由本次版本化验证收据确认。",
+      "gateId": "agent_traceability"
+    },
+    {
+      "label": "按受影响集合调度",
+      "status": "passed",
+      "evidence": [
+        {
+          "kind": "automated_test",
+          "ref": "packages/agent-runtime/test::受影响集合调度",
+          "observed": true
+        },
+        {
+          "kind": "runtime_trace",
+          "ref": "ablation/contract-report.json::C组调度贡献",
+          "observed": true
+        }
+      ],
+      "rationale": "所需自动化、运行或界面证据均已由本次版本化验证收据确认。",
+      "gateId": "affected_set_scheduling"
+    },
+    {
+      "label": "岗位私有视野隔离",
+      "status": "passed",
+      "evidence": [
+        {
+          "kind": "automated_test",
+          "ref": "packages/agent-runtime/test::岗位私有视野",
+          "observed": true
+        },
+        {
+          "kind": "runtime_trace",
+          "ref": "e2e/ronggang-full-loop.spec.ts::私有NPC互动",
+          "observed": true
+        }
+      ],
+      "rationale": "所需自动化、运行或界面证据均已由本次版本化验证收据确认。",
+      "gateId": "private_view_isolation"
+    },
+    {
+      "label": "岗位行为形成可评价后果",
+      "status": "passed",
+      "evidence": [
+        {
+          "kind": "automated_test",
+          "ref": "e2e/ronggang-full-loop.spec.ts::暴雨与发布后果",
+          "observed": true
+        },
+        {
+          "kind": "timeline",
+          "ref": "e2e/ronggang-full-loop.spec.ts::世界状态回写",
+          "observed": true
+        },
+        {
+          "kind": "visible_ui",
+          "ref": "e2e/chromium::任务优先级与发布门变化",
+          "observed": true
+        }
+      ],
+      "rationale": "所需自动化、运行或界面证据均已由本次版本化验证收据确认。",
+      "gateId": "vocational_consequence"
+    },
+    {
+      "label": "证据评价与教师终审",
+      "status": "passed",
+      "evidence": [
+        {
+          "kind": "automated_test",
+          "ref": "e2e/ronggang-full-loop.spec.ts::四路评价与教师终评",
+          "observed": true
+        },
+        {
+          "kind": "runtime_trace",
+          "ref": "e2e/ronggang-full-loop.spec.ts::固定评价案件",
+          "observed": true
+        },
+        {
+          "kind": "visible_ui",
+          "ref": "e2e/chromium::教师逐维复核",
+          "observed": true
+        }
+      ],
+      "rationale": "所需自动化、运行或界面证据均已由本次版本化验证收据确认。",
+      "gateId": "evidence_teacher_review"
+    },
+    {
+      "label": "失败显式降级与恢复",
+      "status": "passed",
+      "evidence": [
+        {
+          "kind": "automated_test",
+          "ref": "packages/agent-runtime/test::失败样本与空值保留",
+          "observed": true
+        },
+        {
+          "kind": "runtime_trace",
+          "ref": "e2e/ronggang-full-loop.spec.ts::失败降级与重试入口",
+          "observed": true
+        }
+      ],
+      "rationale": "所需自动化、运行或界面证据均已由本次版本化验证收据确认。",
+      "gateId": "explicit_failure_recovery"
+    },
+    {
+      "label": "不可变发布与旧版兼容",
+      "status": "passed",
+      "evidence": [
+        {
+          "kind": "version_hash",
+          "ref": "scenario-package-validation::固定发布哈希",
+          "observed": true
+        },
+        {
+          "kind": "automated_test",
+          "ref": "packages/world-core/test::旧版恢复回归",
+          "observed": true
+        }
+      ],
+      "rationale": "所需自动化、运行或界面证据均已由本次版本化验证收据确认。",
+      "gateId": "immutable_compatibility"
+    },
+    {
+      "label": "无图像模型完整运行",
+      "status": "passed",
+      "evidence": [
+        {
+          "kind": "visible_ui",
+          "ref": "e2e/chromium::CSS场景与结构化卡片全流程",
+          "observed": true
+        },
+        {
+          "kind": "static_source",
+          "ref": "apps/web/src::无图像模型依赖的世界舞台",
+          "observed": true
+        }
+      ],
+      "rationale": "所需自动化、运行或界面证据均已由本次版本化验证收据确认。",
+      "gateId": "no_image_model_dependency"
+    }
+  ],
+  "causalClaims": [
+    {
+      "label": "操作平台决定改变世界机会",
+      "status": "passed",
+      "evidence": [
+        {
+          "kind": "automated_test",
+          "ref": "e2e/ronggang-full-loop.spec.ts::operation_changes_world",
+          "observed": true
+        },
+        {
+          "kind": "timeline",
+          "ref": "e2e/session-timeline::operation_changes_world",
+          "observed": true
+        },
+        {
+          "kind": "visible_ui",
+          "ref": "e2e/chromium-visible-ui::operation_changes_world",
+          "observed": true
+        }
+      ],
+      "rationale": "同一 Chromium 黄金路径同时断言自动化结果、事件时间线与可见界面变化。",
+      "causalId": "operation_changes_world"
+    },
+    {
+      "label": "NPC承诺与线索反向进入正式工作",
+      "status": "passed",
+      "evidence": [
+        {
+          "kind": "automated_test",
+          "ref": "e2e/ronggang-full-loop.spec.ts::world_changes_operation",
+          "observed": true
+        },
+        {
+          "kind": "timeline",
+          "ref": "e2e/session-timeline::world_changes_operation",
+          "observed": true
+        },
+        {
+          "kind": "visible_ui",
+          "ref": "e2e/chromium-visible-ui::world_changes_operation",
+          "observed": true
+        }
+      ],
+      "rationale": "同一 Chromium 黄金路径同时断言自动化结果、事件时间线与可见界面变化。",
+      "causalId": "world_changes_operation"
+    },
+    {
+      "label": "突发事件同时改变两个界面",
+      "status": "passed",
+      "evidence": [
+        {
+          "kind": "automated_test",
+          "ref": "e2e/ronggang-full-loop.spec.ts::incident_changes_both_surfaces",
+          "observed": true
+        },
+        {
+          "kind": "timeline",
+          "ref": "e2e/session-timeline::incident_changes_both_surfaces",
+          "observed": true
+        },
+        {
+          "kind": "visible_ui",
+          "ref": "e2e/chromium-visible-ui::incident_changes_both_surfaces",
+          "observed": true
+        }
+      ],
+      "rationale": "同一 Chromium 黄金路径同时断言自动化结果、事件时间线与可见界面变化。",
+      "causalId": "incident_changes_both_surfaces"
+    },
+    {
+      "label": "治理与教师决定形成世界后果",
+      "status": "passed",
+      "evidence": [
+        {
+          "kind": "automated_test",
+          "ref": "e2e/ronggang-full-loop.spec.ts::governance_changes_world",
+          "observed": true
+        },
+        {
+          "kind": "timeline",
+          "ref": "e2e/session-timeline::governance_changes_world",
+          "observed": true
+        },
+        {
+          "kind": "visible_ui",
+          "ref": "e2e/chromium-visible-ui::governance_changes_world",
+          "observed": true
+        }
+      ],
+      "rationale": "同一 Chromium 黄金路径同时断言自动化结果、事件时间线与可见界面变化。",
+      "causalId": "governance_changes_world"
+    },
+    {
+      "label": "两种界面进入同一评价与回放",
+      "status": "passed",
+      "evidence": [
+        {
+          "kind": "automated_test",
+          "ref": "e2e/ronggang-full-loop.spec.ts::unified_evidence_and_replay",
+          "observed": true
+        },
+        {
+          "kind": "timeline",
+          "ref": "e2e/session-timeline::unified_evidence_and_replay",
+          "observed": true
+        },
+        {
+          "kind": "visible_ui",
+          "ref": "e2e/chromium-visible-ui::unified_evidence_and_replay",
+          "observed": true
+        }
+      ],
+      "rationale": "同一 Chromium 黄金路径同时断言自动化结果、事件时间线与可见界面变化。",
+      "causalId": "unified_evidence_and_replay"
+    }
+  ],
+  "assessmentHash": "fc2d61fef259ef3e0e8a4d5213546f60c420953c1c0f841228e3e3e0a177b67a"
+}

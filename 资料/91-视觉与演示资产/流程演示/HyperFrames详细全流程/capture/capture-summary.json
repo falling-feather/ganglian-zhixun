@@ -1,0 +1,23 @@
+{
+  "schema": "ronggang.website-capture-summary.v1",
+  "sourceUrl": "http://127.0.0.1:4373/",
+  "captureMethod": "真实浏览器交互后的离散状态截图与时间轴编码",
+  "rawVideo": "../assets/course-to-review-raw.mp4",
+  "durationSeconds": 421,
+  "representativeFrames": [
+    "frame-00002.jpg",
+    "frame-00005.jpg",
+    "frame-00016.jpg",
+    "frame-00042.jpg",
+    "frame-00052.jpg",
+    "frame-00061.jpg",
+    "frame-00068.jpg",
+    "frame-00070.jpg"
+  ],
+  "verifiedOutcomes": {
+    "teacherFinalScore": 92.2,
+    "artifactRevision": "R2",
+    "governanceLoop": "阻断并驳回后换材重做，第二个精确仲裁获批",
+    "studentFeedback": "已发布"
+  }
+}

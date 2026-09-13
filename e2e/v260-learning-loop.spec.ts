@@ -1,0 +1,67 @@
+import {expect,test} from '@playwright/test';
+import type {LearnerAdaptationViewV4,StudentStudyV3} from '../packages/contracts/src/index.js';
+import {createFieldLoop,connectFieldLoop,performFieldRoute,submitFieldCoursework,type FieldLoopFixture} from './fixtures/v260-http';
+const origin=process.env.E2E_API_ORIGIN??'http://127.0.0.1:3001';
+const completed:Array<{loop:FieldLoopFixture;next:LearnerAdaptationViewV4;score:number}>=[];
+test.describe.serial('V3作品、教师评阅与后续训练',()=>{
+ for(const route of ['resident','public'] as const)test(route+'：实际调查、作品与教师逐维评阅',async({page},info)=>{
+  test.setTimeout(180000);const errors:string[]=[];page.on('pageerror',error=>errors.push(error.message));
+  const loop=await createFieldLoop(origin,route,Date.now()+'-'+route);
+  await performFieldRoute(loop);
+  const {refs,samples,assessment:baseline}=await submitFieldCoursework(loop);
+  expect(baseline.status).toBe('insufficient_evidence');expect(baseline.decision?.sessionScore).toBeNull();
+  expect((await loop.read()).nodes.find(node=>node.id==='loc-community-courtyard')!.visited).toBe(route==='resident');
+  if(route==='resident')await loop.save('artifact-fact-check-sheet',{...samples['artifact-fact-check-sheet']!,fact_items:'本次活动实际到场12人。'+samples['artifact-fact-check-sheet']!.fact_items},refs);
+  else await loop.save('artifact-feature-story',{...samples['artifact-feature-story']!,headline:'吴姐店铺是来访者唯一值得去的地方'},refs);
+  const current=await loop.assessment();expect(current.criteria.every(item=>item.score===null)).toBe(true);
+  await page.goto('/student/reviews/'+loop.session.sessionId+'?profileId='+loop.profile);
+  await expect(page.getByRole('heading',{name:'本场过程与作品反馈'})).toBeVisible();
+  await page.screenshot({path:info.outputPath(route+'-feedback.png')});
+  await page.goto('/teacher/reviews/'+loop.session.sessionId+'?profileId=teacher-class-a&sessionId='+loop.session.sessionId);
+  await expect(page.getByRole('button',{name:'固定本班终裁'})).toBeVisible();
+  const cards=page.locator('.v4-teacher-criterion-grid > article');await expect(cards).toHaveCount(6);
+  for(const card of await cards.all()){
+   const title=await card.getByRole('heading').innerText(),weak=route==='resident'?title==='事实与信源核验':title==='编辑判断与独立性';
+   await card.getByLabel('能力档位').selectOption(weak?'low':'high');
+   await card.getByLabel('分数',{exact:true}).fill(weak?'38':'84');
+   await card.getByLabel('修订依据').fill(weak?(route==='resident'?'工程验收模拟评阅：准备量没有证明实际到场人数，这项核心判断需要更正。':'工程验收模拟评阅：公共服务委托不支持排他性店铺宣传，需要重新说明独立编辑判断。'):'工程验收模拟评阅：已提交内容与本场记录体现了这一维度的具体判断；本记录不代表真实专业教师意见。');
+  }
+  await page.getByRole('checkbox',{name:/我已逐维核对同一组盲化证据/}).check();
+  await page.getByLabel('终裁理由',{exact:true}).fill('工程验收通过演示教师账号逐维核对当前提交稿，保留具体问题和改进方向，不作为真实师生试用或外部专业效度。');
+  await page.getByRole('button',{name:'固定本班终裁'}).click();
+  await expect(page.getByRole('heading',{name:'本班终裁已固定'})).toBeVisible();
+  const final=await loop.assessment();expect(final.status).toBe('final');
+  const study=await loop.student.request<StudentStudyV3>('GET','/api/v3/me/study');
+  await loop.student.request('POST','/api/v3/me/study/complete',{requestId:'finish-'+loop.session.sessionId,sessionId:loop.session.sessionId,expectedRevision:study.revision,confirmation:'complete'});
+  await page.goto('/student/portfolio?profileId='+loop.profile);
+  await expect(page.getByRole('heading',{name:'我的课程作品'})).toBeVisible();
+  await page.locator('.personal-work-portfolio .v2-outcome-card').filter({hasText:loop.session.title}).getByRole('button',{name:'查看已交作品'}).click();
+  await expect(page.locator('.dossier-submitted-works > article').first()).toBeVisible();
+  await page.screenshot({path:info.outputPath(route+'-submitted-portfolio.png')});
+  const readAdaptation=async()=>(await loop.student.request<{adaptation:LearnerAdaptationViewV4}>('GET','/api/v4/sessions/'+loop.session.sessionId+'/learner-adaptation?bindingId='+loop.bindingId)).adaptation;
+  const proposal=await readAdaptation();
+  expect(proposal.proposal?.variantRef).toBe(route==='resident'?'variant-xunpu-source-triangulation':'variant-xunpu-editorial-independence');
+  await loop.student.request('POST','/api/v4/sessions/'+loop.session.sessionId+'/learner-adaptation-consents',{bindingId:loop.bindingId,requestId:'consent-'+loop.session.sessionId,accepted:true});
+  await loop.teacher.request('POST','/api/v4/sessions/'+loop.session.sessionId+'/second-session-authorizations',{bindingId:loop.teacher.binding(loop.session.sessionId,'teacher'),requestId:'authorize-'+loop.session.sessionId,expectedHandoffId:proposal.proposal!.handoffId});
+  const following=await readAdaptation();expect(following.handoff?.status).toBe('provisioned');
+  await page.goto('/student/reviews/'+loop.session.sessionId+'?profileId='+loop.profile);
+  await expect(page.getByLabel('第二场真实机制变化')).toBeVisible();await page.screenshot({path:info.outputPath(route+'-next-training.png')});
+  expect(errors).toEqual([]);completed.push({loop,next:following,score:final.decision!.sessionScore!});
+ });
+ test('后续场次进入同一在学名额并保留原成绩',async({page},info)=>{
+  test.setTimeout(180000);expect(completed).toHaveLength(2);const first=completed[0]!;
+  const study=await first.loop.student.request<StudentStudyV3>('GET','/api/v3/me/study');
+  const target=first.next.handoff!.sessionRef!;
+  await first.loop.student.request('POST','/api/v3/me/study/enter-prepared',{requestId:'enter-'+target,sourceSessionId:first.loop.session.sessionId,sessionId:target,expectedRevision:study.revision});
+  const next=await connectFieldLoop(origin,'public',first.loop.profile,{sessionId:target,bindingId:first.next.handoff!.bindingRef!,title:first.next.proposal!.title},'next-'+Date.now());
+  expect((await next.read()).turns).toEqual([]);
+  await performFieldRoute(next,true);await submitFieldCoursework(next);
+  while((await next.read()).remainingMinutes>0)await next.act({kind:'wait',minutes:Math.min(10,(await next.read()).remainingMinutes)});
+  const calibrated=(await first.loop.student.request<{adaptation:LearnerAdaptationViewV4}>('GET','/api/v4/sessions/'+first.loop.session.sessionId+'/learner-adaptation?bindingId='+first.loop.bindingId)).adaptation;
+  expect(calibrated.state).toBe('calibrated');expect(calibrated.handoff!.calibration!.actionCount).toBeGreaterThan(0);
+  expect((await first.loop.assessment()).decision!.sessionScore).toBe(first.score);
+  await page.goto('/student/reviews/'+first.loop.session.sessionId+'?profileId='+first.loop.profile);await page.setViewportSize({width:390,height:844});
+  expect(await page.evaluate(()=>document.documentElement.scrollWidth-document.documentElement.clientWidth)).toBeLessThanOrEqual(1);
+  await page.screenshot({path:info.outputPath('followup-mobile.png')});
+ });
+});

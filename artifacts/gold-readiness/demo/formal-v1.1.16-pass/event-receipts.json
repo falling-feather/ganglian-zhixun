@@ -1,0 +1,167 @@
+{
+  "schemaVersion": "golden-demo-event-receipts/1.0.0",
+  "runId": "v1.1.16-formal-pass-20260730",
+  "sessionId": "training-4e03313594507c7f286a",
+  "receipts": [
+    {
+      "stateVersion": 1,
+      "eventType": "session_started",
+      "eventId": "event-948c5fc9-730a-40c2-a0a6-3bd58f356e95",
+      "timestamp": "2026-07-29T18:29:06.454Z",
+      "actorId": "teacher-main",
+      "summary": "地方文旅活动融媒体报道实训会话已启动"
+    },
+    {
+      "stateVersion": 125,
+      "eventType": "candidate_event_rejected",
+      "eventId": "event-c62a836a-1ae5-4f45-a8c4-e5e8c3339944",
+      "timestamp": "2026-07-29T18:30:19.545Z",
+      "actorId": "system",
+      "summary": "世界内核自动关闭失效导演候选：补齐可核验信源清单"
+    },
+    {
+      "stateVersion": 132,
+      "eventType": "world_fact_updated",
+      "eventId": "event-d980552a-534f-47cd-af1f-afc76d0b8852",
+      "timestamp": "2026-07-29T18:30:39.453Z",
+      "actorId": "system",
+      "summary": "权威客流事实已按审批结果更正为12,600人次"
+    },
+    {
+      "stateVersion": 153,
+      "eventType": "media_processing_requested",
+      "eventId": "event-5643032f-e4fc-44d7-ac9c-23f8bb79f6fc",
+      "timestamp": "2026-07-29T18:31:02.045Z",
+      "actorId": "student-editor",
+      "summary": "异步处理任务已排队：水乡非遗市集现场图 · 图片理解与合规检查"
+    },
+    {
+      "stateVersion": 160,
+      "eventType": "media_processing_completed",
+      "eventId": "event-f28fe081-b973-4c49-bad9-780fbf090bb0",
+      "timestamp": "2026-07-29T18:31:06.903Z",
+      "actorId": "system",
+      "summary": "多模态处理档案已完成；输出保持待核验观察"
+    },
+    {
+      "stateVersion": 176,
+      "eventType": "scenario_intervention_applied",
+      "eventId": "event-ac4c3755-1b27-4f15-be93-fe74bc798343",
+      "timestamp": "2026-07-29T18:31:19.158Z",
+      "actorId": "system",
+      "summary": "新的岗位情境已生效：暴雨突发下的双岗应变"
+    },
+    {
+      "stateVersion": 178,
+      "eventType": "production_artifact_created",
+      "eventId": "event-f25e8e06-03c1-4ad2-afc7-f4a28cf8e6d6",
+      "timestamp": "2026-07-29T18:31:58.823Z",
+      "actorId": "student-editor",
+      "summary": "已创建融媒体图文稿：融媒体图文稿·未命名 · R1"
+    },
+    {
+      "stateVersion": 185,
+      "eventType": "artifact_revision_saved",
+      "eventId": "event-a39bb9bd-d13d-40ef-9e85-8d006b1a94d4",
+      "timestamp": "2026-07-29T18:32:15.307Z",
+      "actorId": "student-editor",
+      "summary": "成果已保存为不可变修订 R2"
+    },
+    {
+      "stateVersion": 192,
+      "eventType": "governance_review_requested",
+      "eventId": "event-a6826f24-a832-4e9a-9b96-8655c0702492",
+      "timestamp": "2026-07-29T18:32:33.380Z",
+      "actorId": "student-editor",
+      "summary": "已固定材料并发起四域治理：水乡非遗市集现场图"
+    },
+    {
+      "stateVersion": 204,
+      "eventType": "governance_review_arbitrated",
+      "eventId": "event-6cc86e25-f9bf-47df-9bd6-9a3d62168e50",
+      "timestamp": "2026-07-29T18:32:41.566Z",
+      "actorId": "system",
+      "summary": "治理仲裁完成：revise；等待教师复核"
+    },
+    {
+      "stateVersion": 212,
+      "eventType": "governance_reviewed",
+      "eventId": "event-af1125db-1ae5-4296-b00c-612a02b91dbc",
+      "timestamp": "2026-07-29T18:33:19.383Z",
+      "actorId": "teacher-main",
+      "summary": "教师已批准精确治理仲裁"
+    },
+    {
+      "stateVersion": 244,
+      "eventType": "copyright_risk_flagged",
+      "eventId": "event-204575b5-df54-4a9a-82a4-545b476d62d1",
+      "timestamp": "2026-07-29T18:34:18.860Z",
+      "actorId": "system",
+      "summary": "版权方申诉生效，现场图进入争议状态"
+    },
+    {
+      "stateVersion": 302,
+      "eventType": "publication_paused",
+      "eventId": "event-0530c09e-3c2d-4cb7-a97c-0bd2a33d0fd0",
+      "timestamp": "2026-07-29T18:35:14.671Z",
+      "actorId": "student-editor",
+      "summary": "责任编辑暂缓发布并冻结待审版本"
+    },
+    {
+      "stateVersion": 313,
+      "eventType": "submission_created",
+      "eventId": "event-1fbf3eb8-d88d-4b3c-b36e-8dcef2d9834f",
+      "timestamp": "2026-07-29T18:35:25.219Z",
+      "actorId": "student-editor",
+      "summary": "责任编辑提交融媒体成果 R2 与过程证据"
+    },
+    {
+      "stateVersion": 314,
+      "eventType": "evaluation_case_opened",
+      "eventId": "event-a661b9cf-6839-45cd-8696-c6b53dfcd6e5",
+      "timestamp": "2026-07-29T18:35:25.219Z",
+      "actorId": "system",
+      "summary": "已固定成果修订、量规与只读证据包，评价法庭开始收集意见"
+    },
+    {
+      "stateVersion": 329,
+      "eventType": "evaluation_arbitrated",
+      "eventId": "event-e9c311f5-1689-41f5-a3a7-d24d5f68061e",
+      "timestamp": "2026-07-29T18:35:34.445Z",
+      "actorId": "system",
+      "summary": "评价仲裁已更新：ready_for_teacher"
+    },
+    {
+      "stateVersion": 350,
+      "eventType": "assessment_created",
+      "eventId": "event-2c2d1d1a-3c84-4747-89e5-fc8133a61d16",
+      "timestamp": "2026-07-29T18:37:08.831Z",
+      "actorId": "system",
+      "summary": "教师终评已固定；学生端仅投影公开反馈"
+    },
+    {
+      "stateVersion": 353,
+      "eventType": "learning_candidate_created",
+      "eventId": "event-957a7765-e596-44e7-8391-515c2094cada",
+      "timestamp": "2026-07-29T18:37:11.160Z",
+      "actorId": "agent-learning",
+      "summary": "学习候选已生成；尚未写入任何正式知识或技能版本"
+    },
+    {
+      "stateVersion": 354,
+      "eventType": "learning_candidate_replay_completed",
+      "eventId": "event-f9ad12f8-a6c7-4bbe-a78c-0de1882a63f3",
+      "timestamp": "2026-07-29T18:37:11.160Z",
+      "actorId": "system",
+      "summary": "学习候选离线回放通过，等待课程负责人审核"
+    },
+    {
+      "stateVersion": 355,
+      "eventType": "learning_candidate_reviewed",
+      "eventId": "event-7b03cbe6-b854-41ad-b11a-7e43d2c94915",
+      "timestamp": "2026-07-29T18:37:23.357Z",
+      "actorId": "teacher-main",
+      "summary": "课程负责人批准学习候选；仍需单独发布"
+    }
+  ]
+}

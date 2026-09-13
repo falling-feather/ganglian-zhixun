@@ -1,0 +1,77 @@
+{
+  "schemaVersion": "gold-technical-evidence/1.0.0",
+  "generatedAt": "2026-07-29T21:54:15.950Z",
+  "receipts": [
+    {
+      "receiptId": "scenario-package-validation",
+      "command": "internal: validateScenarioPackage(flagship, transfer)",
+      "scope": "旗舰与迁移情境的Schema、引用与内容哈希",
+      "status": "passed",
+      "startedAt": "2026-07-29T21:54:15.950Z",
+      "durationMs": 0,
+      "resultSummary": "两个情境均通过编译校验，且定义哈希与发布绑定一致。",
+      "outputHash": "01c5dbe66439c82efa1965fa55774537226c8e2992471d6ed672dd6ae8232f66"
+    },
+    {
+      "receiptId": "ablation-contract-replay",
+      "command": "internal: runGoldContractReplay(protocol)",
+      "scope": "A/B/C确定性工程合同与失败关闭门",
+      "status": "passed",
+      "startedAt": "2026-07-29T21:54:15.950Z",
+      "durationMs": 0,
+      "resultSummary": "合同回放30次，全部工程门通过。",
+      "outputHash": "1306a7bd1b1b417dd4ac5decb1e66c2e64a041cd6563de6883e81d75b6feb14f"
+    },
+    {
+      "receiptId": "transfer-runtime-scan",
+      "command": "internal: scan transfer topic markers in forbidden runtime paths",
+      "scope": "第二情境题材专用内核代码扫描",
+      "status": "passed",
+      "startedAt": "2026-07-29T21:54:15.950Z",
+      "durationMs": 0,
+      "resultSummary": "扫描4个受限路径，未发现迁移题材标记。",
+      "outputHash": "044bdef9e3d5068383758c5631c71a64dd0dda7121f0b522dcea3b0262e7b8a5"
+    },
+    {
+      "receiptId": "api-local-action-performance",
+      "command": "node node_modules/vitest/vitest.mjs run apps/api/test/gold-performance.test.ts --maxWorkers=1 --reporter=verbose",
+      "scope": "本地世界行动确认P50/P95",
+      "status": "passed",
+      "startedAt": "2026-07-29T21:54:16.782Z",
+      "durationMs": 14874.1332,
+      "resultSummary": "本地世界行动性能测试通过，精确分位数见performance/summary.json。",
+      "outputHash": "291da4bb508ca7795466c1cf2647b4e6ca7e2a0d6e32030575d3c294aebe7cc0"
+    },
+    {
+      "receiptId": "agent-runtime-tests",
+      "command": "pnpm --filter @ronggang/agent-runtime test",
+      "scope": "多智能体合同、调度、视野、失败与Live执行器",
+      "status": "passed",
+      "startedAt": "2026-07-29T21:54:31.657Z",
+      "durationMs": 3393.0485999999983,
+      "resultSummary": "智能体运行时测试通过。",
+      "outputHash": "23bb855c57a90291c763af1232a662ece1424f9dcadaf218d2e942d68951fa6e"
+    },
+    {
+      "receiptId": "world-core-tests",
+      "command": "pnpm --filter @ronggang/world-core test",
+      "scope": "统一世界、情境后果、版本哈希与旧版回归",
+      "status": "passed",
+      "startedAt": "2026-07-29T21:54:35.050Z",
+      "durationMs": 3888.846599999997,
+      "resultSummary": "世界核心测试通过。",
+      "outputHash": "a77bc3ecdb75c6eaf29e14522610cbc3469c0ca0a8ae1924255fd20bcecd7ce8"
+    },
+    {
+      "receiptId": "browser-golden-path",
+      "command": "pnpm test:e2e:built",
+      "scope": "Chromium双维度黄金路径、时间线与可见界面",
+      "status": "passed",
+      "startedAt": "2026-07-29T21:54:38.939Z",
+      "durationMs": 89328.80239999999,
+      "resultSummary": "Chromium黄金路径全部通过。",
+      "outputHash": "97698ce30ef9dd1c2035815c5945b0e115284347da59b2b82d44031724c98fc5"
+    }
+  ],
+  "receiptsHash": "4d46d1daa27af2ebb3fdcb3a3dbb1e2ef0a565582f301a9093f5007465e3d603"
+}

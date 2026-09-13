@@ -1,0 +1,85 @@
+{
+  "schemaVersion": "golden-demo-run/1.0.0",
+  "runId": "v1.1.16-formal-pass-20260730",
+  "track": "V1.1.16",
+  "status": "passed",
+  "scenario": {
+    "scenarioId": "scenario-local-tourism-media-v0.1",
+    "version": "1.1.1",
+    "releaseId": "release-scenario-local-tourism-media-v0.1-1.1.1-baseline",
+    "contentHash": "db3561089fabef485cff10a55730759e0d8b1702ba66e000b5b33f70a165e690",
+    "compilerVersion": "scenario-compiler/1.0.0"
+  },
+  "session": {
+    "sessionId": "training-4e03313594507c7f286a",
+    "sessionEpoch": "session-epoch-21a467fc-9b93-43ce-bb0f-e0ef03487120",
+    "finalStateVersion": 355
+  },
+  "timing": {
+    "operatorStartAt": "2026-07-29T18:29:06.362Z",
+    "sessionStartedAt": "2026-07-29T18:29:06.454Z",
+    "assessmentCreatedAt": "2026-07-29T18:37:08.831Z",
+    "learningCandidateReviewedAt": "2026-07-29T18:37:23.357Z",
+    "studentReplayVisibleAt": "2026-07-29T18:37:47.167Z",
+    "operatorToStudentReplayMs": 520805,
+    "sessionToAssessmentMs": 482377,
+    "sessionToLearningReviewMs": 496903,
+    "sessionToStudentReplayMs": 520713,
+    "minimumMs": 480000,
+    "maximumMs": 720000,
+    "measuredStart": "operator_before_release_start_click",
+    "measuredEnd": "student_final_feedback_and_score_visible",
+    "pass": true
+  },
+  "objects": {
+    "artifactId": "artifact-0c3fd16b-a1d6-474a-bb22-29ff574bfa50",
+    "revisionId": "artifact-revision-29d57a3e-df01-446c-b2fd-3013b390f43d",
+    "revisionContentHash": "b32d6e0596be657bf1a92f3e32248c21a27f8a0f5be7beac36181214e55ab6a4",
+    "governanceReviewId": "governance-review-198eaacf-2c05-4d40-a52e-83ff93de5e17",
+    "governanceFindingSetHash": "7b59e94e0844324de69e326a961ba5bbde59f3c0e1c9ca16f5fc913d849be2a2",
+    "governanceDecisionHash": "62225e3f41c774867338e6ef370036f14d496802f6a0d49c5a0afbb0a661f54a",
+    "submissionId": "submission-caab0b3d-5082-4a76-b159-f3c8cc269bb2",
+    "evaluationCaseId": "evaluation-case-67cd08e9-e5b0-4b85-a1e0-98c26969ffed",
+    "evaluationCaseHash": "bef9d0c82547115da5f6f4d5b1b33c509aa37d8a0c30c1d13c7e44a20e069120",
+    "evidenceBundleHash": "620b09938073507b51eaeb78ee2a959c157f38dd8270375c490cc1a5dc0f9333",
+    "assessmentId": "assessment-teacher-ce040971-b802-4f7a-bdad-373c4eb25a3e",
+    "learningCandidateId": "learning-candidate-261d946e-9d03-42f2-b69c-31496ceb84e1",
+    "learningCandidateHash": "3077136fd1f061a7dc27bcdb91042dc6730fe4c8369a1a8f2f984269bda69d1b",
+    "learningReplayReportHash": "0c0aef3d9ef4f43ce2086e95d1a61be6dc1ec0ffe088c852bb49e228844ab760"
+  },
+  "result": {
+    "worldEventCount": 355,
+    "evidenceCount": 18,
+    "taskCount": 82,
+    "runCount": 82,
+    "failureCount": 0,
+    "degradedCount": 0,
+    "pendingCount": 0,
+    "abnormalCount": 0,
+    "finalScore": 92.2,
+    "dimensionScores": {
+      "fact": 32.27,
+      "copyright": 27.66,
+      "release": 18.44,
+      "trace": 13.83
+    },
+    "learningReplay": {
+      "status": "passed",
+      "passedCaseCount": 4,
+      "testCaseCount": 4,
+      "scoreDrift": 0,
+      "privacyViolationCount": 0
+    },
+    "browserConsoleLogCount": 0
+  },
+  "providerBoundary": {
+    "iflytekMode": "mock",
+    "semanticModelMode": "deterministic_mock",
+    "machineOutputsRemain": "unverified_observation"
+  },
+  "limitations": [
+    "Does not close the real-model Live performance gate.",
+    "Does not close formal A/B/C ablation or second-scenario transfer gates.",
+    "Does not replace teacher-consistency, student-learning-gain, or official competition evidence."
+  ]
+}

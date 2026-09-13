@@ -1,0 +1,488 @@
+<template id="governance-overlay-template">
+  <div
+    data-composition-id="governance-overlay"
+    data-width="1280"
+    data-height="720"
+    aria-label="事实、版权、平台门禁与四域治理章节覆盖层"
+  >
+    <div
+      id="governance-section-03-pill"
+      class="clip chapter-pill chapter-pill--risk"
+      data-start="0"
+      data-duration="103"
+      data-track-index="10"
+    >
+      <span class="chapter-pill__number">03</span>
+      <span class="chapter-pill__title">事实、版权与平台门禁</span>
+      <span class="chapter-pill__status chapter-pill__status--risk">风险核验</span>
+    </div>
+
+    <div
+      id="governance-section-03-lower"
+      class="clip lower-third lower-third--risk"
+      data-start="0"
+      data-duration="5"
+      data-track-index="11"
+    >
+      <span class="lower-third__rail"></span>
+      <div class="lower-third__copy">
+        <span class="lower-third__eyebrow">教师门禁 · 人工复核</span>
+        <strong class="lower-third__headline">事实与授权争议逐项过门</strong>
+        <span class="lower-third__description">教师审批客流更正与授权争议，学生选择暂缓发布</span>
+      </div>
+      <span class="lower-third__badge">HOLD</span>
+    </div>
+
+    <div
+      id="governance-section-transition"
+      class="clip chapter-transition"
+      data-start="102.55"
+      data-duration="0.9"
+      data-track-index="12"
+      data-layout-allow-overflow
+      aria-hidden="true"
+    >
+      <span class="chapter-transition__block chapter-transition__block--risk"></span>
+      <span class="chapter-transition__block chapter-transition__block--approved"></span>
+      <span class="chapter-transition__trace"></span>
+    </div>
+
+    <div
+      id="governance-section-04-pill"
+      class="clip chapter-pill chapter-pill--approved"
+      data-start="103"
+      data-duration="111"
+      data-track-index="10"
+    >
+      <span class="chapter-pill__number">04</span>
+      <span class="chapter-pill__title">异步处理与四域治理</span>
+      <span class="chapter-pill__status chapter-pill__status--approved">治理通过</span>
+    </div>
+
+    <div
+      id="governance-section-04-lower"
+      class="clip lower-third lower-third--approved"
+      data-start="103"
+      data-duration="5"
+      data-track-index="11"
+    >
+      <span class="lower-third__rail"></span>
+      <div class="lower-third__copy">
+        <span class="lower-third__eyebrow">智能体编排 · 四域并行</span>
+        <strong class="lower-third__headline">阻断、重做、批准形成治理闭环</strong>
+        <span class="lower-third__description">内容、安全、版权、平台四域并行；阻断版驳回，合规材料重做后批准</span>
+      </div>
+      <span class="lower-third__badge">4 / 4</span>
+    </div>
+
+    <style>
+      @font-face {
+        font-family: "Microsoft YaHei";
+        src: local("Microsoft YaHei");
+        font-style: normal;
+        font-weight: 300 900;
+      }
+
+      @font-face {
+        font-family: "Cascadia Mono";
+        src: local("Cascadia Mono");
+        font-style: normal;
+        font-weight: 400 800;
+      }
+
+      [data-composition-id="governance-overlay"] {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        box-sizing: border-box;
+        background: rgba(7, 24, 39, 0);
+        color: #f2f7fa;
+        font-family: "Microsoft YaHei", sans-serif;
+        pointer-events: none;
+      }
+
+      [data-composition-id="governance-overlay"] *,
+      [data-composition-id="governance-overlay"] *::before,
+      [data-composition-id="governance-overlay"] *::after {
+        box-sizing: border-box;
+      }
+
+      [data-composition-id="governance-overlay"] .chapter-pill {
+        position: absolute;
+        top: 28px;
+        left: 316px;
+        z-index: 4;
+        display: flex;
+        align-items: center;
+        width: max-content;
+        max-width: 460px;
+        min-height: 48px;
+        padding: 7px 9px 7px 8px;
+        gap: 10px;
+        border: 1px solid rgba(154, 181, 194, 0.34);
+        border-radius: 14px;
+        background: rgba(7, 24, 39, 0.92);
+        box-shadow: 0 12px 32px rgba(1, 11, 20, 0.3);
+        backdrop-filter: blur(12px);
+        will-change: transform, opacity;
+      }
+
+      [data-composition-id="governance-overlay"] .chapter-pill--risk {
+        border-color: rgba(244, 184, 96, 0.56);
+      }
+
+      [data-composition-id="governance-overlay"] .chapter-pill--approved {
+        border-color: rgba(36, 199, 201, 0.56);
+      }
+
+      [data-composition-id="governance-overlay"] .chapter-pill__number {
+        display: grid;
+        place-items: center;
+        flex: 0 0 34px;
+        width: 34px;
+        height: 34px;
+        border-radius: 10px;
+        background: #f4b860;
+        color: #071827;
+        font-family: "Cascadia Mono", monospace;
+        font-size: 17px;
+        font-weight: 800;
+        line-height: 1;
+        font-variant-numeric: tabular-nums;
+        will-change: transform, opacity;
+      }
+
+      [data-composition-id="governance-overlay"] .chapter-pill--approved .chapter-pill__number {
+        background: #24c7c9;
+      }
+
+      [data-composition-id="governance-overlay"] .chapter-pill__title {
+        min-width: 0;
+        color: #f2f7fa;
+        font-size: 22px;
+        font-weight: 800;
+        line-height: 1.2;
+        letter-spacing: -0.03em;
+        white-space: nowrap;
+        will-change: transform, opacity;
+      }
+
+      [data-composition-id="governance-overlay"] .chapter-pill__status {
+        display: inline-flex;
+        align-items: center;
+        height: 28px;
+        padding: 0 10px;
+        border-radius: 999px;
+        font-size: 16px;
+        font-weight: 700;
+        line-height: 1;
+        white-space: nowrap;
+        will-change: transform, opacity;
+      }
+
+      [data-composition-id="governance-overlay"] .chapter-pill__status--risk {
+        background: rgba(244, 184, 96, 0.16);
+        color: #ffd888;
+      }
+
+      [data-composition-id="governance-overlay"] .chapter-pill__status--approved {
+        background: rgba(36, 199, 201, 0.16);
+        color: #7ff7ee;
+      }
+
+      [data-composition-id="governance-overlay"] .lower-third {
+        position: absolute;
+        left: 316px;
+        bottom: 34px;
+        z-index: 5;
+        display: flex;
+        align-items: stretch;
+        width: 620px;
+        min-height: 102px;
+        padding: 16px 18px 16px 0;
+        gap: 18px;
+        border: 1px solid rgba(154, 181, 194, 0.32);
+        border-radius: 18px;
+        background: rgba(7, 24, 39, 0.94);
+        box-shadow: 0 20px 54px rgba(1, 11, 20, 0.38);
+        backdrop-filter: blur(14px);
+        will-change: transform, opacity;
+      }
+
+      [data-composition-id="governance-overlay"] .lower-third--risk {
+        border-color: rgba(244, 184, 96, 0.48);
+      }
+
+      [data-composition-id="governance-overlay"] .lower-third--approved {
+        border-color: rgba(36, 199, 201, 0.48);
+      }
+
+      [data-composition-id="governance-overlay"] .lower-third__rail {
+        flex: 0 0 6px;
+        width: 6px;
+        min-height: 70px;
+        border-radius: 0 8px 8px 0;
+        background: #f4b860;
+        transform-origin: center bottom;
+        will-change: transform, opacity;
+      }
+
+      [data-composition-id="governance-overlay"] .lower-third--approved .lower-third__rail {
+        background: #24c7c9;
+      }
+
+      [data-composition-id="governance-overlay"] .lower-third__copy {
+        display: flex;
+        flex: 1 1 auto;
+        min-width: 0;
+        flex-direction: column;
+        justify-content: center;
+        gap: 4px;
+      }
+
+      [data-composition-id="governance-overlay"] .lower-third__eyebrow {
+        color: #ffd888;
+        font-family: "Cascadia Mono", monospace;
+        font-size: 16px;
+        font-weight: 700;
+        line-height: 1.2;
+        letter-spacing: 0.04em;
+        will-change: transform, opacity;
+      }
+
+      [data-composition-id="governance-overlay"] .lower-third--approved .lower-third__eyebrow {
+        color: #7ff7ee;
+      }
+
+      [data-composition-id="governance-overlay"] .lower-third__headline {
+        color: #f2f7fa;
+        font-size: 25px;
+        font-weight: 900;
+        line-height: 1.22;
+        letter-spacing: -0.035em;
+        will-change: transform, opacity;
+      }
+
+      [data-composition-id="governance-overlay"] .lower-third__description {
+        max-width: 472px;
+        color: #9ab5c2;
+        font-size: 17px;
+        font-weight: 350;
+        line-height: 1.45;
+        will-change: transform, opacity;
+      }
+
+      [data-composition-id="governance-overlay"] .lower-third__badge {
+        align-self: center;
+        flex: 0 0 auto;
+        min-width: 72px;
+        padding: 7px 10px;
+        border: 1px solid rgba(244, 184, 96, 0.48);
+        border-radius: 999px;
+        color: #ffd888;
+        font-family: "Cascadia Mono", monospace;
+        font-size: 16px;
+        font-weight: 800;
+        line-height: 1;
+        text-align: center;
+        font-variant-numeric: tabular-nums;
+        will-change: transform, opacity;
+      }
+
+      [data-composition-id="governance-overlay"] .lower-third--approved .lower-third__badge {
+        border-color: rgba(36, 199, 201, 0.48);
+        color: #7ff7ee;
+      }
+
+      [data-composition-id="governance-overlay"] .chapter-transition {
+        position: absolute;
+        top: 28px;
+        left: 316px;
+        z-index: 8;
+        width: 510px;
+        height: 48px;
+        overflow: hidden;
+        border-radius: 14px;
+        background: rgba(7, 24, 39, 0.96);
+        box-shadow: 0 12px 32px rgba(1, 11, 20, 0.34);
+      }
+
+      [data-composition-id="governance-overlay"] .chapter-transition__block {
+        position: absolute;
+        top: 0;
+        width: 56%;
+        height: 100%;
+        will-change: transform, opacity;
+      }
+
+      [data-composition-id="governance-overlay"] .chapter-transition__block--risk {
+        left: 0;
+        background: #f4b860;
+        transform-origin: right center;
+      }
+
+      [data-composition-id="governance-overlay"] .chapter-transition__block--approved {
+        right: 0;
+        background: #24c7c9;
+        transform-origin: left center;
+      }
+
+      [data-composition-id="governance-overlay"] .chapter-transition__trace {
+        position: absolute;
+        top: 0;
+        left: 50%;
+        width: 4px;
+        height: 100%;
+        background: #f2f7fa;
+        box-shadow: 0 0 18px rgba(242, 247, 250, 0.85);
+        will-change: transform, opacity;
+      }
+    </style>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+
+      const governanceTimeline = gsap.timeline({
+        paused: true,
+        defaults: { overwrite: "auto" }
+      });
+
+      governanceTimeline.addLabel("section03", 0);
+      governanceTimeline.from(
+        "#governance-section-03-pill",
+        { x: -34, opacity: 0, duration: 0.52, ease: "expo.out" },
+        0.18
+      );
+      governanceTimeline.from(
+        "#governance-section-03-pill .chapter-pill__number",
+        { scale: 0.72, rotation: -4, opacity: 0, duration: 0.38, ease: "expo.out" },
+        0.3
+      );
+      governanceTimeline.from(
+        "#governance-section-03-pill .chapter-pill__title",
+        { x: -18, opacity: 0, duration: 0.44, ease: "power3.out" },
+        0.36
+      );
+      governanceTimeline.from(
+        "#governance-section-03-pill .chapter-pill__status",
+        { scale: 0.86, opacity: 0, duration: 0.32, ease: "circ.out" },
+        0.48
+      );
+      governanceTimeline.from(
+        "#governance-section-03-lower",
+        { y: 44, opacity: 0, duration: 0.68, ease: "power4.out" },
+        0.28
+      );
+      governanceTimeline.from(
+        "#governance-section-03-lower .lower-third__rail",
+        { scaleY: 0, opacity: 0, duration: 0.48, ease: "expo.out" },
+        0.48
+      );
+      governanceTimeline.from(
+        "#governance-section-03-lower .lower-third__eyebrow",
+        { x: -22, opacity: 0, duration: 0.36, ease: "power2.out" },
+        0.58
+      );
+      governanceTimeline.from(
+        "#governance-section-03-lower .lower-third__headline",
+        { y: 18, opacity: 0, duration: 0.5, ease: "circ.out" },
+        0.68
+      );
+      governanceTimeline.from(
+        "#governance-section-03-lower .lower-third__description",
+        { opacity: 0, duration: 0.72, ease: "sine.out" },
+        0.84
+      );
+      governanceTimeline.from(
+        "#governance-section-03-lower .lower-third__badge",
+        { x: 24, scale: 0.82, opacity: 0, duration: 0.42, ease: "power3.out" },
+        0.9
+      );
+
+      governanceTimeline.addLabel("governanceTransition", 102.55);
+      governanceTimeline.from(
+        "#governance-section-transition",
+        { x: -62, opacity: 0, duration: 0.26, ease: "power4.out" },
+        "governanceTransition"
+      );
+      governanceTimeline.fromTo(
+        "#governance-section-transition .chapter-transition__block--risk",
+        { xPercent: -100 },
+        { xPercent: 14, duration: 0.46, ease: "power3.inOut", immediateRender: false },
+        "governanceTransition+=0.05"
+      );
+      governanceTimeline.fromTo(
+        "#governance-section-transition .chapter-transition__block--approved",
+        { xPercent: 100 },
+        { xPercent: -14, duration: 0.46, ease: "power3.inOut", immediateRender: false },
+        "governanceTransition+=0.05"
+      );
+      governanceTimeline.fromTo(
+        "#governance-section-transition .chapter-transition__trace",
+        { scaleY: 0.15, opacity: 0 },
+        { scaleY: 1, opacity: 1, duration: 0.28, ease: "expo.out", immediateRender: false },
+        "governanceTransition+=0.22"
+      );
+      governanceTimeline.to(
+        "#governance-section-transition",
+        { x: 64, opacity: 0, duration: 0.24, ease: "power4.in" },
+        "governanceTransition+=0.66"
+      );
+
+      governanceTimeline.addLabel("section04", 103);
+      governanceTimeline.from(
+        "#governance-section-04-pill",
+        { x: -34, opacity: 0, duration: 0.48, ease: "expo.out" },
+        "section04+=0.16"
+      );
+      governanceTimeline.from(
+        "#governance-section-04-pill .chapter-pill__number",
+        { scale: 0.7, rotation: 4, opacity: 0, duration: 0.4, ease: "expo.out" },
+        "section04+=0.28"
+      );
+      governanceTimeline.from(
+        "#governance-section-04-pill .chapter-pill__title",
+        { x: -18, opacity: 0, duration: 0.42, ease: "power3.out" },
+        "section04+=0.34"
+      );
+      governanceTimeline.from(
+        "#governance-section-04-pill .chapter-pill__status",
+        { scale: 0.84, opacity: 0, duration: 0.34, ease: "circ.out" },
+        "section04+=0.46"
+      );
+      governanceTimeline.from(
+        "#governance-section-04-lower",
+        { y: 48, opacity: 0, duration: 0.72, ease: "power4.out" },
+        "section04+=0.24"
+      );
+      governanceTimeline.from(
+        "#governance-section-04-lower .lower-third__rail",
+        { scaleY: 0, opacity: 0, duration: 0.46, ease: "expo.out" },
+        "section04+=0.46"
+      );
+      governanceTimeline.from(
+        "#governance-section-04-lower .lower-third__eyebrow",
+        { x: -24, opacity: 0, duration: 0.38, ease: "power2.out" },
+        "section04+=0.56"
+      );
+      governanceTimeline.from(
+        "#governance-section-04-lower .lower-third__headline",
+        { y: 20, opacity: 0, duration: 0.52, ease: "circ.out" },
+        "section04+=0.66"
+      );
+      governanceTimeline.from(
+        "#governance-section-04-lower .lower-third__description",
+        { opacity: 0, duration: 0.74, ease: "sine.out" },
+        "section04+=0.82"
+      );
+      governanceTimeline.from(
+        "#governance-section-04-lower .lower-third__badge",
+        { x: 24, scale: 0.8, opacity: 0, duration: 0.44, ease: "power3.out" },
+        "section04+=0.88"
+      );
+
+      window.__timelines["governance-overlay"] = governanceTimeline;
+    </script>
+  </div>
+</template>

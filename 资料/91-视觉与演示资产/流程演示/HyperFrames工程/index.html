@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>融岗智训｜全流程交互演示</title>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      @font-face {
+        font-family: "Microsoft YaHei";
+        src: local("Microsoft YaHei");
+        font-style: normal;
+        font-weight: 300 900;
+      }
+
+      @font-face {
+        font-family: "Cascadia Mono";
+        src: local("Cascadia Mono");
+        font-style: normal;
+        font-weight: 300 800;
+      }
+
+      :root {
+        color-scheme: dark;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        width: 1280px;
+        height: 720px;
+        margin: 0;
+        overflow: hidden;
+        background: #071827;
+        color: #f2f7fa;
+        font-family: "Microsoft YaHei", sans-serif;
+      }
+
+      #workflow-demo {
+        position: relative;
+        width: 1280px;
+        height: 720px;
+        overflow: hidden;
+        background: #071827;
+      }
+
+      .scene {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+      }
+
+      .brand-scene {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 76px 104px;
+        background-color: #071827;
+      }
+
+      .brand-grid {
+        position: absolute;
+        inset: 0;
+        opacity: 0.16;
+        background-image:
+          linear-gradient(rgba(36, 199, 201, 0.22) 1px, rgba(36, 199, 201, 0) 1px),
+          linear-gradient(90deg, rgba(36, 199, 201, 0.22) 1px, rgba(36, 199, 201, 0) 1px);
+        background-size: 72px 72px;
+      }
+
+      .brand-glow {
+        position: absolute;
+        width: 620px;
+        height: 620px;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(36, 199, 201, 0.3) 0%, rgba(36, 199, 201, 0) 68%);
+      }
+
+      .brand-content {
+        position: relative;
+        z-index: 2;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        width: 100%;
+        max-width: 980px;
+        gap: 22px;
+      }
+
+      .brand-kicker {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        color: #24c7c9;
+        font-family: "Cascadia Mono", monospace;
+        font-size: 18px;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      .brand-kicker::before {
+        content: "";
+        width: 38px;
+        height: 3px;
+        background: #24c7c9;
+      }
+
+      .brand-title {
+        max-width: 1020px;
+        margin: 0;
+        font-size: 78px;
+        font-weight: 900;
+        line-height: 1.08;
+        letter-spacing: -0.04em;
+      }
+
+      .brand-subtitle {
+        max-width: 880px;
+        margin: 0;
+        color: #9ab5c2;
+        font-size: 26px;
+        font-weight: 350;
+        line-height: 1.55;
+      }
+
+      .role-flow {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        margin-top: 14px;
+      }
+
+      .role-pill {
+        display: inline-flex;
+        align-items: center;
+        min-height: 48px;
+        padding: 0 20px;
+        border: 1px solid rgba(36, 199, 201, 0.34);
+        border-radius: 12px;
+        background: rgba(13, 43, 58, 0.82);
+        font-size: 20px;
+        font-weight: 700;
+      }
+
+      .role-arrow {
+        color: #24c7c9;
+        font-family: "Cascadia Mono", monospace;
+        font-size: 24px;
+      }
+
+      #web-recording {
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        display: block;
+        width: 1280px;
+        height: 720px;
+        object-fit: cover;
+        opacity: 0;
+        background: #071827;
+      }
+
+      .chapter-card {
+        position: absolute;
+        right: 28px;
+        bottom: 26px;
+        z-index: 8;
+        width: 450px;
+        min-height: 132px;
+        padding: 20px 24px 22px;
+        overflow: hidden;
+        border: 1px solid rgba(36, 199, 201, 0.35);
+        border-radius: 18px;
+        background: rgba(7, 24, 39, 0.92);
+        box-shadow: 0 20px 52px rgba(7, 24, 39, 0.28);
+        backdrop-filter: blur(12px);
+      }
+
+      .chapter-kicker {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        margin-bottom: 10px;
+        color: #24c7c9;
+        font-family: "Cascadia Mono", monospace;
+        font-size: 16px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+      }
+
+      .chapter-step {
+        color: #9ab5c2;
+        font-variant-numeric: tabular-nums;
+      }
+
+      .chapter-card h2 {
+        margin: 0 0 8px;
+        font-size: 28px;
+        font-weight: 900;
+        line-height: 1.15;
+        letter-spacing: -0.03em;
+      }
+
+      .chapter-card p {
+        margin: 0;
+        color: #f2f7fa;
+        font-size: 20px;
+        font-weight: 350;
+        line-height: 1.45;
+      }
+
+      .chapter-rule {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        height: 4px;
+        background: #24c7c9;
+        transform-origin: left center;
+      }
+
+      #intro {
+        z-index: 12;
+      }
+
+      #outro {
+        z-index: 14;
+        opacity: 0;
+      }
+
+      .outro-summary {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+        color: #9ab5c2;
+        font-family: "Cascadia Mono", monospace;
+        font-size: 18px;
+        font-weight: 600;
+      }
+
+      .outro-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #24c7c9;
+        box-shadow: 0 0 18px rgba(36, 199, 201, 0.72);
+      }
+    </style>
+  </head>
+  <body>
+    <div data-hf-id="hf-jgi4" id="workflow-demo" data-composition-id="ronggang-workflow-demo" data-width="1280" data-height="720" data-start="0" data-duration="79.2">
+      <section data-hf-id="hf-z769" id="intro" class="clip scene brand-scene" data-start="0" data-duration="3.5" data-track-index="1">
+        <div data-hf-id="hf-zgqw" id="intro-grid" class="brand-grid" data-layout-ignore=""></div>
+        <div data-hf-id="hf-0org" id="intro-glow" class="brand-glow" data-layout-ignore=""></div>
+        <div data-hf-id="hf-q1xz" class="brand-content">
+          <div data-hf-id="hf-m6as" id="intro-kicker" class="brand-kicker">RONGGANG ZHI XUN</div>
+          <h1 data-hf-id="hf-8fkg" id="intro-title" class="brand-title">融岗智训｜全流程交互演示</h1>
+          <p data-hf-id="hf-n2kn" id="intro-subtitle" class="brand-subtitle">学生学习、教师组织、管理员保障，在同一课程世界中连续协作。</p>
+          <div data-hf-id="hf-ijrc" id="intro-flow" class="role-flow">
+            <span data-hf-id="hf-r5n5" class="role-pill">学生实践</span>
+            <span data-hf-id="hf-j4md" class="role-arrow">→</span>
+            <span data-hf-id="hf-x4l9" class="role-pill">教师指导</span>
+            <span data-hf-id="hf-p7cp" class="role-arrow">→</span>
+            <span data-hf-id="hf-obvh" class="role-pill">管理员保障</span>
+          </div>
+        </div>
+      </section>
+
+      <video data-hf-id="hf-pmoz" id="web-recording" class="clip" data-start="2.33" data-duration="72.466667" data-track-index="0" src="Web端全流程原始录制.mp4" muted playsinline></video>
+
+      <section data-hf-id="hf-b4s2" id="chapter-student-world" class="clip chapter-card" data-start="3.6" data-duration="5" data-track-index="2">
+        <div data-hf-id="hf-uh6r" class="chapter-kicker"><span data-hf-id="hf-bd8z">学生端</span><span data-hf-id="hf-3a8d" class="chapter-step">01 / 06</span></div>
+        <h2 data-hf-id="hf-v5bc">课程任务与岗位现场</h2>
+        <p data-hf-id="hf-439g">从任务工作台进入职业情境，岗位身份和世界进度保持同步。</p>
+        <div data-hf-id="hf-db96" class="chapter-rule"></div>
+      </section>
+
+      <section data-hf-id="hf-r9sm" id="chapter-sources" class="clip chapter-card" data-start="18.8" data-duration="5" data-track-index="2">
+        <div data-hf-id="hf-gef7" class="chapter-kicker"><span data-hf-id="hf-de0j">学生端</span><span data-hf-id="hf-95ya" class="chapter-step">02 / 06</span></div>
+        <h2 data-hf-id="hf-2t95">调研素材与证据链</h2>
+        <p data-hf-id="hf-f95z">区分原始材料、机器观察和经审核事实，再决定引用边界。</p>
+        <div data-hf-id="hf-3ila" class="chapter-rule"></div>
+      </section>
+
+      <section data-hf-id="hf-0s39" id="chapter-production" class="clip chapter-card" data-start="29.8" data-duration="5" data-track-index="2">
+        <div data-hf-id="hf-g046" class="chapter-kicker"><span data-hf-id="hf-czpi">学生端</span><span data-hf-id="hf-7sz3" class="chapter-step">03 / 06</span></div>
+        <h2 data-hf-id="hf-hfwe">内容生产与处理档案</h2>
+        <p data-hf-id="hf-386q">形成可追溯成果版本，并把多模态处理结果与人工判断分开记录。</p>
+        <div data-hf-id="hf-3wwb" class="chapter-rule"></div>
+      </section>
+
+      <section data-hf-id="hf-b04q" id="chapter-governance" class="clip chapter-card" data-start="41.8" data-duration="5" data-track-index="2">
+        <div data-hf-id="hf-flt5" class="chapter-kicker"><span data-hf-id="hf-cleh">学生端</span><span data-hf-id="hf-ya98" class="chapter-step">04 / 06</span></div>
+        <h2 data-hf-id="hf-2zb0">事实、版权与平台治理</h2>
+        <p data-hf-id="hf-c3p0">四个专业分支并行运行，阻断项和人工复核要求显式回流。</p>
+        <div data-hf-id="hf-4b7c" class="chapter-rule"></div>
+      </section>
+
+      <section data-hf-id="hf-118e" id="chapter-teacher" class="clip chapter-card" data-start="47.8" data-duration="5" data-track-index="2">
+        <div data-hf-id="hf-f7i4" class="chapter-kicker"><span data-hf-id="hf-5rh9">教师端</span><span data-hf-id="hf-4xix" class="chapter-step">05 / 06</span></div>
+        <h2 data-hf-id="hf-2a6p">事件审批与学习评价</h2>
+        <p data-hf-id="hf-2qfo">教师处理课堂事件、查看班级与证据，并在评分复核中收口。</p>
+        <div data-hf-id="hf-1j25" class="chapter-rule"></div>
+      </section>
+
+      <section data-hf-id="hf-uktz" id="chapter-admin" class="clip chapter-card" data-start="63.8" data-duration="5" data-track-index="2">
+        <div data-hf-id="hf-et73" class="chapter-kicker"><span data-hf-id="hf-rm3i">管理员</span><span data-hf-id="hf-4yem" class="chapter-step">06 / 06</span></div>
+        <h2 data-hf-id="hf-fu0w">日志与运行追踪</h2>
+        <p data-hf-id="hf-uts3">后台日志、智能体调度和恢复追踪集中管理，不干扰师生界面。</p>
+        <div data-hf-id="hf-1xd6" class="chapter-rule"></div>
+      </section>
+
+      <section data-hf-id="hf-df5j" id="outro" class="clip scene brand-scene" data-start="74.8" data-duration="4.4" data-track-index="1">
+        <div data-hf-id="hf-jckt" id="outro-grid" class="brand-grid" data-layout-ignore=""></div>
+        <div data-hf-id="hf-tv75" id="outro-glow" class="brand-glow" data-layout-ignore=""></div>
+        <div data-hf-id="hf-tw7r" class="brand-content">
+          <div data-hf-id="hf-78tc" id="outro-kicker" class="brand-kicker">WORKFLOW COMPLETE</div>
+          <h2 data-hf-id="hf-twr3" id="outro-title" class="brand-title">全流程演示完成</h2>
+          <p data-hf-id="hf-49ls" id="outro-subtitle" class="brand-subtitle">原型已经形成学生实践、教师指导与管理员保障的连续闭环。</p>
+          <div data-hf-id="hf-9hne" id="outro-summary" class="outro-summary">
+            <span data-hf-id="hf-xkds" class="outro-dot"></span>
+            <span data-hf-id="hf-k14u">课程任务</span>
+            <span data-hf-id="hf-1bmq">·</span>
+            <span data-hf-id="hf-ulwv">职业情境</span>
+            <span data-hf-id="hf-8hs6">·</span>
+            <span data-hf-id="hf-f7if">证据评价</span>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      var tl = gsap.timeline({ paused: true });
+
+      tl.fromTo("#intro-glow", { opacity: 0.18, scale: 0.88 }, { opacity: 0.48, scale: 1.08, duration: 3.1, ease: "sine.inOut", immediateRender: false }, 0.1);
+      tl.fromTo("#intro-kicker", { opacity: 0, y: 22 }, { opacity: 1, y: 0, duration: 0.45, ease: "power2.out", immediateRender: false }, 0.2);
+      tl.fromTo("#intro-title", { opacity: 0, y: 46 }, { opacity: 1, y: 0, duration: 0.72, ease: "power3.out", immediateRender: false }, 0.32);
+      tl.fromTo("#intro-subtitle", { opacity: 0, y: 28 }, { opacity: 1, y: 0, duration: 0.56, ease: "expo.out", immediateRender: false }, 0.68);
+      tl.fromTo("#intro-flow", { opacity: 0, x: -34 }, { opacity: 1, x: 0, duration: 0.62, ease: "power2.out", immediateRender: false }, 0.95);
+
+      tl.to("#intro", { opacity: 0, filter: "blur(10px)", scale: 1.03, duration: 0.5, ease: "power2.inOut" }, 2.75);
+      tl.fromTo("#web-recording", { opacity: 0, filter: "blur(10px)", scale: 0.99 }, { opacity: 1, filter: "blur(0px)", scale: 1, duration: 0.5, ease: "power2.inOut", immediateRender: false }, 2.333);
+
+      var chapterStarts = [
+        ["#chapter-student-world", 3.6],
+        ["#chapter-sources", 18.8],
+        ["#chapter-production", 29.8],
+        ["#chapter-governance", 41.8],
+        ["#chapter-teacher", 47.8],
+        ["#chapter-admin", 63.8]
+      ];
+
+      chapterStarts.forEach(function (entry) {
+        var selector = entry[0];
+        var start = entry[1];
+        tl.fromTo(selector, { opacity: 0, x: 44 }, { opacity: 1, x: 0, duration: 0.5, ease: "power3.out", immediateRender: false }, start + 0.08);
+        tl.fromTo(selector + " .chapter-kicker", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.36, ease: "expo.out", immediateRender: false }, start + 0.2);
+        tl.fromTo(selector + " h2", { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.42, ease: "power2.out", immediateRender: false }, start + 0.3);
+        tl.fromTo(selector + " p", { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.4, ease: "sine.out", immediateRender: false }, start + 0.42);
+        tl.fromTo(selector + " .chapter-rule", { scaleX: 0 }, { scaleX: 1, duration: 0.72, ease: "power2.out", immediateRender: false }, start + 0.22);
+      });
+
+      tl.to("#web-recording", { opacity: 0, filter: "blur(10px)", scale: 1.02, duration: 0.5, ease: "power2.inOut" }, 74.283);
+      tl.fromTo("#outro", { opacity: 0, filter: "blur(10px)", scale: 0.98 }, { opacity: 1, filter: "blur(0px)", scale: 1, duration: 0.5, ease: "power2.inOut", immediateRender: false }, 74.8);
+      tl.fromTo("#outro-glow", { opacity: 0.16, scale: 0.9 }, { opacity: 0.48, scale: 1.08, duration: 3.2, ease: "sine.inOut", immediateRender: false }, 74.9);
+      tl.fromTo("#outro-kicker", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.4, ease: "power2.out", immediateRender: false }, 75.0);
+      tl.fromTo("#outro-title", { opacity: 0, y: 42 }, { opacity: 1, y: 0, duration: 0.64, ease: "power3.out", immediateRender: false }, 75.18);
+      tl.fromTo("#outro-subtitle", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.5, ease: "expo.out", immediateRender: false }, 75.55);
+      tl.fromTo("#outro-summary", { opacity: 0, x: -28 }, { opacity: 1, x: 0, duration: 0.54, ease: "power2.out", immediateRender: false }, 75.82);
+      tl.to("#outro", { opacity: 0, duration: 0.55, ease: "power1.in" }, 78.55);
+
+      window.__timelines["ronggang-workflow-demo"] = tl;
+    </script>
+  </body>
+</html>

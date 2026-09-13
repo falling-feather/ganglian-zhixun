@@ -1,0 +1,463 @@
+{
+  "schemaVersion": "gold-technical-evidence/1.0.0",
+  "planVersion": "gold-qa-technical-plan/1.0.0",
+  "scenarioBindings": [
+    {
+      "role": "flagship",
+      "scenarioId": "scenario-local-tourism-media-v0.1",
+      "version": "1.1.1",
+      "releaseRef": "release-scenario-local-tourism-media-v0.1-1.1.1-baseline",
+      "contentHash": "db3561089fabef485cff10a55730759e0d8b1702ba66e000b5b33f70a165e690"
+    },
+    {
+      "role": "transfer",
+      "scenarioId": "scenario-heritage-night-tour-capacity-v1",
+      "version": "1.0.0",
+      "releaseRef": "release-scenario-heritage-night-tour-capacity-v1-1.0.0-baseline",
+      "contentHash": "9e3068e126b8df944af7152f0d76dfba7374860335802442e9c161c4a284074d"
+    }
+  ],
+  "goldenDemo": {
+    "targetDurationMinutes": 11,
+    "steps": [
+      {
+        "stepId": "teacher-starts-pinned-release",
+        "order": 1,
+        "minuteStart": 0,
+        "minuteEnd": 1,
+        "actor": "teacher",
+        "surface": "teacher_control",
+        "action": "教师选择已发布旗舰情境、确认版本与内容哈希并开班。",
+        "visibleChange": "学生岗位、初始节点、虚拟时间和共享任务同时出现。",
+        "agentContribution": "课程设计助理只解释已发布配置，不替教师发布。",
+        "evidenceRefs": [
+          "scenario:flagship/release",
+          "world:training_session_started"
+        ],
+        "verificationRefs": [
+          "e2e/ronggang-full-loop.spec.ts::教师复制旗舰情境",
+          "apps/api/test/server.test.ts::scenario release"
+        ],
+        "fallback": "Live不可用时仍使用同一发布版和确定性模型开班，并在界面标记Mock。"
+      },
+      {
+        "stepId": "student-submits-topic-plan",
+        "order": 2,
+        "minuteStart": 1,
+        "minuteEnd": 2,
+        "actor": "student",
+        "surface": "course_operation",
+        "action": "学生提交选题、受众和信源计划。",
+        "visibleChange": "采访机会、待核事实和共享任务从同一投影更新。",
+        "agentContribution": "任务规划与证据教练提供形成性建议，不提交正式成果。",
+        "evidenceRefs": [
+          "causal:operation_changes_world",
+          "trace:action-envelope/course_operation"
+        ],
+        "verificationRefs": [
+          "e2e/ronggang-full-loop.spec.ts::学生端双维度共用同一投影",
+          "packages/world-core/test/engine.test.ts::experience choice"
+        ],
+        "fallback": "建议分支失败时保留学生提交和可重试任务状态。"
+      },
+      {
+        "stepId": "student-interviews-private-npc",
+        "order": 3,
+        "minuteStart": 2,
+        "minuteEnd": 3.5,
+        "actor": "student",
+        "surface": "world_interaction",
+        "action": "学生切换世界交互，向具有岗位私有视野的NPC采访并记录承诺或拒绝。",
+        "visibleChange": "NPC关系、私有线索、承诺和时间消耗形成可见后果。",
+        "agentContribution": "岗位角色智能体只基于当前角色上下文与私有记忆回应。",
+        "evidenceRefs": [
+          "causal:world_changes_operation",
+          "trace:role-agent/private-context"
+        ],
+        "verificationRefs": [
+          "e2e/ronggang-full-loop.spec.ts::学生岗位互动形成世界状态变化",
+          "packages/context-engine/test/memory.test.ts::role isolation"
+        ],
+        "fallback": "模型失败时显示显式降级与可重试状态，不伪造NPC承诺。"
+      },
+      {
+        "stepId": "student-processes-material",
+        "order": 4,
+        "minuteStart": 3.5,
+        "minuteEnd": 4.5,
+        "actor": "student",
+        "surface": "course_operation",
+        "action": "学生回到操作平台处理转写和材料版本，并把线索接入正式待办。",
+        "visibleChange": "世界线索成为材料引用、待核声明和修订任务。",
+        "agentContribution": "材料理解和采访结构化只产生严格Schema草稿。",
+        "evidenceRefs": [
+          "causal:world_changes_operation",
+          "trace:media-processing/material-version"
+        ],
+        "verificationRefs": [
+          "e2e/ronggang-full-loop.spec.ts::多模态处理与四域治理",
+          "packages/media-processing/test"
+        ],
+        "fallback": "工具不可用时保持原材料版本并请求补证。"
+      },
+      {
+        "stepId": "storm-event-changes-both-surfaces",
+        "order": 5,
+        "minuteStart": 4.5,
+        "minuteEnd": 6,
+        "actor": "student",
+        "surface": "world_interaction",
+        "action": "学生行为触发暴雨事件，并在两个界面查看同一事件的任务影响。",
+        "visibleChange": "世界场景、虚拟时间、任务优先级和发布约束同步改变。",
+        "agentContribution": "情境导演只选择白名单路线，调度器只唤醒受影响实例。",
+        "evidenceRefs": [
+          "causal:incident_changes_both_surfaces",
+          "trace:dispatch-plan/affected-set"
+        ],
+        "verificationRefs": [
+          "packages/world-core/test/structured-world.test.ts",
+          "packages/agent-runtime/test/scheduler.test.ts"
+        ],
+        "fallback": "导演模型失败时使用确定性no_op或教师候选，不阻塞世界查看。"
+      },
+      {
+        "stepId": "two-roles-revise-plan",
+        "order": 6,
+        "minuteStart": 6,
+        "minuteEnd": 7,
+        "actor": "student",
+        "surface": "course_operation",
+        "action": "记者与责任编辑完成最小交接并修订多平台成果。",
+        "visibleChange": "交接、计划修订和成果R2进入同一证据链。",
+        "agentContribution": "协作辅助只解释保留与过滤理由，不代做学生决策。",
+        "evidenceRefs": [
+          "trace:agent-template-instance-task",
+          "evidence:artifact-r2"
+        ],
+        "verificationRefs": [
+          "e2e/ronggang-full-loop.spec.ts::责任编辑完成版权与平台双轮协作",
+          "packages/agent-runtime/test/catalog.test.ts"
+        ],
+        "fallback": "辅助实例失败时学生仍可手动交接与修订。"
+      },
+      {
+        "stepId": "four-domain-governance",
+        "order": 7,
+        "minuteStart": 7,
+        "minuteEnd": 8,
+        "actor": "student",
+        "surface": "material_and_governance",
+        "action": "学生发起事实、版权、内容安全和平台规则四域治理。",
+        "visibleChange": "四条Finding、确定性仲裁和教师门状态可见。",
+        "agentContribution": "四域节点并行建议，权威写入仍由确定性仲裁和教师门控制。",
+        "evidenceRefs": [
+          "trace:governance-four-domain",
+          "evidence:arbitration-hash"
+        ],
+        "verificationRefs": [
+          "e2e/ronggang-full-loop.spec.ts::多模态处理与四域治理",
+          "packages/media-processing/test/governance.test.ts"
+        ],
+        "fallback": "任一分支不可用即失败关闭，不把缺失结果当作通过。"
+      },
+      {
+        "stepId": "teacher-makes-authoritative-decision",
+        "order": 8,
+        "minuteStart": 8,
+        "minuteEnd": 9,
+        "actor": "teacher",
+        "surface": "teacher_review",
+        "action": "教师按精确对象版本与决策哈希批准、驳回或要求补证。",
+        "visibleChange": "发布、暂缓或返工成为世界后果并反向进入学生端。",
+        "agentContribution": "实时干预助理只提供候选，不能直接批准。",
+        "evidenceRefs": [
+          "causal:governance_changes_world",
+          "evidence:teacher-decision"
+        ],
+        "verificationRefs": [
+          "e2e/ronggang-full-loop.spec.ts::版权与平台双轮协作",
+          "packages/world-core/test/governance.test.ts"
+        ],
+        "fallback": "教师门不可用时保持未放行，禁止模型越权写入。"
+      },
+      {
+        "stepId": "teacher-finalizes-evaluation",
+        "order": 9,
+        "minuteStart": 9,
+        "minuteEnd": 10,
+        "actor": "teacher",
+        "surface": "evaluation_and_replay",
+        "action": "系统固定评价案件，教师查看四路初评并逐维终评。",
+        "visibleChange": "每项主要分数可回到行为、引用、世界后果和教师决定。",
+        "agentContribution": "三路语义评价只读固定证据，规则与教师保持独立。",
+        "evidenceRefs": [
+          "causal:unified_evidence_and_replay",
+          "evidence:teacher-assessment-review"
+        ],
+        "verificationRefs": [
+          "e2e/ronggang-full-loop.spec.ts::成果完成R1R2四路评价",
+          "packages/agent-runtime/test/evaluators.test.ts"
+        ],
+        "fallback": "任一模型评价失败时保留规则分和教师终评入口，模型分为空。"
+      },
+      {
+        "stepId": "student-reviews-capability-and-causality",
+        "order": 10,
+        "minuteStart": 10,
+        "minuteEnd": 11,
+        "actor": "student",
+        "surface": "evaluation_and_replay",
+        "action": "学生查看公开能力反馈和从根行动到后果的因果回放。",
+        "visibleChange": "同一事件与证据标识贯穿课程操作、世界互动、治理和评价。",
+        "agentContribution": "评价复核助理只解释已发布反馈，不泄漏教师内部说明。",
+        "evidenceRefs": [
+          "causal:unified_evidence_and_replay",
+          "trace:world-and-execution-timeline"
+        ],
+        "verificationRefs": [
+          "e2e/ronggang-full-loop.spec.ts::成果完成R1R2四路评价",
+          "apps/api/test/trace-projection.test.ts"
+        ],
+        "fallback": "Live不可用时读取同一发布版的确定性回放并明确标识。"
+      }
+    ]
+  },
+  "crossSurfaceCausality": [
+    {
+      "causalId": "operation_changes_world",
+      "label": "操作平台决定改变世界机会",
+      "requirement": "选题或信源计划必须改变可用人物、问题或世界信息状态。",
+      "requiredEvidenceKinds": [
+        "automated_test",
+        "timeline",
+        "visible_ui"
+      ],
+      "verificationRefs": [
+        "world-core:record_experience_choice",
+        "e2e:student-dual-dimension"
+      ]
+    },
+    {
+      "causalId": "world_changes_operation",
+      "label": "NPC承诺与线索反向进入正式工作",
+      "requirement": "世界交互形成的承诺、拒绝或私有线索必须进入待办、材料或核验状态。",
+      "requiredEvidenceKinds": [
+        "automated_test",
+        "timeline",
+        "visible_ui"
+      ],
+      "verificationRefs": [
+        "world-core:structured-world-result-signals",
+        "e2e:role-interaction-trace"
+      ]
+    },
+    {
+      "causalId": "incident_changes_both_surfaces",
+      "label": "突发事件同时改变两个界面",
+      "requirement": "事件必须同步改变场景、虚拟时间、任务优先级与成果约束。",
+      "requiredEvidenceKinds": [
+        "automated_test",
+        "timeline",
+        "visible_ui"
+      ],
+      "verificationRefs": [
+        "world-core:dynamic-event-card",
+        "e2e:shared-projection-continuity"
+      ]
+    },
+    {
+      "causalId": "governance_changes_world",
+      "label": "治理与教师决定形成世界后果",
+      "requirement": "正式治理决定必须改变NPC反应、平台反馈、关系或后续事件。",
+      "requiredEvidenceKinds": [
+        "automated_test",
+        "timeline",
+        "visible_ui"
+      ],
+      "verificationRefs": [
+        "world-core:governance-outcome",
+        "e2e:teacher-event-gate"
+      ]
+    },
+    {
+      "causalId": "unified_evidence_and_replay",
+      "label": "两种界面进入同一评价与回放",
+      "requirement": "两个界面的行为必须进入同一证据案件和因果回放，且不泄漏其他岗位私有视野。",
+      "requiredEvidenceKinds": [
+        "automated_test",
+        "timeline",
+        "visible_ui"
+      ],
+      "verificationRefs": [
+        "agent-runtime:evaluation-case",
+        "e2e:evaluation-learning-replay"
+      ]
+    }
+  ],
+  "technicalGates": [
+    {
+      "gateId": "dual_dimension_continuity",
+      "label": "双维度连续性",
+      "requirement": "同一会话和岗位切换模式时，任务、材料、成果、承诺、时间和风险连续。",
+      "requiredEvidenceKinds": [
+        "automated_test",
+        "visible_ui"
+      ],
+      "verificationRefs": [
+        "e2e:student-dual-dimension"
+      ]
+    },
+    {
+      "gateId": "single_world_authority",
+      "label": "同一世界权威链",
+      "requirement": "所有动作进入同一WorldEngine、事件与投影链，前端没有第二权威世界状态。",
+      "requiredEvidenceKinds": [
+        "automated_test",
+        "static_source"
+      ],
+      "verificationRefs": [
+        "world-core:engine",
+        "web:single-projection"
+      ]
+    },
+    {
+      "gateId": "agent_traceability",
+      "label": "模板、实例与任务可追踪",
+      "requirement": "至少三个平面能够从模板定位实例、任务、上下文、调用和结果。",
+      "requiredEvidenceKinds": [
+        "runtime_trace",
+        "automated_test"
+      ],
+      "verificationRefs": [
+        "api:agent-scale-trace",
+        "agent-runtime:catalog"
+      ]
+    },
+    {
+      "gateId": "affected_set_scheduling",
+      "label": "按受影响集合调度",
+      "requirement": "每次事件记录选择、过滤、理由和预算，不默认全广播。",
+      "requiredEvidenceKinds": [
+        "runtime_trace",
+        "automated_test"
+      ],
+      "verificationRefs": [
+        "agent-runtime:scheduler",
+        "api:dispatch-plan"
+      ]
+    },
+    {
+      "gateId": "private_view_isolation",
+      "label": "岗位私有视野隔离",
+      "requirement": "跨岗位、跨会话与模式切换不得泄漏其他角色材料或记忆。",
+      "requiredEvidenceKinds": [
+        "automated_test",
+        "runtime_trace"
+      ],
+      "verificationRefs": [
+        "context-engine:acl",
+        "e2e:student-authorization"
+      ]
+    },
+    {
+      "gateId": "vocational_consequence",
+      "label": "岗位行为形成可评价后果",
+      "requirement": "世界互动至少改变线索、约束、关系、材料、任务或后果之一。",
+      "requiredEvidenceKinds": [
+        "automated_test",
+        "visible_ui"
+      ],
+      "verificationRefs": [
+        "world-core:result-signals",
+        "e2e:role-interaction"
+      ]
+    },
+    {
+      "gateId": "evidence_teacher_review",
+      "label": "证据评价与教师终审",
+      "requirement": "主要能力分可定位行为、引用、后果、规则/模型意见和教师决定。",
+      "requiredEvidenceKinds": [
+        "automated_test",
+        "runtime_trace"
+      ],
+      "verificationRefs": [
+        "agent-runtime:evaluators",
+        "e2e:teacher-final-review"
+      ]
+    },
+    {
+      "gateId": "explicit_failure_recovery",
+      "label": "失败显式降级与恢复",
+      "requirement": "模型、工具或实例失败不补造结果，世界仍可查看、重试或由教师介入。",
+      "requiredEvidenceKinds": [
+        "automated_test",
+        "runtime_trace"
+      ],
+      "verificationRefs": [
+        "agent-orchestrator:failure-matrix",
+        "api:recovery"
+      ]
+    },
+    {
+      "gateId": "immutable_compatibility",
+      "label": "不可变发布与旧版兼容",
+      "requirement": "0.7.0与1.0.0哈希保持，旧会话和检查点不被静默升级。",
+      "requiredEvidenceKinds": [
+        "version_hash",
+        "automated_test"
+      ],
+      "verificationRefs": [
+        "scenario-catalog:immutable-release",
+        "world-core:recovery-regression"
+      ]
+    },
+    {
+      "gateId": "no_image_model_dependency",
+      "label": "无图像模型完整运行",
+      "requirement": "固定CSS场景、结构化卡片与基础动效能够完成全部黄金交互。",
+      "requiredEvidenceKinds": [
+        "visible_ui",
+        "static_source"
+      ],
+      "verificationRefs": [
+        "web:student-world-stage",
+        "e2e:chromium-full-loop"
+      ]
+    }
+  ],
+  "performanceTargets": {
+    "localActionP95Ms": 500,
+    "asyncProgressVisibleWithinMs": 1000,
+    "liveModelP95Ms": 8000,
+    "discloseCallsTokensCost": true
+  },
+  "transferTarget": {
+    "configurationOnly": true,
+    "maxAuthoringMinutes": 480,
+    "requiredStudentRoles": 2,
+    "requiredPrivateNpcs": 2,
+    "requiredNodes": 3,
+    "forbiddenTopicSpecificRuntimePaths": [
+      "apps/web/src",
+      "packages/agent-runtime/src",
+      "packages/world-core/src/engine.ts",
+      "packages/world-core/src/structured-world.ts"
+    ]
+  },
+  "artifactLayout": [
+    "manifest.json",
+    "technical-plan.json",
+    "validation/receipts.json",
+    "gates/evidence-assessment.json",
+    "demo/golden-demo.md",
+    "ablation/preregistration.json",
+    "ablation/contract-report.json",
+    "ablation/controlled-live-report.json",
+    "ablation/blind-review-packet.json",
+    "ablation/condition-key.json",
+    "transfer/configuration-proof.json",
+    "performance/summary.json"
+  ],
+  "claimBoundary": "该计划定义QA-002技术证据的采集与失败关闭方式；计划存在不等于测试已通过、Live实验已完成、教师盲评已形成或教学效果已被证明。",
+  "planHash": "407a7dfa9882affce6ad4028c4b5deaf3dbd144888fc4999a4f73aae8de12ce0"
+}

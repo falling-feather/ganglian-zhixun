@@ -1,0 +1,352 @@
+{
+  "schemaVersion": "gold-competition-official-matrix/1.0.0",
+  "challengeId": "XA-202603",
+  "sourceRegistryHash": "fc1f6257a922defc655aceb61ff9531a4d66a047eba9123f49d00f49fddf0cb4",
+  "requirements": [
+    {
+      "requirementId": "competition_eligibility",
+      "title": "参赛资格与团队边界",
+      "sourceIds": [
+        "challenge-cup-2026-announcement",
+        "xa-202603-question"
+      ],
+      "locator": "赛事正文“参赛对象”；原题第4节（PDF第2页）",
+      "requirementSummary": "参赛者须满足当届学生身份和年龄要求；团队不超过10人、指导教师不超过3人，可跨单位组队但只能由一个主体提交。",
+      "mappingStatus": "mapped",
+      "evidenceStatus": "unverified",
+      "verificationMode": "manual",
+      "mappingRefs": [
+        "doc/02-项目规划.md#5-待确认事项",
+        "doc/02-子文档/26-国金成果证明与开发准入标准.md"
+      ],
+      "rationale": "规则已定位，但仓库不保存真实成员学籍、年龄、指导教师和唯一申报主体证明，不能由原型自动判定资格。",
+      "nextAction": "由项目负责人逐人复核学籍、年龄、队伍人数、指导教师人数及唯一申报主体，并把脱敏核验收据纳入最终申报包。",
+      "dueDate": null
+    },
+    {
+      "requirementId": "registration_receipt",
+      "title": "报名成功回执",
+      "sourceIds": [
+        "challenge-cup-2026-announcement",
+        "xa-202603-question"
+      ],
+      "locator": "赛事正文“赛事安排”；原题第8节（一）（PDF第9-10页）",
+      "requirementSummary": "官网报名窗口为2026年5月30日至6月30日，报名表须盖章、上传并通过系统审核。",
+      "mappingStatus": "mapped",
+      "evidenceStatus": "unverified",
+      "verificationMode": "manual",
+      "mappingRefs": [
+        "doc/02-项目规划.md#5-待确认事项"
+      ],
+      "rationale": "当前日期已超过报名截止日，仓库中没有审核通过的报名表或系统回执；是否已经报名是参赛资格的首要人工阻断项。",
+      "nextAction": "立即确认团队是否已在6月30日前完成报名并通过审核；若已完成，冻结脱敏报名回执及报名表哈希，若未完成则不得宣称本届可提交。",
+      "dueDate": "2026-06-30"
+    },
+    {
+      "requirementId": "development_direction",
+      "title": "核心开发方向",
+      "sourceIds": [
+        "xa-202603-question"
+      ],
+      "locator": "原题第5节（一）（PDF第3-5页）",
+      "requirementSummary": "作品至少覆盖人才培养方案优化、岗位能力图谱、岗位任务转学习任务或个性化自适应学习中的一个方向。",
+      "mappingStatus": "mapped",
+      "evidenceStatus": "passed",
+      "verificationMode": "artifact_review",
+      "mappingRefs": [
+        "doc/02-子文档/23-融岗智训产品设计定型稿.md#5-核心功能",
+        "doc/02-子文档/25-V1.1双维度交互与智能体群开发交接.md#5-岗位能力与证据评价",
+        "packages/world-core/src/scenario-experience.ts"
+      ],
+      "rationale": "旗舰课程把融媒体岗位真实任务转为七节点学习任务，并提供岗位证据评价、个性化回放与改进路径，工程实现覆盖第三和第四类方向。",
+      "nextAction": "在作品方案中明确只主张“岗位典型工作任务转化成学习型任务”为主方向，“个性化学习”为辅助方向，避免泛化为四类全覆盖。",
+      "dueDate": null
+    },
+    {
+      "requirementId": "professional_group_and_job",
+      "title": "具体专业群与核心岗位",
+      "sourceIds": [
+        "xa-202603-question"
+      ],
+      "locator": "原题第5节（三）1（PDF第6-7页）",
+      "requirementSummary": "团队须明确一个具体专业群和对应典型就业岗位，作品功能直接服务该岗位的教学、实训或就业支持。",
+      "mappingStatus": "mapped",
+      "evidenceStatus": "passed",
+      "verificationMode": "artifact_review",
+      "mappingRefs": [
+        "doc/02-子文档/23-融岗智训产品设计定型稿.md",
+        "packages/world-core/src/scenario.ts",
+        "packages/world-core/src/scenario-experience.ts"
+      ],
+      "rationale": "当前原型已聚焦融媒体技术与运营方向，以记者和责任编辑岗位完成文旅活动采编、治理、发布与复盘实训；岗位职责、私有视野和交付均进入配置。",
+      "nextAction": "最终材料固定专业群正式名称及一个主岗位，说明双岗位协作只是同一职业任务链的教学组织方式。",
+      "dueDate": null
+    },
+    {
+      "requirementId": "real_scenario_and_pain_point",
+      "title": "真实场景与具体痛点",
+      "sourceIds": [
+        "xa-202603-question"
+      ],
+      "locator": "原题第5节（二）1；评分标准“创意实用度”（PDF第5、8页）",
+      "requirementSummary": "场景须来自教学、实训或就业一线，明确“谁、在哪个环节、遇到什么困难”，并建议附场景来源说明。",
+      "mappingStatus": "mapped",
+      "evidenceStatus": "insufficient",
+      "verificationMode": "manual",
+      "mappingRefs": [
+        "doc/02-子文档/23-融岗智训产品设计定型稿.md#6-四项产品理念",
+        "packages/world-core/src/scenario.ts",
+        "artifacts/gold-readiness/demo/formal-v1.1.16-pass/run.json"
+      ],
+      "rationale": "系统内已有具体人物、环节、冲突与可验证职业后果，但目前是冻结演示情境，尚无目标专业教师访谈、真实课程痛点确认或场景来源回执。",
+      "nextAction": "邀请至少一名目标专业教师核验“学生在文旅融媒体采编中难以同时处理信源、版权、平台规则和突发改稿”的场景，并冻结访谈摘要与身份说明。",
+      "dueDate": null
+    },
+    {
+      "requirementId": "functional_closed_loop",
+      "title": "微任务功能闭环",
+      "sourceIds": [
+        "xa-202603-question"
+      ],
+      "locator": "原题第5节（二）2（PDF第5-6页）",
+      "requirementSummary": "智能体须独立完成输入、知识或规则调用、逻辑处理、结果生成和清晰反馈组成的完整可用交互闭环。",
+      "mappingStatus": "mapped",
+      "evidenceStatus": "passed",
+      "verificationMode": "automated",
+      "mappingRefs": [
+        "artifacts/gold-readiness/manifest.json",
+        "artifacts/gold-readiness/demo/formal-v1.1.16-pass/run.json",
+        "packages/agent-runtime/src/graph.ts",
+        "packages/world-core/src/engine.ts"
+      ],
+      "rationale": "黄金演示和技术根清单覆盖任务输入、授权RAG、智能体或规则处理、结构化输出、世界二验、教师门和学生反馈的连续闭环。",
+      "nextAction": "保持当前黄金路径不可变；接入Live能力后用同一脚本形成新证据版本，不覆盖现有Mock边界。",
+      "dueDate": null
+    },
+    {
+      "requirementId": "professional_accuracy_and_citations",
+      "title": "专业准确性与依据来源",
+      "sourceIds": [
+        "xa-202603-question"
+      ],
+      "locator": "原题第5节（二）3；评分标准“内容专业准确性”（PDF第6、8页）",
+      "requirementSummary": "输出应符合职业标准、行业规范或权威教材，关键知识点标明来源，并保留安全提示和原则性错误控制。",
+      "mappingStatus": "mapped",
+      "evidenceStatus": "insufficient",
+      "verificationMode": "artifact_review",
+      "mappingRefs": [
+        "packages/context-engine/src/rag.ts",
+        "packages/world-core/src/governance-execution.ts",
+        "packages/world-core/src/scenario.ts"
+      ],
+      "rationale": "运行时已强制知识ACL、内容哈希、引用白名单、确定性规则和教师复核，但当前知识多为课程内规则摘要，尚未系统绑定职业标准编号、权威教材页码或行业规范版本。",
+      "nextAction": "建立至少50条带文献编号、版本、页码或条款号的融媒体专业知识条目，并由目标专业教师抽检关键高风险回答。",
+      "dueDate": null
+    },
+    {
+      "requirementId": "multi_turn_friendly_interaction",
+      "title": "多轮澄清与友好反馈",
+      "sourceIds": [
+        "xa-202603-question"
+      ],
+      "locator": "原题第5节（二）4；评分标准“技术实现合理性”（PDF第6、8页）",
+      "requirementSummary": "作品应能澄清模糊提问、支持2至3轮追问，以分步骤、口语化和可视化方式反馈。",
+      "mappingStatus": "mapped",
+      "evidenceStatus": "passed",
+      "verificationMode": "automated",
+      "mappingRefs": [
+        "packages/world-core/src/scenario-experience.ts",
+        "apps/web/src/components/student-workbench.tsx",
+        "apps/web/src/components/student-world-stage.tsx",
+        "artifacts/gold-readiness/demo/formal-v1.1.16-pass/screenshot-manifest.json"
+      ],
+      "rationale": "学生端提供岗位通讯、连续追问、分步任务、事件卡、因果回放和状态可视化，黄金演示截图与浏览器门已验证关键反馈界面可见。",
+      "nextAction": "在正式演示脚本中保留一次模糊提问澄清和两轮岗位追问，避免只展示结构化按钮。",
+      "dueDate": null
+    },
+    {
+      "requirementId": "runnable_interactive_mvp",
+      "title": "可运行可交互MVP",
+      "sourceIds": [
+        "xa-202603-question"
+      ],
+      "locator": "原题第5节（三）2；评分标准“作品完成度”（PDF第7-8页）",
+      "requirementSummary": "不得只提交方案、PPT或概念视频；必须提供可运行可交互的最小产品，至少具备一种输入和一种输出。",
+      "mappingStatus": "mapped",
+      "evidenceStatus": "passed",
+      "verificationMode": "automated",
+      "mappingRefs": [
+        "artifacts/gold-readiness/demo/formal-v1.1.16-pass/run.json",
+        "artifacts/gold-readiness/demo/formal-v1.1.16-pass/screenshot-manifest.json",
+        "apps/api/src/server.ts",
+        "apps/web/src/App.tsx"
+      ],
+      "rationale": "原型具备教师端、学生端、真实状态机、持久任务、文本与文件输入、结构化反馈和连续可演示闭环；520.805秒冻结演示已通过截图与失败门。",
+      "nextAction": "准备稳定的Demo访问地址、演示账号和简明运行说明，并在提交前按正式网络环境复跑。",
+      "dueDate": null
+    },
+    {
+      "requirementId": "structured_knowledge_minimum",
+      "title": "专业知识库最低规模",
+      "sourceIds": [
+        "xa-202603-question"
+      ],
+      "locator": "原题第5节（三）3；评分标准“技术实现合理性”（PDF第7-8页）",
+      "requirementSummary": "作品须嵌入真实专业教学、实训或岗位标准知识；评分标准要求知识库至少50条专业内容并标注简要来源。",
+      "mappingStatus": "mapped",
+      "evidenceStatus": "insufficient",
+      "verificationMode": "automated",
+      "mappingRefs": [
+        "packages/world-core/src/scenario.ts",
+        "packages/context-engine/src/rag.ts",
+        "doc/02-子文档/25-V1.1双维度交互与智能体群开发交接.md#1-当前基线与必须补齐的差距"
+      ],
+      "rationale": "当前旗舰课程只有16条版本化知识切片，虽具备来源、哈希和ACL，但未达到原题评分标准的50条最低规模，且权威外部出处仍不完整。",
+      "nextAction": "扩充到不少于50条经教师审核的融媒体岗位知识，逐条登记来源、版本、页码或条款号，并增加数量与引用完整性自动门。",
+      "dueDate": null
+    },
+    {
+      "requirementId": "real_user_feedback",
+      "title": "2至3名真实用户反馈",
+      "sourceIds": [
+        "xa-202603-question"
+      ],
+      "locator": "原题第5节（三）4；评分标准“验证与反馈”（PDF第7-9页）",
+      "requirementSummary": "邀请2至3名目标专业在校生或教师试用，收集标注具体身份的书面或视频反馈，内容须具体且包含优点和改进方向。",
+      "mappingStatus": "mapped",
+      "evidenceStatus": "insufficient",
+      "verificationMode": "manual",
+      "mappingRefs": [
+        "packages/agent-runtime/src/gold-pilot-study.ts",
+        "packages/agent-runtime/src/gold-pilot-readiness.ts",
+        "doc/02-项目规划.md#13-国金成果证明与开发准入"
+      ],
+      "rationale": "试点、知情、身份说明、退出和冻结报告工作流已实现，但仓库没有真实教师或学生、真实试用记录及访谈反馈，不能用演示数据替代。",
+      "nextAction": "先完成至少2至3名官方最低用户的真实试用与具体反馈；内部国金试点仍按更高的3名教师、20个完整学生配对门单独推进。",
+      "dueDate": null
+    },
+    {
+      "requirementId": "official_scoring_rubric",
+      "title": "30/50/20官方评分映射",
+      "sourceIds": [
+        "xa-202603-question"
+      ],
+      "locator": "原题第6节（PDF第7-9页）",
+      "requirementSummary": "总分100分：功能完整与实用30分、技术实现与内容质量50分、应用潜力与完成质量20分，并细分为六个评分项。",
+      "mappingStatus": "mapped",
+      "evidenceStatus": "insufficient",
+      "verificationMode": "artifact_review",
+      "mappingRefs": [
+        "packages/agent-runtime/src/gold-readiness.ts",
+        "packages/agent-runtime/src/gold-competition-readiness.ts",
+        "doc/02-子文档/26-国金成果证明与开发准入标准.md"
+      ],
+      "rationale": "现有六域能力量规和六类成果门可提供底层证据，但尚未形成与官方六个评分项逐项对应的100分答辩表、证据页码和模拟评分。",
+      "nextAction": "新增官方30/50/20评分卡，逐子项绑定产品界面、运行证据、材料页码、负责人和补证动作，并组织一次独立模拟评审。",
+      "dueDate": null
+    },
+    {
+      "requirementId": "configuration_extensibility",
+      "title": "模块化与可迁移适配",
+      "sourceIds": [
+        "xa-202603-question"
+      ],
+      "locator": "原题评分标准“可拓展性”（PDF第8页）",
+      "requirementSummary": "模块设计应清晰，能够以简要适配方式迁移到相近专业、岗位或实训场景，并说明适配方法和范围。",
+      "mappingStatus": "mapped",
+      "evidenceStatus": "passed",
+      "verificationMode": "automated",
+      "mappingRefs": [
+        "artifacts/gold-readiness/transfer/configuration-proof.json",
+        "packages/scenario-catalog/src/catalog.ts",
+        "packages/world-core/src/scenario-experience.ts"
+      ],
+      "rationale": "第二微型情境已通过不可变发布、配置迁移、结构校验、题材内核扫描和11.4115分钟前瞻工时门，证明当前原型的配置化迁移能力。",
+      "nextAction": "在作品方案中附一页配置迁移清单和边界，明确一次同域异题迁移不等于跨全部专业规模化有效。",
+      "dueDate": null
+    },
+    {
+      "requirementId": "submission_deadline",
+      "title": "作品提交与初审时间",
+      "sourceIds": [
+        "xa-202603-question"
+      ],
+      "locator": "原题第7节（PDF第9页）",
+      "requirementSummary": "2026年9月15日前提交作品，9月30日前完成初审；发榜单位可能按实际情况申请延期并另行通知。",
+      "mappingStatus": "mapped",
+      "evidenceStatus": "unverified",
+      "verificationMode": "manual",
+      "mappingRefs": [
+        "doc/02-项目规划.md#13-国金成果证明与开发准入"
+      ],
+      "rationale": "截止日期已固定，但当前没有最终压缩包、邮件发送收据或发榜单位延期通知；系统不能把开发进度当作已提交。",
+      "nextAction": "以9月15日为硬截止倒排内审、打包、校验和邮件发送；实际提交后冻结压缩包哈希、邮件发送时间及收件回执。",
+      "dueDate": "2026-09-15"
+    },
+    {
+      "requirementId": "submission_package",
+      "title": "六类提交材料",
+      "sourceIds": [
+        "xa-202603-question"
+      ],
+      "locator": "原题第8节（二）（PDF第10-11页）",
+      "requirementSummary": "压缩包须按规定命名并包含参赛信息、作品Demo、100MB以内作品方案PPT、可复现代码或模型材料、伦理与安全合规声明，以及可选的测试报告等辅助材料。",
+      "mappingStatus": "mapped",
+      "evidenceStatus": "insufficient",
+      "verificationMode": "artifact_review",
+      "mappingRefs": [
+        "artifacts/gold-readiness/",
+        "doc/02-子文档/26-国金成果证明与开发准入标准.md",
+        "packages/agent-runtime/src/gold-competition-readiness.ts"
+      ],
+      "rationale": "代码、Demo和多类技术证据已存在，但审核通过的参赛信息、最终PPT、签字盖章合规声明、正式演示地址和按官方命名的最终压缩包尚未形成。",
+      "nextAction": "建立官方六目录装配清单，为每个文件登记负责人、状态、字节数、SHA-256和最后复核人；缺一项不得生成“可提交”状态。",
+      "dueDate": "2026-09-15"
+    },
+    {
+      "requirementId": "iflytek_delivery_path",
+      "title": "星辰或自部署Demo交付",
+      "sourceIds": [
+        "xa-202603-question"
+      ],
+      "locator": "原题第5节答题要求；第8节（二）2（PDF第3、10页）",
+      "requirementSummary": "作品基于星辰Agent能力开发；提交时可提供星辰智能体编号，或提供可体验的Demo地址和文档，自行部署被明确允许。",
+      "mappingStatus": "mapped",
+      "evidenceStatus": "insufficient",
+      "verificationMode": "artifact_review",
+      "mappingRefs": [
+        "packages/iflytek-adapter/src/catalog.ts",
+        "packages/iflytek-adapter/src/live-handlers.ts",
+        "apps/api/src/server.ts",
+        ".env.example"
+      ],
+      "rationale": "统一讯飞能力目录、Live处理器和失败降级边界已实现，但当前正式证据仍为Mock，尚无星辰智能体编号、可公开访问Demo或关键Live调用收据。",
+      "nextAction": "二选一闭环：完成星辰智能体/工作流Live接入并冻结编号与收据，或部署可公开体验的自研Demo并提供运行文档；两者都需保持当前自研世界内核边界。",
+      "dueDate": "2026-09-15"
+    },
+    {
+      "requirementId": "ip_ethics_and_ai_label",
+      "title": "知识产权、伦理安全与AI标识",
+      "sourceIds": [
+        "challenge-cup-2026-announcement",
+        "xa-202603-question"
+      ],
+      "locator": "赛事正文“参赛对象”；原题第8节（二）5及后续知识产权要求（PDF第10-11页）",
+      "requirementSummary": "参赛者须拥有完整独立知识产权；提交签字或盖章的伦理与安全合规声明，承诺不使用未脱敏个人数据、不生成学术造假内容，并设置明显AI生成内容标识。",
+      "mappingStatus": "mapped",
+      "evidenceStatus": "insufficient",
+      "verificationMode": "manual",
+      "mappingRefs": [
+        "packages/world-core/src/governance-execution.ts",
+        "packages/agent-runtime/src/gold-pilot-study.ts",
+        "apps/web/src/components/student-production-workspace.tsx",
+        "doc/02-子文档/26-国金成果证明与开发准入标准.md"
+      ],
+      "rationale": "原型已有去标识、内容治理、教师门和部分机器输出标识，但尚无全仓知识产权清单、第三方素材授权复核及负责人签字或学校盖章的正式PDF声明。",
+      "nextAction": "建立代码、模型、数据、图片、字体和外部材料的权利清单；统一AI生成标识；完成规定三项承诺并由负责人签字或学校盖章。",
+      "dueDate": "2026-09-15"
+    }
+  ],
+  "claimBoundary": "矩阵中的passed只表示现有工程或冻结工件满足对应原题要求的可验证部分；insufficient和unverified均继续阻止完整参赛就绪主张。报名资格、真实身份、真实反馈、最终提交、知识产权和发榜单位后续通知必须由人工或外部收据确认，不能由代码推断。",
+  "matrixHash": "9e4a55b1d66da84c9c7150d63d46c51493e83d80f5c44b86080550c71b359767"
+}

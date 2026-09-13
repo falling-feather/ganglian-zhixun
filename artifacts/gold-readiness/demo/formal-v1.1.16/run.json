@@ -1,0 +1,43 @@
+{
+  "schemaVersion": "golden-demo-run/1.0.0",
+  "runId": "v1.1.16-rehearsal-timeout-20260730",
+  "track": "V1.1.16",
+  "status": "failed_timeout",
+  "scenario": {
+    "scenarioId": "scenario-local-tourism-media-v0.1",
+    "version": "1.1.1",
+    "releaseId": "release-scenario-local-tourism-media-v0.1-1.1.1-baseline",
+    "contentHash": "db3561089fabef485cff10a55730759e0d8b1702ba66e000b5b33f70a165e690"
+  },
+  "sessionId": "training-44748bb61393b2c4d9b2",
+  "timing": {
+    "operatorStartAt": "2026-07-29T18:05:17.319Z",
+    "sessionStartedAt": "2026-07-29T18:06:07.335Z",
+    "submissionCreatedAt": "2026-07-29T18:17:15.899Z",
+    "assessmentCreatedAt": "2026-07-29T18:17:54.751Z",
+    "learningCandidateReviewedAt": "2026-07-29T18:18:06.757Z",
+    "studentReplayVisibleAt": null,
+    "operatorToLearningReviewMs": 769438,
+    "sessionToLearningReviewMs": 719422,
+    "minimumMs": 480000,
+    "maximumMs": 720000,
+    "pass": false
+  },
+  "result": {
+    "worldEventCount": 355,
+    "evidenceCount": 18,
+    "taskCount": 82,
+    "runCount": 82,
+    "failureCount": 0,
+    "degradedCount": 0,
+    "finalScore": 92.2,
+    "learningReplay": {
+      "status": "passed",
+      "passedCaseCount": 4,
+      "testCaseCount": 4,
+      "scoreDrift": 0,
+      "privacyViolationCount": 0
+    }
+  },
+  "failureReason": "Operator timing exceeded 12 minutes before the fixed final step, student-visible final feedback and replay, was confirmed. The failure is retained and is not counted as a formal pass."
+}

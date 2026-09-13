@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>修订提交与终评反馈透明说明层</title>
+  </head>
+  <body>
+    <template id="review-beat-template">
+      <div
+        id="review-beat"
+        data-composition-id="review-beat"
+        data-width="1280"
+        data-height="720"
+      >
+        <section
+          id="review-chapter-5"
+          class="clip chapter-pill"
+          data-start="0"
+          data-duration="66"
+          data-track-index="0"
+        >
+          <span class="chapter-index">05</span>
+          <span class="chapter-title">R1 / R2 成果修订与提交</span>
+          <span class="chapter-status" aria-hidden="true"></span>
+        </section>
+
+        <aside
+          id="review-note-5"
+          class="clip lower-third"
+          data-start="0"
+          data-duration="5"
+          data-track-index="1"
+        >
+          <span class="note-marker" aria-hidden="true"></span>
+          <p>R1 保留问题，R2 替换未授权材料并固定精确版本</p>
+        </aside>
+
+        <div
+          id="review-transition"
+          class="clip transition-sweep"
+          data-start="65.55"
+          data-duration="0.7"
+          data-track-index="2"
+          data-layout-ignore
+          aria-hidden="true"
+        ></div>
+
+        <section
+          id="review-chapter-6"
+          class="clip chapter-pill"
+          data-start="66"
+          data-duration="72"
+          data-track-index="0"
+        >
+          <span class="chapter-index">06</span>
+          <span class="chapter-title">教师终评与学生反馈</span>
+          <span class="chapter-status" aria-hidden="true"></span>
+        </section>
+
+        <aside
+          id="review-note-6"
+          class="clip lower-third"
+          data-start="66"
+          data-duration="5"
+          data-track-index="1"
+        >
+          <span class="note-marker" aria-hidden="true"></span>
+          <p>评价智能体逐维建议，教师锁定 92.2 分，学生查看证据与策略复盘</p>
+        </aside>
+
+        <aside
+          id="review-score"
+          class="clip score-callout"
+          data-start="117"
+          data-duration="19"
+          data-track-index="1"
+          aria-label="教师锁定终评分 92.2 分"
+        >
+          <span class="score-label">教师锁定终评</span>
+          <strong class="score-value">92.2</strong>
+          <span class="score-unit">分</span>
+        </aside>
+
+        <style>
+          @font-face {
+            font-family: "Microsoft YaHei";
+            src: local("Microsoft YaHei");
+            font-style: normal;
+            font-weight: 300 900;
+          }
+
+          @font-face {
+            font-family: "Cascadia Mono";
+            src: local("Cascadia Mono");
+            font-style: normal;
+            font-weight: 300 800;
+          }
+
+          #review-beat {
+            position: relative;
+            width: 1280px;
+            height: 720px;
+            overflow: hidden;
+            background: rgba(7, 24, 39, 0);
+            color: #f2f7fa;
+            font-family: "Microsoft YaHei", sans-serif;
+            pointer-events: none;
+          }
+
+          #review-beat *,
+          #review-beat *::before,
+          #review-beat *::after {
+            box-sizing: border-box;
+          }
+
+          #review-beat .chapter-pill {
+            position: absolute;
+            top: 22px;
+            left: 26px;
+            z-index: 5;
+            display: flex;
+            align-items: center;
+            width: max-content;
+            max-width: 460px;
+            min-height: 46px;
+            margin: 0;
+            padding: 7px 16px 7px 8px;
+            gap: 11px;
+            overflow: hidden;
+            border: 1px solid rgba(58, 221, 224, 0.58);
+            border-radius: 14px;
+            background: rgba(13, 43, 58, 0.93);
+            box-shadow: 0 12px 34px rgba(5, 27, 46, 0.28);
+            backdrop-filter: blur(10px);
+            will-change: transform, opacity;
+          }
+
+          #review-beat .chapter-index {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 32px;
+            height: 32px;
+            border-radius: 10px;
+            background: #24c7c9;
+            color: #071827;
+            font-family: "Cascadia Mono", monospace;
+            font-size: 17px;
+            font-weight: 800;
+            line-height: 1;
+            font-variant-numeric: tabular-nums;
+            will-change: transform, opacity;
+          }
+
+          #review-beat .chapter-title {
+            overflow: hidden;
+            color: #f2f7fa;
+            font-size: 22px;
+            font-weight: 900;
+            line-height: 1.25;
+            letter-spacing: -0.025em;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            will-change: transform, opacity;
+          }
+
+          #review-beat .chapter-status {
+            width: 7px;
+            height: 7px;
+            margin-left: 2px;
+            flex: 0 0 auto;
+            border-radius: 50%;
+            background: #70f2d1;
+            box-shadow: 0 0 0 4px rgba(112, 242, 209, 0.14);
+            will-change: transform, opacity;
+          }
+
+          #review-beat .lower-third {
+            position: absolute;
+            bottom: 28px;
+            left: 28px;
+            z-index: 6;
+            display: flex;
+            align-items: center;
+            width: min(620px, calc(100% - 56px));
+            min-height: 72px;
+            margin: 0;
+            padding: 14px 22px 14px 18px;
+            gap: 15px;
+            overflow: hidden;
+            border: 1px solid rgba(58, 221, 224, 0.38);
+            border-radius: 16px;
+            background: rgba(13, 43, 58, 0.93);
+            box-shadow: 0 18px 48px rgba(5, 27, 46, 0.3);
+            backdrop-filter: blur(12px);
+            will-change: transform, opacity;
+          }
+
+          #review-beat .note-marker {
+            width: 5px;
+            height: 42px;
+            flex: 0 0 auto;
+            border-radius: 999px;
+            background: #24c7c9;
+            box-shadow: 0 0 20px rgba(36, 199, 201, 0.44);
+            transform-origin: center bottom;
+            will-change: transform, opacity;
+          }
+
+          #review-beat .lower-third p {
+            max-width: 540px;
+            margin: 0;
+            color: #f2f7fa;
+            font-size: 20px;
+            font-weight: 350;
+            line-height: 1.45;
+            letter-spacing: 0.005em;
+            will-change: transform, opacity;
+          }
+
+          #review-beat .transition-sweep {
+            position: absolute;
+            top: 20px;
+            left: 24px;
+            z-index: 8;
+            width: 486px;
+            height: 50px;
+            border-radius: 15px;
+            background: rgba(36, 199, 201, 0.36);
+            box-shadow: 0 0 34px rgba(36, 199, 201, 0.34);
+            transform-origin: left center;
+            will-change: transform, opacity;
+          }
+
+          #review-beat .score-callout {
+            position: absolute;
+            bottom: 28px;
+            left: 28px;
+            z-index: 7;
+            display: grid;
+            grid-template-columns: auto auto;
+            grid-template-rows: auto auto;
+            align-items: end;
+            width: 236px;
+            min-height: 108px;
+            margin: 0;
+            padding: 14px 18px;
+            overflow: hidden;
+            border: 1px solid rgba(36, 199, 201, 0.66);
+            border-radius: 16px;
+            background: rgba(7, 24, 39, 0.94);
+            box-shadow: 0 18px 48px rgba(5, 27, 46, 0.32);
+            backdrop-filter: blur(12px);
+            transform-origin: left bottom;
+            will-change: transform, opacity;
+          }
+
+          #review-beat .score-label {
+            grid-column: 1 / -1;
+            color: #9ab5c2;
+            font-size: 17px;
+            font-weight: 350;
+            line-height: 1.25;
+            letter-spacing: 0.02em;
+            will-change: transform, opacity;
+          }
+
+          #review-beat .score-value {
+            color: #24c7c9;
+            font-family: "Cascadia Mono", monospace;
+            font-size: 54px;
+            font-weight: 800;
+            line-height: 0.95;
+            letter-spacing: -0.045em;
+            font-variant-numeric: tabular-nums;
+            will-change: transform, opacity;
+          }
+
+          #review-beat .score-unit {
+            align-self: end;
+            padding-bottom: 5px;
+            color: #f2f7fa;
+            font-size: 20px;
+            font-weight: 900;
+            line-height: 1;
+            will-change: transform, opacity;
+          }
+        </style>
+
+        <script>
+          window.__timelines = window.__timelines || {};
+          var reviewTimeline = gsap.timeline({ paused: true });
+
+          reviewTimeline.from(
+            "#review-chapter-5",
+            { x: -42, opacity: 0, scale: 0.96, duration: 0.48, ease: "expo.out" },
+            0.18
+          );
+          reviewTimeline.from(
+            "#review-chapter-5 .chapter-index",
+            { rotation: -8, scale: 0.78, opacity: 0, duration: 0.34, ease: "power2.out" },
+            0.3
+          );
+          reviewTimeline.from(
+            "#review-chapter-5 .chapter-title",
+            { x: -18, opacity: 0, duration: 0.42, ease: "power3.out" },
+            0.38
+          );
+          reviewTimeline.from(
+            "#review-chapter-5 .chapter-status",
+            { scale: 0, opacity: 0, duration: 0.28, ease: "circ.out" },
+            0.56
+          );
+          reviewTimeline.from(
+            "#review-note-5",
+            { x: -58, opacity: 0, duration: 0.58, ease: "power4.out" },
+            0.24
+          );
+          reviewTimeline.from(
+            "#review-note-5 .note-marker",
+            { scaleY: 0, opacity: 0, duration: 0.32, ease: "circ.out" },
+            0.46
+          );
+          reviewTimeline.from(
+            "#review-note-5 p",
+            { y: 16, opacity: 0, duration: 0.46, ease: "sine.out" },
+            0.52
+          );
+          reviewTimeline.to(
+            "#review-note-5",
+            { x: -24, opacity: 0, duration: 0.28, ease: "power2.in" },
+            4.66
+          );
+
+          reviewTimeline.fromTo(
+            "#review-transition",
+            { scaleX: 0, opacity: 0 },
+            { scaleX: 1, opacity: 1, duration: 0.28, ease: "power3.inOut" },
+            65.55
+          );
+          reviewTimeline.to(
+            "#review-transition",
+            { scaleX: 0, x: 486, opacity: 0, duration: 0.3, ease: "power4.in" },
+            65.9
+          );
+
+          reviewTimeline.from(
+            "#review-chapter-6",
+            { x: 48, opacity: 0, scale: 0.97, duration: 0.52, ease: "expo.out", immediateRender: false },
+            66.08
+          );
+          reviewTimeline.from(
+            "#review-chapter-6 .chapter-index",
+            { rotation: 7, scale: 0.78, opacity: 0, duration: 0.36, ease: "power2.out", immediateRender: false },
+            66.22
+          );
+          reviewTimeline.from(
+            "#review-chapter-6 .chapter-title",
+            { x: 20, opacity: 0, duration: 0.44, ease: "power3.out", immediateRender: false },
+            66.32
+          );
+          reviewTimeline.from(
+            "#review-chapter-6 .chapter-status",
+            { scale: 0, opacity: 0, duration: 0.3, ease: "circ.out", immediateRender: false },
+            66.5
+          );
+          reviewTimeline.from(
+            "#review-note-6",
+            { x: -62, opacity: 0, duration: 0.62, ease: "power4.out", immediateRender: false },
+            66.16
+          );
+          reviewTimeline.from(
+            "#review-note-6 .note-marker",
+            { scaleY: 0, opacity: 0, duration: 0.34, ease: "circ.out", immediateRender: false },
+            66.42
+          );
+          reviewTimeline.from(
+            "#review-note-6 p",
+            { y: 18, opacity: 0, duration: 0.5, ease: "sine.out", immediateRender: false },
+            66.5
+          );
+          reviewTimeline.to(
+            "#review-note-6",
+            { x: -24, opacity: 0, duration: 0.28, ease: "power2.in" },
+            70.66
+          );
+
+          reviewTimeline.from(
+            "#review-score",
+            { x: -40, opacity: 0, scale: 0.94, duration: 0.62, ease: "expo.out", immediateRender: false },
+            117.18
+          );
+          reviewTimeline.from(
+            "#review-score .score-label",
+            { y: 12, opacity: 0, duration: 0.34, ease: "sine.out", immediateRender: false },
+            117.42
+          );
+          reviewTimeline.from(
+            "#review-score .score-value",
+            { scale: 0.9, opacity: 0, duration: 0.48, ease: "power3.out", immediateRender: false },
+            117.56
+          );
+          reviewTimeline.from(
+            "#review-score .score-unit",
+            { x: -10, opacity: 0, duration: 0.3, ease: "circ.out", immediateRender: false },
+            117.74
+          );
+          reviewTimeline.to(
+            "#review-score .score-value",
+            { scale: 1.055, duration: 0.32, ease: "sine.inOut" },
+            121.2
+          );
+          reviewTimeline.to(
+            "#review-score .score-value",
+            { scale: 1, duration: 0.42, ease: "sine.inOut" },
+            121.52
+          );
+
+          reviewTimeline.to(
+            "#review-score",
+            { y: 12, opacity: 0, duration: 0.44, ease: "power2.in" },
+            135.46
+          );
+          reviewTimeline.to(
+            "#review-chapter-6",
+            { y: -14, opacity: 0, duration: 0.5, ease: "power3.in" },
+            137.28
+          );
+
+          window.__timelines["review-beat"] = reviewTimeline;
+        </script>
+      </div>
+    </template>
+  </body>
+</html>
