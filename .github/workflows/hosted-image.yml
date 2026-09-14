@@ -28,6 +28,7 @@ jobs:
         run: |
           set -euo pipefail
           docker run -d --name glzx-ci -p 127.0.0.1:4173:4173 \
+            -e COREPACK_ENABLE_NETWORK=0 \
             -e WEB_ALLOWED_ORIGINS=https://glzx.fallingfeather.cn \
             -e __VITE_ADDITIONAL_SERVER_ALLOWED_HOSTS=glzx.fallingfeather.cn \
             ganglian-zhixun:${{ github.sha }}
