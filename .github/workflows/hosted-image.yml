@@ -37,6 +37,9 @@ jobs:
               ready=1
               break
             fi
+            if test "$(docker inspect --format '{{.State.Running}}' glzx-ci)" != true; then
+              break
+            fi
             sleep 2
           done
           docker logs --tail 120 glzx-ci

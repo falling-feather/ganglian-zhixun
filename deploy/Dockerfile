@@ -8,7 +8,7 @@ RUN python3 -m venv /opt/ronggang-python && /opt/ronggang-python/bin/pip install
 ENV RONGGANG_AI025_PYTHON=/opt/ronggang-python/bin/python RONGGANG_CONTENT_PYTHON=/opt/ronggang-python/bin/python RONGGANG_AI025_MODEL_DIR=/data/models/embeddings RONGGANG_BE007_MODEL_DIR=/data/models/media
 COPY . .
 RUN pnpm install --frozen-lockfile && pnpm build && mkdir -p /data && chown -R node:node /app /data
-ENV NODE_ENV=production DEMO_SKIP_BUILD=1 DEMO_REUSE_DATA=1 DEMO_OPEN_BROWSER=0 DEMO_HOST=0.0.0.0 DEMO_DATA_DIR=/data DEMO_API_PORT=3001
+ENV NODE_ENV=production DEMO_SKIP_BUILD=1 DEMO_REUSE_DATA=1 DEMO_OPEN_BROWSER=0 DEMO_HOST=0.0.0.0 DEMO_DATA_DIR=/data/runtime DEMO_API_PORT=3001
 USER node
 EXPOSE 4173
 STOPSIGNAL SIGTERM
