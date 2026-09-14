@@ -136,6 +136,7 @@ export interface ContentCaseDossier {
       materialId: string;
       title: string;
       publicDescription: string;
+      document?:{format:string;body:string};
       sourceRefs: ContentCaseSourceRef[];
       inspectableFields: string[];
       simulationBoundary: string;
@@ -402,6 +403,7 @@ function parseCaseDossier(value: unknown): ContentCaseDossier | null {
           materialId: stringOf(material.materialId, `studentMaterials[${index}].materialId`)!,
           title: stringOf(material.title, `studentMaterials[${index}].title`)!,
           publicDescription: stringOf(material.publicDescription, `studentMaterials[${index}].publicDescription`)!,
+          ...(material.document?{document:{format:stringOf(objectOf(material.document,'document').format,'document.format')!,body:stringOf(objectOf(material.document,'document').body,'document.body')!}}:{}),
           sourceRefs: sourceRefs(material.sourceRefs, `studentMaterials[${index}].sourceRefs`),
           inspectableFields: stringsOf(material.inspectableFields, `studentMaterials[${index}].inspectableFields`),
           simulationBoundary: stringOf(material.simulationBoundary, `studentMaterials[${index}].simulationBoundary`)!,

@@ -1,4 +1,5 @@
 import {
+  SessionControlOverviewSchema,type SessionControlOverview,
   AdminCollaborationEpisodeSchema,
   AgentTopologyManifestSchema,
   BusinessOperationReceiptListResponseSchema,
@@ -64,6 +65,7 @@ import {
 } from "./flagship-v4";
 
 export interface AdminGateway {
+  getSessionOverview?(bindingId:string,authorizationSessionId:string,signal?:AbortSignal):Promise<SessionControlOverview>;
   getSessionExperienceDescriptor(
     sessionId: string,
     bindingId: string,
@@ -275,6 +277,8 @@ export function createHttpAdminGateway(
     requestUnknown(path, signal, options)
   );
   return {
+    async getSessionOverview(bindingId,authorizationSessionId,signal){return SessionControlOverviewSchema.parse(await read('/api/training-sessions?'+new URLSearchParams({bindingId,authorizationSessionId}),signal));},
+
     async getSessionExperienceDescriptor(sessionId, bindingId, signal) {
       return parseSessionExperienceDescriptorResponse(await read(
         `/api/sessions/${encodeURIComponent(sessionId)}/experience-descriptor?bindingId=${encodeURIComponent(bindingId)}`,

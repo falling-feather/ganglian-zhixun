@@ -46,16 +46,38 @@ node scripts/build-public-demo.mjs
 
 ## 完整系统托管准备
 
-完整 Node 后端、模型网关和持久化实现保留在源码中。目前没有托管账号／服务器，未宣称其已上线。
+完整 Node 后端、模型网关和持久化实现保留在源码中。2026-09-15用户启动阿里云部署准备，本轮先完成域名基础配置，再指导完整应用部署。
 
-提供 `deploy/Dockerfile` 和 `deploy/start-hosted.mjs`，沿用正式启动器，供具备持久化磁盘的 Node／容器平台接入。当前环境没有 Docker，因此容器镜像尚未实际构建验证。
+已核对的目标是杭州轻量应用服务器 `1Panel-ehke`，公网IP `47.99.130.142`，2核2GiB内存、40GiB系统盘，应用镜像为1Panel 1.10.26。已在阿里云DNS新增 `glzx.fallingfeather.cn` 的A记录，默认线路、TTL 600秒、启用状态；公网DNS已返回目标IP。云端防火墙的TCP 80和443规则原本已启用。
+
+完整应用尚未上线：当前HTTP返回301跳转到同域名HTTPS，HTTPS证书校验报域名不匹配。1Panel开启了自定义安全入口，普通 `/login` 无法访问；本轮未登录面板、配置新站点或申请证书。轻量控制台的域名关联向导未完成，不影响已生效的公网DNS记录。
+
+提供 `deploy/Dockerfile` 和 `deploy/start-hosted.mjs`，沿用正式启动器，供具备持久化磁盘的 Node／容器平台接入。目标服务器已有Docker；这些配置仍是待验证方案，容器镜像尚未实际构建验证。
 
 ```sh
 docker build -f deploy/Dockerfile -t ganglian-zhixun .
-docker run --rm -p 4173:4173 -v ganglian-data:/data \
-  -e WEB_ALLOWED_ORIGINS=https://你的完整系统域名 \
+docker run -d --name ganglian-zhixun --restart unless-stopped \
+  -p 127.0.0.1:4173:4173 -v ganglian-data:/data \
+  --env-file .env.server \
+  -e PORT=4173 \
+  -e WEB_ALLOWED_ORIGINS=https://glzx.fallingfeather.cn \
+  -e __VITE_ADDITIONAL_SERVER_ALLOWED_HOSTS=glzx.fallingfeather.cn \
   ganglian-zhixun
 ```
+
+上述命令在上传后的项目根目录执行，仍需完成服务器构建与运行验证。先准备 `.env.server`，仅放需要的服务端模型配置，例如 `MODEL_PROVIDER`、`DEEPSEEK_BASE_URL`、`DEEPSEEK_API_KEY`、`DEEPSEEK_MODEL`；模型名称和凭据沿用最终验收配置。不要原样复制本机HOST、PORT和DATA_DIR。密钥不放进镜像、网页或公开仓库。
+
+后续操作顺序：
+
+1. 登录1Panel实际安全入口，确认现有Nginx/OpenResty由哪里管理，以及4173端口是否空闲。
+2. 上传最终完整源码，使用现有Dockerfile构建并启动单实例。使用新建的 `ganglian-data` 持久卷，不迁入本机个人学习数据。先检查 `docker logs --tail 100 ganglian-zhixun` 和 `curl -fsS http://127.0.0.1:4173/health`。
+3. 在现有网站服务中新增 `glzx.fallingfeather.cn` 站点，反向代理到应用4173端口。若1Panel/OpenResty采用主机网络，目标为 `http://127.0.0.1:4173`；若采用独立容器网络，应先确认同网络的服务地址，不将容器内的127.0.0.1误当作宿主机。保留Host、转发协议与客户端信息；模型请求按需要设置代理超时并关闭流式响应缓冲。
+4. 为该子域名申请或绑定有效证书，并设置HTTP跳转HTTPS。可用1Panel的ACME/HTTP验证与自动续签；验证请求需要正确到达该站点。已有证书仅在覆盖本域名时复用。
+5. 从外部网络验证HTTPS证书、`/health`、学生/教师登录、一次真实模型交互、作品提交与教师复核，再将HTTPS地址写入提交材料。
+
+当前启动器使用Vite preview，已检查本机依赖支持 `__VITE_ADDITIONAL_SERVER_ALLOWED_HOSTS`，部署时仅放行目标域名。API生产模式设置Secure Cookie，因此HTTPS是完整登录验收的必要条件。2GiB实例的构建与多模态处理承载能力尚未实测，需以首次构建、运行内存和评委并发测试为准。
+
+操作参考：[1Panel创建反向代理网站](https://1panel.cn/docs/v1/user_manual/websites/website_create/)、[证书申请](https://1panel.cn/docs/v1/user_manual/websites/certificate_create/)、[网站HTTPS设置](https://1panel.cn/docs/v1/user_manual/websites/website_config_basic/)。
 
 部署条件：
 

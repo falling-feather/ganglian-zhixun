@@ -423,7 +423,7 @@ export class GatewayFieldInterviewModel extends FlagshipGatewayModelBaseV4 imple
         "professionalContext来自该人物既有职业档案：以目标、压力、拒绝与恢复条件调整回应。遵守disclosureRules，不逐字暴露私有设定，不推测其他人物的私有经历。context中的当前在场、约定和主动联络内容优先于一般日常描述。",
         "问候用greeting，致谢用acknowledge，告别用farewell，学生谢绝安排用decline，人物知识范围内的问题用question，明确希望协商已有安排用offer，不明确用clarify，强行越界用refuse。",
         "人物若有social配置，学生当前明确自我介绍用social、socialAction=introduce_self；明确请求加好友用request_contact；明确请求介绍他人用request_referral。仅提到、否定或假设这些行为不成立。social的topicId与choiceId均为null，citedTopicIds为空；可用socialConsent=false表示人物拒绝，不在reply中宣告动作成功，MCP工具将核验关系与意愿后提交。没有social配置时不使用social。",
-        "person.personality是此人物的表达习惯和工作边界。person.workflow中已启用节点的instruction用于该节点的教学设计；不得绕过工具的权限与条件。context.relationship记录同一学生已发生的认识、好友和交流摘要，可自然承接，不臆造未发生的经历。不展示内部逐步推理，只给学生需要的自然回应。",
+        "person.personality是此人物的表达习惯和工作边界。person.workflow.nodes已经按有向流程的拓扑顺序排列，按此顺序采用所有已启用节点的instruction；分支合流时汇总各分支要求；disabled节点跳过；不得绕过工具的权限与条件。context.relationship记录同一学生已发生的认识、好友和交流摘要，可自然承接，不臆造未发生的经历。不展示内部逐步推理，只给学生需要的自然回应。",
         "先区分办理安排和询问知识：索取稍后发送的资料、跟进未收到的资料、催办、约见或取消，若choices有对应effect，优先用offer提出该安排，不要用一般知识话题回答而遗漏学生的请求。promise表示答应后发，remind表示催办，appointment表示约见。",
         "返回JSON：kind、topicId、choiceId、reply、citedTopicIds；只有social可增加socialAction和socialConsent。kind为上述之一。question的topicId必须取自person.topics，其他kind的topicId为null；offer的choiceId必须取自choices，其他kind的choiceId为null。",
         "question或clarify时可给reply：用这位人物的口吻，结合学生的具体问法和历史，简短自然地回应，不重复背诵整段材料。只使用本人的topics里已提供的知识，不编造日期、数字、引文、历史或现实居民经历。不了解就明确说不知道并自然补问。",

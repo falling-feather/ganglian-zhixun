@@ -15,6 +15,7 @@ import {
   projectRoot,
 } from "./lib/release-process.mjs";
 import { assertRuntimePrerequisites } from "./check-runtime-prerequisites.mjs";
+import { releaseBaselines, baselineStopMode } from "./lib/release-policy.mjs";
 
 const args = process.argv.slice(2);
 const requireClean = args.includes("--require-clean");
@@ -38,7 +39,6 @@ const STABLE_SNAPSHOT_KEYS = [
 const FORCED_CRASH_STOP_MODE =
   "forced_crash_then_explicit_stale_lease_recovery";
 const GRACEFUL_STOP_MODE = "ipc_graceful_close";
-const V1_REQUIRED_DRILLS = ["V0.9.3", "V0.9.4"];
 
 function parseEnvironment(text) {
   const values = new Map();
@@ -398,7 +398,7 @@ async function validateUpgradeRollbackReceipt(receipt, expectedRef) {
     GRACEFUL_STOP_MODE,
     `${label}.upgrade.stopMode`,
   );
-  if (expectedRef === "V0.9.4") {
+  if (baselineStopMode(expectedRef) === GRACEFUL_STOP_MODE) {
     for (const [path, value] of [
       ["from.initialStopMode", from.initialStopMode],
       ["from.stopMode", from.stopMode],
@@ -433,18 +433,14 @@ async function validateUpgradeRollbackReceipt(receipt, expectedRef) {
 
 let releaseEvidence = null;
 if (requireReceipts) {
-  if (rootPackage.version !== "1.0.0") {
-    throw new Error(
-      `版本 ${rootPackage.version} 尚未定义严格发布收据策略`,
-    );
-  }
+  const requiredDrills = releaseBaselines(rootPackage.version);
   const cleanRoom = await readReceipt(
     "clean-room-check.json",
     "clean-room 收据",
   );
   validateCleanRoomReceipt(cleanRoom);
   const upgradeRollback = [];
-  for (const fromRef of V1_REQUIRED_DRILLS) {
+  for (const fromRef of requiredDrills) {
     const receipt = await readReceipt(
       `upgrade-rollback-drill-${fromRef}.json`,
       `${fromRef} 升级/回滚收据`,

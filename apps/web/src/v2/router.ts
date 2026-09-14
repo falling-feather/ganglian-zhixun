@@ -2,6 +2,7 @@ export type TeacherRouteName = "classes" | "director" | "reviews" | "courses" | 
 export type AdminRouteName = "overview" | "agents" | "events" | "trace" | "evidence" | "readiness" | "materials";
 
 export type V2Route =
+  | { kind: "login" }
   | { kind: "student-courses" }
   | { kind: "student-course-detail"; courseId: string }
   | { kind: "student-training"; sessionId: string }
@@ -22,7 +23,7 @@ function decoded(segment: string): string {
 
 export function parseV2Route(pathname: string): V2Route {
   const parts = pathname.split("/").filter(Boolean).map(decoded);
-  if (parts.length === 0) return { kind: "student-courses" };
+  if (parts.length === 0 || (parts[0] === 'login' && parts.length === 1)) return { kind: "login" };
   if (parts[0] === "student" && parts[1] === "courses" && parts.length === 2) {
     return { kind: "student-courses" };
   }

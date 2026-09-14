@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { ArrowLeft, ArrowRight, BookOpen, RefreshCw, UserRound } from "lucide-react";
 import type { TeacherStudentArchiveV3, TeacherSubmittedWorksV3 } from "@ronggang/contracts";
 import type { TeacherGateway } from "../teacher-gateway";
-import { ArchiveStage } from "./archive-stage";
+import { TeacherArchiveStage } from './teacher-archive-stage';
 import {SubmittedWorkView} from './submitted-work-view';
 import "./teacher-student-archive.css";
 
@@ -39,10 +39,10 @@ export default function TeacherStudentArchive({ gateway, navigate }: {
       <h2>人物交往记录</h2><p className="dossier-explanation">这里展示已经发生的认识、联络与引荐。关系参数本身不会直接充当分数。</p>
       {current?.relationships.length?<div className="dossier-relationships">{current.relationships.map((person,index)=><article key={`${person.name}:${index}`}><UserRound/><div><strong>{person.name}</strong><small>{person.friend?'已建立工作联络':person.met?'已认识':'已获引荐线索'}{person.introductions?` · 引荐 ${person.introductions} 人`:''}</small></div></article>)}</div>:<p className="dossier-explanation">尚未形成交往记录。</p>}
     </aside></div>
-  </main>:<ArchiveStage title="学生档案" audience="teacher"
+  </main>:<TeacherArchiveStage classrooms={archive?.classrooms??[]}
     dossiers={(archive?.students??[]).map(student=>{
       const run=student.runs.find(run=>run.sessionId===student.currentSessionId)??student.runs[0];
-      return {id:student.studentId,title:student.displayName,region:run?.region??'尚未开课',
+      return {id:student.studentId,title:student.displayName,collection:student.classroomId??archive?.classrooms?.[0]?.classroomId??'',region:run?.region??'尚未开课',
         subtitle:run?run.title+'。'+statusText[run.status]+'，已提交 '+run.submittedWorks+' 项成果。':'这份档案将持续保留学生的课程、作品与学习评价。',
         coverIndex:run?.coverIndex??5,status:student.runs.length+' 次课程记录',actionLabel:'打开学生档案',
         details:[{title:'当前课程',text:run?run.title+' · '+statusText[run.status]:'尚未开始课程'},
@@ -50,5 +50,5 @@ export default function TeacherStudentArchive({ gateway, navigate }: {
           {title:'档案内容',items:['已提交作品与附件','职业行为与过程反馈','历史课程记录']}]};
     })}
     loading={!archive&&!error} error={error} onOpen={async dossier=>setSelected(dossier.id)}
-    footer={<button type="button" className="teacher-archive-refresh" onClick={()=>setRevision(value=>value+1)}><RefreshCw/>刷新学生档案</button>}/>;
+    onRefresh={()=>setRevision(value=>value+1)}/>;
 }

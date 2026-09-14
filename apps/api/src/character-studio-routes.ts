@@ -7,7 +7,7 @@ import { CharacterBlueprintV3Schema } from '@ronggang/contracts';
 import type { ContentStore } from '@ronggang/content-store';
 import { CharacterStudio } from './character-studio.js';
 import { TeachingTaskError, type TeachingTaskActor } from './teaching-task-service.js';
-const id = z.string().trim().min(1).max(240), author = z.object({ bindingId: id, authorizationSessionId: id }).strict();
+const id = z.string().trim().min(1).max(240), author = z.object({ bindingId: id, authorizationSessionId: id, classroomId: id.optional() }).strict();
 const mutation = author.extend({ requestId: id, expectedRevision: z.number().int().nonnegative() });
 export type TeachingAuthorizer = (request: FastifyRequest, mutation: boolean, context?: z.infer<typeof author>) => Promise<TeachingTaskActor & { profileId: string; teamId: string | null }>;
 export async function registerCharacterStudioRoutes(app: FastifyInstance, dependencies: {
@@ -15,7 +15,7 @@ export async function registerCharacterStudioRoutes(app: FastifyInstance, depend
 }) {
   const memoryArt = new Map<string, Buffer>();
   app.get('/api/v3/character-studio', async request => {
-    const query = z.object({ courseId: id }).strict().parse(request.query);
+    const query = z.object({ courseId: id, classroomId: id.optional() }).strict().parse(request.query);
     return dependencies.studio.workspace(await dependencies.authorize(request, false), query.courseId);
   });
   app.post('/api/v3/character-studio/:courseId/draft', async request => {

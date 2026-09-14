@@ -68,7 +68,9 @@ function ArtifactEditor({
   const [submitting, setSubmitting] = useState(false);
   const changed = useMemo(() => artifact.editableFields.some(field => fields[field.fieldId] !== initialFields[field.fieldId]), [artifact, fields, initialFields]);
   useEffect(() => { onDirtyChange(artifact.artifactId,changed); return () => onDirtyChange(artifact.artifactId,false); },[artifact.artifactId,changed,onDirtyChange]);
-  const canSave = changed && Object.values(fields).some(value => value.trim());
+  const missing=artifact.editableFields.filter(field=>(fields[field.fieldId]??'').trim().length<field.minimumLength).map(field=>field.label);
+  const tooLong=artifact.editableFields.some(field=>(fields[field.fieldId]??'').length>field.maximumLength);
+  const canSave = !tooLong && changed && Object.values(fields).some(value => value.trim());
   useEffect(() => { if (artifact.status === "submitted") setSubmitting(false); }, [artifact.status]);
   useEffect(() => {
     const guard = (event: BeforeUnloadEvent) => { if (changed) { event.preventDefault(); event.returnValue = ""; } };
@@ -105,7 +107,7 @@ function ArtifactEditor({
                   value={value}
                   maxLength={field.maximumLength}
                   rows={field.maximumLength > 1_000 ? 9 : 4}
-                  placeholder={`请写入你的${field.label}。系统不会替你生成答案。`}
+                  placeholder={`记录${field.label}，写下你的具体观察与判断。`}
                   onChange={(event) => setFields((current) => ({
                     ...current,
                     [field.fieldId]: event.target.value,
@@ -148,10 +150,8 @@ function ArtifactEditor({
 
       <footer className="flagship-editor-actions">
         <div>
-          <span>{artifact.mechanicalCompletion.mechanicalReady ? "内容已齐备，可以送审" : "继续完善作品"}</span>
-          <small>{artifact.mechanicalCompletion.missingFields.length > 0
-            ? `待补字段：${artifact.mechanicalCompletion.missingFields.join("、")}`
-            : "提交以当前保存的作品为准"}</small>
+          <span>{changed?'有未保存修改':artifact.status==='submitted'?'当前版本已送审':artifact.mechanicalCompletion.mechanicalReady?'内容已齐备，可以送审':'继续完善作品'}</span>
+          <small>{changed?(missing.length?`可先保存草稿，送审前还需完善：${missing.join('、')}`:'请先保存当前修改，再提交这一版本'):artifact.status==='submitted'?'继续修改会保存为新版本，已交内容保留':missing.length?`待完善：${missing.join('、')}`:'提交以当前保存的作品为准'}</small>
         </div>
         {artifact.artifactId === "artifact-feature-story" && artifact.latestRevision ? (
           <button

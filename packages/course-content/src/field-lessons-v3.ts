@@ -1,3 +1,4 @@
+import {addCourseArcV3} from "./field-course-arcs-v3.js";
 import { hashCanonical, deepFreeze } from "./canonical.js";
 import { xunpuExplorationLesson, type ExplorationLesson, type ExplorationPerson, type ExplorationMaterial } from "./xunpu-exploration-lesson.js";
 import { courseRegionAssignments } from "./course-regions.js";
@@ -164,7 +165,8 @@ export const courseFieldLessonsV3: ReadonlyArray<{ courseId: string; lesson: Exp
   } else if (region === 'rongjiang') {
     body.people.find(person => person.id === 'rg-specialist')!.nodeId = 'rg-commentary-room';
   }
-  const completed = { ...body, version:'3.0.0-content.1', workPlan };
+  addCourseArcV3(courseId,body);
+  const completed = { ...body, version:'3.0.1-content.2', workPlan };
   completed.strategies = fieldPathsV3(courseId, { ...completed, contentHash:'' });
   return { courseId, lesson: finish(completed) };
 });

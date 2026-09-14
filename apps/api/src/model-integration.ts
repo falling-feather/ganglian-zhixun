@@ -167,7 +167,7 @@ export function createModelIntegration(
       maxRetries: config.maxRetries,
       ...(options.fetchImpl ? { fetchImpl: options.fetchImpl } : {}),
     });
-    visionProvider = new OpenAiCompatibleModelProvider({
+    if(config.visionModel)visionProvider = new OpenAiCompatibleModelProvider({
       profileId: `${config.profileId}-vision`,
       baseUrl: config.baseUrl,
       apiKey: config.apiKey,

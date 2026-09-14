@@ -8,7 +8,6 @@ import {
   writeFile,
 } from "node:fs/promises";
 import { createHash } from "node:crypto";
-import { tmpdir } from "node:os";
 import {
   basename,
   dirname,
@@ -80,7 +79,9 @@ const candidateTree = (await captureCommand(
 const lockfileSha256 = createHash("sha256").update(
   await readFile(resolve(projectRoot, "pnpm-lock.yaml")),
 ).digest("hex");
-const root = await mkdtemp(join(tmpdir(), "ronggang-clean-room-"));
+const tempParent = resolve(projectRoot, '.local', 'release-validation');
+await mkdir(tempParent, { recursive: true });
+const root = await mkdtemp(join(tempParent, "ronggang-clean-room-"));
 const cleanProject = resolve(root, "source");
 
 function copyFilter(source) {
@@ -127,10 +128,23 @@ async function assertMissing(path, label) {
 
 try {
   await assertRuntimePrerequisites();
-  await cp(projectRoot, cleanProject, {
-    recursive: true,
-    filter: copyFilter,
-  });
+  const sourceFiles = (await captureCommand('git', [
+    'ls-files', '--cached', '--others', '--exclude-standard', '-z',
+  ], {cwd: projectRoot})).stdout.split('\0').filter(Boolean);
+  await mkdir(cleanProject, {recursive: true});
+  const copiedFiles = [];
+  for (const name of new Set(sourceFiles)) {
+    const source = resolve(projectRoot, name);
+    if (!source.startsWith(`${resolve(projectRoot)}${sep}`) || !copyFilter(source)) continue;
+    try { await lstat(source); } catch (error) { if (error.code === 'ENOENT') continue; throw error; }
+    const target = resolve(cleanProject, name);
+    await mkdir(dirname(target), {recursive: true});
+    await cp(source, target);
+    copiedFiles.push(name);
+  }
+  // The exported tree has no Git metadata. Retain exactly the source enumeration
+  // so the same secret scanner can inspect it without touching private files.
+  await writeFile(resolve(cleanProject, '.release-source-files.json'), JSON.stringify(copiedFiles), 'utf8');
   await Promise.all([
     assertMissing(resolve(cleanProject, "node_modules"), "node_modules"),
     assertMissing(resolve(cleanProject, "dist"), "dist"),
@@ -174,7 +188,7 @@ try {
   } else {
     await runCommand(pnpmExecutable, ["check"], {
       cwd: cleanProject,
-      env: { RONGGANG_DOC_CHECK_OPTIONAL: "1" },
+      env: { RONGGANG_DOC_CHECK_OPTIONAL: "1", RONGGANG_EXPORTED_SOURCE: "1" },
       label: "clean-room full gate",
     });
   }
@@ -209,7 +223,7 @@ try {
   process.stdout.write(`${JSON.stringify(receipt, null, 2)}\n`);
 } finally {
   if (!keep) {
-    const resolvedTemp = resolve(tmpdir());
+    const resolvedTemp = tempParent;
     const resolvedRoot = resolve(root);
     if (
       resolvedRoot.startsWith(`${resolvedTemp}${sep}`)

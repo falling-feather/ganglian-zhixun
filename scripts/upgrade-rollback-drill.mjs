@@ -6,7 +6,6 @@ import {
   writeFile,
 } from "node:fs/promises";
 import { createHash } from "node:crypto";
-import { tmpdir } from "node:os";
 import {
   basename,
   dirname,
@@ -25,12 +24,13 @@ import {
   waitForHttpJson,
 } from "./lib/release-process.mjs";
 import { assertRuntimePrerequisites } from "./check-runtime-prerequisites.mjs";
+import { releaseBaselines } from "./lib/release-policy.mjs";
 
 const args = process.argv.slice(2).filter((argument) => argument !== "--");
 const fromRefIndex = args.indexOf("--from-ref");
 const fromRef = fromRefIndex >= 0
   ? args[fromRefIndex + 1]
-  : "V0.9.3";
+  : releaseBaselines(JSON.parse(await readFile(resolve(projectRoot, 'package.json'), 'utf8')).version).at(-1);
 if (!fromRef || !/^V\d+\.\d+\.\d+$/u.test(fromRef)) {
   throw new Error("--from-ref 必须是 Vx.y.z 标签");
 }
@@ -38,7 +38,9 @@ const allowDirty = args.includes("--allow-dirty");
 const skipCurrentBuild =
   process.env.RELEASE_DRILL_SKIP_CURRENT_BUILD === "1";
 const keep = process.env.RELEASE_DRILL_KEEP === "1";
-const root = await mkdtemp(join(tmpdir(), "ronggang-upgrade-drill-"));
+const tempParent = resolve(projectRoot, '.local', 'release-validation');
+await mkdir(tempParent, {recursive: true});
+const root = await mkdtemp(join(tempParent, "ronggang-upgrade-drill-"));
 const oldTree = resolve(root, "old-tree");
 const repositoryRoot = projectRoot;
 const oldProject = oldTree;
@@ -666,7 +668,7 @@ try {
       }
       worktreeRegistered = false;
     }
-    const resolvedTemp = resolve(tmpdir());
+    const resolvedTemp = tempParent;
     const resolvedRoot = resolve(root);
     if (
       resolvedRoot.startsWith(`${resolvedTemp}${sep}`)

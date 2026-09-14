@@ -129,6 +129,7 @@ await runCommand("git", [
   "e2e",
   "packages",
   "scripts",
+  "deploy",
 ], {
   cwd: repositoryRoot,
   label: "release source archive",

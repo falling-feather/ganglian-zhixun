@@ -547,7 +547,7 @@ export function parseStudentEpisodeResponse(
 }
 
 export interface DemoAuthExpectation {
-  profileId: string;
+  profileId?: string;
   sessionId?: string;
   now?: number;
 }
@@ -571,7 +571,7 @@ export function parseDemoAuthContext(
   const profileId = stringOf(object.profileId, "DemoAuthContext.profileId");
   const expiresAt = dateTimeOf(object.expiresAt, "DemoAuthContext.expiresAt");
   const now = expectation.now ?? Date.now();
-  if (profileId !== expectation.profileId) {
+  if (expectation.profileId !== undefined && profileId !== expectation.profileId) {
     throw new WireFormatError("演示身份与请求的 profileId 不一致");
   }
   if (principal.status !== "active") {

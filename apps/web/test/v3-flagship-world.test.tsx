@@ -359,7 +359,7 @@ describe("V3 flagship student world", () => {
     expect(markup).toContain('aria-label="进入发布门"');
     expect(markup).toContain("专题报道成稿");
     expect(markup).toContain("素材权利台账");
-    expect(markup).toContain("系统不会替你生成答案");
+    expect(markup).toContain("写下你的具体观察与判断");
     expect(markup).toContain("<textarea");
     expect(markup).not.toContain("Trace");
     expect(markup).not.toContain("Prompt");

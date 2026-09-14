@@ -23,7 +23,7 @@ describe("model gateway configuration", () => {
     expect(config.provider).toBe("deepseek");
     if (config.provider === "deepseek") {
       expect(config.model).toBe("deepseek-v4-pro");
-      expect(config.visionModel).toBe("deepseek-v4-flash-vision-exp");
+      expect(config.visionModel).toBeNull();
       expect(config.baseUrl).toBe("https://api.deepseek.com/");
     }
   });

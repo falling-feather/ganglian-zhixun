@@ -1,3 +1,5 @@
+import { DemoLoginRequestSchema } from '@ronggang/contracts';
+import { demoLoginAccounts } from './demo-login-accounts.js';
 import { readFile } from "node:fs/promises";
 import { createHash, randomBytes } from "node:crypto";
 import { fileURLToPath } from "node:url";
@@ -2847,6 +2849,11 @@ async function createAppWithLease(
       return (await courseLearning.claim({ subject, courseReleaseId, bindingId: null, activeSessionId: null })).enrollmentId;
     },
   });
+  const teacherClassrooms = async (principalId: string) => {
+    const memberships = await sessionControl.listMemberships({principalId,roles:['teacher'],statuses:['active']});
+    const ids = new Set(memberships.filter(item=>item.teamId===null&&item.sessionId===null).map(item=>item.classroomId));
+    return (await sessionControl.listClassrooms()).filter(item=>ids.has(item.classroomId)&&item.status==='active').map(item=>({classroomId:item.classroomId,name:item.name}));
+  };
   const authorizeTeaching: TeachingAuthorizer = async (request, mutation, authorContext) => {
       if (mutation) { assertAllowedOrigin(request.headers.origin); assertNoClientActorClaim(request.body); }
       const token = requireToken(request.headers.cookie);
@@ -2861,7 +2868,10 @@ async function createAppWithLease(
         await assertTeacherScope({ control: sessionControl, principalId: profile.principalId, classroomId: sourceSession.classroomId, teamId: sourceSession.teamId });
         actorId = authorized.binding.actorId; sourceSessionId = sourceSession.sessionId;
       }
-      return { principalId: profile.principalId, actorId, role: profile.role, classroomId: profile.classroomId,
+      const requestedClass = authorContext?.classroomId ?? (request.query as {classroomId?:unknown}).classroomId;
+      const classroomId = requestedClass === undefined ? profile.classroomId : z.string().min(1).max(240).parse(requestedClass);
+      if (classroomId !== profile.classroomId && (profile.role !== 'teacher' || !(await teacherClassrooms(profile.principalId)).some(item=>item.classroomId===classroomId))) throw new TeachingTaskError('access_denied','没有所选班级的课程管理权限');
+      return { principalId: profile.principalId, actorId, role: profile.role, classroomId,
         sourceSessionId, teamId: profile.teamId, profileId: profile.profileId };
     };
   await registerTeachingTaskRoutes(app, { tasks: teachingTasks, runtime: teachingTaskRuntime, authorize: authorizeTeaching,
@@ -3066,7 +3076,13 @@ async function createAppWithLease(
     },
   });
   await registerTeacherArchiveRoutes(app, { study: studentStudy, authorize: authorizeTeaching, engine: worldSimulationV3,
-    lessons: fieldLessonCatalog, work: flagshipStudentWorkV3, assessment: flagshipAssessmentV4, studentName: profileId => getDemoProfile(profileId).displayName });
+    lessons: fieldLessonCatalog, work: flagshipStudentWorkV3, assessment: flagshipAssessmentV4, classrooms: teacherClassrooms, studentName: profileId => getDemoProfile(profileId).displayName,
+    roster:async classroomId=>{
+      const memberships=await sessionControl.listMemberships({classroomId,roles:['student'],statuses:['active']});
+      const principals=new Set(memberships.map(item=>item.principalId));
+      return demoProfileDefinitions.filter(profile=>profile.role==='student'&&profile.classroomId===classroomId&&principals.has(profile.principalId))
+        .map(profile=>({principalId:profile.principalId,profileId:profile.profileId,classroomId,displayName:profile.displayName}));
+    } });
   await registerCourseArchiveRoutes(app, { service: roots.course.learning, authorize: authorizeCoursePrincipal, teaching: { tasks: teachingTasks, authorize: authorizeTeaching } });
   await registerCourseLearningRoutes(app, {
     service: roots.course.learning,
@@ -4147,17 +4163,7 @@ async function createAppWithLease(
     };
   });
 
-  app.post("/api/auth/demo-session", async (request, reply) => {
-    assertAllowedOrigin(request.headers.origin);
-    assertNoClientActorClaim(request.body);
-    const input = demoSessionBodySchema.parse(request.body ?? {});
-    const profile = getDemoProfile(input.profileId ?? "operator-demo");
-    const sessionId = input.sessionId ?? profile.defaultSessionId;
-    if (sessionId === null) {
-      const issued = auth.issuePrincipalSession(profile);
-      reply.header("Set-Cookie", auth.cookieHeader(issued.token, secureCookies));
-      return issued.context;
-    }
+  const profileMemberships = async (profile:ReturnType<typeof getDemoProfile>,sessionId:string):Promise<MembershipRoleAssignment[]> => {
     const session = await sessionControl.getSession(sessionId);
     if (!session || !["active", "paused"].includes(session.status)) {
       throw new RoleBindingDeniedError("目标训练会话尚未激活或不存在");
@@ -4216,7 +4222,47 @@ async function createAppWithLease(
         throw new RoleBindingDeniedError("该身份不是目标第二场的有效成员");
       }
     }
-    const issued = auth.issueMembershipSession(profile, memberships);
+    return memberships;
+  };
+  const issueProfileLogin = async (profileId:string,sessionId:string|null) => {
+    const profile=getDemoProfile(profileId);
+    return sessionId===null?auth.issuePrincipalSession(profile):auth.issueMembershipSession(profile,await profileMemberships(profile,sessionId));
+  };
+  app.get('/api/auth/demo-accounts',async()=>({accounts:demoLoginAccounts()}));
+  app.post('/api/auth/login',async(request,reply)=>{
+    assertAllowedOrigin(request.headers.origin);
+    const input=DemoLoginRequestSchema.parse(request.body);
+    const account=demoLoginAccounts().find(item=>item.username===input.username.toLowerCase()&&item.password===input.password&&item.role===input.role);
+    if(!account)throw new AuthenticationRequiredError('账号、密码或登录身份不正确');
+    const profile=getDemoProfile(account.profileId);
+    const issued=await issueProfileLogin(profile.profileId,profile.role==='student'?null:profile.defaultSessionId);
+    reply.header('Set-Cookie',auth.cookieHeader(issued.token,secureCookies));
+    reply.header('Cache-Control','no-store');
+    return issued.context;
+  });
+  app.get('/api/auth/session',async(request,reply)=>{
+    reply.header('Cache-Control','no-store');
+    return auth.context(requireToken(request.headers.cookie));
+  });
+  app.post('/api/auth/session-context',async(request,reply)=>{
+    assertAllowedOrigin(request.headers.origin);
+    const token=requireToken(request.headers.cookie);
+    auth.assertCsrf(token,request.headers['x-csrf-token'] as string|undefined);
+    const input=z.object({sessionId:z.string().regex(/^[a-zA-Z0-9_-]{1,80}$/u)}).strict().parse(request.body);
+    const current=auth.resolvePrincipal(token);
+    const memberships=await profileMemberships(getDemoProfile(current.profileId),input.sessionId);
+    auth.addMembershipBindings(token,memberships);
+    reply.header('Cache-Control','no-store');
+    return auth.context(token);
+  });
+  // Retained for internal engineering fixtures. The public UI uses credential
+  // login and restores only the identity held by its HttpOnly session cookie.
+  app.post("/api/auth/demo-session", async (request, reply) => {
+    assertAllowedOrigin(request.headers.origin);
+    assertNoClientActorClaim(request.body);
+    const input = demoSessionBodySchema.parse(request.body ?? {});
+    const profile = getDemoProfile(input.profileId ?? "operator-demo");
+    const issued=await issueProfileLogin(profile.profileId,input.sessionId??profile.defaultSessionId);
     reply.header("Set-Cookie", auth.cookieHeader(issued.token, secureCookies));
     return issued.context;
   });

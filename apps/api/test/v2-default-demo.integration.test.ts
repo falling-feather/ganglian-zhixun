@@ -736,6 +736,18 @@ describe("V2 default interactive demo", () => {
       },
     });
     expect(stale.statusCode).toBe(409);
+    // Re-read after the negative requests: background chapter evaluation may
+    // legitimately advance the state while the permission checks are running.
+    const currentPending = await app.inject({
+      method: "GET",
+      url: `/api/sessions/${DEMO_XUNPU_SESSION_ID}/collaboration-episode?bindingId=${teacherBinding.bindingId}`,
+      headers: { cookie: teacher.cookie },
+    });
+    expect(currentPending.statusCode).toBe(200);
+    expect(currentPending.json()).toMatchObject({
+      status: "awaiting_gate",
+      teacherGate: { gateId: "gate-xunpu-topic", status: "pending" },
+    });
     const approved = await app.inject({
       method: "POST",
       url: `/api/sessions/${DEMO_XUNPU_SESSION_ID}/teacher-gates/gate-xunpu-topic/decisions`,
@@ -746,7 +758,7 @@ describe("V2 default interactive demo", () => {
       },
       payload: {
         bindingId: teacherBinding.bindingId,
-        expectedStateVersion: pending.json().stateVersion,
+        expectedStateVersion: currentPending.json().stateVersion,
         decision: "approve",
         reason: "证据引用与选题边界完整，可以推进。",
       },

@@ -2,6 +2,10 @@ import { describe, expect, it } from "vitest";
 import { migrateLegacyLocation, parseV2Route } from "../src/v2/router";
 
 describe("V2 path router", () => {
+  it('opens the role archive login at the public root and login route',()=>{
+    expect(parseV2Route('/')).toEqual({kind:'login'});
+    expect(parseV2Route('/login')).toEqual({kind:'login'});
+  });
   it("parses the student journeys, course detail, and authorized materials entry", () => {
     expect(parseV2Route("/student/courses")).toEqual({ kind: "student-courses" });
     expect(parseV2Route("/student/courses/course-ai-tourism-copyright-governance"))

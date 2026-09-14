@@ -1,0 +1,59 @@
+name: Build hosted Linux image
+
+on:
+  push:
+    branches:
+      - 'codex/aliyun-glzx-*'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: hosted-image-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  image:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check source for credentials
+        run: node scripts/scan-release-secrets.mjs
+      - name: Build Linux image
+        run: docker build --progress=plain -f deploy/Dockerfile -t ganglian-zhixun:${{ github.sha }} .
+      - name: Verify application startup
+        shell: bash
+        run: |
+          set -euo pipefail
+          docker run -d --name glzx-ci -p 127.0.0.1:4173:4173 \
+            -e WEB_ALLOWED_ORIGINS=https://glzx.fallingfeather.cn \
+            -e __VITE_ADDITIONAL_SERVER_ALLOWED_HOSTS=glzx.fallingfeather.cn \
+            ganglian-zhixun:${{ github.sha }}
+          ready=0
+          for attempt in $(seq 1 90); do
+            if curl --fail --silent http://127.0.0.1:4173/health > /tmp/glzx-health.json; then
+              ready=1
+              break
+            fi
+            sleep 2
+          done
+          docker logs --tail 120 glzx-ci
+          test "$ready" = 1
+          cat /tmp/glzx-health.json
+          docker stop --time 30 glzx-ci
+      - name: Publish deployment image
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          docker save ganglian-zhixun:${{ github.sha }} | gzip -1 > ganglian-zhixun-linux-amd64.tar.gz
+          sha256sum ganglian-zhixun-linux-amd64.tar.gz > ganglian-zhixun-linux-amd64.tar.gz.sha256
+          printf 'Source commit: %s\nImage: ganglian-zhixun:%s\nPlatform: linux/amd64\n' "$GITHUB_SHA" "$GITHUB_SHA" > build-info.txt
+          printf 'Linux deployment image for the complete Ganglian Zhixun application. Built from the referenced commit and checked for successful startup. Model credentials and user data are not included.\n' > release-notes.txt
+          gh release create "glzx-image-${GITHUB_RUN_ID}" \
+            ganglian-zhixun-linux-amd64.tar.gz ganglian-zhixun-linux-amd64.tar.gz.sha256 build-info.txt \
+            --target "$GITHUB_SHA" --title "Ganglian Zhixun Linux deployment ${GITHUB_RUN_ID}" \
+            --notes-file release-notes.txt --prerelease --latest=false

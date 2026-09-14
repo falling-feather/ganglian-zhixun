@@ -44,7 +44,7 @@ export function ArchiveReader({dossier,index,audience,origin,reduced,error,onClo
     finally{setBusy(false);}
   };
   const sections=dossier.details??[{title:audience==='teacher'?'当前课程':'课程任务',text:dossier.subtitle}];
-  return <dialog ref={dialog} className="archive-reader" tabIndex={-1} aria-label={dossier.title+'档案详情'} aria-busy={busy}
+  return <dialog ref={dialog} className={"archive-reader"+(audience==='teacher'?' is-teacher':'')} tabIndex={-1} aria-label={dossier.title+'档案详情'} aria-busy={busy}
     onCancel={event=>{event.preventDefault();close();}}>
     <span className="archive-reader-back" aria-hidden="true"/>
     <span className="archive-reader-pages" aria-hidden="true"/>
@@ -55,7 +55,7 @@ export function ArchiveReader({dossier,index,audience,origin,reduced,error,onClo
         <button type="button" onClick={close} disabled={busy||closing} aria-label="收回档案">收回档案<X size={17}/></button></header>
       <div className="archive-reader-scroll">
         <h2>{dossier.title}</h2><p className="archive-reader-meta">{dossier.region}{dossier.duration?' · '+dossier.duration:''}</p>
-        <ArchiveCover dossier={dossier}/>
+        {audience==='student'?<ArchiveCover dossier={dossier}/>:null}
         {sections.map(section=><section className="archive-reader-section" key={section.title}><h3>{section.title}</h3>
           {section.text?<p>{section.text}</p>:null}
           {section.items?<ul>{section.items.map(item=><li key={item}>{item}</li>)}</ul>:null}

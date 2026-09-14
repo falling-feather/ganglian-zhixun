@@ -23,3 +23,5 @@ export * from "./professional-training.js";
 export * from "./flagship-course-projection.js";
 export * from "./xunpu-exploration-lesson.js";
 export * from "./media-teaching-tasks.js";
+
+export * from "./case-documents-v3.js";

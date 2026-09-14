@@ -54,7 +54,14 @@ export class PublishedCourseRuntime {
     const course = courses.getReleaseById(courseReleaseId), launch = courses.getLaunch(courseReleaseId);
     if (!launch) throw new CourseLearningError("course_not_found", "这门课程尚未配置可运行的实训环境");
     const template = await sessionControl.getSession(launch.sessionId);
-    if (!template || template.classroomId !== actor.classroomId || template.teamId !== actor.teamId) throw new CourseLearningError("access_denied", "该课程不在当前班级的授课范围内");
+    if (!template) throw new CourseLearningError("course_not_found", "该课程的发布模板不存在");
+    // Published content is reusable across teaching classes. Authorize the
+    // learner's actual class/team, then create their own isolated world below.
+    const [team,memberships]=await Promise.all([
+      sessionControl.getTeam(actor.teamId),
+      sessionControl.listMemberships({principalId:actor.principalId,classroomId:actor.classroomId,roles:['student'],statuses:['active']}),
+    ]);
+    if(!team||team.status!=='active'||team.classroomId!==actor.classroomId||!memberships.some(member=>member.teamId===actor.teamId))throw new CourseLearningError('access_denied','当前学生没有本班小组的有效成员关系');
     const source = await worldSimulationV3.getRecord(this.dependencies.kernelTemplateSessionId);
     const fieldLessonHash = await this.dependencies.fieldLessonFor(course.courseId, actor.classroomId, practiceOrdinal);
     if (!fieldLessonHash) throw new CourseLearningError("course_not_found", "这门课程尚未发布可运行的现场内容");

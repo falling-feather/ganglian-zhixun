@@ -34,3 +34,7 @@ release-artifacts/
 
 # Local competition material preparation, PPT concepts, renders and scratch files
 /参赛材料工作区/
+
+# Local model testing credentials
+/deepseek-test.txt
+/deepseek/

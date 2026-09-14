@@ -13,7 +13,7 @@ export type ModelGatewayConfig =
     baseUrl: string;
     apiKey: string;
     model: string;
-    visionModel: string;
+    visionModel: string | null;
   }
   | {
     provider: "iflytek_xingchen";
@@ -81,9 +81,9 @@ export function readModelGatewayConfig(
       maxRetries,
       baseUrl: validUrl(environment.DEEPSEEK_BASE_URL?.trim() || "https://api.deepseek.com", "DEEPSEEK_BASE_URL"),
       apiKey: required(environment, "DEEPSEEK_API_KEY", "DeepSeek"),
-      model: environment.DEEPSEEK_MODEL?.trim() || "deepseek-v4-flash",
+      model: environment.DEEPSEEK_MODEL?.trim() || "deepseek-flash",
       visionModel: environment.DEEPSEEK_VISION_MODEL?.trim()
-        || "deepseek-v4-flash-vision-exp",
+        || null,
     };
   }
   if (provider === "iflytek_xingchen") {

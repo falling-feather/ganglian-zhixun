@@ -253,8 +253,9 @@ function CaseDossierPanel({
           <div className="v2-content-case-materials">
             {dossier.dossier.studentMaterials.map((material) => (
               <article key={material.materialId}>
-                <header><strong>{material.title}</strong><span>{material.materialId}</span></header>
+                <header><strong>{material.title}</strong></header>
                 <p>{material.publicDescription}</p>
+                {material.document?<details className="case-document"><summary>阅读全文 · 教学仿真原件</summary><pre>{material.document.body}</pre><button type="button" onClick={()=>{const url=URL.createObjectURL(new Blob([material.document!.body],{type:'text/plain;charset=utf-8'}));const a=document.createElement('a');a.href=url;a.download=material.title+'.txt';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}}>下载文本</button></details>:null}
                 <small>{material.simulationBoundary}</small>
                 <ul>
                   {material.inspectableFields.map((field) => <li key={field}>{field}</li>)}
@@ -318,7 +319,7 @@ function ProfessionalTaskPanel({
         <div className="v2-content-task-list">
           {taskPackage.tasks.map((task) => (
             <details key={task.taskId}>
-              <summary><strong>{task.title}</strong><span>{task.workflowPhase}</span></summary>
+              <summary><strong>{task.title}</strong></summary>
               <div><p><b>课程章节：</b>{task.courseSectionRefs.join("、")}</p><p><b>成果：</b>{task.artifacts.join("、")}</p><p><b>量规：</b>{task.rubricDimensions.join("、")}</p><p><b>知识：</b>{task.knowledgeIds.join("、")}</p>{task.trainingRules.map((rule) => <p key={`${task.taskId}-${rule.statement}`}><b>{rule.ruleType}：</b>{rule.statement}</p>)}</div>
             </details>
           ))}
@@ -575,8 +576,7 @@ function ContentLibraryWorkbench({
       {courses.length === 0 ? <section className="v2-content-empty v2-content-empty-large"><Database /><h2>{mode === "student" ? "当前没有已授权课程" : "暂无可维护课程"}</h2><p>{mode === "student" ? "认领并进入课程后，才能查询该课程的授权资料。" : "课程发布后，教学资料入口会读取真实课程。"}</p></section> : null}
       {courses.length > 0 ? (
         <>
-          <CaseDossierPanel dossier={caseDossier} loading={caseLoading} error={caseError} mode={mode} />
-          <ProfessionalTaskPanel taskPackage={professionalTasks} loading={tasksLoading} error={tasksError} />
+          {mode==='student'?<><CaseDossierPanel dossier={caseDossier} loading={caseLoading} error={caseError} mode={mode} /><ProfessionalTaskPanel taskPackage={professionalTasks} loading={tasksLoading} error={tasksError} /></>:null}
           {mode === "staff" ? <MaterialUpload key={selectedCourseId} courseId={selectedCourseId} gateway={gateway} onUploaded={handleUploaded} /> : null}
           {mode === "staff" ? <StaffSourceList sources={sources} jobs={jobs} onPreview={(revisionId) => void handlePreview(revisionId)} /> : null}
           {mode === "staff" ? (
@@ -597,6 +597,7 @@ function ContentLibraryWorkbench({
             </form>
           </section>
           <SearchResultList result={searchResult} />
+          {mode==='staff'?<details className="teacher-material-reference"><summary>课程资料包与默认岗位任务</summary><CaseDossierPanel dossier={caseDossier} loading={caseLoading} error={caseError} mode={mode} /><ProfessionalTaskPanel taskPackage={professionalTasks} loading={tasksLoading} error={tasksError} /></details>:null}
         </>
       ) : null}
     </main>

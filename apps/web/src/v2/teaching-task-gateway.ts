@@ -1,4 +1,4 @@
-import { CharacterStudioWorkspaceV3Schema, type CharacterStudioWorkspaceV3, type CharacterStudioDraftV3, type CharacterBlueprintV3 } from "@ronggang/contracts";
+import { TeacherClassroomsV3Schema, CharacterStudioWorkspaceV3Schema, type CharacterStudioWorkspaceV3, type CharacterStudioDraftV3, type CharacterBlueprintV3 } from "@ronggang/contracts";
 import {
   TeachingTaskDraftV1Schema, TeachingTaskGenerationResultV1Schema, TeachingTaskReleaseV1Schema, TeachingTaskSessionV1Schema, TeachingTaskWorkspaceV1Schema,
   type TeachingTaskDraftV1, type TeachingTaskGenerationResultV1, type TeachingTaskInputV1, type TeachingTaskPlanV1, type TeachingTaskReleaseV1, type TeachingTaskSessionV1, type TeachingTaskWorkspaceV1,
@@ -6,10 +6,11 @@ import {
 import { GatewayHttpError, type GatewayRuntimeOptions } from "./gateway";
 import type { DemoAuthContext } from "./models";
 
-export type TeachingAuthorContext = { bindingId: string; authorizationSessionId: string };
+export type TeachingAuthorContext = { bindingId: string; authorizationSessionId: string; classroomId?: string };
 export type TeachingTaskEdit = Pick<TeachingTaskPlanV1, "title" | "assignment" | "audience" | "objectives" | "durationMinutes" | "scaffoldingLevel" | "challengeLevel"> & { steps: Array<{ taskRef: string; instruction: string }> };
 export interface TeachingTaskGateway {
-  studioWorkspace?(courseId: string, signal?: AbortSignal): Promise<CharacterStudioWorkspaceV3>;
+  classrooms?(signal?: AbortSignal): Promise<{classrooms:Array<{classroomId:string;name:string}>}>;
+  studioWorkspace?(courseId: string, signal?: AbortSignal, classroomId?: string): Promise<CharacterStudioWorkspaceV3>;
   saveStudio?(context: TeachingAuthorContext, draft: CharacterStudioDraftV3, characters: CharacterBlueprintV3[]): Promise<CharacterStudioWorkspaceV3>;
   publishStudio?(context: TeachingAuthorContext, draft: CharacterStudioDraftV3): Promise<CharacterStudioWorkspaceV3>;
   uploadStudioArt?(context: TeachingAuthorContext, courseId: string, input: {name: string; dataUrl: string; rightsStatement: string}): Promise<string>;
@@ -40,9 +41,10 @@ export function createHttpTeachingTaskGateway(auth: DemoAuthContext, options: Ga
     return result;
   };
   return {
-    studioWorkspace: async (courseId, signal) => CharacterStudioWorkspaceV3Schema.parse(await request('/api/v3/character-studio?courseId='+encodeURIComponent(courseId), 'GET', undefined, signal)),
-    saveStudio: (context, draft, characters) => command('/api/v3/character-studio/'+encodeURIComponent(draft.courseId)+'/draft', { ...context, expectedRevision: draft.revision, characters }, body => CharacterStudioWorkspaceV3Schema.parse(body)),
-    publishStudio: (context, draft) => command('/api/v3/character-studio/'+encodeURIComponent(draft.courseId)+'/publish', { ...context, expectedRevision: draft.revision, contentHash: draft.contentHash }, body => CharacterStudioWorkspaceV3Schema.parse(body)),
+    classrooms: async signal => TeacherClassroomsV3Schema.parse(await request('/api/v3/teacher/classrooms','GET',undefined,signal)),
+    studioWorkspace: async (courseId, signal, classroomId) => CharacterStudioWorkspaceV3Schema.parse(await request('/api/v3/character-studio?'+new URLSearchParams({courseId,...(classroomId?{classroomId}:{})}), 'GET', undefined, signal)),
+    saveStudio: (context, draft, characters) => command('/api/v3/character-studio/'+encodeURIComponent(draft.courseId)+'/draft', { ...context, classroomId:draft.classroomId, expectedRevision: draft.revision, characters }, body => CharacterStudioWorkspaceV3Schema.parse(body)),
+    publishStudio: (context, draft) => command('/api/v3/character-studio/'+encodeURIComponent(draft.courseId)+'/publish', { ...context, classroomId:draft.classroomId, expectedRevision: draft.revision, contentHash: draft.contentHash }, body => CharacterStudioWorkspaceV3Schema.parse(body)),
     uploadStudioArt: async (context, courseId, input) => { const result = await request('/api/v3/character-studio/'+encodeURIComponent(courseId)+'/art','POST', { ...context, ...input }); if (typeof result.image !== 'string') throw new Error('人物图片返回格式无效'); return result.image; },
     workspace: async signal => TeachingTaskWorkspaceV1Schema.parse(await request("/api/teaching-tasks", "GET", undefined, signal)),
     generate: (context, input) => command("/api/teaching-tasks/generate", { ...context, input }, body => TeachingTaskGenerationResultV1Schema.parse(body)),

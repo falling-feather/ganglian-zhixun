@@ -1,4 +1,4 @@
-interface ArchiveLoop {start: number; length: number}
+interface ArchiveLoop {start: number; length: number; count?: number}
 export interface ArchiveSheet {
   x: number;
   z: number;
@@ -44,7 +44,7 @@ export function resizeArchiveLoop(sheets: ArchiveSheet[], start: number, length:
   if (!loop) return;
   const scale = length / loop.length;
   for (const sheet of sheets) {
-    sheet.z = start + (sheet.slot + 0.5) * length / SHEETS_PER_ROW;
+    sheet.z = start + (sheet.slot + 0.5) * length / (loop.count ?? SHEETS_PER_ROW);
     sheet.phase *= scale;
   }
   loop.start = start;
@@ -67,10 +67,11 @@ export function advanceArchiveFlow(sheets: ArchiveSheet[], delta: number, focusI
   const easing = 1 - Math.exp(-dt * 20);
   for (let index = 0; index < sheets.length; index += 1) {
     const sheet = sheets[index]!;
-    const nextSlot = wrap(sheet.slot + sheet.direction, SHEETS_PER_ROW);
-    const nextIndex = sheet.row * SHEETS_PER_ROW + nextSlot;
+    const count = sheet.loop.count ?? SHEETS_PER_ROW;
+    const nextSlot = wrap(sheet.slot + sheet.direction, count);
+    const nextIndex = index - sheet.slot + nextSlot;
     const gap = wrap((positions[nextIndex]! - positions[index]!) * sheet.direction, sheet.loop.length);
-    const spacing = sheet.loop.length / SHEETS_PER_ROW;
+    const spacing = sheet.loop.length / count;
     const distance = focus ? Math.hypot(sheet.x - focus.x, positions[index]! - positions[focusIndex!]!) : Infinity;
     const activity = Math.max(0, Math.min(1, (distance - 0.85) / 0.85));
     // A little headway recovery restores spacing after release without rewinding or snapping.

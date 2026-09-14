@@ -1,17 +1,20 @@
-import { hashCanonical, xunpuV4PostPublicationCaseDossier } from "@ronggang/course-content";
+import { hashCanonical, xunpuV4PostPublicationCaseDossier,postpublicationDocumentsV3 } from "@ronggang/course-content";
 import type { ContentStore } from "@ronggang/content-store";
 
 export const POSTPUBLICATION_CASE_COURSE = "course-xunpu-intangible-media";
-const caseId = "case-xunpu-postpublication-context-v1";
-const releaseId = "case-release-xunpu-postpublication-context-v1";
+const caseId = "case-xunpu-postpublication-context-v2";
+const releaseId = "case-release-xunpu-postpublication-context-v2";
 
 /** The published teaching dossier is immutable; publication does not imply expert review. */
 export async function seedCourseCaseLibrary(store: ContentStore): Promise<void> {
   if ((await store.listCaseReleases(POSTPUBLICATION_CASE_COURSE)).some((release) => release.releaseId === releaseId)) return;
-  const payload = structuredClone(xunpuV4PostPublicationCaseDossier) as unknown as Record<string, unknown>;
-  const draft = await store.createCaseDraft({ caseId, courseId: POSTPUBLICATION_CASE_COURSE, caseKey: "postpublication-context", version: 1,
+  const source=structuredClone(xunpuV4PostPublicationCaseDossier);
+  const payload = {...source,studentMaterials:source.studentMaterials.map(material=>({...material,
+    title:material.materialKind==='published_video_record'?'首发剪辑记录与时间线（仿真文本）':material.title,
+    document:postpublicationDocumentsV3[material.materialId]}))} as unknown as Record<string, unknown>;
+  const draft = await store.createCaseDraft({ caseId, courseId: POSTPUBLICATION_CASE_COURSE, caseKey: "postpublication-context", version: 2,
     title: "蟳埔发布后语境与权益回应案例资料包", payload, contentHash: hashCanonical(payload), status: "draft" });
-  await store.publishCase({ releaseId, caseId: draft.caseId, courseId: draft.courseId, releaseVersion: "postpublication-context/1.0.0", contentHash: draft.contentHash,
+  await store.publishCase({ releaseId, caseId: draft.caseId, courseId: draft.courseId, releaseVersion: "postpublication-context/2.0.0", contentHash: draft.contentHash,
     metadata: { reviewStatus: "pending_expert_review", materialBoundary: "教学仿真，未声称真实人物、后台数据或教师外审" } });
 }
 

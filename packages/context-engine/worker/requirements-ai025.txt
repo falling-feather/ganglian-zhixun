@@ -27,4 +27,4 @@ tokenizers==0.23.2
 tqdm==4.70.0
 typing-extensions==4.16.0
 urllib3==2.7.0
-win32-setctime==1.2.0
+win32-setctime==1.2.0; sys_platform == "win32"

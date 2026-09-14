@@ -54,7 +54,7 @@ export class ArchiveFieldRenderer {
 
   static async create(canvas:HTMLCanvasElement,callbacks:FieldCallbacks,signal:AbortSignal) {
     if(signal.aborted)throw new DOMException('Archive mount cancelled','AbortError');
-    const texture=await new TextureLoader().loadAsync(publicAsset('/assets/archive/charcoal-paper.png'));
+    const texture=await new TextureLoader().loadAsync(publicAsset('/assets/archive/charcoal-paper.webp'));
     if(signal.aborted){texture.dispose();throw new DOMException('Archive mount cancelled','AbortError');}
     texture.colorSpace=SRGBColorSpace;texture.wrapS=texture.wrapT=RepeatWrapping;
     texture.repeat.set(.8,1.1);

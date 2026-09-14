@@ -5,7 +5,7 @@ import { courseRegionAssignments, type ExplorationLesson } from "@ronggang/cours
 import type { WorldSimulationEngineV3 } from "@ronggang/world-core";
 import type { TeachingAuthorizer } from "./character-studio-routes.js";
 import { TeachingTaskError } from "./teaching-task-service.js";
-import type { StudentStudyStore } from "./student-study.js";
+import type { StudentStudyStore,StudyOwner } from "./student-study.js";
 import { ChallengeLevelSchema, type FlagshipStudentWorkServiceV3 } from "./flagship-student-work-v3.js";
 import type { FlagshipEvidenceAssessmentServiceV4 } from "./flagship-assessment-v4.js";
 
@@ -14,12 +14,21 @@ export async function registerTeacherArchiveRoutes(app: FastifyInstance, ports: 
   engine: Pick<WorldSimulationEngineV3,"getRecord">; lessons: readonly ExplorationLesson[];
   work: FlagshipStudentWorkServiceV3; assessment: FlagshipEvidenceAssessmentServiceV4;
   studentName(profileId: string): string;
+  classrooms?(principalId: string): Promise<Array<{classroomId: string; name: string}>>;
+  roster?(classroomId:string):Promise<StudyOwner[]>;
 }) {
+  const classroomsFor = (actor: {principalId:string;classroomId:string}) => ports.classrooms ? ports.classrooms(actor.principalId) : Promise.resolve([{classroomId:actor.classroomId,name:actor.classroomId}]);
+  app.get('/api/v3/teacher/classrooms', async request => {
+    const actor = await ports.authorize(request,false);
+    if (actor.role !== 'teacher') throw new TeachingTaskError('access_denied','只有教师可以查看所管理的班级');
+    return {classrooms:await classroomsFor(actor)};
+  });
   app.get('/api/v3/teacher/student-archive/:studentId/sessions/:sessionId/works', async request => {
     const params = z.object({ studentId: z.string().min(1), sessionId: z.string().min(1) }).strict().parse(request.params);
     const actor = await ports.authorize(request,false);
     if (actor.role !== 'teacher') throw new TeachingTaskError('access_denied','只有本班教师可以查阅送审作品');
-    const student = (await ports.study.students(actor.classroomId)).find(student => student.owner.profileId === params.studentId);
+    const allowed = await classroomsFor(actor);
+    const student = (await Promise.all(allowed.map(item => ports.study.students(item.classroomId)))).flat().find(student => student.owner.profileId === params.studentId);
     if (!student?.state.runs.some(run => run.sessionId === params.sessionId)) throw new TeachingTaskError('access_denied','该作品不属于当前班级学生的课程');
     if(student.state.runs.find(run=>run.sessionId===params.sessionId)?.runtimeKind==='legacy_course')throw new TeachingTaskError('invalid_task','本场使用旧版章节流程，请打开原版作品评价入口');
     const work = await ports.work.loadRecord(params.sessionId);
@@ -30,7 +39,10 @@ export async function registerTeacherArchiveRoutes(app: FastifyInstance, ports: 
     z.object({}).strict().parse(request.query);
     const actor = await ports.authorize(request,false);
     if (actor.role !== 'teacher') throw new TeachingTaskError('access_denied','只有本班教师可以查看学生课程档案');
-    const registered = await ports.study.students(actor.classroomId);
+    const classrooms = await classroomsFor(actor);
+    const stored = (await Promise.all(classrooms.map(item => ports.study.students(item.classroomId)))).flat();
+    const roster=ports.roster?(await Promise.all(classrooms.map(item=>ports.roster!(item.classroomId)))).flat():[];
+    const registered=[...new Map([...stored.map(item=>item.owner),...roster].map(owner=>[owner.principalId,{owner}])).values()];
     const students = await Promise.all(registered.map(async student => {
       const state = await ports.study.read(student.owner);
       const runs = await Promise.all(state.runs.map(async run => {
@@ -51,8 +63,8 @@ export async function registerTeacherArchiveRoutes(app: FastifyInstance, ports: 
           relationships:(field?.contacts??[]).map(contact=>({name:lesson?.people.find(person=>person.id===contact.npcId)?.name??'课程人物',met:contact.met,friend:contact.friend,introductions:contact.referredNpcIds.length})),
           assessment:{status:assessment.status,message:assessment.safeMessage,criteria:assessment.criteria.map(criterion=>({id:criterion.criterionId,title:criterion.title,score:criterion.score,rationale:criterion.rationale}))}};
       }));
-      return {studentId:student.owner.profileId,displayName:ports.studentName(student.owner.profileId),currentSessionId:state.currentSessionId,runs:runs.toSorted((a,b)=>b.startedAt.localeCompare(a.startedAt))};
+      return {studentId:student.owner.profileId,displayName:ports.studentName(student.owner.profileId),classroomId:student.owner.classroomId,currentSessionId:state.currentSessionId,runs:runs.toSorted((a,b)=>b.startedAt.localeCompare(a.startedAt))};
     }));
-    return TeacherStudentArchiveV3Schema.parse({students});
+    return TeacherStudentArchiveV3Schema.parse({students,classrooms});
   });
 }

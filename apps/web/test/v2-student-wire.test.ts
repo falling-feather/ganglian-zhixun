@@ -220,12 +220,13 @@ describe("V2 student HTTP wire", () => {
     expect(String(calls[0]?.input)).not.toContain("/projection");
   });
 
-  it("rebinds a discovered reporter session and rotates in-memory CSRF", async () => {
+  it("restores the logged-in identity before binding a discovered reporter session", async () => {
     const calls: Array<{ input: RequestInfo | URL; init?: RequestInit }> = [];
     const fetchImpl: FetchLike = async (input, init) => {
       calls.push({ input, init });
       const path = new URL(String(input)).pathname;
-      if (path === "/api/auth/demo-session") {
+      if(path==='/api/auth/session')return jsonResponse(authFixture({bindings:[]}));
+      if (path === "/api/auth/session-context") {
         return jsonResponse(authFixture({
           bindings: [reporterBinding()],
           csrfToken: "csrf-session-bound",
@@ -239,11 +240,11 @@ describe("V2 student HTTP wire", () => {
     });
     await gateway.authorizeSession("session-xunpu-001");
     await gateway.claimCourse("course-xunpu-intangible-media-r1");
-    expect(JSON.parse(String(calls[0]?.init?.body))).toEqual({
-      profileId: "student-unassigned",
+    expect(String(calls[0]?.input)).toBe('http://api.local/api/auth/session');
+    expect(JSON.parse(String(calls[1]?.init?.body))).toEqual({
       sessionId: "session-xunpu-001",
     });
-    expect(new Headers(calls[1]?.init?.headers).get("X-CSRF-Token"))
+    expect(new Headers(calls[2]?.init?.headers).get("X-CSRF-Token"))
       .toBe("csrf-session-bound");
   });
 

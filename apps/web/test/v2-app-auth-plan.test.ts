@@ -47,7 +47,7 @@ describe("V2 App auth plan", () => {
       { kind: "admin", page: "agents" },
       null,
       "session-xunpu-a",
-    )).toEqual({ profileId: "operator-demo", sessionId: "session-xunpu-a" });
+    )).toBeNull();
   });
 
   it("fails closed instead of silently replacing an explicit cross-role profile", () => {

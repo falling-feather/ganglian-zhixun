@@ -32,6 +32,7 @@ interface DemoAuthSessionRecord {
   authSessionId: string;
   sidHash: string;
   csrfHash: string;
+  csrfToken: string;
   profile: string;
   principal: Principal;
   bindings: RoleBinding[];
@@ -186,6 +187,7 @@ export class DemoAuthService {
       authSessionId: `auth-session-${randomBytes(12).toString("hex")}`,
       sidHash: hashSecret(token),
       csrfHash: hashSecret(csrfToken),
+      csrfToken,
       profile,
       principal,
       bindings,
@@ -236,6 +238,11 @@ export class DemoAuthService {
     };
   }
 
+  context(token:string):DemoAuthContext {
+    const record=this.#requireSession(token);
+    return {profileId:record.profile,principal:structuredClone(record.principal),bindings:structuredClone(record.bindings),csrfToken:record.csrfToken,expiresAt:record.expiresAt};
+  }
+
   #issueProfileSession(
     profile: DemoIdentityProfile,
     activeMemberships: readonly MembershipRoleAssignment[],
@@ -262,6 +269,7 @@ export class DemoAuthService {
       authSessionId: `auth-session-${randomBytes(12).toString("hex")}`,
       sidHash: hashSecret(token),
       csrfHash: hashSecret(csrfToken),
+      csrfToken,
       profile: profile.profileId,
       principal,
       bindings,

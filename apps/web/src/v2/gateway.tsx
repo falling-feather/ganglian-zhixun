@@ -1,4 +1,6 @@
 import {
+  DemoLoginCatalogSchema,
+  type DemoLoginAccount,
   CourseSubmissionRequestSchema,
   FieldExplorationResponseV4Schema,
   FieldInterviewReadResponseV1Schema,
@@ -383,6 +385,24 @@ export async function establishDemoAuth(
   });
 }
 
+export async function readDemoLoginAccounts(signal?:AbortSignal,options:GatewayRuntimeOptions={}):Promise<DemoLoginAccount[]>{
+  return DemoLoginCatalogSchema.parse(await fetchUnknown('/api/auth/demo-accounts',signal?{signal}:{},options)).accounts;
+}
+export async function loginDemoAccount(input:{username:string;password:string;role:'student'|'teacher'},options:GatewayRuntimeOptions={}):Promise<DemoAuthContext>{
+  return parseDemoAuthContext(await fetchUnknown('/api/auth/login',{method:'POST',body:JSON.stringify(input)},options),{});
+}
+export async function restoreAuthenticatedAuth(input:{sessionId?:string;signal?:AbortSignal;profileId?:string;role?:'student'|'teacher'},options:GatewayRuntimeOptions={}):Promise<DemoAuthContext>{
+  const current=parseDemoAuthContext(await fetchUnknown('/api/auth/session',input.signal?{signal:input.signal}:{},options),{});
+  if((input.profileId&&current.profileId!==input.profileId)||(input.role&&!current.profileId.startsWith(input.role+'-')))throw new GatewayHttpError(401,'请选择对应账号登录','identity_mismatch');
+  if(!input.sessionId||current.bindings.some(binding=>binding.sessionId===input.sessionId))return current;
+  return parseDemoAuthContext(await fetchUnknown('/api/auth/session-context',{
+    method:'POST',...(input.signal?{signal:input.signal}:{}),headers:{'X-CSRF-Token':current.csrfToken},body:JSON.stringify({sessionId:input.sessionId}),
+  },options),{profileId:current.profileId,sessionId:input.sessionId});
+}
+export async function logoutDemoAccount(csrfToken:string,options:GatewayRuntimeOptions={}):Promise<void>{
+  await fetchUnknown('/api/auth/logout',{method:'POST',headers:{'X-CSRF-Token':csrfToken}},options);
+}
+
 export function createHttpExperienceGateway(
   auth: DemoAuthContext,
   options: GatewayRuntimeOptions = {},
@@ -417,8 +437,8 @@ export function createHttpExperienceGateway(
       return StudentNotebookV1Schema.parse(await mutate(`/api/v3/sessions/${encodeURIComponent(sessionId)}/notebook`, input));
     },
     async authorizeSession(sessionId, signal) {
-      const nextAuth = await establishDemoAuth({
-        profileId: activeAuth.profileId,
+      const nextAuth = await restoreAuthenticatedAuth({
+        profileId:activeAuth.profileId,
         sessionId,
         ...(signal ? { signal } : {}),
       }, options);

@@ -1,6 +1,6 @@
 {
   "name": "ronggang-zhixun-prototype",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "private": true,
   "type": "module",
   "packageManager": "pnpm@11.9.0",
@@ -20,6 +20,7 @@
     "demo": "pnpm start",
     "demo:smoke": "pnpm start:smoke",
     "data:backup": "pnpm --filter @ronggang/api data:backup",
+    "content:prepare": "node scripts/prepare-course-library.mjs",
     "data:verify": "pnpm --filter @ronggang/api data:verify",
     "data:restore": "pnpm --filter @ronggang/api data:restore",
     "build:packages": "pnpm --filter @ronggang/contracts build && pnpm --filter @ronggang/content-store build && pnpm --filter @ronggang/course-content build && pnpm --filter @ronggang/session-control build && pnpm --filter @ronggang/context-engine build && pnpm --filter @ronggang/scenario-catalog build && pnpm --filter @ronggang/model-gateway build && pnpm --filter @ronggang/agent-runtime build && pnpm --filter @ronggang/world-core build && pnpm --filter @ronggang/agent-orchestrator build && pnpm --filter @ronggang/iflytek-adapter build && pnpm --filter @ronggang/media-processing build",
@@ -30,6 +31,7 @@
     "test": "pnpm build:packages && pnpm test:packages",
     "test:e2e": "pnpm build && playwright test",
     "test:e2e:built": "playwright test",
+    "test:release-tools": "node --test scripts/lib/release-policy.test.mjs",
     "test:live:deepseek": "pnpm --filter @ronggang/model-gateway test:live && pnpm --filter @ronggang/agent-runtime test:live",
     "gold:evidence": "pnpm build:packages && node scripts/generate-gold-readiness-evidence.mjs",
     "gold:evidence:full": "pnpm build:packages && node scripts/generate-gold-readiness-evidence.mjs --full",

@@ -1,5 +1,5 @@
 import {
-  FieldInterviewActionRequestV1Schema, FieldInterviewSpeechDecisionV1Schema,
+  FieldInterviewActionRequestV1Schema, FieldInterviewSpeechDecisionV1Schema, characterWorkflowOrder,
   type FieldInterviewActionRequestV1, type FieldInterviewModelReceiptV1, type FieldInterviewSpeechDecisionV1,
 } from "@ronggang/contracts";
 import { hashCanonical, type ExplorationLesson, type ExplorationPerson, type XunpuNpcV4 } from "@ronggang/course-content";
@@ -123,7 +123,7 @@ export class FieldInterviewService {
         .map(material => ({ id: material.id, title: material.title, body: material.body, kind: material.kind, evidenceStatus: material.evidenceStatus ?? "unspecified" })),
       person: { id: person.id, name: person.name, role: person.role, activity: person.activity, goal: person.goal, unknown: person.unknown,
         topics: knowledgeEnabled ? person.topics : [], ...(person.personality ? { personality: person.personality } : {}),
-        ...(person.workflow ? { workflow: person.workflow } : {}), ...(person.social ? { social: person.social } : {}) },
+        ...(person.workflow ? { workflow: {memoryWindow:person.workflow.memoryWindow,nodes:characterWorkflowOrder(person.workflow).map(({position:_position,...node})=>node)} } : {}), ...(person.social ? { social: person.social } : {}) },
       professionalContext: profile ? { publicGoal: profile.publicGoal, privatePressure: profile.privatePressure,
         refusalConditions: profile.refusalConditions, recoveryConditions: profile.recoveryConditions, disclosureRules: profile.disclosureRules } : null,
       utterance: action.text,

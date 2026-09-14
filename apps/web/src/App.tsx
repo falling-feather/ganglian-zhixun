@@ -7,10 +7,11 @@ import {
   useState,
   type ReactNode,
 } from "react";
-import { createHttpAdminGateway } from "./v2/admin-gateway";
 import {
   createHttpExperienceGateway,
-  establishDemoAuth,
+  restoreAuthenticatedAuth,
+  logoutDemoAccount,
+  GatewayHttpError,
   ExperienceGatewayProvider,
 } from "./v2/gateway";
 import type { DemoAuthContext } from "./v2/models";
@@ -28,6 +29,7 @@ import {
 } from "./v2/content-library-gateway";
 
 const StudentCoursesPage = lazy(() => import("./v2/pages/student-course-archive"));
+const LoginPage = lazy(() => import('./v2/pages/login-page'));
 const StudentCourseDetailPage = lazy(() => import("./v2/pages/student-course-detail-page"));
 const StudentTrainingPage = lazy(() => import("./v2/pages/student-training-page"));
 const ContentLibraryPage = lazy(() => import("./v2/pages/content-library-page"));
@@ -37,12 +39,6 @@ const TeacherClassesPage = lazy(() => import("./v2/pages/teacher-student-archive
 const TeacherDirectorPage = lazy(() => import("./v2/pages/teacher-director-page"));
 const TeacherReviewsPage = lazy(() => import("./v2/pages/teacher-reviews-page"));
 const TeacherCoursesPage = lazy(() => import("./v2/pages/teacher-courses-page"));
-const AdminOverviewPage = lazy(() => import("./v2/pages/admin-overview-page"));
-const AdminTopologyPage = lazy(() => import("./v2/pages/admin-topology-page"));
-const AdminEventsPage = lazy(() => import("./v2/pages/admin-events-page"));
-const AdminTracePage = lazy(() => import("./v2/pages/admin-trace-page"));
-const AdminEvidencePage = lazy(() => import("./v2/pages/admin-evidence-page"));
-const AdminReadinessPage = lazy(() => import("./v2/pages/admin-readiness-page"));
 
 export const DefaultV2SessionId = "demo-xunpu-v2";
 
@@ -53,7 +49,7 @@ export interface RouteAuthPlan {
 
 /** Administrator-only readers must never be constructed for student/teacher routes. */
 export function routeAllowsAdministratorData(route: V2Route): boolean {
-  return route.kind === "admin";
+  return false;
 }
 
 function safeProfileId(value: string | null): string | null {
@@ -90,7 +86,7 @@ export function authPlanForRoute(
   requestedProfileId: string | null,
   requestedSessionId: string | null = null,
 ): RouteAuthPlan | null {
-  if (route.kind === "not-found") return null;
+  if (route.kind === "not-found" || route.kind === 'login' || route.kind === 'admin') return null;
   if (route.kind.startsWith("student-")) {
     const profileId = profileForRole(requestedProfileId, "student");
     if (!profileId) return null;
@@ -252,6 +248,7 @@ function NotFoundPage() {
 
 type AuthLoad =
   | { state: "loading" }
+  | { state: "login"; planKey:string }
   | { state: "error"; message: string; planKey: string }
   | { state: "ready"; auth: DemoAuthContext; planKey: string };
 
@@ -265,6 +262,7 @@ export default function App() {
   const authPlanKey = authPlan ? JSON.stringify(authPlan) : "";
 
   const navigate = useCallback((path: string, replace = false) => {
+    if(!window.dispatchEvent(new Event("ganglian-before-navigate",{cancelable:true})))return;
     const target = pathWithRoleContext(
       path,
       window.location.search,
@@ -286,12 +284,16 @@ export default function App() {
     if (!authPlan) return;
     const controller = new AbortController();
     setAuthLoad({ state: "loading" });
-    establishDemoAuth({ ...authPlan, signal: controller.signal })
+    restoreAuthenticatedAuth({...('sessionId' in authPlan?{sessionId:authPlan.sessionId}:{}),...(requestedProfileId?{profileId:requestedProfileId}:{}),role:route.kind==='teacher'?'teacher':'student',signal:controller.signal})
       .then((auth) => {
-        if (!controller.signal.aborted) setAuthLoad({ state: "ready", auth, planKey: authPlanKey });
+        if (!controller.signal.aborted) {
+          if(!authMatchesRoute(auth,route)||(requestedProfileId!==null&&requestedProfileId!==auth.profileId))setAuthLoad({state:'login',planKey:authPlanKey});
+          else setAuthLoad({ state: "ready", auth, planKey: authPlanKey });
+        }
       })
       .catch((cause: unknown) => {
         if (!controller.signal.aborted) {
+          if(cause instanceof GatewayHttpError&&cause.status===401){setAuthLoad({state:'login',planKey:authPlanKey});return;}
           setAuthLoad({
             state: "error",
             planKey: authPlanKey,
@@ -312,17 +314,20 @@ export default function App() {
       ? createHttpTeacherGateway(authLoad.auth)
       : null
   ), [authLoad, route.kind]);
-  const adminGateway = useMemo(() => (
-    authLoad.state === "ready" && routeAllowsAdministratorData(route)
-      ? createHttpAdminGateway()
-      : null
-  ), [authLoad, route.kind]);
   const contentLibraryGateway: ContentLibraryGateway | null = useMemo(() => (
     authLoad.state === "ready"
       ? createHttpContentLibraryGateway(authLoad.auth)
       : null
   ), [authLoad]);
   const teachingTaskGateway = useMemo(() => authLoad.state === "ready" ? createHttpTeachingTaskGateway(authLoad.auth) : null, [authLoad]);
+
+  const enterLogin=(auth:DemoAuthContext)=>{
+    const teacher=auth.profileId.startsWith('teacher-');
+    navigate(`${teacher?'/teacher/classes':'/student/courses'}?profileId=${encodeURIComponent(auth.profileId)}${teacher?'&sessionId='+DefaultV2SessionId:''}`,true);
+    setAuthRevision(value=>value+1);
+  };
+  if(route.kind==='admin')return <main className="v2-route-loading"><h1>管理页面已禁用</h1><p>本作品提供学生与教师体验。</p><button type="button" onClick={()=>navigate('/login',true)}>返回登录</button></main>;
+  if(route.kind==='login'||authLoad.state==='login')return <Suspense fallback={<RouteLoading label="正在打开登录档案"/>}><LoginPage onLogin={enterLogin}/></Suspense>;
 
   if (!authPlan) {
     return route.kind === "not-found"
@@ -356,6 +361,11 @@ export default function App() {
   }
 
   const contextSessionId = authPlan.sessionId;
+  const logout=async()=>{
+    try{await logoutDemoAccount(authLoad.auth.csrfToken);}
+    catch(cause){if(!(cause instanceof GatewayHttpError&&cause.status===401)){setAuthLoad({state:'error',planKey:authPlanKey,message:cause instanceof Error?cause.message:'暂时无法退出登录'});return;}}
+    setAuthLoad({state:'loading'});navigate('/login');
+  };
   let content: ReactNode;
   switch (route.kind) {
     case "student-courses":
@@ -464,31 +474,6 @@ export default function App() {
       }
       break;
     }
-    case "admin": {
-      if (route.page === "materials") {
-        content = contentLibraryGateway
-          ? <ContentLibraryPage gateway={contentLibraryGateway} mode="staff" />
-          : <RouteFailure title="教学资料不可用" message="缺少内容服务网关，已停止读取教学资料。" />;
-        break;
-      }
-      if (!adminGateway || !contextSessionId) {
-        content = <RouteFailure title="管理工作区不可用" message="缺少管理员网关或训练会话上下文。" />;
-        break;
-      }
-      const bindingId = administratorBindingIdFor(authLoad.auth, contextSessionId);
-      if (!bindingId) {
-        content = <RouteFailure title="当前身份没有管理员会话绑定" message="已停止读取拓扑、事件、追踪和系统证据。" />;
-        break;
-      }
-      const common = { gateway: adminGateway, sessionId: contextSessionId, bindingId };
-      if (route.page === "agents") content = <AdminTopologyPage {...common} />;
-      else if (route.page === "events") content = <AdminEventsPage {...common} />;
-      else if (route.page === "trace") content = <AdminTracePage {...common} />;
-      else if (route.page === "evidence") content = <AdminEvidencePage {...common} />;
-      else if (route.page === "readiness") content = <AdminReadinessPage {...common} />;
-      else content = <AdminOverviewPage {...common} navigate={navigate} />;
-      break;
-    }
     case "not-found":
       content = <NotFoundPage />;
       break;
@@ -499,6 +484,7 @@ export default function App() {
       route={route}
       {...(contextSessionId ? { contextSessionId } : {})}
       navigate={navigate}
+      onLogout={()=>void logout()}
     >
       <Suspense fallback={<RouteLoading />}>{content}</Suspense>
     </V2RoleShell>

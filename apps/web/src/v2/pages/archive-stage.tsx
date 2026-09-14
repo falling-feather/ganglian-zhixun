@@ -125,7 +125,7 @@ export function ArchiveStage({title,dossiers,onOpen,error,loading=false,audience
       </aside>:null}
       {active&&!reader&&!expanded?<><svg className="archive-connector" aria-hidden="true"><path ref={line}/></svg>
         <span ref={number} className="archive-focus-number" aria-hidden="true">{String(dossiers.findIndex(item=>item.id===active.id)+1).padStart(2,'0')}</span></>:null}
-      <nav className={'archive-index '+(expanded||renderError?'is-visible':'')} aria-label={audience==='teacher'?'学生档案目录':'课程档案目录'}>
+      <nav className={'archive-index '+(expanded||renderError?'is-visible':'')} aria-label={audience==='teacher'?'学生档案目录':'课程目录'}>
         {visible.map(item=><button type="button" className={'v3-dossier '+(hovered===item.id?'is-focused':'')} data-dossier-id={item.id}
           aria-label={'查看档案：'+item.region+' · '+item.title} key={item.id} onFocus={()=>focus(item.id)}
           onPointerEnter={()=>{if(expanded)focus(item.id);}} onClick={()=>open(item.id,true)}>
@@ -135,8 +135,8 @@ export function ArchiveStage({title,dossiers,onOpen,error,loading=false,audience
       <footer className="archive-footer">
         <span className="archive-guide"><Mouse size={20}/><span>移动鼠标，探索{audience==='teacher'?'学生':'课程'}档案</span></span>
         {footer?<div className="archive-status-slot">{footer}</div>:null}
-        <button type="button" className="v3-archive-expand" aria-pressed={expanded} onClick={()=>{setExpanded(value=>!value);engine.current?.clearPointer();}}>
-          {expanded?<SlidersHorizontal size={19}/>:<Grid2X2 size={19}/>}<span>{expanded?'收拢档案':'展开档案'}</span><ArrowUpRight size={17}/>
+        <button type="button" className="v3-archive-expand" aria-expanded={expanded} onClick={()=>{setExpanded(value=>!value);engine.current?.clearPointer();}}>
+          {expanded?<SlidersHorizontal size={19}/>:<Grid2X2 size={19}/>}<span>{audience==='student'?(expanded?'收拢课程':'展开课程'):(expanded?'收拢档案':'展开档案')}</span><ArrowUpRight size={17}/>
         </button>
       </footer>
     </main>

@@ -8,9 +8,11 @@ export const TeacherSubmittedWorksV3Schema = z.object({
   }).strict()),
 }).strict();
 export type TeacherSubmittedWorksV3 = z.infer<typeof TeacherSubmittedWorksV3Schema>;
+export const TeacherClassroomsV3Schema = z.object({ classrooms: z.array(z.object({ classroomId: z.string(), name: z.string() }).strict()) }).strict();
 export const TeacherStudentArchiveV3Schema = z.object({
+  classrooms: TeacherClassroomsV3Schema.shape.classrooms.optional(),
   students: z.array(z.object({
-    studentId: z.string(), displayName: z.string(), currentSessionId: z.string().nullable(),
+    studentId: z.string(), displayName: z.string(), classroomId: z.string().optional(), currentSessionId: z.string().nullable(),
     runs: z.array(StudyRunV3Schema.omit({ bindingId: true }).extend({
       region: z.string(), coverIndex: z.number().int().min(0).max(5),
       visitedScenes: z.number().int().nonnegative(), conversations: z.number().int().nonnegative(),

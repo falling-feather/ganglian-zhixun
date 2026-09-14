@@ -23,7 +23,7 @@ export interface DemoProfileDefinition extends DemoIdentityProfile {
   role: "operator" | "teacher" | "student";
 }
 
-export const demoProfileDefinitions = [
+export const demoProfileDefinitions:readonly DemoProfileDefinition[] = [
   {
     profileId: "operator-demo",
     principalId: "principal-operator-demo",
@@ -45,7 +45,7 @@ export const demoProfileDefinitions = [
   {
     profileId: "student-team-a",
     principalId: "principal-student-team-a",
-    displayName: "地方文旅 A 班采编学生",
+    displayName: "学生2",
     defaultSessionId: "demo-local-tourism",
     classroomId: DEMO_CLASSROOM_A_ID,
     teamId: DEMO_TEAM_A_ID,
@@ -54,7 +54,7 @@ export const demoProfileDefinitions = [
   {
     profileId: "student-unassigned",
     principalId: "principal-student-unassigned",
-    displayName: "体验学生",
+    displayName: "学生1",
     defaultSessionId: null,
     classroomId: DEMO_CLASSROOM_A_ID,
     teamId: DEMO_TEAM_A_ID,
@@ -72,13 +72,19 @@ export const demoProfileDefinitions = [
   {
     profileId: "student-team-b",
     principalId: "principal-student-team-b",
-    displayName: "地方文旅 B 班采编学生",
+    displayName: "学生3",
     defaultSessionId: DEMO_SECONDARY_SESSION_ID,
     classroomId: DEMO_CLASSROOM_B_ID,
     teamId: DEMO_TEAM_B_ID,
     role: "student",
   },
-] as const satisfies readonly DemoProfileDefinition[];
+  {profileId:'teacher-demo',principalId:'principal-teacher-demo',displayName:'演示教师',defaultSessionId:'demo-xunpu-v2',classroomId:DEMO_CLASSROOM_A_ID,teamId:null,role:'teacher'},
+  ...Array.from({length:17},(_,index):DemoProfileDefinition=>{
+    const number=index+4,inClassA=number<=11;
+    return {profileId:`student-roster-${number}`,principalId:`principal-student-roster-${number}`,displayName:`学生${number}`,defaultSessionId:null,
+      classroomId:inClassA?DEMO_CLASSROOM_A_ID:DEMO_CLASSROOM_B_ID,teamId:inClassA?DEMO_TEAM_A_ID:DEMO_TEAM_B_ID,role:'student'};
+  }),
+];
 
 const fixedSeedTime = "2026-07-26T00:00:00.000Z";
 
@@ -107,6 +113,8 @@ function rosterMemberships(): SessionMembership[] {
   const studentA = byId.get("student-team-a")!;
   const teacherB = byId.get("teacher-class-b")!;
   const studentB = byId.get("student-team-b")!;
+  const teacherDemo=byId.get('teacher-demo')!;
+  const additionalStudents=demoProfileDefinitions.filter(profile=>profile.role==='student'&&!['student-team-a','student-team-b'].includes(profile.profileId));
   return [
     membership(operator, "teacher-main", "teacher", "teacher"),
     membership(operator, "student-editor", "student", "editor"),
@@ -117,6 +125,9 @@ function rosterMemberships(): SessionMembership[] {
     membership(teacherB, "teacher-main", "teacher", "teacher"),
     membership(studentB, "student-editor", "student", "editor"),
     membership(studentB, "student-reporter", "student", "reporter"),
+    membership(teacherDemo,'teacher-main','teacher','class-a'),
+    membership({...teacherDemo,classroomId:DEMO_CLASSROOM_B_ID},'teacher-main','teacher','class-b'),
+    ...additionalStudents.map(profile=>membership(profile,'student-reporter','student','reporter')),
   ];
 }
 

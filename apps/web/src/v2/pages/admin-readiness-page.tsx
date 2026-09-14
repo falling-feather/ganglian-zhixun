@@ -237,10 +237,10 @@ export default function AdminReadinessPage({
     <main className="v2-admin-page v2-readiness-page">
       <header className="v2-admin-heading">
         <div>
-          <h1>质量、规则与实证</h1>
-          <p>并列核对五课程运行资格、三组消融证据和国金质量门；缺口按原样保留。</p>
+          <h1>交付状态与验证记录</h1>
+          <p>分别查看可运行功能、提交材料与研究验证。真实用户反馈和专业复核按实际记录保留。</p>
         </div>
-        <span>{data ? `证据就绪上限 ${data.readiness.officialScorecard.evidenceReadyMaxScore} 分` : "读取中"}</span>
+        <span>{data ? `工程证据与外部反馈分开核对` : "读取中"}</span>
       </header>
       {error ? (
         <div className="v2-inline-error" role="alert">
@@ -252,19 +252,20 @@ export default function AdminReadinessPage({
       ) : null}
       {data ? (
         <>
-          <AgentEvaluationSurface evaluation={data.evaluation} />
+          <section className="submission-readiness-summary"><h2>本机作品交付</h2><p>课程、场次与规则的发布状态可在下方核对。源代码封版、完整演示链路与真实用户反馈需要各自的验收记录。</p><p>高级盲评和大样本试点是额外研究目标，不自动作为本轮可运行Demo的完成门；项目记录的目标用户反馈要求仍须真实满足。</p></section>
+          <details className="research-readiness-details"><summary>课程运行规则与高级研究验证</summary><AgentEvaluationSurface evaluation={data.evaluation} /></details>
 
           <section className="v2-competition-readiness" aria-labelledby="v2-competition-readiness-title">
             <header className="v2-evaluation-section-heading">
               <div>
-                <span>国金质量门</span>
-                <h2 id="v2-competition-readiness-title">参赛工件与外部实证边界</h2>
+                <span>证据与材料</span>
+                <h2 id="v2-competition-readiness-title">提交材料与额外研究证据</h2>
                 <p>工程验证不替代教师复核、真实师生反馈或赛事资格回执。</p>
               </div>
             </header>
             <div className="v2-readiness-boundary">
-              <strong>{data.readiness.summary.readyForCompetitionClaim ? "快照允许参赛就绪主张" : "当前不得宣称参赛就绪"}</strong>
-              <p>{data.readiness.claimBoundary}</p>
+              <strong>{data.readiness.summary.readyForCompetitionClaim ? "当前证据满足这套完整研究门" : "部分外部反馈与研究证据尚未完成"}</strong>
+              <details><summary>查看原始验证协议与结论边界</summary><p>{data.readiness.claimBoundary}</p></details>
             </div>
             <div className="v2-readiness-gates">
               {data.readiness.deliverables.map((gate) => (

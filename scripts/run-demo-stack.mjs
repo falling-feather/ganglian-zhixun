@@ -44,7 +44,7 @@ if (smoke && freshData) {
 }
 const openBrowser = process.env.DEMO_OPEN_BROWSER === "1";
 const openRole = process.env.DEMO_OPEN_ROLE?.trim() || "student";
-if (!new Set(["student", "teacher", "admin"]).has(openRole)) {
+if (!new Set(["student", "teacher"]).has(openRole)) {
   throw new Error(`DEMO_OPEN_ROLE 无效：${openRole}`);
 }
 const demoModelProvider = process.env.DEMO_MODEL_PROVIDER?.trim()
@@ -95,9 +95,8 @@ if (!smoke && !reuseData) {
 
 function roleUrls(origin) {
   return {
-    student: `${origin}/student/courses?profileId=student-unassigned`,
-    teacher: `${origin}/teacher/classes?profileId=teacher-class-a&sessionId=demo-xunpu-v2`,
-    admin: `${origin}/admin/overview?profileId=operator-demo&sessionId=demo-xunpu-v2`,
+    student: `${origin}/`,
+    teacher: `${origin}/login?role=teacher`,
   };
 }
 
@@ -170,16 +169,16 @@ const api = forkApi(resolve(projectRoot, "apps/api/dist/main.js"), {
     MODEL_MAX_RETRIES: process.env.MODEL_MAX_RETRIES?.trim() || "1",
     SHOWCASE_DETERMINISTIC_STRUCTURED:
       process.env.SHOWCASE_DETERMINISTIC_STRUCTURED?.trim()
-      || (demoModelProvider === "deepseek" ? "1" : "0"),
+      || "0",
     ...(demoModelProvider === "deepseek" ? {
       DEEPSEEK_BASE_URL: process.env.DEEPSEEK_BASE_URL?.trim() || "https://api.deepseek.com",
       DEEPSEEK_API_KEY: process.env.DEEPSEEK_API_KEY,
-      DEEPSEEK_MODEL: process.env.DEEPSEEK_MODEL?.trim() || "deepseek-v4-flash",
+      DEEPSEEK_MODEL: process.env.DEEPSEEK_MODEL?.trim() || "deepseek-flash",
     } : {}),
-    IFLYTEK_MODE: "mock",
+    IFLYTEK_MODE: process.env.IFLYTEK_MODE?.trim() || "mock",
     DEEPSEEK_LIVE_SMOKE: "0",
     STARTUP_RECOVERY_MODE: "blocking",
-    WEB_ALLOWED_ORIGINS: webOrigin,
+    WEB_ALLOWED_ORIGINS: [...new Set([...(process.env.WEB_ALLOWED_ORIGINS ?? "").split(",").map(value=>value.trim()).filter(Boolean),webOrigin])].join(","),
   },
 });
 children.add(api);
@@ -292,7 +291,6 @@ try {
         "体验入口：",
         `  学生：${entryUrls.student}`,
         `  教师：${entryUrls.teacher}`,
-        `  管理员：${entryUrls.admin}`,
         "演示栈保持运行；输入 stop 回车，或按 Ctrl+C 停止。",
         "",
       ].join("\n"),
