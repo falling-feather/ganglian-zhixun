@@ -11,6 +11,6 @@ COPY . .
 RUN pnpm install --frozen-lockfile && pnpm build && mkdir -p /data && chown -R node:node /app /data /opt/corepack
 ENV NODE_ENV=production COREPACK_ENABLE_NETWORK=0 DEMO_SKIP_BUILD=1 DEMO_REUSE_DATA=1 DEMO_OPEN_BROWSER=0 DEMO_HOST=0.0.0.0 DEMO_DATA_DIR=/data/runtime DEMO_API_PORT=3001
 USER node
-EXPOSE 4173
+EXPOSE 3001
 STOPSIGNAL SIGTERM
-CMD ["node", "deploy/start-hosted.mjs"]
+CMD ["node", "deploy/start-api.mjs"]

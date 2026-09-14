@@ -21,11 +21,14 @@ def main() -> None:
     texts = payload.get("texts")
     if not isinstance(texts, list) or not all(isinstance(text, str) for text in texts):
         raise ValueError("texts must be an array of strings")
+    batch_size = int(os.environ.get("RONGGANG_AI025_BATCH_SIZE", "8"))
+    if batch_size < 1:
+        raise ValueError("RONGGANG_AI025_BATCH_SIZE must be positive")
     from fastembed import TextEmbedding
 
     with redirect_stdout(sys.stderr):
-        model = TextEmbedding(model_name=model_version, cache_dir=str(cache_dir))
-        vectors = [list(map(float, vector)) for vector in model.embed(texts)]
+        model = TextEmbedding(model_name=model_version, cache_dir=str(cache_dir), threads=1)
+        vectors = [list(map(float, vector)) for vector in model.embed(texts, batch_size=batch_size)]
     dimension = len(vectors[0]) if vectors else 0
     if any(len(vector) != dimension for vector in vectors):
         raise ValueError("embedding vectors have inconsistent dimensions")

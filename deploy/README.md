@@ -44,46 +44,58 @@ node scripts/build-public-demo.mjs
 
 以上是本机限速模拟结果，不代表所有网络下的GitHub Pages访问时长。GitHub线路、DNS和区域连接时延仍可能影响访问。已通过12项定向检查和浏览器回归：无初始课程全文请求、进入单课后加载、WebP图像实际解码、私人笔记恢复、作品导出、地图与窄屏操作。
 
-## 完整系统托管准备
+## 阿里云完整系统
 
-完整 Node 后端、模型网关和持久化实现保留在源码中。2026-09-15用户启动阿里云部署准备，本轮先完成域名基础配置，再指导完整应用部署。
+完整应用地址：[glzx.fallingfeather.cn](https://glzx.fallingfeather.cn/)。使用杭州轻量服务器 `1Panel-ehke`（47.99.130.142，2核2GiB），A记录TTL为600秒。主机Nginx提供静态网页，只有 `/api` 与 `/health` 转发到单个API容器的3001端口。已有的其他站点继续使用原配置。
 
-已核对的目标是杭州轻量应用服务器 `1Panel-ehke`，公网IP `47.99.130.142`，2核2GiB内存、40GiB系统盘，应用镜像为1Panel 1.10.26。已在阿里云DNS新增 `glzx.fallingfeather.cn` 的A记录，默认线路、TTL 600秒、启用状态；公网DNS已返回目标IP。云端防火墙的TCP 80和443规则原本已启用。
+HTTPS使用Let's Encrypt证书，当前证书到期时间为2026-12-13，`certbot-renew.timer`与Nginx重载钩子负责续签。配置模板见 [nginx.conf](nginx.conf)。静态资源从同一镜像的 `/app/apps/web/dist` 导出；容器只启动 [start-api.mjs](start-api.mjs)，不再额外运行Vite预览服务和pnpm启动进程。
 
-完整应用尚未上线：当前HTTP返回301跳转到同域名HTTPS，HTTPS证书校验报域名不匹配。1Panel开启了自定义安全入口，普通 `/login` 无法访问；本轮未登录面板、配置新站点或申请证书。轻量控制台的域名关联向导未完成，不影响已生效的公网DNS记录。
+### 构建与运行
 
-提供 `deploy/Dockerfile` 和 `deploy/start-hosted.mjs`，沿用正式启动器，供具备持久化磁盘的 Node／容器平台接入。目标服务器已有Docker；这些配置仍是待验证方案，容器镜像尚未实际构建验证。
+使用Node 24、pnpm 11.9.0。Linux镜像由 [.github/workflows/hosted-image.yml](../.github/workflows/hosted-image.yml) 构建并检查启动；本地也可使用同一Dockerfile。模型缓存位于持久卷中的 `/data/models`，学习数据位于 `/data/runtime`。
 
 ```sh
 docker build -f deploy/Dockerfile -t ganglian-zhixun .
 docker run -d --name ganglian-zhixun --restart unless-stopped \
-  -p 127.0.0.1:4173:4173 -v ganglian-data:/data \
-  --env-file .env.server \
-  -e PORT=4173 \
-  -e WEB_ALLOWED_ORIGINS=https://glzx.fallingfeather.cn \
-  -e __VITE_ADDITIONAL_SERVER_ALLOWED_HOSTS=glzx.fallingfeather.cn \
+  --memory=1400m --memory-swap=3g \
+  --log-driver json-file --log-opt max-size=10m --log-opt max-file=3 \
+  -p 127.0.0.1:3001:3001 -v ganglian-data:/data \
+  --env-file /opt/ganglian-zhixun/server.env \
+  -e HOST=0.0.0.0 -e PORT=3001 -e DATA_DIR=/data/runtime \
+  -e STARTUP_RECOVERY_MODE=blocking \
+  -e WEB_ALLOWED_ORIGINS=https://glzx.fallingfeather.cn,http://127.0.0.1:3001 \
   ganglian-zhixun
 ```
 
-上述命令在上传后的项目根目录执行，仍需完成服务器构建与运行验证。先准备 `.env.server`，仅放需要的服务端模型配置，例如 `MODEL_PROVIDER`、`DEEPSEEK_BASE_URL`、`DEEPSEEK_API_KEY`、`DEEPSEEK_MODEL`；模型名称和凭据沿用最终验收配置。不要原样复制本机HOST、PORT和DATA_DIR。密钥不放进镜像、网页或公开仓库。
+`server.env`为服务器专用配置，权限0600，包含当前验收使用的模型提供方、地址、模型名与凭据。密钥不进入镜像、静态网页或Git。不要复制本机的HOST、PORT、DATA_DIR。已缓存模型的演示实例使用 `HF_HUB_OFFLINE=1`，初次准备模型时需先取得对应模型文件。
 
-后续操作顺序：
+当前2GiB实例另启用2GiB Swap，容器内存上限1400MiB、内存加Swap合计上限3GiB。Node旧生代上限768MiB；本地向量模型单次批量为8条、推理线程为1，查询和索引共用一个串行工作队列。错误仍返回调用方，不通过静默降级掩盖失败。
 
-1. 登录1Panel实际安全入口，确认现有Nginx/OpenResty由哪里管理，以及4173端口是否空闲。
-2. 上传最终完整源码，使用现有Dockerfile构建并启动单实例。使用新建的 `ganglian-data` 持久卷，不迁入本机个人学习数据。先检查 `docker logs --tail 100 ganglian-zhixun` 和 `curl -fsS http://127.0.0.1:4173/health`。
-3. 在现有网站服务中新增 `glzx.fallingfeather.cn` 站点，反向代理到应用4173端口。若1Panel/OpenResty采用主机网络，目标为 `http://127.0.0.1:4173`；若采用独立容器网络，应先确认同网络的服务地址，不将容器内的127.0.0.1误当作宿主机。保留Host、转发协议与客户端信息；模型请求按需要设置代理超时并关闭流式响应缓冲。
-4. 为该子域名申请或绑定有效证书，并设置HTTP跳转HTTPS。可用1Panel的ACME/HTTP验证与自动续签；验证请求需要正确到达该站点。已有证书仅在覆盖本域名时复用。
-5. 从外部网络验证HTTPS证书、`/health`、学生/教师登录、一次真实模型交互、作品提交与教师复核，再将HTTPS地址写入提交材料。
+```dotenv
+NODE_OPTIONS=--max-old-space-size=768
+RONGGANG_AI025_BATCH_SIZE=8
+OMP_NUM_THREADS=1
+OPENBLAS_NUM_THREADS=1
+MKL_NUM_THREADS=1
+HF_HUB_OFFLINE=1
+TOKENIZERS_PARALLELISM=false
+```
 
-当前启动器使用Vite preview，已检查本机依赖支持 `__VITE_ADDITIONAL_SERVER_ALLOWED_HOSTS`，部署时仅放行目标域名。API生产模式设置Secure Cookie，因此HTTPS是完整登录验收的必要条件。2GiB实例的构建与多模态处理承载能力尚未实测，需以首次构建、运行内存和评委并发测试为准。
+### 课程资料与运行检查
 
-操作参考：[1Panel创建反向代理网站](https://1panel.cn/docs/v1/user_manual/websites/website_create/)、[证书申请](https://1panel.cn/docs/v1/user_manual/websites/certificate_create/)、[网站HTTPS设置](https://1panel.cn/docs/v1/user_manual/websites/website_config_basic/)。
+专业资料在运行服务上通过正式API导入，并建立检索索引：
 
-部署条件：
+```sh
+docker exec -e GANGLIAN_PREPARE_ORIGIN=http://127.0.0.1:3001 \
+  ganglian-zhixun node scripts/prepare-course-library.mjs
+curl --fail https://glzx.fallingfeather.cn/health
+docker stats --no-stream ganglian-zhixun
+```
 
-- 单实例与持久化 `/data`；当前文件存储及目录租约不支持多副本同时写入。正常停止会释放租约，异常退出应按数据安全 CLI 核验旧进程后恢复。
-- HTTPS 域名与 `WEB_ALLOWED_ORIGINS`。容器入口同时托管正式网页和 API 代理，保持认证 cookie 同源，不依赖第三方 cookie。
-- 模型凭据通过托管平台的环境变量提供，不能放入前端或提交至仓库。未设置真实模型时仍按原有 deterministic 配置运行，不能当作实时模型验收。
-- 正式演示身份中存在学生、教师与管理员角色。完整系统公网运行前应限制访问范围并完成独立访客身份和调用配额配置；勿将当前本机学习数据直接放入公开演示实例。
+2026-09-15已完成4份公开专业PDF在10个课程关联中的导入与5门课程索引；全部返回成功。降低内存后的容器没有在该流程中重启。三路并发向量请求实测均返回512维有限数值，约4秒完成；该次容器内存峰值约1.0GiB，结束后约567MiB。这是本次部署的有限负载验证，不代表课堂并发容量承诺。多人演示建议至少4GiB内存；语音、OCR和集中导入还需根据实际负载测试。
 
-本轮公开源码是工作区可发布文件的快照，不携带本机 Git 历史、密钥、个人学习数据、依赖目录或临时日志；后续公开更新应从权威工作区重新导出并审查差异。
+学生/教师演示登录入口均位于首页，账号与演示密码在登录页公开显示。生产模式使用Secure Cookie，必须通过HTTPS访问。服务重启后需重新登录；持久学习数据和知识库保留在卷内。
+
+单实例为当前数据写入边界。常规更新先 `docker stop --time 30 ganglian-zhixun`，确认API完成关闭并释放数据目录租约，再切换镜像；不得启动两个实例同时写入同一卷。异常终止后先确认全部写入进程已停止，再用数据安全CLI检查租约。Docker PID重用可能使旧租约被识别为占用，不能只因PID相同就删除锁文件或重置学习数据。
+
+2026-09-15收尾状态：HTTPS、学生登录、五课程目录、实训场景、作品草稿保存与索引准备已通过。在线模型尚未通过：一次现场调用记录为model_response_invalid，服务器直接模型请求在45秒后超时；该次场景回复来自确定性兜底，不能作为实时模型能力验收。教师复核与作品完整送审尚未完成线上验收。按用户要求停止继续扩展，当前交付为已上线且完成内存修复的演示环境，保留上述未通过项。

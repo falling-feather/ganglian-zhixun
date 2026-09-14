@@ -88,6 +88,7 @@ export class LocalFastEmbedProvider implements TextEmbeddingProvider {
   readonly #pythonExecutable: string;
   readonly #workerPath: string;
   readonly #modelDir: string;
+  #workerQueue: Promise<void> = Promise.resolve();
 
   constructor(options: {
     pythonExecutable?: string;
@@ -109,11 +110,16 @@ export class LocalFastEmbedProvider implements TextEmbeddingProvider {
 
   async embedDocuments(texts: readonly string[], modelVersion = ChineseContentEmbeddingModel): Promise<EmbeddingBatch> {
     if (texts.length === 0) return { modelVersion, dimension: 0, vectors: [] };
-    const record = await runWorker(this.#pythonExecutable, this.#workerPath, {
+    const payload = {
       modelVersion,
       cacheDir: this.#modelDir,
       texts: [...texts],
-    });
+    };
+    // Queries and indexing share one model worker so concurrent requests do not multiply model memory.
+    const operation = this.#workerQueue.then(() => runWorker(this.#pythonExecutable, this.#workerPath, payload));
+    // Keep the queue usable after failure; the caller still receives the original rejected operation.
+    this.#workerQueue = operation.then(() => undefined, () => undefined);
+    const record = await operation;
     const vectors = Array.isArray(record.vectors)
       ? record.vectors.map((vector) => Array.isArray(vector) ? vector.map(Number) : [])
       : [];

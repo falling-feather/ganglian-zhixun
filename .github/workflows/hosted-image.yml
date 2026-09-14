@@ -27,14 +27,13 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          docker run -d --name glzx-ci -p 127.0.0.1:4173:4173 \
+          docker run -d --name glzx-ci -p 127.0.0.1:3001:3001 \
             -e COREPACK_ENABLE_NETWORK=0 \
             -e WEB_ALLOWED_ORIGINS=https://glzx.fallingfeather.cn \
-            -e __VITE_ADDITIONAL_SERVER_ALLOWED_HOSTS=glzx.fallingfeather.cn \
             ganglian-zhixun:${{ github.sha }}
           ready=0
           for attempt in $(seq 1 90); do
-            if curl --fail --silent http://127.0.0.1:4173/health > /tmp/glzx-health.json; then
+            if curl --fail --silent http://127.0.0.1:3001/health > /tmp/glzx-health.json; then
               ready=1
               break
             fi
