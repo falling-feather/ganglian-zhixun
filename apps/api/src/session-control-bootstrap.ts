@@ -1,5 +1,6 @@
 import type { RoleContract } from "@ronggang/contracts";
 import {
+  isRoleMembership,
   type SessionControlService,
   type SessionMembership,
   type TrainingSessionRecord,
@@ -127,7 +128,7 @@ function rosterMemberships(): SessionMembership[] {
     membership(studentB, "student-reporter", "student", "reporter"),
     membership(teacherDemo,'teacher-main','teacher','class-a'),
     membership({...teacherDemo,classroomId:DEMO_CLASSROOM_B_ID},'teacher-main','teacher','class-b'),
-    ...additionalStudents.map(profile=>membership(profile,'student-reporter','student','reporter')),
+    ...additionalStudents.map(profile=>({...membership(profile,'student-reporter','student','roster'),kind:'roster' as const})),
   ];
 }
 
@@ -177,8 +178,25 @@ export async function seedDemoOrganization(
     if (!await control.getTeam(team.teamId)) await control.putTeam(team);
   }
   for (const membership of rosterMemberships()) {
-    if (!await control.getMembership(membership.membershipId)) {
-      await control.putMembership(membership);
+    const legacy = membership.kind === "roster"
+      ? await control.getMembership(membership.membershipId.replace(/-roster$/u, "-reporter"))
+      : null;
+    if (legacy && (legacy.principalId !== membership.principalId
+      || legacy.classroomId !== membership.classroomId || legacy.teamId !== membership.teamId
+      || legacy.sessionId !== null || legacy.role !== "student" || legacy.actorId !== membership.actorId)) {
+      throw new RoleBindingDeniedError("旧演示名册成员与当前定义不一致");
+    }
+    const existing = await control.getMembership(membership.membershipId);
+    if (!existing) {
+      await control.putMembership(legacy?.kind === undefined && legacy
+        ? { ...membership, status: legacy.status, revokedAt: legacy.revokedAt,
+          createdAt: legacy.createdAt, updatedAt: legacy.updatedAt }
+        : membership);
+    }
+    // Create the replacement first so an interrupted migration can resume
+    // without mistaking its own revocation for a student's roster removal.
+    if (legacy && legacy.kind === undefined && legacy.status === "active") {
+      await control.revokeMembership(legacy.membershipId, new Date().toISOString());
     }
   }
 }
@@ -204,6 +222,7 @@ export async function materializeProfileAssignments(input: {
   });
   const assignments: MembershipRoleAssignment[] = [];
   for (const membership of memberships) {
+    if (!isRoleMembership(membership)) continue;
     if (input.session.requiresExplicitStudentMembership && membership.role === "student" && membership.sessionId === null) continue;
     if (
       membership.sessionId !== null

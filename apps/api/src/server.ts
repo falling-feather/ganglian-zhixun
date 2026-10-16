@@ -223,6 +223,7 @@ import {
   LocalRecoveryCheckpointCatalog,
   SessionControlError,
   SessionControlService,
+  isRoleMembership,
   type RecoveryCheckpointCatalog,
   type SessionMembership,
   type SessionControlStore,
@@ -834,7 +835,8 @@ export function createDefaultSecondSessionProvisionerV4(dependencies: {
       statuses: ["active"],
     });
     const learnerMembership = learnerMemberships.find((membership) => {
-      if (membership.actorId !== input.learnerActorId
+      if (!isRoleMembership(membership)
+        || membership.actorId !== input.learnerActorId
         || membership.teamId !== sourceControlSession.teamId
         || (membership.sessionId !== null
           && membership.sessionId !== input.sourceSessionId)) return false;
@@ -3059,7 +3061,7 @@ async function createAppWithLease(
     preparedRun:async(actor,input)=>{
       const source=await worldSimulationV3.getRecord(input.sourceSessionId);
       const memberships=await sessionControl.listMemberships({classroomId:actor.classroomId,roles:['student'],statuses:['active']});
-      const membership=memberships.find(item=>item.principalId===actor.principalId&&(item.sessionId===null||item.sessionId===input.sourceSessionId)
+      const membership=memberships.find(item=>isRoleMembership(item)&&item.principalId===actor.principalId&&(item.sessionId===null||item.sessionId===input.sourceSessionId)
         && (!source.fieldInterview || (item.actorId===source.fieldInterview.actorId&&stableMembershipBindingId(actor.principalId,membershipAssignment(item,input.sourceSessionId))===source.fieldInterview.bindingId)));
       if(!membership)throw new PermissionDeniedError('当前学生没有来源课程的有效成员关系');
       const bindingId=stableMembershipBindingId(actor.principalId,membershipAssignment(membership,input.sourceSessionId));
@@ -4096,7 +4098,8 @@ async function createAppWithLease(
       return {
         profileId: profile.profileId,
         displayName: profile.displayName,
-        defaultSessionId: profile.defaultSessionId,
+        defaultSessionId: authorizedSessions.some(session => session.sessionId === profile.defaultSessionId)
+          ? profile.defaultSessionId : null,
         authorizedSessionIds: authorizedSessions.map((session) => session.sessionId),
         classroomId: profile.classroomId,
         teamId: profile.teamId,

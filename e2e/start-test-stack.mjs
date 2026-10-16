@@ -294,14 +294,12 @@ try {
   if (web.pid !== undefined) serverPids.add(web.pid);
   await persistStackState();
   const webExitedEarly = rejectIfExited(web, "Web");
-  await Promise.race([
-    waitForUrl(webOrigin, "Web"),
-    webExitedEarly,
-  ]);
+  // playwright.config.ts owns the Web readiness URL and deadline. A second
+  // independent probe must not terminate a stack already accepted by Playwright.
   void webExitedEarly.catch(() => undefined);
 
   process.stdout.write(
-    `[e2e] deterministic stack ready; data=${dataDir}\n`,
+    `[e2e] API ready; Playwright will verify Web readiness; data=${dataDir}\n`,
   );
   await Promise.race([
     waitForExitWithoutTimeout(api),

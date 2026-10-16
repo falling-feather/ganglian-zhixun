@@ -36,7 +36,7 @@ export function V2RoleShell({ route, navigate, children,onLogout }: V2RoleShellP
     { label: "数字资料", path: "/student/materials", active: page === "student-materials" },
   ];
   return <div ref={shell} className={"v3-shell "+(teacher?"v3-role-teacher":"v3-role-student")}>
-    <header className="v3-topbar"><button type="button" className="v3-brand" onClick={() => navigate(teacher ? "/teacher/classes" : "/student/courses")}><BrandMark /><span>岗链智训</span></button>
+    <header className="v3-topbar"><button type="button" className="v3-brand" onClick={() => navigate(teacher ? "/teacher/classes" : "/student/courses")}><BrandMark /><span>职教星云</span></button>
       <nav aria-label={teacher ? "教师端页面" : "学生端页面"}>{navigation.map(item => <button type="button" key={item.path} className={item.active ? "active" : ""} aria-label={item.label} aria-current={item.active ? "page" : undefined} onClick={() => navigate(item.path)}><span className="v3-nav-full">{item.label}</span><span className="v3-nav-compact" aria-hidden="true">{teacher ? item.label === "教学资料" ? "资料" : item.label : item.label === "我的课程" ? "课程" : item.label === "我的作品" ? "作品" : "资料"}</span></button>)}</nav>
       <div className="v3-account"><details><summary>{teacher ? "教师" : "学生"}<ChevronDown /></summary><div className="v3-role-menu">
         {[{label:"学生登录",path:"/login?role=student"},{label:"教师登录",path:"/login?role=teacher"}].map(item => <button type="button" key={item.path} onClick={event => { event.currentTarget.closest("details")?.removeAttribute("open"); navigate(item.path); }}>{item.label}</button>)}

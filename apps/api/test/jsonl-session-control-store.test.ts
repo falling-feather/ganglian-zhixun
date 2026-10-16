@@ -5,13 +5,15 @@ import { resolve } from "node:path";
 import {
   InMemorySessionControlStore,
   SessionControlError,
+  SessionControlService,
   type Classroom,
   type SessionMembership,
   type TeamInstance,
   type TrainingSessionRecord,
 } from "@ronggang/session-control";
-import { afterEach, describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import { JsonlSessionControlStore } from "../src/jsonl-session-control-store.js";
+import { DEMO_CLASSROOM_A_ID, DEMO_TEAM_A_ID, seedDemoOrganization } from "../src/session-control-bootstrap.js";
 import { registerSessionControlStoreContract } from "./session-control-store.contract.js";
 
 const t0 = "2026-07-26T00:00:00.000Z";
@@ -106,6 +108,38 @@ registerSessionControlStoreContract(
 );
 
 describe("JsonlSessionControlStore", () => {
+  it("migrates only seeded roster entries, preserving claimed and legacy role access across reopen", async () => {
+    const path = await makePath(), store = new JsonlSessionControlStore(path);
+    const control = new SessionControlService(store);
+    await control.putClassroom(classroom(DEMO_CLASSROOM_A_ID));
+    await control.putTeam(team(DEMO_TEAM_A_ID, DEMO_CLASSROOM_A_ID));
+    const legacyRoster = { ...membership(), membershipId: "membership-student-unassigned-reporter",
+      principalId: "principal-student-unassigned", classroomId: DEMO_CLASSROOM_A_ID, teamId: DEMO_TEAM_A_ID };
+    await store.putMembership(legacyRoster);
+    await store.putMembership({ ...legacyRoster, membershipId: "membership-student-roster-4-reporter",
+      principalId: "principal-student-roster-4", status: "revoked", revokedAt: t1 });
+    const legacySession = { ...session(), classroomId: legacyRoster.classroomId, teamId: legacyRoster.teamId };
+    await store.createSession(legacySession, "legacy-course-request");
+    await store.putMembership({ ...legacyRoster, membershipId: "claimed-course-role", sessionId: legacySession.sessionId });
+    const interrupted = new SessionControlService(new JsonlSessionControlStore(path));
+    vi.spyOn(interrupted, "revokeMembership").mockRejectedValueOnce(new Error("migration interrupted"));
+    await expect(seedDemoOrganization(interrupted)).rejects.toThrow("migration interrupted");
+    expect(await store.getMembership("membership-student-unassigned-roster")).toMatchObject({ kind: "roster", status: "active" });
+    await seedDemoOrganization(new SessionControlService(new JsonlSessionControlStore(path)));
+
+    const reopened = new JsonlSessionControlStore(path);
+    expect((await reopened.getMembership("membership-student-unassigned-roster"))?.kind).toBe("roster");
+    expect((await reopened.getMembership(legacyRoster.membershipId))?.status).toBe("revoked");
+    expect(await reopened.getMembership("membership-student-roster-4-roster")).toMatchObject({ kind: "roster", status: "revoked", revokedAt: t1 });
+    expect((await reopened.getMembership("membership-student-team-a-reporter"))?.kind).toBeUndefined();
+    expect((await reopened.listSessions({ principalId: legacyRoster.principalId })).map(item => item.sessionId)).toEqual([legacySession.sessionId]);
+    await reopened.revokeMembership("claimed-course-role", t2);
+    expect(await reopened.listSessions({ principalId: legacyRoster.principalId })).toEqual([]);
+    const before = await readFile(path, "utf8");
+    await seedDemoOrganization(new SessionControlService(reopened));
+    expect(await readFile(path, "utf8")).toBe(before);
+  });
+
   it("persists classroom, team, session, idempotency, membership, and status across reopen", async () => {
     const path = await makePath();
     const store = new JsonlSessionControlStore(path);

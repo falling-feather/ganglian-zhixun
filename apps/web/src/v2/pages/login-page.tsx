@@ -29,9 +29,9 @@ export default function LoginPage({onLogin}:{onLogin(auth:DemoAuthContext):void}
   const bookStyle={'--book-x':origin.x+'px','--book-y':origin.y+'px','--book-sx':origin.sx,'--book-sy':origin.sy} as CSSProperties;
   return <main className={'login-world'+(intro?' is-intro':'')+(role?' is-selected role-'+role:'')}>
     <div className="login-horizon" aria-hidden="true"/>
-    {intro?<div className="login-intro" aria-label="岗链智训标识开场动画"><div className="login-intro-mark"><BrandMark/></div><button type="button" onClick={()=>setIntro(false)}>跳过动画 <ArrowRight size={15}/></button></div>:null}
+    {intro?<div className="login-intro" aria-label="职教星云标识开场动画"><div className="login-intro-mark"><BrandMark/></div><button type="button" onClick={()=>setIntro(false)}>跳过动画 <ArrowRight size={15}/></button></div>:null}
     <div className="login-experience" inert={intro||!!role} aria-hidden={!!role}>
-      <header className="login-header"><span><i aria-hidden="true"/>岗链智训</span><span>进入你的学习现场</span></header>
+      <header className="login-header"><span><i aria-hidden="true"/>职教星云</span><span>进入你的学习现场</span></header>
       <section className="login-stage" aria-label="选择登录身份"><div className="login-archives">
         {(['student','teacher'] as const).map(value=><button ref={node=>{archives.current[value]=node;}} type="button" key={value} className={'login-archive '+value} aria-label={value==='student'?'学生登录':'教师登录'} onClick={()=>select(value)} disabled={busy}>
           <span className="login-archive-float"><span className="login-volume"><span className="login-folder-back" aria-hidden="true"/><span className="login-folder-paper" aria-hidden="true"/><span className="login-folder-spine" aria-hidden="true"/><span className="login-folder-front"><FolderFace role={value}/></span></span></span><span className="login-archive-shadow" aria-hidden="true"/>
@@ -55,7 +55,7 @@ export default function LoginPage({onLogin}:{onLogin(auth:DemoAuthContext):void}
       </div></section>
       <div className="login-turning-leaf">
         <div className={'login-leaf-cover '+role} aria-hidden="true"><FolderFace role={role}/></div>
-        <section className="login-book-info"><header><BrandMark/><span>岗链智训</span><span className="login-page-number">01 / {role==='student'?'学习档案':'教学档案'}</span></header>
+        <section className="login-book-info"><header><BrandMark/><span>职教星云</span><span className="login-page-number">01 / {role==='student'?'学习档案':'教学档案'}</span></header>
           <div className="login-book-introduction"><span className="login-book-square" aria-hidden="true"/><h2>{role==='student'?<>走进学习现场<br/>写下自己的判断</>:<>打开学生档案<br/>看见学习过程</>}</h2><p>{role==='student'?'在不同场景中交流、调查与创作。课程进度、作品和私人笔记，会随你的账号保存。':'切换班级，查看学生的课程与作品；在开课前，编排人物和教学任务。'}</p>
             <ul>{(role==='student'?['从多个地点开始，自由探索线索','随手记录观察，整理并提交作品','回看反馈，继续下一次练习']:['两个班级，每班10名测试学生','查看个人课程、已交作品与评价','配置人物，设计下一次课堂体验']).map((line,index)=><li key={line}><span>0{index+1}</span>{line}</li>)}</ul>
           </div><footer><span>{role==='student'?'探索 · 记录 · 创作':'观察 · 编排 · 指导'}</span><span>DEMO / {role==='student'?'STUDENT':'TEACHER'}</span></footer>

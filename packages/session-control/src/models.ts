@@ -8,6 +8,8 @@ export type TrainingSessionStatus =
   | "recovery_failed";
 export type SessionMembershipStatus = "active" | "revoked";
 export type SessionMembershipRole = "teacher" | "student";
+export const sessionMembershipKinds = ["role", "roster"] as const;
+export type SessionMembershipKind = typeof sessionMembershipKinds[number];
 
 export interface Classroom {
   classroomId: string;
@@ -45,6 +47,8 @@ export interface TrainingSessionRecord {
 
 export interface SessionMembership {
   membershipId: string;
+  /** Omitted in legacy records: a role grant. A roster entry only permits enrollment. */
+  kind?: SessionMembershipKind | undefined;
   principalId: string;
   classroomId: string;
   teamId: string | null;
@@ -55,6 +59,10 @@ export interface SessionMembership {
   createdAt: string;
   updatedAt: string;
   revokedAt: string | null;
+}
+
+export function isRoleMembership(membership: Pick<SessionMembership, "kind">): boolean {
+  return (membership.kind ?? "role") === "role";
 }
 
 export interface SessionScope {

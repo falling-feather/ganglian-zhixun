@@ -2,9 +2,11 @@ import type { ChallengeAssignment, SessionExperienceDescriptor, WorldSimulationR
 import type { SessionControlService, SessionMembership, TrainingSessionRecord } from "@ronggang/session-control";
 import { SimulationSessionNotFoundError, type WorldSimulationEngineV3 } from "@ronggang/world-core";
 import { BusinessOperationError, type BusinessOperationCoordinator, type CommitBusinessOperationInput } from "./business-operation-receipt.js";
-import { stableMembershipBindingId, type DemoAuthService, type MembershipRoleAssignment } from "./identity.js";
+import { isRoleMembership } from "@ronggang/session-control";
+import { RoleBindingDeniedError, stableMembershipBindingId, type DemoAuthService, type MembershipRoleAssignment } from "./identity.js";
 
 export function membershipAssignment(membership: SessionMembership, sessionId: string): MembershipRoleAssignment {
+  if (!isRoleMembership(membership)) throw new RoleBindingDeniedError("班级名册成员尚未取得课程岗位授权");
   return { membershipId: membership.membershipId, principalId: membership.principalId, sessionId, actorId: membership.actorId,
     actorKind: membership.role, roleId: membership.role === "student" ? "reporter" : "teacher", status: membership.status };
 }

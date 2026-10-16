@@ -1,5 +1,7 @@
 import { expect, test, type Page } from "@playwright/test";
 import {openArchiveDossier} from './fixtures/archive-flow';
+// Keep action/DOM traces; continuous WebGL readback distorts this multi-account flow.
+test.use({video:'off',trace:{mode:'retain-on-failure',screenshots:false,snapshots:true}});
 
 async function noOverflow(page: Page) {
   expect(await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth)).toBeLessThanOrEqual(1);

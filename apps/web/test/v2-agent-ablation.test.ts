@@ -227,7 +227,7 @@ describe("AI-010 administrator rule and ablation evidence", () => {
     expect(markup).not.toContain("hypothesis_supported");
   });
 
-  it("keeps administrator readers unreachable from student and teacher first frames", () => {
+  it("keeps administrator readers disabled on student, teacher, and direct administrator routes", () => {
     expect(routeAllowsAdministratorData(parseV2Route("/student/courses"))).toBe(false);
     expect(routeAllowsAdministratorData(
       parseV2Route("/student/training/demo-xunpu-v2"),
@@ -236,6 +236,6 @@ describe("AI-010 administrator rule and ablation evidence", () => {
     expect(routeAllowsAdministratorData(
       parseV2Route("/teacher/director/demo-xunpu-v2"),
     )).toBe(false);
-    expect(routeAllowsAdministratorData(parseV2Route("/admin/readiness"))).toBe(true);
+    expect(routeAllowsAdministratorData(parseV2Route("/admin/readiness"))).toBe(false);
   });
 });

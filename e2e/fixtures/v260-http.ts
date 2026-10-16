@@ -109,6 +109,7 @@ export async function performFieldRoute(loop: FieldLoopFixture, compareSources=f
   await loop.choose('entity-platform-duty','qiao-hold','暂缓没有充分核实的片段，保留继续调查的安排。','scene');
   if(compareSources){
     await meet('xp-florist','请说明花材选择标准与准备过程。');
+    await loop.choose('xp-florist','xp-handover-checked','核对本课新增的返工与交接原件，再带着实际记录比较来源。','scene');
     await meet('entity-inheritor','本轮教学如何组织示范和练习？');
     await loop.choose('entity-inheritor','huang-invitation','在确认的范围观察一个步骤，不替学员决定拍摄。','scene');
     await meet('xp-craft-assistant','怎样区分示范和学员独立完成的步骤？');

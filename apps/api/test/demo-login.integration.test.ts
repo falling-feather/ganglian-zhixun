@@ -43,9 +43,9 @@ it('restores the same login, rejects cross-class session access, and revokes log
   const logout=await app.inject({method:'POST',url:'/api/auth/logout',headers:student.headers});expect(logout.statusCode).toBe(200);
   expect((await app.inject({url:'/api/auth/session',headers:student.headers})).statusCode).toBe(401);
 });
-it('starts independent courses for the remaining student accounts and exposes them to the teacher',async()=>{
+it('starts independent courses for all student accounts and exposes them to the teacher',async()=>{
   const sessions:string[]=[];
-  for(const username of ['student2','student3']){
+  for(const username of ['student1','student2','student3']){
     const student=await login(username,'student');
     const courses=(await app.inject({url:'/api/v3/course-archive',headers:student.headers})).json().courses;
     const start=await app.inject({method:'POST',url:'/api/v3/me/study/start',headers:student.headers,payload:{requestId:'login-test-'+username,courseReleaseId:courses[0].courseRef.releaseId}});
@@ -53,7 +53,7 @@ it('starts independent courses for the remaining student accounts and exposes th
     const context=await app.inject({method:'POST',url:'/api/auth/session-context',headers:student.headers,payload:{sessionId:start.json().run.sessionId}});
     expect(context.statusCode,context.body).toBe(200);expect(context.json().profileId).toBe(student.auth.profileId);
   }
-  expect(new Set(sessions).size).toBe(2);
+  expect(new Set(sessions).size).toBe(3);
   const teacher=await login('teacher','teacher'),roster=(await app.inject({url:'/api/v3/teacher/student-archive',headers:teacher.headers})).json();
-  expect(roster.students.filter((s:{currentSessionId:string|null})=>sessions.includes(s.currentSessionId??''))).toHaveLength(2);
+  expect(roster.students.filter((s:{currentSessionId:string|null})=>sessions.includes(s.currentSessionId??''))).toHaveLength(3);
 },30_000);

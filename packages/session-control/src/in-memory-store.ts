@@ -1,5 +1,6 @@
 import { canonicalJson } from "./canonical.js";
 import { SessionControlError } from "./errors.js";
+import { isRoleMembership } from "./models.js";
 import type {
   Classroom,
   MembershipScope,
@@ -157,6 +158,7 @@ export class InMemorySessionControlStore implements SessionControlStore {
           .filter((membership) => (
             membership.principalId === scope.principalId
             && membership.status === "active"
+            && isRoleMembership(membership)
           ))
           .flatMap((membership) => {
             if (membership.sessionId !== null) return [membership.sessionId];

@@ -38,3 +38,9 @@ release-artifacts/
 # Local model testing credentials
 /deepseek-test.txt
 /deepseek/
+
+# Unpublished video project and its original recordings stay local.
+/演示/学生到教师全流程视频/
+
+# Existing local presentation-render fragment; its source is not part of the app.
+/assets/formula.fragment.json

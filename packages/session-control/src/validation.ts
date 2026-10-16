@@ -1,4 +1,5 @@
 import { SessionControlError } from "./errors.js";
+import { sessionMembershipKinds } from "./models.js";
 import type {
   Classroom,
   SessionMembership,
@@ -59,6 +60,12 @@ export function validateSession(record: TrainingSessionRecord): void {
 }
 
 export function validateMembership(record: SessionMembership): void {
+  if (record.kind !== undefined && !sessionMembershipKinds.includes(record.kind)) {
+    throw new SessionControlError("invalid_record", "未知的成员关系类型");
+  }
+  if (record.kind === "roster" && (record.role !== "student" || record.sessionId !== null)) {
+    throw new SessionControlError("invalid_record", "名册成员必须为班级范围的学生");
+  }
   assertNonEmpty(record.membershipId, "membershipId");
   assertNonEmpty(record.principalId, "principalId");
   assertNonEmpty(record.classroomId, "classroomId");

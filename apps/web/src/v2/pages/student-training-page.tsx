@@ -203,7 +203,7 @@ function TrainingHeader({
         className="v2-training-brand"
         onClick={() => navigate("/student/courses")}
       >
-        <BrandMark /><strong>融岗智训</strong><span>学生端</span><b>当前实训</b>
+        <BrandMark /><strong>职教星云</strong><span>学生端</span><b>当前实训</b>
       </button>
       <div className="v2-training-context">
         <strong>{view.courseTitle}</strong>

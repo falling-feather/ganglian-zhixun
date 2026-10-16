@@ -1,6 +1,6 @@
-[CmdletBinding()]
+﻿[CmdletBinding()]
 param(
-  [ValidateSet("student", "teacher", "admin")]
+  [ValidateSet("student", "teacher")]
   [string]$Role = "student",
 
   [switch]$FreshData,
@@ -39,8 +39,15 @@ $scriptName = if ($FreshData) { "start:fresh" } else { "start" }
 
 Push-Location -LiteralPath $applicationRoot
 try {
-  Write-Host "[融岗智训] 程序目录：$applicationRoot" -ForegroundColor Cyan
-  Write-Host "[融岗智训] 体验身份：$Role；数据模式：$(if ($FreshData) { '全新数据' } else { '复用演示进度' })" -ForegroundColor Cyan
+  Write-Host "[职教星云] 程序目录：$applicationRoot" -ForegroundColor Cyan
+  Write-Host "[职教星云] 体验身份：$Role；数据模式：$(if ($FreshData) { '全新数据' } else { '复用演示进度' })" -ForegroundColor Cyan
+
+  $env:COREPACK_ENABLE_DOWNLOAD_PROMPT = "0"
+  $localPnpmBin = Join-Path $applicationRoot ".local/pnpm-bin"
+  New-Item -ItemType Directory -Path $localPnpmBin -Force | Out-Null
+  & corepack enable pnpm --install-directory $localPnpmBin
+  if ($LASTEXITCODE -ne 0) { throw "Could not prepare the project package manager." }
+  $env:PATH = $localPnpmBin + [System.IO.Path]::PathSeparator + $env:PATH
 
   & corepack pnpm preflight
   if ($LASTEXITCODE -ne 0) {
@@ -59,8 +66,8 @@ try {
   } else {
     "就绪后会自动打开浏览器。"
   }
-  Write-Host "[融岗智训] 正在构建并启动，首次运行需要几分钟；$browserHint" -ForegroundColor Green
-  Write-Host "[融岗智训] 停止服务请回到此窗口按 Ctrl+C。" -ForegroundColor Green
+  Write-Host "[职教星云] 正在构建并启动，首次运行需要几分钟；$browserHint" -ForegroundColor Green
+  Write-Host "[职教星云] 停止服务请回到此窗口按 Ctrl+C。" -ForegroundColor Green
   & corepack pnpm run $scriptName
   if ($LASTEXITCODE -ne 0) {
     throw "融岗智训启动失败，退出码：$LASTEXITCODE"

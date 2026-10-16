@@ -157,7 +157,7 @@ export function NodeInterviewShell(props: NodeInterviewShellProps) {
       objects={localMaterials.map(material => ({ objectId: material.id, label: material.title, hint: material.discovered ? "已取得资料，可以再次查看" : material.description }))}
       destinations={destinations}
       onNavigate={id => void go(id)} onPerson={id => openPerson(id)} onObject={id => void inspect(id)}/>
-    <header className="interview-hud"><div><div className="interview-brand"><span aria-hidden="true">◇</span>岗链智训</div><p>{view.region?.title ?? "蟳埔"} · {node.title}</p><button type="button" className="interview-objective" onClick={() => openTool("brief")}><span/> {view.topic || view.title}</button></div>
+    <header className="interview-hud"><div><div className="interview-brand"><span aria-hidden="true">◇</span>职教星云</div><p>{view.region?.title ?? "蟳埔"} · {node.title}</p><button type="button" className="interview-objective" onClick={() => openTool("brief")}><span/> {view.topic || view.title}</button></div>
       <div className="interview-clock"><div><time>{clockAt(view.virtualMinute)}</time><button type="button" onClick={() => openTool("settings")} aria-label="现场设置"><Settings2 /></button></div><small>剩余 {view.remainingMinutes} 分钟 · 教学仿真</small></div>
     </header>
     <aside className="interview-tools" aria-label="采访工具">

@@ -12,7 +12,7 @@ test('公开导览：仓库子路径、三地区、私人笔记与作品导出',
   expect(lessonRequests).toEqual([]);
   await expect(page.locator('.archive-field-canvas')).toHaveAttribute('data-target-fps','30');
   await page.screenshot({path:info.outputPath('public-home.png')});
-  await page.getByRole('button',{name:'展开档案',exact:true}).click();
+  await page.getByRole('button',{name:'展开课程',exact:true}).click();
   await page.getByRole('button',{name:'查看档案：蟳埔 · 社区深度采访',exact:true}).click();
   await page.getByRole('button',{name:'进入课程导览',exact:true}).click();
   await expect(page.getByRole('heading',{name:'巷口',exact:true})).toBeVisible();
@@ -43,7 +43,7 @@ test('公开导览：仓库子路径、三地区、私人笔记与作品导出',
   await page.screenshot({path:info.outputPath('public-tour.png')});
   for(const [label,title] of [['榕江 · 赛事采编','赛事广场'],['山地景区 · 暴雨服务报道','游客中心前场']]) {
     await page.getByRole('button',{name:'课程档案',exact:true}).click();
-    await page.getByRole('button',{name:'展开档案',exact:true}).click();
+    await page.getByRole('button',{name:'展开课程',exact:true}).click();
     await page.getByRole('button',{name:'查看档案：'+label,exact:true}).click();
     await page.getByRole('button',{name:'进入课程导览',exact:true}).click();
     await expect(page.getByRole('heading',{name:title,exact:true})).toBeVisible();

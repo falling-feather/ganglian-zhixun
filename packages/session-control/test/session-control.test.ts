@@ -102,6 +102,36 @@ async function seededService(): Promise<SessionControlService> {
 }
 
 describe("session creation idempotency", () => {
+  it("keeps roster eligibility separate from legacy and explicit session roles", async () => {
+    const service = await seededService();
+    await service.createSession(session("legacy-course", "class-a", "team-a1"), "legacy-course-request");
+    await service.putMembership(membership("roster", "new-student", "class-a", "team-a1", { kind: "roster" }));
+    await service.putMembership(membership("legacy-role", "existing-student", "class-a", "team-a1"));
+
+    assert.equal((await service.listMemberships({ principalId: "new-student" })).length, 1);
+    assert.deepEqual(await service.listSessions({ principalId: "new-student" }), []);
+    assert.equal((await service.listSessions({ principalId: "existing-student" })).length, 1);
+
+    await service.putMembership(membership("claimed-role", "new-student", "class-a", "team-a1", {
+      sessionId: "legacy-course", kind: "role",
+    }));
+    assert.equal((await service.listSessions({ principalId: "new-student" })).length, 1);
+  });
+
+  it("rejects an invalid membership kind and a roster entry bound to a training session", async () => {
+    const service = await seededService();
+    await service.createSession(session("legacy-course", "class-a", "team-a1"), "legacy-course-request");
+    await assert.rejects(service.putMembership(membership("bad-kind", "student-a", "class-a", "team-a1", {
+      kind: "unknown" as NonNullable<SessionMembership["kind"]>,
+    })), SessionControlError);
+    await assert.rejects(service.putMembership(membership("bad-roster", "student-a", "class-a", "team-a1", {
+      kind: "roster", sessionId: "legacy-course",
+    })), SessionControlError);
+    await assert.rejects(service.putMembership(membership("teacher-roster", "teacher-a", "class-a", null, {
+      kind: "roster",
+    })), SessionControlError);
+  });
+
   it("keeps an individually assigned session out of another student's class-wide visibility", async () => {
     const service = await seededService();
     await service.putMembership(membership("class-student-a", "student-a", "class-a", "team-a1"));

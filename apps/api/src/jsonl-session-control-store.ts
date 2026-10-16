@@ -2,6 +2,7 @@ import { mkdir, open, readFile } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
 import {
   InMemorySessionControlStore,
+  sessionMembershipKinds,
   type Classroom,
   type MembershipScope,
   type SessionControlStore,
@@ -61,6 +62,7 @@ const TrainingSessionRecordSchema = z.object({
 
 const SessionMembershipSchema = z.object({
   membershipId: z.string().min(1),
+  kind: z.enum(sessionMembershipKinds).optional(),
   principalId: z.string().min(1),
   classroomId: z.string().min(1),
   teamId: z.string().min(1).nullable(),

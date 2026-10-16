@@ -1,17 +1,19 @@
 import {expect,type Page} from '@playwright/test';
 
 export async function revealArchiveDetails(page:Page,title:string|RegExp){
- await expect(page.locator('.v3-archive')).toBeVisible();
- await expect.poll(()=>page.locator('.v3-dossier').count()).toBeGreaterThan(0);
+ await expect(page.locator('.v3-archive,.teacher-archive-home')).toBeVisible();
+ if(await page.locator('.teacher-archive-home').count())await expect(page.getByRole('combobox',{name:'选择班级'})).toBeEnabled();
+ else await expect(page.locator('.v3-archive')).toHaveAttribute('data-ready','true',{timeout:30000});
  const filters=page.locator('.archive-filters'),collection=page.getByLabel('档案类型');
  if(await collection.count()){
   if(await filters.getAttribute('open')===null)await filters.locator('summary').click();
   await collection.selectOption('');
   await filters.locator('summary').click();
  }
- const expand=page.getByRole('button',{name:'展开档案',exact:true});
+ const expand=page.getByRole('button',{name:/^展开(课程|档案)$/});
  if(await expand.count())await expand.click();
- const dossier=page.locator('.v3-dossier').filter({hasText:title}).first();
+ await expect.poll(()=>page.locator('.v3-dossier,.teacher-directory button').count()).toBeGreaterThan(0);
+ const dossier=page.locator('.v3-dossier,.teacher-directory button').filter({hasText:title}).first();
  await dossier.click();
  const reader=page.locator('.archive-reader');
  await expect(reader).toBeVisible();await expect(reader).toHaveAttribute('data-settled','true');
