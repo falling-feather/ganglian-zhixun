@@ -1,0 +1,210 @@
+{
+  "archive_date": "2026-10-17",
+  "source_commit": "3e4493db22d870a0cb428fcbe7eac038655dcf64",
+  "branch": "codex/research-archive",
+  "scope": "前期调研与公开依据；不含团队提交包和个人原件",
+  "changes": "保留研究正文，仅规范换行并调整归档链接",
+  "files": [
+    {
+      "path": "资料/01-赛事要求/01-XA-202603榜题硬要求与项目映射.md",
+      "source": "资料/01-赛事要求/01-XA-202603榜题硬要求与项目映射.md",
+      "source_sha256": "6be7db2eb7ce53d2f8d26556feb53e01fcc85c81cfa1814dfc2480fd90afd5c7",
+      "archived_sha256": "5f40d0287b060525566d1df813ea867e9b37456a1ffc93d6c9bf5cba24c28857",
+      "links_adjusted": true,
+      "status": "研究依据快照，以正文标注日期为准"
+    },
+    {
+      "path": "资料/02-浙传专业特色/01-专业特色与项目转化.md",
+      "source": "资料/02-浙传专业特色/01-专业特色与项目转化.md",
+      "source_sha256": "e1532e147110c7d2464700ba9ea5a86f80a1ad66b1c431848370448291a84ed9",
+      "archived_sha256": "e1532e147110c7d2464700ba9ea5a86f80a1ad66b1c431848370448291a84ed9",
+      "links_adjusted": false,
+      "status": "研究依据快照，以正文标注日期为准"
+    },
+    {
+      "path": "资料/03-智能体技术路线/01-真实世界与学习者数字分身技术路线.md",
+      "source": "资料/03-智能体技术路线/01-真实世界与学习者数字分身技术路线.md",
+      "source_sha256": "ba7d8081741b5e009e5d21523b29224fc3bd88ec4ae8d9964deb71b95d67628d",
+      "archived_sha256": "ba7d8081741b5e009e5d21523b29224fc3bd88ec4ae8d9964deb71b95d67628d",
+      "links_adjusted": false,
+      "status": "研究依据快照，以正文标注日期为准"
+    },
+    {
+      "path": "资料/04-职业教育依据/01-专业群岗位任务与评价设计依据.md",
+      "source": "资料/04-职业教育依据/01-专业群岗位任务与评价设计依据.md",
+      "source_sha256": "97d0d9d599cdba85005a7be44f5a597d0d3c85e4a75b29724ab4eb9f88ba8116",
+      "archived_sha256": "97d0d9d599cdba85005a7be44f5a597d0d3c85e4a75b29724ab4eb9f88ba8116",
+      "links_adjusted": false,
+      "status": "研究依据快照，以正文标注日期为准"
+    },
+    {
+      "path": "资料/04-职业教育依据/02-目标用户访谈提纲.md",
+      "source": "资料/04-职业教育依据/02-目标用户访谈提纲.md",
+      "source_sha256": "9397c43b81f2430d7e22ac78770341d2479805065da89888693d45d2054bd17d",
+      "archived_sha256": "452eebde9df1b4478860a239d96db1eece151152bcd399ad32a0677ddc5631ab",
+      "links_adjusted": true,
+      "status": "研究依据快照，以正文标注日期为准"
+    },
+    {
+      "path": "资料/04-职业教育依据/03-融媒体技术与运营专业教学标准-2025.pdf",
+      "source": "资料/04-职业教育依据/03-融媒体技术与运营专业教学标准-2025.pdf",
+      "source_sha256": "8b2e4f20f6e9095ff768e57cf759eab480d1abca39b09c7febef687272f6c600",
+      "archived_sha256": "8b2e4f20f6e9095ff768e57cf759eab480d1abca39b09c7febef687272f6c600",
+      "links_adjusted": false,
+      "status": "研究依据快照，以正文标注日期为准"
+    },
+    {
+      "path": "资料/04-职业教育依据/04-蟳埔簪花围技艺-DB3505T16-2024.pdf",
+      "source": "资料/04-职业教育依据/04-蟳埔簪花围技艺-DB3505T16-2024.pdf",
+      "source_sha256": "a1fb7fede7ef2524c1df9f9a690d346439fb02cdfddada0b52548ce70239de6a",
+      "archived_sha256": "a1fb7fede7ef2524c1df9f9a690d346439fb02cdfddada0b52548ce70239de6a",
+      "links_adjusted": false,
+      "status": "研究依据快照，以正文标注日期为准"
+    },
+    {
+      "path": "资料/04-职业教育依据/05-蟳埔样板课调研来源.md",
+      "source": "资料/04-职业教育依据/05-蟳埔样板课调研来源.md",
+      "source_sha256": "2795ac642324b0134d092d1f72cf6dfb0ab39ee3abd0f2ab5ace3c730efb140f",
+      "archived_sha256": "885417d9cde44dbc3883066d539766757fd31beffb921764e3c2a927a185b240",
+      "links_adjusted": true,
+      "status": "研究依据快照，以正文标注日期为准"
+    },
+    {
+      "path": "资料/04-职业教育依据/06-V2.6岗位任务与专业复核包.md",
+      "source": "资料/04-职业教育依据/06-V2.6岗位任务与专业复核包.md",
+      "source_sha256": "5e1b4c291281cc0e6cc27246e89f92f21fa0eed5d00ab59a1cc644b05101314d",
+      "archived_sha256": "47370cf00e26dc6f17f1002e2ecceb554a5a988a14eb6c35a909c133789d42f8",
+      "links_adjusted": true,
+      "status": "研究依据快照，以正文标注日期为准"
+    },
+    {
+      "path": "资料/04-职业教育依据/07-GB45438-2025-公开原件.pdf",
+      "source": "资料/04-职业教育依据/07-GB45438-2025-公开原件.pdf",
+      "source_sha256": "bb704324cbfeb19e98df040cf08a0912475ed5cb4a80782108b74e634e51c8c3",
+      "archived_sha256": "bb704324cbfeb19e98df040cf08a0912475ed5cb4a80782108b74e634e51c8c3",
+      "links_adjusted": false,
+      "status": "研究依据快照，以正文标注日期为准"
+    },
+    {
+      "path": "资料/04-职业教育依据/07-V3三地区五课程资料来源.md",
+      "source": "资料/04-职业教育依据/07-V3三地区五课程资料来源.md",
+      "source_sha256": "63c9b5d93f9104e6951e901331949ecf17f9adff95ebf14fdf389b8ce3cd6d9f",
+      "archived_sha256": "daf838512cbf864d9b19aba60ed45035a6adc22a4718b4c1c7887f5bd87583d9",
+      "links_adjusted": true,
+      "status": "研究依据快照，以正文标注日期为准"
+    },
+    {
+      "path": "资料/04-职业教育依据/08-统计法-2024-公开原件.pdf",
+      "source": "资料/04-职业教育依据/08-统计法-2024-公开原件.pdf",
+      "source_sha256": "bd2e2918d133f4caebaff2df11dee555eea16ceaac45fbfe29baa8ebd45448ca",
+      "archived_sha256": "bd2e2918d133f4caebaff2df11dee555eea16ceaac45fbfe29baa8ebd45448ca",
+      "links_adjusted": false,
+      "status": "研究依据快照，以正文标注日期为准"
+    },
+    {
+      "path": "资料/90-历史资料归档/旧赛事调研/01-独立赛事案例调研-职业教育智能体方向.md",
+      "source": "资料/90-历史资料归档/旧赛事调研/01-独立赛事案例调研-职业教育智能体方向.md",
+      "source_sha256": "8a1f69afead08806a844ccd296c71ebbc7a83dee5c77ee28db87cf67442561cd",
+      "archived_sha256": "8a1f69afead08806a844ccd296c71ebbc7a83dee5c77ee28db87cf67442561cd",
+      "links_adjusted": false,
+      "status": "历史研究，保留原日期与判断"
+    },
+    {
+      "path": "资料/90-历史资料归档/旧赛事调研/02-创青春揭榜挂帅赛制与奖项调研.md",
+      "source": "资料/90-历史资料归档/旧赛事调研/02-创青春揭榜挂帅赛制与奖项调研.md",
+      "source_sha256": "4a87f99624cd6c7c507b1c886b34f01b24fcccfb326e297246164cac800fd3b4",
+      "archived_sha256": "4a87f99624cd6c7c507b1c886b34f01b24fcccfb326e297246164cac800fd3b4",
+      "links_adjusted": false,
+      "status": "历史研究，保留原日期与判断"
+    },
+    {
+      "path": "资料/90-历史资料归档/旧赛事调研/资料索引.md",
+      "source": "资料/90-历史资料归档/旧赛事调研/资料索引.md",
+      "source_sha256": "fcf1fdb07812a637ba25688b37019319452ad1c13f56a95bca65df0dbadf00d7",
+      "archived_sha256": "fcf1fdb07812a637ba25688b37019319452ad1c13f56a95bca65df0dbadf00d7",
+      "links_adjusted": false,
+      "status": "历史研究，保留原日期与判断"
+    },
+    {
+      "path": "资料/90-历史资料归档/企划与交付参考/01-方案一-融媒职训AgentStudio企划书-v0.2.md",
+      "source": "资料/90-历史资料归档/企划与交付参考/01-方案一-融媒职训AgentStudio企划书-v0.2.md",
+      "source_sha256": "243d87f4eeb73535c11c16c51a85a830cbc2a4067270ae0529cdd40352af34fe",
+      "archived_sha256": "243d87f4eeb73535c11c16c51a85a830cbc2a4067270ae0529cdd40352af34fe",
+      "links_adjusted": false,
+      "status": "历史研究，保留原日期与判断"
+    },
+    {
+      "path": "资料/90-历史资料归档/企划与交付参考/02-方案二-智审片场企划书-v0.2.md",
+      "source": "资料/90-历史资料归档/企划与交付参考/02-方案二-智审片场企划书-v0.2.md",
+      "source_sha256": "1613f9db1dcc1c09653ec05d802800ea2e091f31b85f658d689ec63c7af4ba28",
+      "archived_sha256": "1613f9db1dcc1c09653ec05d802800ea2e091f31b85f658d689ec63c7af4ba28",
+      "links_adjusted": false,
+      "status": "历史研究，保留原日期与判断"
+    },
+    {
+      "path": "资料/90-历史资料归档/前期方案/2026-06-24_前期探索/01-调研结论与评委偏好.md",
+      "source": "资料/90-历史资料归档/前期方案/2026-06-24_前期探索/01-调研结论与评委偏好.md",
+      "source_sha256": "24de126010e6fe8f477cdfbce1b0ca28bf175adeaaa3a39ffc9ffc9c67e5e6ae",
+      "archived_sha256": "24de126010e6fe8f477cdfbce1b0ca28bf175adeaaa3a39ffc9ffc9c67e5e6ae",
+      "links_adjusted": false,
+      "status": "历史研究，保留原日期与判断"
+    },
+    {
+      "path": "资料/90-历史资料归档/前期方案/2026-06-24_前期探索/05-方向备选与取舍.md",
+      "source": "资料/90-历史资料归档/前期方案/2026-06-24_前期探索/05-方向备选与取舍.md",
+      "source_sha256": "f28a800c575c511c51929a18af07ca62cf5d7135193b8abf275b8e85edbe27ad",
+      "archived_sha256": "f28a800c575c511c51929a18af07ca62cf5d7135193b8abf275b8e85edbe27ad",
+      "links_adjusted": false,
+      "status": "历史研究，保留原日期与判断"
+    },
+    {
+      "path": "资料/90-历史资料归档/前期方案/2026-06-24_前期探索/06-浙传视角方向重构-越剧数字传播职训.md",
+      "source": "资料/90-历史资料归档/前期方案/2026-06-24_前期探索/06-浙传视角方向重构-越剧数字传播职训.md",
+      "source_sha256": "8be9f713a3a5a54c99adcc1ddb9452cd305f593842830be29c14a87337c8180a",
+      "archived_sha256": "8be9f713a3a5a54c99adcc1ddb9452cd305f593842830be29c14a87337c8180a",
+      "links_adjusted": false,
+      "status": "历史研究，保留原日期与判断"
+    },
+    {
+      "path": "资料/90-历史资料归档/前期方案/2026-06-24_前期探索/07-项目本体创新重构-职训AgentStudio.md",
+      "source": "资料/90-历史资料归档/前期方案/2026-06-24_前期探索/07-项目本体创新重构-职训AgentStudio.md",
+      "source_sha256": "2fc529156fef316ee19f70c42ac40bdbcf94e7d9e04855a0a3f8a694609404ba",
+      "archived_sha256": "2fc529156fef316ee19f70c42ac40bdbcf94e7d9e04855a0a3f8a694609404ba",
+      "links_adjusted": false,
+      "status": "历史研究，保留原日期与判断"
+    },
+    {
+      "path": "资料/90-历史资料归档/前期方案/2026-06-24_前期探索/XA-202603赛题评估.md",
+      "source": "资料/90-历史资料归档/前期方案/2026-06-24_前期探索/XA-202603赛题评估.md",
+      "source_sha256": "fca39f36132e0d5a90fe853116bd7fc1f5100cb46a9d1c6cc51994372d8eebfe",
+      "archived_sha256": "fca39f36132e0d5a90fe853116bd7fc1f5100cb46a9d1c6cc51994372d8eebfe",
+      "links_adjusted": false,
+      "status": "历史研究，保留原日期与判断"
+    },
+    {
+      "path": "资料/90-历史资料归档/对话快照/00-关键决策摘要.md",
+      "source": "资料/90-历史资料归档/对话快照/00-关键决策摘要.md",
+      "source_sha256": "f2796f53e55b9c5a72cace519938271c369e52f49729a1bba4bc10d92f8afa62",
+      "archived_sha256": "1d965884667bd971684e88dc2188f60559f0ace63f95a2a7b7c41897953ae465",
+      "links_adjusted": true,
+      "status": "历史研究，保留原日期与判断"
+    },
+    {
+      "path": "artifacts/gold-readiness/official/source-registry.json",
+      "source": "artifacts/gold-readiness/official/source-registry.json",
+      "source_sha256": "7f9ccad22ef4e430563a393f161f38e0e0e070bdc5d8d6e3a59c118b02c11436",
+      "archived_sha256": "7f9ccad22ef4e430563a393f161f38e0e0e070bdc5d8d6e3a59c118b02c11436",
+      "links_adjusted": false,
+      "status": "研究依据快照，以正文标注日期为准"
+    },
+    {
+      "path": "原始附件/01-XA-202603比赛方案.pdf",
+      "source": "赛事官方公开原题附件",
+      "source_sha256": "10ce35ffe5e36e1c391a345dc7803f02f7ea58dc61b5ac7ddbd2ef9b7ec48bf3",
+      "archived_sha256": "10ce35ffe5e36e1c391a345dc7803f02f7ea58dc61b5ac7ddbd2ef9b7ec48bf3",
+      "links_adjusted": false,
+      "status": "研究依据快照，以正文标注日期为准"
+    }
+  ],
+  "unresolved_links": []
+}
